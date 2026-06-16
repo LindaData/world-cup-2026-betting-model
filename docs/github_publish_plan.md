@@ -62,6 +62,20 @@ git branch -M main
 git push -u origin main
 ```
 
+The repository includes a GitHub Actions workflow:
+
+```text
+.github/workflows/pages.yml
+```
+
+It publishes the static website from `docs/` to GitHub Pages. If Pages does not appear automatically after the first push, go to:
+
+```text
+GitHub repo > Settings > Pages > Build and deployment > Source: GitHub Actions
+```
+
+Then rerun the `Publish GitHub Pages` workflow from the Actions tab.
+
 ## Suggested README Sections
 
 - Project goal.
