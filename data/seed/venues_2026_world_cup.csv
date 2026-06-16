@@ -1,0 +1,18 @@
+venue_id,region,country,city,venue_name,timezone,latitude,longitude,capacity
+vancouver_bc_place,Western,CA,Vancouver,BC Place,America/Vancouver,49.2767,-123.1119,54000
+seattle_lumen_field,Western,US,Seattle,Lumen Field,America/Los_Angeles,47.5953,-122.3317,69000
+sf_bay_area_levis_stadium,Western,US,San Francisco Bay Area (Santa Clara),Levi's Stadium,America/Los_Angeles,37.4030,-121.9700,71000
+los_angeles_sofi_stadium,Western,US,Los Angeles (Inglewood),SoFi Stadium,America/Los_Angeles,33.9530,-118.3390,70000
+guadalajara_estadio_akron,Central,MX,Guadalajara (Zapopan),Estadio Akron,America/Mexico_City,20.6817,-103.4628,48000
+mexico_city_estadio_azteca,Central,MX,Mexico City,Estadio Azteca,America/Mexico_City,19.3031,-99.1506,83000
+monterrey_estadio_bbva,Central,MX,Monterrey (Guadalupe),Estadio BBVA,America/Monterrey,25.6692,-100.2444,53500
+houston_nrg_stadium,Central,US,Houston,NRG Stadium,America/Chicago,29.6847,-95.4108,72000
+dallas_att_stadium,Central,US,Dallas (Arlington),AT&T Stadium,America/Chicago,32.7478,-97.0928,94000
+kansas_city_arrowhead_stadium,Central,US,Kansas City,Arrowhead Stadium,America/Chicago,39.0489,-94.4839,73000
+atlanta_mercedes_benz_stadium,Eastern,US,Atlanta,Mercedes-Benz Stadium,America/New_York,33.7556,-84.4000,75000
+miami_hard_rock_stadium,Eastern,US,Miami (Miami Gardens),Hard Rock Stadium,America/New_York,25.9581,-80.2389,65000
+toronto_bmo_field,Eastern,CA,Toronto,BMO Field,America/Toronto,43.6333,-79.4186,45000
+boston_gillette_stadium,Eastern,US,Boston (Foxborough),Gillette Stadium,America/New_York,42.0910,-71.2640,65000
+philadelphia_lincoln_financial_field,Eastern,US,Philadelphia,Lincoln Financial Field,America/New_York,39.9008,-75.1675,69000
+new_york_new_jersey_metlife_stadium,Eastern,US,New York/New Jersey (East Rutherford),MetLife Stadium,America/New_York,40.8135,-74.0744,82500
+

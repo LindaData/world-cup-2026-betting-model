@@ -1,0 +1,17 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.r-lib/
+*.duckdb
+*.duckdb.wal
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep

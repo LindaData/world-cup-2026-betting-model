@@ -1,0 +1,133 @@
+# 2026 World Cup Betting Model
+
+This project is a reproducible data and modeling scaffold for the 2026 FIFA World Cup. It is designed to be worked on from RStudio while using Python for data acquisition and SQL/DuckDB for storage.
+
+The current baseline estimates team goals using historical international match data. Later iterations will move toward win/draw/loss probabilities, market comparison, and app presentation in Shiny or Streamlit.
+
+The intended workflow is three-language:
+
+- **Python**: API clients, raw data pulls, repeatable snapshots.
+- **SQL**: storage tables, joins, views, auditable transformations.
+- **R/RStudio**: exploration, statistical modeling, plots, reports.
+
+DuckDB is the default SQL engine because it is free, embedded, works from R and Python, and does not require running a database server.
+
+## Presentable Outputs
+
+- R Markdown walkthrough: `reports/01_goals_linear_regression.Rmd`
+- Sample modeling dataset: `data/samples/goals_linear_model_sample_1000.csv`
+- Data inventory: `docs/current_data_status.md`
+- Source landscape and pricing: `docs/source_landscape.md`
+- GitHub publishing plan: `docs/github_publish_plan.md`
+
+Render the first report from RStudio:
+
+```r
+source("R/12_render_reports.R")
+```
+
+## Step 1: Data Sources
+
+For a serious soccer betting model, start with these data families:
+
+1. Fixtures, venues, kickoff times, results, and tournament stage.
+2. Historical international results for team-strength estimation.
+3. Team ratings and rankings, such as FIFA ranking points or our own Elo.
+4. Betting odds snapshots from multiple books, ideally with open and close prices.
+5. Context features: rest, travel distance, home/host effects, weather, injuries, roster strength, suspensions, and referee tendencies.
+
+The first API/source connections are scaffolded in `src/wc_model/providers/`:
+
+- `openfootball`: public 2026 World Cup schedule and stadium files.
+- `international_results`: public historical men's international results, goalscorers, and shootouts.
+- `football_data`: fixtures, teams, standings, and results from football-data.org.
+- `the_odds_api`: bookmaker odds and market discovery from The Odds API.
+- `api_football`: optional API-Football fallback/enrichment provider.
+- `open_meteo`: weather context by venue/date.
+
+## Setup
+
+Copy `.env.example` to `.env` and add API keys as you sign up for providers.
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Connection scripts use only the Python standard library. Later analysis notebooks can add pandas, statsmodels, PyMC, scikit-learn, or Stan.
+
+```powershell
+python scripts/check_connections.py
+python scripts/fetch_raw_data.py --sources public
+```
+
+On this machine, the current Windows Python launcher appears broken. Fixing the Python install is the next practical step before running the scripts locally. R and Quarto also are not on PATH from the Codex shell, though they may still be available inside RStudio.
+
+## RStudio Workflow
+
+Open `world-cup-betting-model.Rproj` in RStudio, then run:
+
+```r
+source("R/00_setup.R")
+source("R/01_build_duckdb.R")
+source("R/02_check_python_bridge.R")
+```
+
+After Python is installed and `.env` is configured, Python pulls raw data:
+
+```powershell
+python scripts\fetch_raw_data.py --sources public
+```
+
+Then R builds/updates the DuckDB database:
+
+```r
+source("R/01_build_duckdb.R")
+```
+
+The database is written to `data/processed/world_cup.duckdb`.
+
+For app readiness checks:
+
+```r
+source("R/05_check_app_readiness.R")
+```
+
+The first app should probably be Shiny because this machine already has most of the R app stack installed. Streamlit can use the same DuckDB file later after Python app packages are installed.
+
+## Current Data Build
+
+To refresh the free public data:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\fetch_raw_data.py --sources public wikimedia official-fifa
+.\.venv\Scripts\python.exe scripts\build_public_processed_csv.py
+```
+
+Then load it into DuckDB from R/RStudio:
+
+```r
+source("R/01_build_duckdb.R")
+source("R/06_data_inventory.R")
+```
+
+See `docs/data_inventory.md` and `docs/api_key_setup.md` for what is already pulled and what still needs API keys.
+
+To pull free GDELT news metadata later:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\fetch_news_gdelt.py --include-team-queries
+```
+
+Then reload DuckDB:
+
+```r
+source("R/01_build_duckdb.R")
+```
+
+## Data Storage
+
+Raw pulls go under `data/raw/<timestamp>/`. Do not edit raw files. Feature tables and modeling datasets should go under `data/processed/` once we build them.
+
+## Betting Note
+
+This project is for statistical modeling and research. It will not guarantee profit. Use legal books only, track bankroll separately, and evaluate bets by expected value and calibration rather than vibes.

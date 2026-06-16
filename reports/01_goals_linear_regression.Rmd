@@ -1,0 +1,251 @@
+---
+title: "2026 World Cup Modeling Baseline: Goals Linear Regression"
+author: "World Cup Betting Model Project"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Purpose
+
+This report documents the first transparent baseline model for the World Cup prediction project.
+
+The goal is not to claim that ordinary least squares is the correct final model for soccer goals. It is a clean starting point:
+
+- The dataset uses real historical international football data.
+- The outcome is easy to inspect.
+- The model uses only features known before kickoff.
+- The results are reproducible from RStudio.
+
+Later reports can switch the target to binary win/loss or ordinal loss/draw/win.
+
+# Project Setup
+
+Open the RStudio project:
+
+```text
+world-cup-betting-model.Rproj
+```
+
+Then run:
+
+```{r setup-project, eval=FALSE}
+source("R/00_setup.R")
+source("R/01_build_duckdb.R")
+source("R/06_data_inventory.R")
+source("R/10_fit_linear_goals_model.R")
+```
+
+# Data Sources
+
+The current free/public data layer includes:
+
+- Historical international results.
+- Historical player goal events.
+- 2026 World Cup fixtures.
+- 2026 World Cup squad players.
+- Player caps, goals, clubs, positions, and ages.
+- Venue and weather context.
+- Wikidata player enrichment where available.
+- GDELT news metadata, currently a partial/test pull.
+- Computed team Elo ratings.
+
+Large raw and processed files are kept local. A small shareable sample lives at:
+
+```text
+data/samples/goals_linear_model_sample_1000.csv
+```
+
+# Unit Of Observation
+
+The modeling dataset has one row per **team-match**.
+
+If Argentina plays France, the data has two rows:
+
+- Argentina's goals as the target, with France as the opponent.
+- France's goals as the target, with Argentina as the opponent.
+
+This format is convenient because the target is always:
+
+$$
+Y_{i,m} = \text{goals scored by team } i \text{ in match } m
+$$
+
+# Sample Data
+
+```{r load-sample}
+sample_path <- file.path("..", "data", "samples", "goals_linear_model_sample_1000.csv")
+
+if (!file.exists(sample_path)) {
+  sample_path <- file.path("data", "samples", "goals_linear_model_sample_1000.csv")
+}
+
+sample_data <- readr::read_csv(sample_path, show_col_types = FALSE)
+head(sample_data, 10)
+```
+
+The sample columns are:
+
+```{r sample-columns}
+data.frame(
+  column = names(sample_data),
+  example_value = as.character(sample_data[1, ])
+)
+```
+
+# Modeling Target
+
+The first target is:
+
+$$
+Y_{i,m} = \texttt{y\_goals\_for}
+$$
+
+This is the number of goals scored by team $i$ in match $m$.
+
+# Pre-Match Elo Feature
+
+The project computes a simple Elo rating from historical match results.
+
+For team $i$ against opponent $j$, the expected result before kickoff is:
+
+$$
+p_{i,m} =
+\frac{1}
+{1 + 10^{-\left(E_{i,m}^{pre} + H_m - E_{j,m}^{pre}\right)/400}}
+$$
+
+Where:
+
+- $E_{i,m}^{pre}$ is team $i$'s pre-match Elo.
+- $E_{j,m}^{pre}$ is the opponent's pre-match Elo.
+- $H_m$ is a home advantage adjustment.
+- $p_{i,m}$ is the expected match result on a 0 to 1 scale.
+
+This is not the final team-strength model. It is a transparent baseline signal.
+
+# First Linear Model
+
+The first regression is:
+
+$$
+Y_{i,m}
+= \beta_0
++ \beta_1 E_{i,m}^{pre}
++ \beta_2 E_{j,m}^{pre}
++ \beta_3 p_{i,m}
++ \beta_4 I(\text{listed home}_{i,m})
++ \beta_5 I(\text{neutral site}_m)
++ \epsilon_{i,m}
+$$
+
+with:
+
+$$
+\epsilon_{i,m} \sim N(0, \sigma^2)
+$$
+
+This is deliberately simple. Goals are count data, so a later model should use a Poisson, negative-binomial, bivariate Poisson, or Skellam-style setup.
+
+# Fit The Model
+
+The model has already been fit by:
+
+```{r fit-command, eval=FALSE}
+source("R/10_fit_linear_goals_model.R")
+```
+
+Load the saved metrics and coefficients:
+
+```{r load-model-output}
+metrics_path <- file.path("..", "data", "processed", "modeling", "goals_linear_model_metrics.csv")
+coef_path <- file.path("..", "data", "processed", "modeling", "goals_linear_model_coefficients.csv")
+
+if (!file.exists(metrics_path)) {
+  metrics_path <- file.path("data", "processed", "modeling", "goals_linear_model_metrics.csv")
+  coef_path <- file.path("data", "processed", "modeling", "goals_linear_model_coefficients.csv")
+}
+
+metrics <- readr::read_csv(metrics_path, show_col_types = FALSE)
+coefficients <- readr::read_csv(coef_path, show_col_types = FALSE)
+
+metrics
+```
+
+```{r coefficients}
+coefficients
+```
+
+# Interpretation
+
+The important coefficient signs make sense:
+
+- `pre_elo` is positive: stronger teams score more.
+- `opponent_pre_elo` is negative: stronger opponents suppress scoring.
+- `pre_match_expected_result` is positive: teams expected to perform better score more.
+- `listed_homeTRUE` is positive: listed home teams score more.
+- `neutralTRUE` is positive in this first model, but this should not be over-interpreted until the venue/home coding is refined.
+
+# Why This Is Only A Baseline
+
+Linear regression is easy to read, but goals are non-negative counts. OLS can predict impossible negative values and does not model the natural distribution of soccer scores.
+
+Better next-step goal models:
+
+$$
+Y_{i,m} \sim \text{Poisson}(\lambda_{i,m})
+$$
+
+$$
+\log(\lambda_{i,m}) = X_{i,m}\beta
+$$
+
+For win/draw/loss, an ordinal model could be:
+
+$$
+\text{logit}\left(P(Y_{i,m}^{ord} \leq k)\right)
+= \theta_k - X_{i,m}\beta
+$$
+
+where:
+
+$$
+Y_{i,m}^{ord} \in \{\text{loss}, \text{draw}, \text{win}\}
+$$
+
+and $k$ indexes the ordered cutpoints.
+
+# Next Modeling Steps
+
+1. Add recent form windows: last 5, 10, and 20 matches before each match.
+2. Add squad strength features: total caps, total goals, age profile, position mix.
+3. Add weather and venue context.
+4. Add news features from GDELT: injury terms, lineup terms, and article-volume spikes.
+5. Add odds once API keys are available.
+6. Move from OLS to Poisson or negative-binomial goals.
+7. Build binary and ordinal outcome models.
+8. Calibrate predicted probabilities.
+
+# Reproducibility Checklist
+
+Run these from RStudio:
+
+```{r reproducibility, eval=FALSE}
+source("R/00_setup.R")
+source("R/01_build_duckdb.R")
+source("R/06_data_inventory.R")
+source("R/10_fit_linear_goals_model.R")
+rmarkdown::render("reports/01_goals_linear_regression.Rmd")
+```
+

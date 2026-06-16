@@ -1,0 +1,37 @@
+---
+title: "2026 World Cup Data First Pass"
+format: html
+execute:
+  echo: true
+---
+
+```{r}
+if (file.exists("../R/00_setup.R")) {
+  source("../R/00_setup.R")
+} else {
+  source("R/00_setup.R")
+}
+
+db_path <- file.path(here::here(), "data", "processed", "world_cup.duckdb")
+drv <- duckdb::duckdb(dbdir = db_path, read_only = TRUE)
+con <- DBI::dbConnect(drv)
+```
+
+```{sql connection=con}
+SELECT region, COUNT(*) AS venues, SUM(capacity) AS total_capacity
+FROM seed_venues
+GROUP BY region
+ORDER BY region
+```
+
+```{sql connection=con}
+SELECT *
+FROM vw_recent_team_form
+ORDER BY avg_goal_diff DESC
+LIMIT 20
+```
+
+```{r}
+DBI::dbDisconnect(con)
+duckdb::duckdb_shutdown(drv)
+```
