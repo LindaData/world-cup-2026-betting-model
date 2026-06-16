@@ -1,0 +1,167 @@
+---
+title: "2026 World Cup Betting Model: Project Overview"
+author: "World Cup Betting Model Project"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Purpose
+
+This project builds a reproducible modeling workflow for the 2026 FIFA World Cup.
+
+The current version is intentionally transparent:
+
+- Python pulls raw data and API snapshots.
+- SQL/DuckDB stores model-ready tables and views.
+- R fits statistical models and knits presentable reports.
+- The `docs/` folder holds the local website that will later publish to GitHub Pages.
+
+# Current Modeling Stack
+
+There are two baseline models right now.
+
+| Model | Target | Report |
+| --- | --- | --- |
+| Goals OLS | Team goals scored in a match | `reports/01_goals_linear_regression.html` |
+| Ordinal logistic | `loss < draw < win` | `reports/02_ordinal_result_model.html` |
+
+These are baselines, not final betting models. They give us a working pipeline, interpretable coefficients, sample data, and repeatable metrics.
+
+# Latest Metrics
+
+```{r latest-metrics}
+goals_metrics_path <- file.path("..", "data", "processed", "modeling", "goals_linear_model_metrics.csv")
+ordinal_metrics_path <- file.path("..", "data", "processed", "modeling", "result_ordinal_model_metrics.csv")
+
+if (!file.exists(goals_metrics_path)) {
+  goals_metrics_path <- file.path("data", "processed", "modeling", "goals_linear_model_metrics.csv")
+  ordinal_metrics_path <- file.path("data", "processed", "modeling", "result_ordinal_model_metrics.csv")
+}
+
+goals_metrics <- readr::read_csv(goals_metrics_path, show_col_types = FALSE)
+ordinal_metrics <- readr::read_csv(ordinal_metrics_path, show_col_types = FALSE)
+
+model_summary <- data.frame(
+  model = c("Goals OLS", "Ordinal result logistic"),
+  rows_total = c(goals_metrics$rows_total[[1]], ordinal_metrics$rows_total[[1]]),
+  primary_metric = c("test_rmse", "test_accuracy"),
+  metric_value = c(goals_metrics$test_rmse[[1]], ordinal_metrics$test_accuracy[[1]]),
+  comparison = c(
+    paste("mean_y_test =", round(goals_metrics$mean_y_test[[1]], 4)),
+    paste("majority_baseline =", round(ordinal_metrics$baseline_majority_accuracy[[1]], 4))
+  )
+)
+
+model_summary
+```
+
+# Data Status
+
+The public/no-key data currently includes:
+
+- Historical international match results.
+- Historical player goal events.
+- Computed team Elo match history.
+- 2026 World Cup fixtures.
+- 2026 squad/player tables from public sources.
+- Wikidata player enrichment where available.
+- Open-Meteo weather rows for mapped venues.
+- GDELT news metadata test pull.
+
+Missing or incomplete inputs for advanced betting work:
+
+- Confirmed lineups.
+- Player minutes and substitutions.
+- Injuries and suspensions.
+- Player-match statistics.
+- Odds snapshots and closing-line movement.
+- xG, shots, cards, and referee features.
+
+# Refresh Options
+
+Use these from RStudio.
+
+## Rebuild From Local Data
+
+This is the safest refresh. It does not hit APIs or spend quota.
+
+```{r local-refresh, eval=FALSE}
+source("R/20_refresh_all.R")
+refresh_world_cup_data(profile = "local-rebuild")
+```
+
+## Pull Free No-Key Sources
+
+This refreshes public files, Wikimedia/Wikidata, Open-Meteo, and GDELT.
+
+```{r free-refresh, eval=FALSE}
+source("R/20_refresh_all.R")
+refresh_world_cup_data(profile = "free-refresh")
+```
+
+## Include Keyed APIs Later
+
+Use this only after API keys are added to `.env`.
+
+```{r keyed-refresh, eval=FALSE}
+source("R/20_refresh_all.R")
+refresh_world_cup_data(
+  profile = "free-refresh",
+  include_keyed_apis = TRUE
+)
+```
+
+Odds pulls require a separate explicit option:
+
+```{r odds-refresh, eval=FALSE}
+source("R/20_refresh_all.R")
+refresh_world_cup_data(
+  profile = "free-refresh",
+  include_keyed_apis = TRUE,
+  include_odds_quota = TRUE
+)
+```
+
+# RStudio Workflow
+
+Open:
+
+```text
+world-cup-betting-model.Rproj
+```
+
+Then knit all reports:
+
+```{r render-reports, eval=FALSE}
+source("R/12_render_reports.R")
+```
+
+The local website starts at:
+
+```text
+docs/index.html
+```
+
+# Next Modeling Work
+
+The next useful model improvements are:
+
+1. Rolling team form before each match.
+2. Squad-strength summaries from player caps, goals, age, position, and club.
+3. News-derived injury and lineup signals.
+4. Odds-implied probabilities.
+5. Multinomial logistic regression for win/draw/loss.
+6. Poisson or negative-binomial paired-goal models.
+7. Probability calibration.

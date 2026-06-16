@@ -14,10 +14,14 @@ DuckDB is the default SQL engine because it is free, embedded, works from R and 
 
 ## Presentable Outputs
 
-- R Markdown walkthrough: `reports/01_goals_linear_regression.Rmd`
+- R Markdown overview: `reports/00_project_overview.Rmd`
+- Goals model walkthrough: `reports/01_goals_linear_regression.Rmd`
+- Ordinal result model report: `reports/02_ordinal_result_model.Rmd`
 - Sample modeling dataset: `data/samples/goals_linear_model_sample_1000.csv`
+- Sample ordinal result dataset: `data/samples/result_ordinal_model_sample_1000.csv`
 - Data inventory: `docs/current_data_status.md`
 - Source landscape and pricing: `docs/source_landscape.md`
+- Local refresh workflow: `docs/local_update_workflow.md`
 - GitHub publishing plan: `docs/github_publish_plan.md`
 
 Render the first report from RStudio:
@@ -95,6 +99,33 @@ source("R/05_check_app_readiness.R")
 The first app should probably be Shiny because this machine already has most of the R app stack installed. Streamlit can use the same DuckDB file later after Python app packages are installed.
 
 ## Current Data Build
+
+The easiest local update path is now the refresh orchestrator:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\update_pipeline.py --profile local-rebuild
+```
+
+From RStudio:
+
+```r
+source("R/20_refresh_all.R")
+refresh_world_cup_data(profile = "local-rebuild")
+```
+
+To pull the free/no-key sources again:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\update_pipeline.py --profile free-refresh
+```
+
+After API keys are added to `.env`, keyed providers can be included with:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\update_pipeline.py --profile free-refresh --include-keyed-apis
+```
+
+Odds pulls that consume quota require the extra `--include-odds-quota` flag.
 
 To refresh the free public data:
 

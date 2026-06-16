@@ -125,19 +125,39 @@
 
     <div class="grid">
       <section class="card">
+        <h3>Project Overview</h3>
+        <p>R Markdown front door with the modeling stack, latest metrics, and refresh commands.</p>
+        <a href="reports/00_project_overview.html">Open overview</a>
+      </section>
+      <section class="card">
         <h3>Model Report</h3>
         <p>R Markdown report rendered to HTML with equations, sample data, and model interpretation.</p>
         <a href="reports/01_goals_linear_regression.html">Open report</a>
       </section>
       <section class="card">
-        <h3>Sample Dataset</h3>
+        <h3>Ordinal Result Model</h3>
+        <p>Win, draw, and loss probabilities from a proportional-odds logistic baseline.</p>
+        <a href="reports/02_ordinal_result_model.html">Open report</a>
+      </section>
+      <section class="card">
+        <h3>Goals Sample</h3>
         <p>1,000 real rows from the goals modeling frame, safe to share in the public repo.</p>
         <a href="samples/goals_linear_model_sample_1000.csv">Download CSV</a>
+      </section>
+      <section class="card">
+        <h3>Result Sample</h3>
+        <p>1,000 real rows from the ordinal result modeling frame.</p>
+        <a href="samples/result_ordinal_model_sample_1000.csv">Download CSV</a>
       </section>
       <section class="card">
         <h3>Data Status</h3>
         <p>What has been collected, what is missing, and what needs API keys.</p>
         <a href="current_data_status.md">Read status</a>
+      </section>
+      <section class="card">
+        <h3>Local Updates</h3>
+        <p>One-command local refresh workflow for raw data, DuckDB, metadata, models, and reports.</p>
+        <a href="local_update_workflow.md">Read workflow</a>
       </section>
     </div>
 
@@ -168,7 +188,9 @@
     </p>
     <p>
       Main entry points: <code>world-cup-betting-model.Rproj</code>,
-      <code>R/10_fit_linear_goals_model.R</code>, and <code>R/12_render_reports.R</code>.
+      <code>R/20_refresh_all.R</code>, <code>R/10_fit_linear_goals_model.R</code>,
+      <code>R/11_fit_ordinal_result_model.R</code>,
+      and <code>R/12_render_reports.R</code>.
     </p>
 
     <h2>Limitations</h2>
@@ -180,4 +202,3 @@
   </main>
 </body>
 </html>
-

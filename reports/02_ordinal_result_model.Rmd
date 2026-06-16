@@ -1,0 +1,208 @@
+---
+title: "2026 World Cup Modeling Baseline: Ordinal Result Model"
+author: "World Cup Betting Model Project"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Purpose
+
+This report adds the first result-probability model to the project.
+
+The outcome is ordered:
+
+$$
+Y_{i,m}^{ord} \in \{\text{loss}, \text{draw}, \text{win}\}
+$$
+
+with:
+
+$$
+\text{loss} < \text{draw} < \text{win}
+$$
+
+This is closer to the betting question than the first goals model because it estimates probabilities for match outcomes.
+
+# Unit Of Observation
+
+The data has one row per **team-match**.
+
+If Argentina plays France, there are two rows:
+
+- Argentina result versus France.
+- France result versus Argentina.
+
+That means the modeled outcome is the result from the listed team's perspective.
+
+# Sample Data
+
+```{r load-sample}
+sample_path <- file.path("..", "data", "processed", "modeling", "result_ordinal_model_sample_1000.csv")
+
+if (!file.exists(sample_path)) {
+  sample_path <- file.path("data", "processed", "modeling", "result_ordinal_model_sample_1000.csv")
+}
+
+sample_data <- readr::read_csv(sample_path, show_col_types = FALSE)
+head(sample_data, 10)
+```
+
+# Model
+
+The proportional-odds ordinal logistic model is:
+
+$$
+\text{logit}\left(P(Y_{i,m}^{ord} \leq k)\right)
+= \theta_k - X_{i,m}\beta
+$$
+
+where:
+
+$$
+k \in \{\text{loss}, \text{draw}\}
+$$
+
+and:
+
+$$
+X_{i,m}\beta
+= \beta_1 E_{i,m}^{pre}
++ \beta_2 E_{j,m}^{pre}
++ \beta_3 p_{i,m}
++ \beta_4 I(\text{listed home}_{i,m})
++ \beta_5 I(\text{neutral site}_m)
+$$
+
+The predictors match the first goals model:
+
+- Team pre-match Elo.
+- Opponent pre-match Elo.
+- Elo-derived expected result.
+- Listed-home indicator.
+- Neutral-site indicator.
+
+# Fit The Model
+
+The model is fit by:
+
+```{r fit-command, eval=FALSE}
+source("R/11_fit_ordinal_result_model.R")
+```
+
+Load the saved outputs:
+
+```{r load-model-output}
+metrics_path <- file.path("..", "data", "processed", "modeling", "result_ordinal_model_metrics.csv")
+coef_path <- file.path("..", "data", "processed", "modeling", "result_ordinal_model_coefficients.csv")
+class_path <- file.path("..", "data", "processed", "modeling", "result_ordinal_model_class_distribution.csv")
+confusion_path <- file.path("..", "data", "processed", "modeling", "result_ordinal_model_confusion_matrix.csv")
+pred_path <- file.path("..", "data", "processed", "modeling", "result_ordinal_model_test_predictions.csv")
+
+if (!file.exists(metrics_path)) {
+  metrics_path <- file.path("data", "processed", "modeling", "result_ordinal_model_metrics.csv")
+  coef_path <- file.path("data", "processed", "modeling", "result_ordinal_model_coefficients.csv")
+  class_path <- file.path("data", "processed", "modeling", "result_ordinal_model_class_distribution.csv")
+  confusion_path <- file.path("data", "processed", "modeling", "result_ordinal_model_confusion_matrix.csv")
+  pred_path <- file.path("data", "processed", "modeling", "result_ordinal_model_test_predictions.csv")
+}
+
+metrics <- readr::read_csv(metrics_path, show_col_types = FALSE)
+coefficients <- readr::read_csv(coef_path, show_col_types = FALSE)
+class_distribution <- readr::read_csv(class_path, show_col_types = FALSE)
+confusion <- readr::read_csv(confusion_path, show_col_types = FALSE)
+predictions <- readr::read_csv(pred_path, show_col_types = FALSE)
+
+metrics
+```
+
+# Class Balance
+
+```{r class-distribution}
+class_distribution
+```
+
+# Coefficients
+
+```{r coefficients}
+coefficients
+```
+
+Positive slope coefficients move probability mass toward better outcomes.
+
+For example, if `pre_elo` is positive, higher team Elo increases the probability of `win` and decreases the probability of `loss`, holding other features constant.
+
+# Test Predictions
+
+```{r predictions}
+head(
+  predictions[
+    ,
+    c(
+      "date",
+      "team",
+      "opponent",
+      "y_result_ordered",
+      "predicted_result",
+      "pred_prob_loss",
+      "pred_prob_draw",
+      "pred_prob_win"
+    )
+  ],
+  12
+)
+```
+
+# Confusion Matrix
+
+```{r confusion}
+confusion
+```
+
+# Interpretation
+
+The model is useful because it produces three probabilities:
+
+$$
+P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
+$$
+
+That is the shape we eventually need for betting-market comparison.
+
+But this should still be treated as a baseline:
+
+- The proportional-odds assumption may be too restrictive.
+- Soccer outcomes are not naturally one-team independent because each match creates paired rows.
+- Draws are hard to model and usually need richer features.
+- Market odds will become a critical benchmark once we add them.
+
+# Next Modeling Steps
+
+1. Add rolling recent-form features before each match.
+2. Add squad strength and player availability.
+3. Add team-level news signals.
+4. Add odds-implied probabilities.
+5. Compare ordinal logistic against multinomial logistic regression.
+6. Calibrate probabilities with held-out data.
+
+# Reproducibility Checklist
+
+Run these from RStudio:
+
+```{r reproducibility, eval=FALSE}
+source("R/00_setup.R")
+source("R/01_build_duckdb.R")
+source("R/11_fit_ordinal_result_model.R")
+source("R/12_render_reports.R")
+```

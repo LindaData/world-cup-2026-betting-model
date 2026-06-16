@@ -14,7 +14,13 @@ if (!requireNamespace("rmarkdown", quietly = TRUE)) {
   install.packages("rmarkdown", repos = "https://cloud.r-project.org")
 }
 
-rmarkdown::render("reports/01_goals_linear_regression.Rmd", quiet = FALSE)
+reports <- c(
+  "reports/00_project_overview.Rmd",
+  "reports/01_goals_linear_regression.Rmd",
+  "reports/02_ordinal_result_model.Rmd"
+)
 
-message("Rendered reports/01_goals_linear_regression.html")
-
+for (report in reports) {
+  rmarkdown::render(report, quiet = FALSE)
+  message("Rendered ", sub("\\.Rmd$", ".html", report))
+}
