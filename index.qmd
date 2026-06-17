@@ -6,6 +6,7 @@ subtitle: "An RStudio-first modeling lab for public soccer data, explainable bas
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 root <- if (file.exists("data/processed/modeling")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
 read_csv_if_exists <- function(path) {
   if (file.exists(path)) {
     readr::read_csv(path, show_col_types = FALSE)
@@ -27,6 +28,24 @@ This site is the public-facing project notebook. It follows the same teaching-re
 Code is hidden by default so the report reads cleanly. Use **Show code** when you want to inspect the R steps.
 
 No raw datasets, processed databases, API keys, `.Renviron`, credentials, or private files are published here.
+
+```{r hero-metrics, echo=FALSE, results="asis"}
+goals_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_metrics.csv"))
+ordinal_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_metrics.csv"))
+
+if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
+  cat(metric_cards(data.frame(
+    label = c("Rows Modeled", "Goals RMSE", "Result Accuracy", "Majority Baseline"),
+    value = c(
+      fmt_integer(goals_metrics$rows_total[[1]]),
+      fmt_number(goals_metrics$test_rmse[[1]], 3),
+      fmt_percent(ordinal_metrics$test_accuracy[[1]], 1),
+      fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1)
+    ),
+    note = c("team-match rows", "lower is better", "test set", "comparison point")
+  )))
+}
+```
 
 ## Project Map
 
@@ -51,9 +70,25 @@ The starting modeling unit is one row per team-match. A single game creates two 
 goals_sample <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_sample_1000.csv"))
 
 if (nrow(goals_sample) > 0) {
-  head(goals_sample, 10)
+  goals_sample |>
+    dplyr::select(
+      date,
+      team,
+      opponent,
+      tournament,
+      y_goals_for,
+      pre_elo,
+      opponent_pre_elo,
+      pre_match_expected_result
+    ) |>
+    dplyr::mutate(
+      pre_match_expected_result = fmt_percent(pre_match_expected_result, 1),
+      pre_elo = round(pre_elo, 0),
+      opponent_pre_elo = round(opponent_pre_elo, 0)
+    ) |>
+    display_table(caption = "Sample of the team-match modeling grain.", max_rows = 8)
 } else {
-  data.frame(note = "Sample rows are generated locally by R/10_fit_linear_goals_model.R.")
+  display_table(empty_note("Sample rows are generated locally by R/10_fit_linear_goals_model.R."))
 }
 ```
 
@@ -83,26 +118,24 @@ The first two models are intentionally simple:
 This mirrors the Shiny layout you used before: start with descriptive analytics, then model fitting, then prediction outputs.
 
 ```{r model-summary}
-goals_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_metrics.csv"))
-ordinal_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_metrics.csv"))
-
 if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
   data.frame(
     model = c("Goals OLS", "Ordinal result logistic"),
     target = c("team goals", "loss < draw < win"),
-    rows_total = c(goals_metrics$rows_total[[1]], ordinal_metrics$rows_total[[1]]),
-    primary_metric = c("test RMSE", "test accuracy"),
+    rows = fmt_integer(c(goals_metrics$rows_total[[1]], ordinal_metrics$rows_total[[1]])),
+    primary_metric = c("Test RMSE", "Test accuracy"),
     value = c(
-      round(goals_metrics$test_rmse[[1]], 4),
-      round(ordinal_metrics$test_accuracy[[1]], 4)
+      fmt_number(goals_metrics$test_rmse[[1]], 3),
+      fmt_percent(ordinal_metrics$test_accuracy[[1]], 1)
     ),
-    baseline_context = c(
-      paste("mean test goals:", round(goals_metrics$mean_y_test[[1]], 4)),
-      paste("majority baseline:", round(ordinal_metrics$baseline_majority_accuracy[[1]], 4))
+    context = c(
+      paste("Mean test goals:", fmt_number(goals_metrics$mean_y_test[[1]], 3)),
+      paste("Majority baseline:", fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1))
     )
-  )
+  ) |>
+    display_table(caption = "Current baseline model performance.")
 } else {
-  data.frame(note = "Model metrics are generated locally before rendering.")
+  display_table(empty_note("Model metrics are generated locally before rendering."))
 }
 ```
 
@@ -116,22 +149,23 @@ inventory <- read_csv_if_exists(file.path(root, "data", "processed", "metadata",
 if (nrow(inventory) > 0) {
   inventory |>
     dplyr::arrange(table_name) |>
-    head(20)
+    dplyr::mutate(row_count = fmt_integer(row_count)) |>
+    display_table(caption = "Local tables available for modeling.", max_rows = 16)
 } else {
-  data.frame(note = "Table inventory is generated locally by R/07_export_metadata.R.")
+  display_table(empty_note("Table inventory is generated locally by R/07_export_metadata.R."))
 }
 ```
 
-:::
+## Display Standards
 
-## Current Models
-
-<div class="metric-strip">
-  <div class="metric"><strong>Primary target</strong><span>Goals</span></div>
-  <div class="metric"><strong>Result target</strong><span>W / D / L</span></div>
-  <div class="metric"><strong>Workflow</strong><span>R + Python + SQL</span></div>
-  <div class="metric"><strong>Publishing</strong><span>Quarto HTML</span></div>
+<div class="principles">
+  <div class="principle"><strong>One grain per table</strong>Rows should mean one thing: team-match, match, player, venue, or API pull.</div>
+  <div class="principle"><strong>Readable labels</strong>Keep machine-safe names in source files; convert them to readable labels only in reports.</div>
+  <div class="principle"><strong>Round for display only</strong>Do not round model inputs or stored outputs. Round the rendered table so readers can scan it.</div>
+  <div class="principle"><strong>Separate public and private</strong>Publish metadata and rendered results, not raw datasets, databases, keys, or credentials.</div>
 </div>
+
+:::
 
 ## Reports
 

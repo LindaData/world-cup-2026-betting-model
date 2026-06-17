@@ -6,6 +6,7 @@ subtitle: "Baseline model for team goals scored"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 root <- if (file.exists("data/processed/modeling")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
 read_csv_if_exists <- function(path) {
   if (file.exists(path)) {
     readr::read_csv(path, show_col_types = FALSE)
@@ -44,9 +45,25 @@ No sample CSV is published with the website. These rows are embedded into the re
 sample_data <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_sample_1000.csv"))
 
 if (nrow(sample_data) > 0) {
-  head(sample_data, 10)
+  sample_data |>
+    dplyr::select(
+      date,
+      team,
+      opponent,
+      tournament,
+      y_goals_for,
+      pre_elo,
+      opponent_pre_elo,
+      pre_match_expected_result
+    ) |>
+    dplyr::mutate(
+      pre_elo = round(pre_elo, 0),
+      opponent_pre_elo = round(opponent_pre_elo, 0),
+      pre_match_expected_result = fmt_percent(pre_match_expected_result, 1)
+    ) |>
+    display_table(caption = "Team-match sample used by the goals model.", max_rows = 10)
 } else {
-  data.frame(note = "Sample rows are generated locally by R/10_fit_linear_goals_model.R.")
+  display_table(empty_note("Sample rows are generated locally by R/10_fit_linear_goals_model.R."))
 }
 ```
 
@@ -94,11 +111,55 @@ $$
 metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_metrics.csv"))
 coefficients <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_coefficients.csv"))
 
-if (nrow(metrics) > 0) metrics else data.frame(note = "Metrics are generated locally.")
+if (nrow(metrics) > 0) {
+  data.frame(
+    rows_total = fmt_integer(metrics$rows_total),
+    rows_train = fmt_integer(metrics$rows_train),
+    rows_test = fmt_integer(metrics$rows_test),
+    train_r_squared = fmt_percent(metrics$train_r_squared, 1),
+    test_rmse = fmt_number(metrics$test_rmse, 3),
+    test_mae = fmt_number(metrics$test_mae, 3),
+    mean_y_test = fmt_number(metrics$mean_y_test, 3)
+  ) |>
+    display_table(caption = "Goals model fit summary.")
+} else {
+  display_table(empty_note("Metrics are generated locally."))
+}
 ```
 
 ```{r coefficients}
-if (nrow(coefficients) > 0) coefficients else data.frame(note = "Coefficients are generated locally.")
+if (nrow(coefficients) > 0) {
+  coefficients |>
+    dplyr::mutate(
+      estimate = fmt_number(estimate, 4),
+      std_error = fmt_number(std_error, 4),
+      t_value = fmt_number(t_value, 2),
+      p_value = fmt_p_value(p_value)
+    ) |>
+    display_table(caption = "Regression coefficients. Positive estimates increase expected goals.")
+} else {
+  display_table(empty_note("Coefficients are generated locally."))
+}
+```
+
+```{r coefficient-plot, fig.cap="Direction and size of estimated goals-model effects."}
+if (nrow(coefficients) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  coefficients |>
+    dplyr::filter(term != "(Intercept)") |>
+    ggplot2::ggplot(ggplot2::aes(x = stats::reorder(term, estimate), y = estimate, fill = estimate > 0)) +
+    ggplot2::geom_col(width = 0.65, show.legend = FALSE) +
+    ggplot2::coord_flip() +
+    ggplot2::scale_fill_manual(values = c("#b85c5c", "#157878")) +
+    ggplot2::labs(
+      title = "Goals model coefficients",
+      x = NULL,
+      y = "Estimated effect"
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Coefficient plot is generated locally.")
+}
 ```
 
 ## Interpretation

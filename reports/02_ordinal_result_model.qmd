@@ -6,6 +6,7 @@ subtitle: "Baseline model for loss, draw, and win probabilities"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 root <- if (file.exists("data/processed/modeling")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
 read_csv_if_exists <- function(path) {
   if (file.exists(path)) {
     readr::read_csv(path, show_col_types = FALSE)
@@ -50,9 +51,24 @@ No sample CSV is published with the website. These rows are embedded into the re
 sample_data <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_sample_1000.csv"))
 
 if (nrow(sample_data) > 0) {
-  head(sample_data, 10)
+  sample_data |>
+    dplyr::select(
+      date,
+      team,
+      opponent,
+      y_result_ordered,
+      pre_elo,
+      opponent_pre_elo,
+      pre_match_expected_result
+    ) |>
+    dplyr::mutate(
+      pre_elo = round(pre_elo, 0),
+      opponent_pre_elo = round(opponent_pre_elo, 0),
+      pre_match_expected_result = fmt_percent(pre_match_expected_result, 1)
+    ) |>
+    display_table(caption = "Team-match sample used by the result model.", max_rows = 10)
 } else {
-  data.frame(note = "Sample rows are generated locally by R/11_fit_ordinal_result_model.R.")
+  display_table(empty_note("Sample rows are generated locally by R/11_fit_ordinal_result_model.R."))
 }
 ```
 
@@ -91,19 +107,52 @@ coefficients <- read_csv_if_exists(file.path(root, "data", "processed", "modelin
 confusion <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_confusion_matrix.csv"))
 predictions <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_test_predictions.csv"))
 
-if (nrow(metrics) > 0) metrics else data.frame(note = "Metrics are generated locally.")
+if (nrow(metrics) > 0) {
+  data.frame(
+    rows_total = fmt_integer(metrics$rows_total),
+    rows_train = fmt_integer(metrics$rows_train),
+    rows_test = fmt_integer(metrics$rows_test),
+    test_accuracy = fmt_percent(metrics$test_accuracy, 1),
+    baseline_majority_accuracy = fmt_percent(metrics$baseline_majority_accuracy, 1),
+    test_log_loss = fmt_number(metrics$test_log_loss, 3),
+    test_multiclass_brier = fmt_number(metrics$test_multiclass_brier, 3)
+  ) |>
+    display_table(caption = "Ordinal model fit summary.")
+} else {
+  display_table(empty_note("Metrics are generated locally."))
+}
 ```
 
 ## Class Balance
 
 ```{r class-balance}
-if (nrow(class_distribution) > 0) class_distribution else data.frame(note = "Class balance is generated locally.")
+if (nrow(class_distribution) > 0) {
+  class_distribution |>
+    dplyr::mutate(
+      rows = fmt_integer(rows),
+      share = fmt_percent(share, 1)
+    ) |>
+    display_table(caption = "Outcome balance in the modeling frame.")
+} else {
+  display_table(empty_note("Class balance is generated locally."))
+}
 ```
 
 ## Coefficients
 
 ```{r coefficients}
-if (nrow(coefficients) > 0) coefficients else data.frame(note = "Coefficients are generated locally.")
+if (nrow(coefficients) > 0) {
+  coefficients |>
+    dplyr::mutate(
+      estimate = fmt_number(estimate, 4),
+      std_error = fmt_number(std_error, 4),
+      t_value = fmt_number(t_value, 2),
+      p_value_approx = fmt_p_value(p_value_approx)
+    ) |>
+    display_table(caption = "Ordinal logistic coefficients and thresholds.")
+} else {
+  display_table(empty_note("Coefficients are generated locally."))
+}
 ```
 
 Positive slope coefficients move probability mass toward better outcomes.
@@ -112,31 +161,58 @@ Positive slope coefficients move probability mass toward better outcomes.
 
 ```{r predictions}
 if (nrow(predictions) > 0) {
-  head(
-    predictions[
-      ,
-      c(
-        "date",
-        "team",
-        "opponent",
-        "y_result_ordered",
-        "predicted_result",
-        "pred_prob_loss",
-        "pred_prob_draw",
-        "pred_prob_win"
-      )
-    ],
-    12
-  )
+  predictions |>
+    dplyr::select(
+      date,
+      team,
+      opponent,
+      y_result_ordered,
+      predicted_result,
+      pred_prob_loss,
+      pred_prob_draw,
+      pred_prob_win
+    ) |>
+    dplyr::mutate(
+      pred_prob_loss = fmt_percent(pred_prob_loss, 1),
+      pred_prob_draw = fmt_percent(pred_prob_draw, 1),
+      pred_prob_win = fmt_percent(pred_prob_win, 1)
+    ) |>
+    display_table(caption = "Example test-set predictions.", max_rows = 12)
 } else {
-  data.frame(note = "Predictions are generated locally.")
+  display_table(empty_note("Predictions are generated locally."))
 }
 ```
 
 ## Confusion Matrix
 
 ```{r confusion}
-if (nrow(confusion) > 0) confusion else data.frame(note = "Confusion matrix is generated locally.")
+if (nrow(confusion) > 0) {
+  confusion |>
+    dplyr::mutate(rows = fmt_integer(rows)) |>
+    display_table(caption = "Confusion matrix counts by actual and predicted result.")
+} else {
+  display_table(empty_note("Confusion matrix is generated locally."))
+}
+```
+
+```{r confusion-plot, fig.cap="Confusion matrix as a heatmap; darker cells have more team-match rows."}
+if (nrow(confusion) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  confusion |>
+    ggplot2::ggplot(ggplot2::aes(x = predicted_result, y = actual_result, fill = rows)) +
+    ggplot2::geom_tile(color = "white", linewidth = 0.8) +
+    ggplot2::geom_text(ggplot2::aes(label = format(rows, big.mark = ",")), color = "white", fontface = "bold") +
+    ggplot2::scale_fill_gradient(low = "#9cc7c7", high = "#157878") +
+    ggplot2::labs(
+      title = "Ordinal result model confusion matrix",
+      x = "Predicted result",
+      y = "Actual result",
+      fill = "Rows"
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Confusion matrix plot is generated locally.")
+}
 ```
 
 ## Interpretation
