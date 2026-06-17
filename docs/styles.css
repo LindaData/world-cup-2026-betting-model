@@ -197,6 +197,39 @@ pre code {
   margin-bottom: 0.25rem;
 }
 
+.reference-note {
+  border-left: 4px solid #157878;
+  background: #f5fbfb;
+  padding: 0.85rem 1rem;
+  margin: 1rem 0 1.35rem;
+}
+
+.distribution-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.9rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.distribution-card {
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #ffffff;
+}
+
+.distribution-card strong {
+  display: block;
+  color: #17252a;
+  margin-bottom: 0.25rem;
+}
+
+.distribution-card small {
+  display: block;
+  color: #52616b;
+  margin-top: 0.35rem;
+}
+
 .panel-tabset {
   margin-top: 1rem;
 }

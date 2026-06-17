@@ -191,6 +191,14 @@ Ordinal logistic baseline for `loss < draw < win`, producing win/draw/loss proba
 :::
 :::
 
+::: {.project-card}
+### Distribution Review
+
+Distribution-first notes for deciding whether soccer features should be modeled as counts, continuous variables, ordered outcomes, probabilities, or mixture processes.
+
+<a class="project-button" href="reports/03_distribution_review.html">Open distribution review</a>
+:::
+
 ## Interactive App Direction
 
 ::: {.shiny-panel}

@@ -1,5 +1,152 @@
 [
   {
+    "objectID": "reports/03_distribution_review.html",
+    "href": "reports/03_distribution_review.html",
+    "title": "Distribution Review",
+    "section": "",
+    "text": "This page is a project-specific synthesis, not copied course material. The style direction comes from reviewing public NC State statistics teaching resources: short conceptual framing, visible math, reproducible R/Quarto code, and simulation/diagnostic thinking."
+  },
+  {
+    "objectID": "reports/03_distribution_review.html#why-this-page-exists",
+    "href": "reports/03_distribution_review.html#why-this-page-exists",
+    "title": "Distribution Review",
+    "section": "1 Why This Page Exists",
+    "text": "1 Why This Page Exists\nBefore adding bigger models, each variable should have an explicit statistical shape. Soccer data mixes low-count outcomes, ordered categorical results, probabilities, text/news counts, player availability flags, and continuous context variables.\nThe first pass should be generous: list plausible distributions, build diagnostics, then filter models that do not fit the data or the betting question."
+  },
+  {
+    "objectID": "reports/03_distribution_review.html#current-outcome-shapes",
+    "href": "reports/03_distribution_review.html#current-outcome-shapes",
+    "title": "Distribution Review",
+    "section": "2 Current Outcome Shapes",
+    "text": "2 Current Outcome Shapes\n\n\nMean Goals1.470team-match rows\n\n\nGoal Variance2.640compare with mean\n\n\nZero-Goal Share30.7%possible count-model clue\n\n\nMax Goals31tail check\n\n\n\n\nShow code\nif (nrow(goals_frame) &gt; 0 && \"y_goals_for\" %in% names(goals_frame)) {\n  goals_frame |&gt;\n    dplyr::count(y_goals_for, name = \"rows\") |&gt;\n    dplyr::mutate(\n      share = fmt_percent(rows / sum(rows), 1),\n      rows = fmt_integer(rows)\n    ) |&gt;\n    display_table(caption = \"Observed team-goal distribution.\", max_rows = 12)\n} else {\n  display_table(empty_note(\"Goal distribution is generated locally from the modeling frame.\"))\n}\n\n\n\nObserved team-goal distribution.\n\n\ny Goals for\nRows\nShare\n\n\n\n\n0\n30,352\n30.7%\n\n\n1\n30,476\n30.8%\n\n\n2\n19,343\n19.6%\n\n\n3\n9,436\n9.5%\n\n\n4\n4,555\n4.6%\n\n\n5\n2,126\n2.2%\n\n\n6\n1,124\n1.1%\n\n\n7\n594\n0.6%\n\n\n8\n313\n0.3%\n\n\n9\n185\n0.2%\n\n\n10\n103\n0.1%\n\n\n11\n58\n0.1%\n\n\n\n\n\n\n\nShow code\nif (nrow(goals_frame) &gt; 0 && \"y_goals_for\" %in% names(goals_frame) && requireNamespace(\"ggplot2\", quietly = TRUE)) {\n  lambda_hat &lt;- mean(goals_frame$y_goals_for, na.rm = TRUE)\n  observed &lt;- goals_frame |&gt;\n    dplyr::count(y_goals_for, name = \"observed_rows\") |&gt;\n    dplyr::mutate(observed_share = observed_rows / sum(observed_rows))\n  poisson_ref &lt;- data.frame(\n    y_goals_for = seq(0, max(goals_frame$y_goals_for, na.rm = TRUE)),\n    poisson_share = stats::dpois(seq(0, max(goals_frame$y_goals_for, na.rm = TRUE)), lambda = lambda_hat)\n  )\n\n  ggplot2::ggplot(observed, ggplot2::aes(x = y_goals_for, y = observed_share)) +\n    ggplot2::geom_col(fill = \"#157878\", alpha = 0.82, width = 0.75) +\n    ggplot2::geom_line(data = poisson_ref, ggplot2::aes(y = poisson_share), color = \"#f2a65a\", linewidth = 1.1) +\n    ggplot2::geom_point(data = poisson_ref, ggplot2::aes(y = poisson_share), color = \"#f2a65a\", size = 2) +\n    ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +\n    ggplot2::labs(\n      title = \"Observed goals versus simple Poisson reference\",\n      x = \"Goals scored by team\",\n      y = \"Share of team-match rows\"\n    ) +\n    ggplot2::theme_minimal(base_size = 12)\n} else {\n  plot.new()\n  text(0.5, 0.5, \"Goal distribution plot is generated locally.\")\n}\n\n\n\n\n\nObserved team-goal counts with a Poisson reference curve using the empirical mean."
+  },
+  {
+    "objectID": "reports/03_distribution_review.html#candidate-distributions",
+    "href": "reports/03_distribution_review.html#candidate-distributions",
+    "title": "Distribution Review",
+    "section": "3 Candidate Distributions",
+    "text": "3 Candidate Distributions\n\n\nGoals scoredPoisson, negative binomial, zero-inflated count models, bivariate Poisson, Skellam goal difference.Start here because goals are low nonnegative counts.\n\n\nMatch resultOrdinal logistic, multinomial logistic, adjacent-category models, paired-score simulation.Useful for win/draw/loss odds comparison.\n\n\nPlayer and news countsPoisson or negative binomial with exposure offsets where needed.Useful for goals, mentions, injuries, cards, and appearances.\n\n\nProbabilitiesBeta, Dirichlet, calibration curves, Brier/log-loss summaries.Useful once predictions are compared with market-implied probabilities.\n\n\nContinuous contextNormal, t, lognormal, gamma, empirical splines, or transformed variables.Useful for weather, travel, rest, Elo differences, and player minutes.\n\n\nLatent team strengthGaussian random effects, dynamic state-space ratings, hierarchical priors.Useful when teams have uneven schedule strength and sparse recent games.\n\n\n\n\nShow code\ncandidate_models &lt;- data.frame(\n  data_family = c(\n    \"Team goals\",\n    \"Goal difference\",\n    \"Win/draw/loss\",\n    \"News article counts\",\n    \"Player availability\",\n    \"Market probabilities\",\n    \"Weather and travel\"\n  ),\n  statistical_shape = c(\n    \"Low nonnegative count\",\n    \"Integer contrast\",\n    \"Ordered or nominal category\",\n    \"Sparse count\",\n    \"Binary or proportion\",\n    \"Compositional probabilities\",\n    \"Continuous context\"\n  ),\n  first_models = c(\n    \"Poisson, negative binomial, bivariate Poisson\",\n    \"Skellam, ordered result model\",\n    \"Ordinal logistic, multinomial logistic\",\n    \"Poisson, negative binomial, topic indicators\",\n    \"Logistic regression, hierarchical availability prior\",\n    \"Calibration, beta/Dirichlet summaries, log loss\",\n    \"Splines, t errors, transformed linear effects\"\n  ),\n  diagnostic = c(\n    \"Mean-variance check, zero share, tail fit\",\n    \"Symmetry and draw concentration\",\n    \"Class balance, calibration by class\",\n    \"Overdispersion and burstiness\",\n    \"Missingness and source reliability\",\n    \"Reliability curves and bookmaker margin\",\n    \"Nonlinearity, skew, outliers\"\n  )\n)\n\ndisplay_table(candidate_models, caption = \"Distribution candidates to build and filter.\")\n\n\n\nDistribution candidates to build and filter.\n\n\nData Family\nStatistical Shape\nFirst Models\nDiagnostic\n\n\n\n\nTeam goals\nLow nonnegative count\nPoisson, negative binomial, bivariate Poisson\nMean-variance check, zero share, tail fit\n\n\nGoal difference\nInteger contrast\nSkellam, ordered result model\nSymmetry and draw concentration\n\n\nWin/draw/loss\nOrdered or nominal category\nOrdinal logistic, multinomial logistic\nClass balance, calibration by class\n\n\nNews article counts\nSparse count\nPoisson, negative binomial, topic indicators\nOverdispersion and burstiness\n\n\nPlayer availability\nBinary or proportion\nLogistic regression, hierarchical availability prior\nMissingness and source reliability\n\n\nMarket probabilities\nCompositional probabilities\nCalibration, beta/Dirichlet summaries, log loss\nReliability curves and bookmaker margin\n\n\nWeather and travel\nContinuous context\nSplines, t errors, transformed linear effects\nNonlinearity, skew, outliers"
+  },
+  {
+    "objectID": "reports/03_distribution_review.html#review-notes-captured",
+    "href": "reports/03_distribution_review.html#review-notes-captured",
+    "title": "Distribution Review",
+    "section": "4 Review Notes Captured",
+    "text": "4 Review Notes Captured\nThe public materials reviewed emphasize a few habits that fit this project well:\n\nUse computing to build intuition, not just final answers.\nPut distribution assumptions beside visuals so model choices are auditable.\nCompare models on held-out or cross-validated performance, not training fit alone.\nTeach the reader the data grain before showing the model.\nKeep source code reproducible while making the public page readable.\n\nSources reviewed include Professor Justin Post’s personal/course site, his ST 558 course repository, his Shiny teaching app page, and the Distributome project linked from those teaching resources.\nReference links:\n\nJustin B. Post personal site\nST 558 Data Science for Statisticians\nR Shiny teaching apps\nDistributome"
+  },
+  {
+    "objectID": "reports/03_distribution_review.html#next-build-list",
+    "href": "reports/03_distribution_review.html#next-build-list",
+    "title": "Distribution Review",
+    "section": "5 Next Build List",
+    "text": "5 Next Build List\n\nAdd full-goals distribution diagnostics by tournament era and confederation.\nAdd mean-versus-variance checks for count features.\nAdd calibration plots for ordinal result probabilities.\nAdd cross-validation by time split, not random split only.\nAdd richer plots for predicted versus observed W/D/L rates by probability bucket."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html",
+    "href": "reports/01_goals_linear_regression.html",
+    "title": "Goals Linear Regression",
+    "section": "",
+    "text": "This report documents the first transparent baseline model for the World Cup prediction project.\nThe target is team goals scored in a historical international match:\n\\[\nY_{i,m} = \\text{goals scored by team } i \\text{ in match } m\n\\]\nThis is a baseline, not the final soccer model. Goals are non-negative counts, so future versions should compare Poisson, negative-binomial, bivariate Poisson, or Skellam-style models."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#purpose",
+    "href": "reports/01_goals_linear_regression.html#purpose",
+    "title": "Goals Linear Regression",
+    "section": "",
+    "text": "This report documents the first transparent baseline model for the World Cup prediction project.\nThe target is team goals scored in a historical international match:\n\\[\nY_{i,m} = \\text{goals scored by team } i \\text{ in match } m\n\\]\nThis is a baseline, not the final soccer model. Goals are non-negative counts, so future versions should compare Poisson, negative-binomial, bivariate Poisson, or Skellam-style models."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#unit-of-observation",
+    "href": "reports/01_goals_linear_regression.html#unit-of-observation",
+    "title": "Goals Linear Regression",
+    "section": "2 Unit Of Observation",
+    "text": "2 Unit Of Observation\nThe modeling frame has one row per team-match.\nIf Argentina plays France, the data has two rows:\n\nArgentina’s goals as the target, with France as the opponent.\nFrance’s goals as the target, with Argentina as the opponent."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#sample-rows-embedded-in-report",
+    "href": "reports/01_goals_linear_regression.html#sample-rows-embedded-in-report",
+    "title": "Goals Linear Regression",
+    "section": "3 Sample Rows Embedded In Report",
+    "text": "3 Sample Rows Embedded In Report\nNo sample CSV is published with the website. These rows are embedded into the rendered HTML from the local model frame.\n\n\nShow code\nsample_data &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_sample_1000.csv\"))\n\nif (nrow(sample_data) &gt; 0) {\n  sample_data |&gt;\n    dplyr::select(\n      date,\n      team,\n      opponent,\n      tournament,\n      y_goals_for,\n      pre_elo,\n      opponent_pre_elo,\n      pre_match_expected_result\n    ) |&gt;\n    dplyr::mutate(\n      pre_elo = round(pre_elo, 0),\n      opponent_pre_elo = round(opponent_pre_elo, 0),\n      pre_match_expected_result = fmt_percent(pre_match_expected_result, 1)\n    ) |&gt;\n    display_table(caption = \"Team-match sample used by the goals model.\", max_rows = 10)\n} else {\n  display_table(empty_note(\"Sample rows are generated locally by R/10_fit_linear_goals_model.R.\"))\n}\n\n\n\nTeam-match sample used by the goals model.\n\n\nDate\nTeam\nOpponent\nTournament\ny Goals for\nPre Elo\nOpponent Pre Elo\nPre Match Expected Result\n\n\n\n\n1872-11-30\nScotland\nEngland\nFriendly\n0\n1500\n1500\n64.0%\n\n\n1872-11-30\nEngland\nScotland\nFriendly\n0\n1500\n1500\n36.0%\n\n\n1873-03-08\nEngland\nScotland\nFriendly\n4\n1503\n1497\n64.7%\n\n\n1873-03-08\nScotland\nEngland\nFriendly\n2\n1497\n1503\n35.3%\n\n\n1874-03-07\nScotland\nEngland\nFriendly\n2\n1487\n1513\n60.4%\n\n\n1874-03-07\nEngland\nScotland\nFriendly\n1\n1513\n1487\n39.6%\n\n\n1875-03-06\nEngland\nScotland\nFriendly\n2\n1505\n1495\n65.4%\n\n\n1875-03-06\nScotland\nEngland\nFriendly\n2\n1495\n1505\n34.6%\n\n\n1876-03-04\nScotland\nEngland\nFriendly\n3\n1498\n1502\n63.4%\n\n\n1876-03-04\nEngland\nScotland\nFriendly\n0\n1502\n1498\n36.6%"
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#elo-feature",
+    "href": "reports/01_goals_linear_regression.html#elo-feature",
+    "title": "Goals Linear Regression",
+    "section": "4 Elo Feature",
+    "text": "4 Elo Feature\nFor team \\(i\\) against opponent \\(j\\), expected result before kickoff is:\n\\[\np_{i,m} =\n\\frac{1}\n{1 + 10^{-\\left(E_{i,m}^{pre} + H_m - E_{j,m}^{pre}\\right)/400}}\n\\]\nWhere:\n\n\\(E_{i,m}^{pre}\\) is team \\(i\\)’s pre-match Elo.\n\\(E_{j,m}^{pre}\\) is opponent pre-match Elo.\n\\(H_m\\) is the home advantage adjustment.\n\\(p_{i,m}\\) is expected result on a 0 to 1 scale."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#model",
+    "href": "reports/01_goals_linear_regression.html#model",
+    "title": "Goals Linear Regression",
+    "section": "5 Model",
+    "text": "5 Model\nThe first regression is:\n\\[\nY_{i,m}\n= \\beta_0\n+ \\beta_1 E_{i,m}^{pre}\n+ \\beta_2 E_{j,m}^{pre}\n+ \\beta_3 p_{i,m}\n+ \\beta_4 I(\\text{listed home}_{i,m})\n+ \\beta_5 I(\\text{neutral site}_m)\n+ \\epsilon_{i,m}\n\\]\nwith:\n\\[\n\\epsilon_{i,m} \\sim N(0, \\sigma^2)\n\\]"
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#results",
+    "href": "reports/01_goals_linear_regression.html#results",
+    "title": "Goals Linear Regression",
+    "section": "6 Results",
+    "text": "6 Results\n\n\nShow code\nmetrics &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_metrics.csv\"))\ncoefficients &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_coefficients.csv\"))\n\nif (nrow(metrics) &gt; 0) {\n  data.frame(\n    rows_total = fmt_integer(metrics$rows_total),\n    rows_train = fmt_integer(metrics$rows_train),\n    rows_test = fmt_integer(metrics$rows_test),\n    train_r_squared = fmt_percent(metrics$train_r_squared, 1),\n    test_rmse = fmt_number(metrics$test_rmse, 3),\n    test_mae = fmt_number(metrics$test_mae, 3),\n    mean_y_test = fmt_number(metrics$mean_y_test, 3)\n  ) |&gt;\n    display_table(caption = \"Goals model fit summary.\")\n} else {\n  display_table(empty_note(\"Metrics are generated locally.\"))\n}\n\n\n\nGoals model fit summary.\n\n\nRows Total\nRows Train\nRows Test\nTrain r Squared\nTest RMSE\nTest MAE\nMean y Test\n\n\n\n\n98,810\n79,122\n19,688\n18.6%\n1.463\n1.042\n1.465\n\n\n\n\n\n\n\nShow code\nif (nrow(coefficients) &gt; 0) {\n  coefficients |&gt;\n    dplyr::mutate(\n      estimate = fmt_number(estimate, 4),\n      std_error = fmt_number(std_error, 4),\n      t_value = fmt_number(t_value, 2),\n      p_value = fmt_p_value(p_value)\n    ) |&gt;\n    display_table(caption = \"Regression coefficients. Positive estimates increase expected goals.\")\n} else {\n  display_table(empty_note(\"Coefficients are generated locally.\"))\n}\n\n\n\nRegression coefficients. Positive estimates increase expected goals.\n\n\nTerm\nEstimate\nStd Error\nt Value\np Value\n\n\n\n\n(Intercept)\n1.9402\n0.0552\n35.14\n&lt;0.001\n\n\npre_elo\n0.0016\n0.0001\n21.33\n&lt;0.001\n\n\nopponent_pre_elo\n-0.0023\n0.0001\n-30.34\n&lt;0.001\n\n\npre_match_expected_result\n0.7734\n0.0707\n10.93\n&lt;0.001\n\n\nlisted_homeTRUE\n0.3946\n0.0154\n25.67\n&lt;0.001\n\n\nneutralTRUE\n0.0623\n0.0118\n5.28\n&lt;0.001\n\n\n\n\n\n\n\nShow code\nif (nrow(coefficients) &gt; 0 && requireNamespace(\"ggplot2\", quietly = TRUE)) {\n  coefficients |&gt;\n    dplyr::filter(term != \"(Intercept)\") |&gt;\n    ggplot2::ggplot(ggplot2::aes(x = stats::reorder(term, estimate), y = estimate, fill = estimate &gt; 0)) +\n    ggplot2::geom_col(width = 0.65, show.legend = FALSE) +\n    ggplot2::coord_flip() +\n    ggplot2::scale_fill_manual(values = c(\"#b85c5c\", \"#157878\")) +\n    ggplot2::labs(\n      title = \"Goals model coefficients\",\n      x = NULL,\n      y = \"Estimated effect\"\n    ) +\n    ggplot2::theme_minimal(base_size = 12)\n} else {\n  plot.new()\n  text(0.5, 0.5, \"Coefficient plot is generated locally.\")\n}\n\n\n\n\n\nDirection and size of estimated goals-model effects."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#interpretation",
+    "href": "reports/01_goals_linear_regression.html#interpretation",
+    "title": "Goals Linear Regression",
+    "section": "7 Interpretation",
+    "text": "7 Interpretation\nThe signs match soccer intuition:\n\npre_elo is positive: stronger teams score more.\nopponent_pre_elo is negative: stronger opponents suppress scoring.\npre_match_expected_result is positive: teams expected to perform better score more.\nlisted_homeTRUE is positive: listed home teams score more."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#reproduce-locally",
+    "href": "reports/01_goals_linear_regression.html#reproduce-locally",
+    "title": "Goals Linear Regression",
+    "section": "8 Reproduce Locally",
+    "text": "8 Reproduce Locally\n\n\nShow code\nsource(\"R/01_build_duckdb.R\")\nsource(\"R/10_fit_linear_goals_model.R\")"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "2026 World Cup Betting Model",
+    "section": "",
+    "text": "View on GitHub Goals Model Result Model LindaData Home\nThis site is the public-facing project notebook. It follows the same teaching-report style as the earlier COVID analysis: explain the data pull, show the transformed data, write the model math, then render plots and results.\nCode is hidden by default so the report reads cleanly. Use Show code when you want to inspect the R steps.\nNo raw datasets, processed databases, API keys, .Renviron, credentials, or private files are published here."
+  },
+  {
+    "objectID": "index.html#project-map",
+    "href": "index.html#project-map",
+    "title": "2026 World Cup Betting Model",
+    "section": "1 Project Map",
+    "text": "1 Project Map\n\nAboutData ExplorationModelingDataDisplay Standards\n\n\nThis project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup. The current public version is a transparent baseline, not a final betting system.\nThe project is designed around four layers:\n\nData collection: public match history, Elo ratings, 2026 venues, weather, player metadata, and news signals.\nData storage: local files and DuckDB tables for modeling.\nModeling: interpretable first-pass models in R, with Python handling API pulls and heavier data jobs.\nPublishing: Quarto renders a shareable GitHub Pages site from the local analysis.\n\n\n\nThe starting modeling unit is one row per team-match. A single game creates two observations, one for each team.\n\n\nShow code\ngoals_sample &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_sample_1000.csv\"))\n\nif (nrow(goals_sample) &gt; 0) {\n  goals_sample |&gt;\n    dplyr::select(\n      date,\n      team,\n      opponent,\n      tournament,\n      y_goals_for,\n      pre_elo,\n      opponent_pre_elo,\n      pre_match_expected_result\n    ) |&gt;\n    dplyr::mutate(\n      pre_match_expected_result = fmt_percent(pre_match_expected_result, 1),\n      pre_elo = round(pre_elo, 0),\n      opponent_pre_elo = round(opponent_pre_elo, 0)\n    ) |&gt;\n    display_table(caption = \"Sample of the team-match modeling grain.\", max_rows = 8)\n} else {\n  display_table(empty_note(\"Sample rows are generated locally by R/10_fit_linear_goals_model.R.\"))\n}\n\n\n\nSample of the team-match modeling grain.\n\n\nDate\nTeam\nOpponent\nTournament\ny Goals for\nPre Elo\nOpponent Pre Elo\nPre Match Expected Result\n\n\n\n\n1872-11-30\nScotland\nEngland\nFriendly\n0\n1500\n1500\n64.0%\n\n\n1872-11-30\nEngland\nScotland\nFriendly\n0\n1500\n1500\n36.0%\n\n\n1873-03-08\nEngland\nScotland\nFriendly\n4\n1503\n1497\n64.7%\n\n\n1873-03-08\nScotland\nEngland\nFriendly\n2\n1497\n1503\n35.3%\n\n\n1874-03-07\nScotland\nEngland\nFriendly\n2\n1487\n1513\n60.4%\n\n\n1874-03-07\nEngland\nScotland\nFriendly\n1\n1513\n1487\n39.6%\n\n\n1875-03-06\nEngland\nScotland\nFriendly\n2\n1505\n1495\n65.4%\n\n\n1875-03-06\nScotland\nEngland\nFriendly\n2\n1495\n1505\n34.6%\n\n\n\n\n\n\n\nShow code\nif (nrow(goals_sample) &gt; 0 && requireNamespace(\"ggplot2\", quietly = TRUE)) {\n  ggplot2::ggplot(goals_sample, ggplot2::aes(x = y_goals_for)) +\n    ggplot2::geom_histogram(binwidth = 1, boundary = -0.5, fill = \"#157878\", color = \"white\") +\n    ggplot2::labs(\n      title = \"Goals scored by team-match row\",\n      x = \"Goals scored\",\n      y = \"Team-match rows\"\n    ) +\n    ggplot2::theme_minimal(base_size = 12)\n} else {\n  plot.new()\n  text(0.5, 0.5, \"Goals sample is generated locally before rendering.\")\n}\n\n\n\n\n\nDistribution of goals in the public sample used for the baseline model.\n\n\n\n\n\n\nThe first two models are intentionally simple:\n\nGoals OLS: predicts goals scored.\nOrdinal logistic: predicts loss &lt; draw &lt; win.\n\nThis mirrors the Shiny layout you used before: start with descriptive analytics, then model fitting, then prediction outputs.\n\n\nShow code\nif (nrow(goals_metrics) &gt; 0 && nrow(ordinal_metrics) &gt; 0) {\n  data.frame(\n    model = c(\"Goals OLS\", \"Ordinal result logistic\"),\n    target = c(\"team goals\", \"loss &lt; draw &lt; win\"),\n    rows = fmt_integer(c(goals_metrics$rows_total[[1]], ordinal_metrics$rows_total[[1]])),\n    primary_metric = c(\"Test RMSE\", \"Test accuracy\"),\n    value = c(\n      fmt_number(goals_metrics$test_rmse[[1]], 3),\n      fmt_percent(ordinal_metrics$test_accuracy[[1]], 1)\n    ),\n    context = c(\n      paste(\"Mean test goals:\", fmt_number(goals_metrics$mean_y_test[[1]], 3)),\n      paste(\"Majority baseline:\", fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1))\n    )\n  ) |&gt;\n    display_table(caption = \"Current baseline model performance.\")\n} else {\n  display_table(empty_note(\"Model metrics are generated locally before rendering.\"))\n}\n\n\n\nCurrent baseline model performance.\n\n\nModel\nTarget\nRows\nPrimary Metric\nValue\nContext\n\n\n\n\nGoals OLS\nteam goals\n98,810\nTest RMSE\n1.463\nMean test goals: 1.465\n\n\nOrdinal result logistic\nloss &lt; draw &lt; win\n98,810\nTest accuracy\n58.5%\nMajority baseline: 38.6%\n\n\n\n\n\n\n\nThe local database contains more tables than the public site publishes. The rendered site shows metadata only, which keeps credentials and source data off GitHub.\n\n\nShow code\ninventory &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"metadata\", \"table_inventory.csv\"))\n\nif (nrow(inventory) &gt; 0) {\n  inventory |&gt;\n    dplyr::arrange(table_name) |&gt;\n    dplyr::mutate(row_count = fmt_integer(row_count)) |&gt;\n    display_table(caption = \"Local tables available for modeling.\", max_rows = 16)\n} else {\n  display_table(empty_note(\"Table inventory is generated locally by R/07_export_metadata.R.\"))\n}\n\n\n\nLocal tables available for modeling.\n\n\nTable Name\nRow Count\n\n\n\n\nagg_news_query_counts_gdelt\n8\n\n\nagg_player_international_goals\n15,821\n\n\nagg_team_elo_latest\n336\n\n\nagg_team_history\n336\n\n\nagg_team_recent_form\n262\n\n\ndim_2026_world_cup_squad_players\n1,248\n\n\ndim_locations_from_results\n2,214\n\n\ndim_player_wikidata\n1,248\n\n\nfact_2026_world_cup_fixtures\n72\n\n\nfact_fixture_weather_hourly_open_meteo\n480\n\n\nfact_international_matches_team_long\n98,954\n\n\nfact_news_articles_gdelt\n172\n\n\nfact_player_goals\n47,647\n\n\nfact_team_elo_match_history\n98,842\n\n\nfootball_data_matches\n0\n\n\nodds_snapshots\n0\n\n\n\n\n\n\n\n\n\nOne grain per tableRows should mean one thing: team-match, match, player, venue, or API pull.\n\n\nReadable labelsKeep machine-safe names in source files; convert them to readable labels only in reports.\n\n\nRound for display onlyDo not round model inputs or stored outputs. Round the rendered table so readers can scan it.\n\n\nSeparate public and privatePublish metadata and rendered results, not raw datasets, databases, keys, or credentials."
+  },
+  {
+    "objectID": "index.html#reports",
+    "href": "index.html#reports",
+    "title": "2026 World Cup Betting Model",
+    "section": "2 Reports",
+    "text": "2 Reports\n\n\n\n2.1 Goals Model\nOLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.\nOpen goals report\n\n\n\n2.2 Result Model\nOrdinal logistic baseline for loss &lt; draw &lt; win, producing win/draw/loss probability estimates.\nOpen result report\n\n\n\n\n2.3 Distribution Review\nDistribution-first notes for deciding whether soccer features should be modeled as counts, continuous variables, ordered outcomes, probabilities, or mixture processes.\nOpen distribution review"
+  },
+  {
+    "objectID": "index.html#interactive-app-direction",
+    "href": "index.html#interactive-app-direction",
+    "title": "2026 World Cup Betting Model",
+    "section": "3 Interactive App Direction",
+    "text": "3 Interactive App Direction\n\n3.1 Shiny First, Streamlit Later If Needed\nYour older Shiny code used navbarPage(), sidebarLayout(), DT tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.\nGitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet."
+  },
+  {
+    "objectID": "index.html#refresh-options",
+    "href": "index.html#refresh-options",
+    "title": "2026 World Cup Betting Model",
+    "section": "4 Refresh Options",
+    "text": "4 Refresh Options\nRun these from RStudio.\n\n4.1 Local Rebuild\nDoes not hit APIs or spend quota.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(profile = \"local-rebuild\")\n\n\n\n\n4.2 Free Source Refresh\nPulls free/no-key public sources and rebuilds the local site.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(profile = \"free-refresh\")\n\n\n\n\n4.3 Keyed APIs Later\nUse after .env is configured locally.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(\n  profile = \"free-refresh\",\n  include_keyed_apis = TRUE\n)\n\n\nOdds pulls require explicit quota permission.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(\n  profile = \"free-refresh\",\n  include_keyed_apis = TRUE,\n  include_odds_quota = TRUE\n)"
+  },
+  {
+    "objectID": "index.html#next-work",
+    "href": "index.html#next-work",
+    "title": "2026 World Cup Betting Model",
+    "section": "5 Next Work",
+    "text": "5 Next Work\n\nAdd rolling recent-form features.\nAdd squad-strength and player-availability signals.\nAdd news-derived injury and lineup signals.\nAdd odds-implied probabilities.\nCompare ordinal logistic, multinomial logistic, and paired-goal models.\nCalibrate predicted probabilities."
+  },
+  {
     "objectID": "reports/02_ordinal_result_model.html",
     "href": "reports/02_ordinal_result_model.html",
     "title": "Ordinal Result Model",
@@ -82,110 +229,5 @@
     "title": "Ordinal Result Model",
     "section": "11 Reproduce Locally",
     "text": "11 Reproduce Locally\n\n\nShow code\nsource(\"R/01_build_duckdb.R\")\nsource(\"R/11_fit_ordinal_result_model.R\")"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "2026 World Cup Betting Model",
-    "section": "",
-    "text": "View on GitHub Goals Model Result Model LindaData Home\nThis site is the public-facing project notebook. It follows the same teaching-report style as the earlier COVID analysis: explain the data pull, show the transformed data, write the model math, then render plots and results.\nCode is hidden by default so the report reads cleanly. Use Show code when you want to inspect the R steps.\nNo raw datasets, processed databases, API keys, .Renviron, credentials, or private files are published here."
-  },
-  {
-    "objectID": "index.html#project-map",
-    "href": "index.html#project-map",
-    "title": "2026 World Cup Betting Model",
-    "section": "1 Project Map",
-    "text": "1 Project Map\n\nAboutData ExplorationModelingDataDisplay Standards\n\n\nThis project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup. The current public version is a transparent baseline, not a final betting system.\nThe project is designed around four layers:\n\nData collection: public match history, Elo ratings, 2026 venues, weather, player metadata, and news signals.\nData storage: local files and DuckDB tables for modeling.\nModeling: interpretable first-pass models in R, with Python handling API pulls and heavier data jobs.\nPublishing: Quarto renders a shareable GitHub Pages site from the local analysis.\n\n\n\nThe starting modeling unit is one row per team-match. A single game creates two observations, one for each team.\n\n\nShow code\ngoals_sample &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_sample_1000.csv\"))\n\nif (nrow(goals_sample) &gt; 0) {\n  goals_sample |&gt;\n    dplyr::select(\n      date,\n      team,\n      opponent,\n      tournament,\n      y_goals_for,\n      pre_elo,\n      opponent_pre_elo,\n      pre_match_expected_result\n    ) |&gt;\n    dplyr::mutate(\n      pre_match_expected_result = fmt_percent(pre_match_expected_result, 1),\n      pre_elo = round(pre_elo, 0),\n      opponent_pre_elo = round(opponent_pre_elo, 0)\n    ) |&gt;\n    display_table(caption = \"Sample of the team-match modeling grain.\", max_rows = 8)\n} else {\n  display_table(empty_note(\"Sample rows are generated locally by R/10_fit_linear_goals_model.R.\"))\n}\n\n\n\nSample of the team-match modeling grain.\n\n\nDate\nTeam\nOpponent\nTournament\ny Goals for\nPre Elo\nOpponent Pre Elo\nPre Match Expected Result\n\n\n\n\n1872-11-30\nScotland\nEngland\nFriendly\n0\n1500\n1500\n64.0%\n\n\n1872-11-30\nEngland\nScotland\nFriendly\n0\n1500\n1500\n36.0%\n\n\n1873-03-08\nEngland\nScotland\nFriendly\n4\n1503\n1497\n64.7%\n\n\n1873-03-08\nScotland\nEngland\nFriendly\n2\n1497\n1503\n35.3%\n\n\n1874-03-07\nScotland\nEngland\nFriendly\n2\n1487\n1513\n60.4%\n\n\n1874-03-07\nEngland\nScotland\nFriendly\n1\n1513\n1487\n39.6%\n\n\n1875-03-06\nEngland\nScotland\nFriendly\n2\n1505\n1495\n65.4%\n\n\n1875-03-06\nScotland\nEngland\nFriendly\n2\n1495\n1505\n34.6%\n\n\n\n\n\n\n\nShow code\nif (nrow(goals_sample) &gt; 0 && requireNamespace(\"ggplot2\", quietly = TRUE)) {\n  ggplot2::ggplot(goals_sample, ggplot2::aes(x = y_goals_for)) +\n    ggplot2::geom_histogram(binwidth = 1, boundary = -0.5, fill = \"#157878\", color = \"white\") +\n    ggplot2::labs(\n      title = \"Goals scored by team-match row\",\n      x = \"Goals scored\",\n      y = \"Team-match rows\"\n    ) +\n    ggplot2::theme_minimal(base_size = 12)\n} else {\n  plot.new()\n  text(0.5, 0.5, \"Goals sample is generated locally before rendering.\")\n}\n\n\n\n\n\nDistribution of goals in the public sample used for the baseline model.\n\n\n\n\n\n\nThe first two models are intentionally simple:\n\nGoals OLS: predicts goals scored.\nOrdinal logistic: predicts loss &lt; draw &lt; win.\n\nThis mirrors the Shiny layout you used before: start with descriptive analytics, then model fitting, then prediction outputs.\n\n\nShow code\nif (nrow(goals_metrics) &gt; 0 && nrow(ordinal_metrics) &gt; 0) {\n  data.frame(\n    model = c(\"Goals OLS\", \"Ordinal result logistic\"),\n    target = c(\"team goals\", \"loss &lt; draw &lt; win\"),\n    rows = fmt_integer(c(goals_metrics$rows_total[[1]], ordinal_metrics$rows_total[[1]])),\n    primary_metric = c(\"Test RMSE\", \"Test accuracy\"),\n    value = c(\n      fmt_number(goals_metrics$test_rmse[[1]], 3),\n      fmt_percent(ordinal_metrics$test_accuracy[[1]], 1)\n    ),\n    context = c(\n      paste(\"Mean test goals:\", fmt_number(goals_metrics$mean_y_test[[1]], 3)),\n      paste(\"Majority baseline:\", fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1))\n    )\n  ) |&gt;\n    display_table(caption = \"Current baseline model performance.\")\n} else {\n  display_table(empty_note(\"Model metrics are generated locally before rendering.\"))\n}\n\n\n\nCurrent baseline model performance.\n\n\nModel\nTarget\nRows\nPrimary Metric\nValue\nContext\n\n\n\n\nGoals OLS\nteam goals\n98,810\nTest RMSE\n1.463\nMean test goals: 1.465\n\n\nOrdinal result logistic\nloss &lt; draw &lt; win\n98,810\nTest accuracy\n58.5%\nMajority baseline: 38.6%\n\n\n\n\n\n\n\nThe local database contains more tables than the public site publishes. The rendered site shows metadata only, which keeps credentials and source data off GitHub.\n\n\nShow code\ninventory &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"metadata\", \"table_inventory.csv\"))\n\nif (nrow(inventory) &gt; 0) {\n  inventory |&gt;\n    dplyr::arrange(table_name) |&gt;\n    dplyr::mutate(row_count = fmt_integer(row_count)) |&gt;\n    display_table(caption = \"Local tables available for modeling.\", max_rows = 16)\n} else {\n  display_table(empty_note(\"Table inventory is generated locally by R/07_export_metadata.R.\"))\n}\n\n\n\nLocal tables available for modeling.\n\n\nTable Name\nRow Count\n\n\n\n\nagg_news_query_counts_gdelt\n8\n\n\nagg_player_international_goals\n15,821\n\n\nagg_team_elo_latest\n336\n\n\nagg_team_history\n336\n\n\nagg_team_recent_form\n262\n\n\ndim_2026_world_cup_squad_players\n1,248\n\n\ndim_locations_from_results\n2,214\n\n\ndim_player_wikidata\n1,248\n\n\nfact_2026_world_cup_fixtures\n72\n\n\nfact_fixture_weather_hourly_open_meteo\n480\n\n\nfact_international_matches_team_long\n98,954\n\n\nfact_news_articles_gdelt\n172\n\n\nfact_player_goals\n47,647\n\n\nfact_team_elo_match_history\n98,842\n\n\nfootball_data_matches\n0\n\n\nodds_snapshots\n0\n\n\n\n\n\n\n\n\n\nOne grain per tableRows should mean one thing: team-match, match, player, venue, or API pull.\n\n\nReadable labelsKeep machine-safe names in source files; convert them to readable labels only in reports.\n\n\nRound for display onlyDo not round model inputs or stored outputs. Round the rendered table so readers can scan it.\n\n\nSeparate public and privatePublish metadata and rendered results, not raw datasets, databases, keys, or credentials."
-  },
-  {
-    "objectID": "index.html#reports",
-    "href": "index.html#reports",
-    "title": "2026 World Cup Betting Model",
-    "section": "2 Reports",
-    "text": "2 Reports\n\n\n\n2.1 Goals Model\nOLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.\nOpen goals report\n\n\n\n2.2 Result Model\nOrdinal logistic baseline for loss &lt; draw &lt; win, producing win/draw/loss probability estimates.\nOpen result report"
-  },
-  {
-    "objectID": "index.html#interactive-app-direction",
-    "href": "index.html#interactive-app-direction",
-    "title": "2026 World Cup Betting Model",
-    "section": "3 Interactive App Direction",
-    "text": "3 Interactive App Direction\n\n3.1 Shiny First, Streamlit Later If Needed\nYour older Shiny code used navbarPage(), sidebarLayout(), DT tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.\nGitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet."
-  },
-  {
-    "objectID": "index.html#refresh-options",
-    "href": "index.html#refresh-options",
-    "title": "2026 World Cup Betting Model",
-    "section": "4 Refresh Options",
-    "text": "4 Refresh Options\nRun these from RStudio.\n\n4.1 Local Rebuild\nDoes not hit APIs or spend quota.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(profile = \"local-rebuild\")\n\n\n\n\n4.2 Free Source Refresh\nPulls free/no-key public sources and rebuilds the local site.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(profile = \"free-refresh\")\n\n\n\n\n4.3 Keyed APIs Later\nUse after .env is configured locally.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(\n  profile = \"free-refresh\",\n  include_keyed_apis = TRUE\n)\n\n\nOdds pulls require explicit quota permission.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(\n  profile = \"free-refresh\",\n  include_keyed_apis = TRUE,\n  include_odds_quota = TRUE\n)"
-  },
-  {
-    "objectID": "index.html#next-work",
-    "href": "index.html#next-work",
-    "title": "2026 World Cup Betting Model",
-    "section": "5 Next Work",
-    "text": "5 Next Work\n\nAdd rolling recent-form features.\nAdd squad-strength and player-availability signals.\nAdd news-derived injury and lineup signals.\nAdd odds-implied probabilities.\nCompare ordinal logistic, multinomial logistic, and paired-goal models.\nCalibrate predicted probabilities."
-  },
-  {
-    "objectID": "reports/01_goals_linear_regression.html",
-    "href": "reports/01_goals_linear_regression.html",
-    "title": "Goals Linear Regression",
-    "section": "",
-    "text": "This report documents the first transparent baseline model for the World Cup prediction project.\nThe target is team goals scored in a historical international match:\n\\[\nY_{i,m} = \\text{goals scored by team } i \\text{ in match } m\n\\]\nThis is a baseline, not the final soccer model. Goals are non-negative counts, so future versions should compare Poisson, negative-binomial, bivariate Poisson, or Skellam-style models."
-  },
-  {
-    "objectID": "reports/01_goals_linear_regression.html#purpose",
-    "href": "reports/01_goals_linear_regression.html#purpose",
-    "title": "Goals Linear Regression",
-    "section": "",
-    "text": "This report documents the first transparent baseline model for the World Cup prediction project.\nThe target is team goals scored in a historical international match:\n\\[\nY_{i,m} = \\text{goals scored by team } i \\text{ in match } m\n\\]\nThis is a baseline, not the final soccer model. Goals are non-negative counts, so future versions should compare Poisson, negative-binomial, bivariate Poisson, or Skellam-style models."
-  },
-  {
-    "objectID": "reports/01_goals_linear_regression.html#unit-of-observation",
-    "href": "reports/01_goals_linear_regression.html#unit-of-observation",
-    "title": "Goals Linear Regression",
-    "section": "2 Unit Of Observation",
-    "text": "2 Unit Of Observation\nThe modeling frame has one row per team-match.\nIf Argentina plays France, the data has two rows:\n\nArgentina’s goals as the target, with France as the opponent.\nFrance’s goals as the target, with Argentina as the opponent."
-  },
-  {
-    "objectID": "reports/01_goals_linear_regression.html#sample-rows-embedded-in-report",
-    "href": "reports/01_goals_linear_regression.html#sample-rows-embedded-in-report",
-    "title": "Goals Linear Regression",
-    "section": "3 Sample Rows Embedded In Report",
-    "text": "3 Sample Rows Embedded In Report\nNo sample CSV is published with the website. These rows are embedded into the rendered HTML from the local model frame.\n\n\nShow code\nsample_data &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_sample_1000.csv\"))\n\nif (nrow(sample_data) &gt; 0) {\n  sample_data |&gt;\n    dplyr::select(\n      date,\n      team,\n      opponent,\n      tournament,\n      y_goals_for,\n      pre_elo,\n      opponent_pre_elo,\n      pre_match_expected_result\n    ) |&gt;\n    dplyr::mutate(\n      pre_elo = round(pre_elo, 0),\n      opponent_pre_elo = round(opponent_pre_elo, 0),\n      pre_match_expected_result = fmt_percent(pre_match_expected_result, 1)\n    ) |&gt;\n    display_table(caption = \"Team-match sample used by the goals model.\", max_rows = 10)\n} else {\n  display_table(empty_note(\"Sample rows are generated locally by R/10_fit_linear_goals_model.R.\"))\n}\n\n\n\nTeam-match sample used by the goals model.\n\n\nDate\nTeam\nOpponent\nTournament\ny Goals for\nPre Elo\nOpponent Pre Elo\nPre Match Expected Result\n\n\n\n\n1872-11-30\nScotland\nEngland\nFriendly\n0\n1500\n1500\n64.0%\n\n\n1872-11-30\nEngland\nScotland\nFriendly\n0\n1500\n1500\n36.0%\n\n\n1873-03-08\nEngland\nScotland\nFriendly\n4\n1503\n1497\n64.7%\n\n\n1873-03-08\nScotland\nEngland\nFriendly\n2\n1497\n1503\n35.3%\n\n\n1874-03-07\nScotland\nEngland\nFriendly\n2\n1487\n1513\n60.4%\n\n\n1874-03-07\nEngland\nScotland\nFriendly\n1\n1513\n1487\n39.6%\n\n\n1875-03-06\nEngland\nScotland\nFriendly\n2\n1505\n1495\n65.4%\n\n\n1875-03-06\nScotland\nEngland\nFriendly\n2\n1495\n1505\n34.6%\n\n\n1876-03-04\nScotland\nEngland\nFriendly\n3\n1498\n1502\n63.4%\n\n\n1876-03-04\nEngland\nScotland\nFriendly\n0\n1502\n1498\n36.6%"
-  },
-  {
-    "objectID": "reports/01_goals_linear_regression.html#elo-feature",
-    "href": "reports/01_goals_linear_regression.html#elo-feature",
-    "title": "Goals Linear Regression",
-    "section": "4 Elo Feature",
-    "text": "4 Elo Feature\nFor team \\(i\\) against opponent \\(j\\), expected result before kickoff is:\n\\[\np_{i,m} =\n\\frac{1}\n{1 + 10^{-\\left(E_{i,m}^{pre} + H_m - E_{j,m}^{pre}\\right)/400}}\n\\]\nWhere:\n\n\\(E_{i,m}^{pre}\\) is team \\(i\\)’s pre-match Elo.\n\\(E_{j,m}^{pre}\\) is opponent pre-match Elo.\n\\(H_m\\) is the home advantage adjustment.\n\\(p_{i,m}\\) is expected result on a 0 to 1 scale."
-  },
-  {
-    "objectID": "reports/01_goals_linear_regression.html#model",
-    "href": "reports/01_goals_linear_regression.html#model",
-    "title": "Goals Linear Regression",
-    "section": "5 Model",
-    "text": "5 Model\nThe first regression is:\n\\[\nY_{i,m}\n= \\beta_0\n+ \\beta_1 E_{i,m}^{pre}\n+ \\beta_2 E_{j,m}^{pre}\n+ \\beta_3 p_{i,m}\n+ \\beta_4 I(\\text{listed home}_{i,m})\n+ \\beta_5 I(\\text{neutral site}_m)\n+ \\epsilon_{i,m}\n\\]\nwith:\n\\[\n\\epsilon_{i,m} \\sim N(0, \\sigma^2)\n\\]"
-  },
-  {
-    "objectID": "reports/01_goals_linear_regression.html#results",
-    "href": "reports/01_goals_linear_regression.html#results",
-    "title": "Goals Linear Regression",
-    "section": "6 Results",
-    "text": "6 Results\n\n\nShow code\nmetrics &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_metrics.csv\"))\ncoefficients &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_coefficients.csv\"))\n\nif (nrow(metrics) &gt; 0) {\n  data.frame(\n    rows_total = fmt_integer(metrics$rows_total),\n    rows_train = fmt_integer(metrics$rows_train),\n    rows_test = fmt_integer(metrics$rows_test),\n    train_r_squared = fmt_percent(metrics$train_r_squared, 1),\n    test_rmse = fmt_number(metrics$test_rmse, 3),\n    test_mae = fmt_number(metrics$test_mae, 3),\n    mean_y_test = fmt_number(metrics$mean_y_test, 3)\n  ) |&gt;\n    display_table(caption = \"Goals model fit summary.\")\n} else {\n  display_table(empty_note(\"Metrics are generated locally.\"))\n}\n\n\n\nGoals model fit summary.\n\n\nRows Total\nRows Train\nRows Test\nTrain r Squared\nTest RMSE\nTest MAE\nMean y Test\n\n\n\n\n98,810\n79,122\n19,688\n18.6%\n1.463\n1.042\n1.465\n\n\n\n\n\n\n\nShow code\nif (nrow(coefficients) &gt; 0) {\n  coefficients |&gt;\n    dplyr::mutate(\n      estimate = fmt_number(estimate, 4),\n      std_error = fmt_number(std_error, 4),\n      t_value = fmt_number(t_value, 2),\n      p_value = fmt_p_value(p_value)\n    ) |&gt;\n    display_table(caption = \"Regression coefficients. Positive estimates increase expected goals.\")\n} else {\n  display_table(empty_note(\"Coefficients are generated locally.\"))\n}\n\n\n\nRegression coefficients. Positive estimates increase expected goals.\n\n\nTerm\nEstimate\nStd Error\nt Value\np Value\n\n\n\n\n(Intercept)\n1.9402\n0.0552\n35.14\n&lt;0.001\n\n\npre_elo\n0.0016\n0.0001\n21.33\n&lt;0.001\n\n\nopponent_pre_elo\n-0.0023\n0.0001\n-30.34\n&lt;0.001\n\n\npre_match_expected_result\n0.7734\n0.0707\n10.93\n&lt;0.001\n\n\nlisted_homeTRUE\n0.3946\n0.0154\n25.67\n&lt;0.001\n\n\nneutralTRUE\n0.0623\n0.0118\n5.28\n&lt;0.001\n\n\n\n\n\n\n\nShow code\nif (nrow(coefficients) &gt; 0 && requireNamespace(\"ggplot2\", quietly = TRUE)) {\n  coefficients |&gt;\n    dplyr::filter(term != \"(Intercept)\") |&gt;\n    ggplot2::ggplot(ggplot2::aes(x = stats::reorder(term, estimate), y = estimate, fill = estimate &gt; 0)) +\n    ggplot2::geom_col(width = 0.65, show.legend = FALSE) +\n    ggplot2::coord_flip() +\n    ggplot2::scale_fill_manual(values = c(\"#b85c5c\", \"#157878\")) +\n    ggplot2::labs(\n      title = \"Goals model coefficients\",\n      x = NULL,\n      y = \"Estimated effect\"\n    ) +\n    ggplot2::theme_minimal(base_size = 12)\n} else {\n  plot.new()\n  text(0.5, 0.5, \"Coefficient plot is generated locally.\")\n}\n\n\n\n\n\nDirection and size of estimated goals-model effects."
-  },
-  {
-    "objectID": "reports/01_goals_linear_regression.html#interpretation",
-    "href": "reports/01_goals_linear_regression.html#interpretation",
-    "title": "Goals Linear Regression",
-    "section": "7 Interpretation",
-    "text": "7 Interpretation\nThe signs match soccer intuition:\n\npre_elo is positive: stronger teams score more.\nopponent_pre_elo is negative: stronger opponents suppress scoring.\npre_match_expected_result is positive: teams expected to perform better score more.\nlisted_homeTRUE is positive: listed home teams score more."
-  },
-  {
-    "objectID": "reports/01_goals_linear_regression.html#reproduce-locally",
-    "href": "reports/01_goals_linear_regression.html#reproduce-locally",
-    "title": "Goals Linear Regression",
-    "section": "8 Reproduce Locally",
-    "text": "8 Reproduce Locally\n\n\nShow code\nsource(\"R/01_build_duckdb.R\")\nsource(\"R/10_fit_linear_goals_model.R\")"
   }
 ]

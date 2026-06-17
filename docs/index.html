@@ -140,6 +140,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./reports/02_ordinal_result_model.html"> 
 <span class="menu-text">Result Model</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reports/03_distribution_review.html"> 
+<span class="menu-text">Distributions</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -167,7 +171,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#project-map" id="toc-project-map" class="nav-link active" data-scroll-target="#project-map"><span class="header-section-number">1</span> Project Map</a></li>
-  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports"><span class="header-section-number">2</span> Reports</a></li>
+  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports"><span class="header-section-number">2</span> Reports</a>
+  <ul class="collapse">
+  <li><a href="#distribution-review" id="toc-distribution-review" class="nav-link" data-scroll-target="#distribution-review"><span class="header-section-number">2.3</span> Distribution Review</a></li>
+  </ul></li>
   <li><a href="#interactive-app-direction" id="toc-interactive-app-direction" class="nav-link" data-scroll-target="#interactive-app-direction"><span class="header-section-number">3</span> Interactive App Direction</a>
   <ul class="collapse">
   <li><a href="#shiny-first-streamlit-later-if-needed" id="toc-shiny-first-streamlit-later-if-needed" class="nav-link" data-scroll-target="#shiny-first-streamlit-later-if-needed"><span class="header-section-number">3.1</span> Shiny First, Streamlit Later If Needed</a></li>
@@ -592,6 +599,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </div>
 </div>
+<section id="distribution-review" class="level3 project-card" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="distribution-review"><span class="header-section-number">2.3</span> Distribution Review</h3>
+<p>Distribution-first notes for deciding whether soccer features should be modeled as counts, continuous variables, ordered outcomes, probabilities, or mixture processes.</p>
+<p><a class="project-button" href="reports/03_distribution_review.html">Open distribution review</a></p>
+</section>
 </section>
 <section id="interactive-app-direction" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="interactive-app-direction"><span class="header-section-number">3</span> Interactive App Direction</h2>
@@ -1319,69 +1331,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interactive App Direction</span></span>
-<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a>::: {.shiny-panel}</span>
-<span id="cb9-197"><a href="#cb9-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shiny First, Streamlit Later If Needed</span></span>
+<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribution Review</span></span>
+<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-197"><a href="#cb9-197" aria-hidden="true" tabindex="-1"></a>Distribution-first notes for deciding whether soccer features should be modeled as counts, continuous variables, ordered outcomes, probabilities, or mixture processes.</span>
 <span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a>Your older Shiny code used <span class="in">`navbarPage()`</span>, <span class="in">`sidebarLayout()`</span>, <span class="in">`DT`</span> tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.</span>
-<span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a>GitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet.</span>
-<span id="cb9-202"><a href="#cb9-202" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/03_distribution_review.html"</span><span class="dt">&gt;</span>Open distribution review<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-202"><a href="#cb9-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interactive App Direction</span></span>
 <span id="cb9-203"><a href="#cb9-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-204"><a href="#cb9-204" aria-hidden="true" tabindex="-1"></a><span class="fu">## Refresh Options</span></span>
-<span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a>Run these from RStudio.</span>
-<span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a><span class="fu">### Local Rebuild</span></span>
-<span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a>Does not hit APIs or spend quota.</span>
+<span id="cb9-204"><a href="#cb9-204" aria-hidden="true" tabindex="-1"></a>::: {.shiny-panel}</span>
+<span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shiny First, Streamlit Later If Needed</span></span>
+<span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a>Your older Shiny code used <span class="in">`navbarPage()`</span>, <span class="in">`sidebarLayout()`</span>, <span class="in">`DT`</span> tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.</span>
+<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a>GitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet.</span>
+<span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb9-211"><a href="#cb9-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-212"><a href="#cb9-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r local-refresh, eval=FALSE}</span></span>
-<span id="cb9-213"><a href="#cb9-213" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb9-214"><a href="#cb9-214" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"local-rebuild"</span>)</span>
-<span id="cb9-215"><a href="#cb9-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-216"><a href="#cb9-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-217"><a href="#cb9-217" aria-hidden="true" tabindex="-1"></a><span class="fu">### Free Source Refresh</span></span>
-<span id="cb9-218"><a href="#cb9-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-219"><a href="#cb9-219" aria-hidden="true" tabindex="-1"></a>Pulls free/no-key public sources and rebuilds the local site.</span>
-<span id="cb9-220"><a href="#cb9-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-221"><a href="#cb9-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r free-refresh, eval=FALSE}</span></span>
-<span id="cb9-222"><a href="#cb9-222" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb9-223"><a href="#cb9-223" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"free-refresh"</span>)</span>
-<span id="cb9-224"><a href="#cb9-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-225"><a href="#cb9-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-226"><a href="#cb9-226" aria-hidden="true" tabindex="-1"></a><span class="fu">### Keyed APIs Later</span></span>
-<span id="cb9-227"><a href="#cb9-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-228"><a href="#cb9-228" aria-hidden="true" tabindex="-1"></a>Use after <span class="in">`.env`</span> is configured locally.</span>
-<span id="cb9-229"><a href="#cb9-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-230"><a href="#cb9-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r keyed-refresh, eval=FALSE}</span></span>
-<span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
-<span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
-<span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span></span>
-<span id="cb9-235"><a href="#cb9-235" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-236"><a href="#cb9-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-212"><a href="#cb9-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Refresh Options</span></span>
+<span id="cb9-213"><a href="#cb9-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-214"><a href="#cb9-214" aria-hidden="true" tabindex="-1"></a>Run these from RStudio.</span>
+<span id="cb9-215"><a href="#cb9-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-216"><a href="#cb9-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### Local Rebuild</span></span>
+<span id="cb9-217"><a href="#cb9-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-218"><a href="#cb9-218" aria-hidden="true" tabindex="-1"></a>Does not hit APIs or spend quota.</span>
+<span id="cb9-219"><a href="#cb9-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-220"><a href="#cb9-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r local-refresh, eval=FALSE}</span></span>
+<span id="cb9-221"><a href="#cb9-221" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb9-222"><a href="#cb9-222" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"local-rebuild"</span>)</span>
+<span id="cb9-223"><a href="#cb9-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-224"><a href="#cb9-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-225"><a href="#cb9-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Free Source Refresh</span></span>
+<span id="cb9-226"><a href="#cb9-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-227"><a href="#cb9-227" aria-hidden="true" tabindex="-1"></a>Pulls free/no-key public sources and rebuilds the local site.</span>
+<span id="cb9-228"><a href="#cb9-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-229"><a href="#cb9-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r free-refresh, eval=FALSE}</span></span>
+<span id="cb9-230"><a href="#cb9-230" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"free-refresh"</span>)</span>
+<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a><span class="fu">### Keyed APIs Later</span></span>
+<span id="cb9-235"><a href="#cb9-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-236"><a href="#cb9-236" aria-hidden="true" tabindex="-1"></a>Use after <span class="in">`.env`</span> is configured locally.</span>
 <span id="cb9-237"><a href="#cb9-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-238"><a href="#cb9-238" aria-hidden="true" tabindex="-1"></a>Odds pulls require explicit quota permission.</span>
-<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-240"><a href="#cb9-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r odds-refresh, eval=FALSE}</span></span>
-<span id="cb9-241"><a href="#cb9-241" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
-<span id="cb9-243"><a href="#cb9-243" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
-<span id="cb9-244"><a href="#cb9-244" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb9-245"><a href="#cb9-245" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_odds_quota =</span> <span class="cn">TRUE</span></span>
-<span id="cb9-246"><a href="#cb9-246" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Work</span></span>
-<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add rolling recent-form features.</span>
-<span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add squad-strength and player-availability signals.</span>
-<span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Add news-derived injury and lineup signals.</span>
-<span id="cb9-254"><a href="#cb9-254" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Add odds-implied probabilities.</span>
-<span id="cb9-255"><a href="#cb9-255" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Compare ordinal logistic, multinomial logistic, and paired-goal models.</span>
-<span id="cb9-256"><a href="#cb9-256" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Calibrate predicted probabilities.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb9-238"><a href="#cb9-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r keyed-refresh, eval=FALSE}</span></span>
+<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb9-240"><a href="#cb9-240" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
+<span id="cb9-241"><a href="#cb9-241" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
+<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-243"><a href="#cb9-243" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-244"><a href="#cb9-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-245"><a href="#cb9-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-246"><a href="#cb9-246" aria-hidden="true" tabindex="-1"></a>Odds pulls require explicit quota permission.</span>
+<span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r odds-refresh, eval=FALSE}</span></span>
+<span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
+<span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
+<span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_odds_quota =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-254"><a href="#cb9-254" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-255"><a href="#cb9-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-256"><a href="#cb9-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-257"><a href="#cb9-257" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Work</span></span>
+<span id="cb9-258"><a href="#cb9-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-259"><a href="#cb9-259" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add rolling recent-form features.</span>
+<span id="cb9-260"><a href="#cb9-260" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add squad-strength and player-availability signals.</span>
+<span id="cb9-261"><a href="#cb9-261" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Add news-derived injury and lineup signals.</span>
+<span id="cb9-262"><a href="#cb9-262" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Add odds-implied probabilities.</span>
+<span id="cb9-263"><a href="#cb9-263" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Compare ordinal logistic, multinomial logistic, and paired-goal models.</span>
+<span id="cb9-264"><a href="#cb9-264" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Calibrate predicted probabilities.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

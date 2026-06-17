@@ -1,0 +1,177 @@
+---
+title: "Distribution Review"
+subtitle: "Candidate probability models and diagnostics for the World Cup modeling workflow"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed/modeling")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+goals_frame <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_frame.csv"))
+if (nrow(goals_frame) == 0) {
+  goals_frame <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_sample_1000.csv"))
+}
+result_distribution <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_class_distribution.csv"))
+```
+
+::: {.reference-note}
+This page is a project-specific synthesis, not copied course material. The style direction comes from reviewing public NC State statistics teaching resources: short conceptual framing, visible math, reproducible R/Quarto code, and simulation/diagnostic thinking.
+:::
+
+## Why This Page Exists
+
+Before adding bigger models, each variable should have an explicit statistical shape. Soccer data mixes low-count outcomes, ordered categorical results, probabilities, text/news counts, player availability flags, and continuous context variables.
+
+The first pass should be generous: list plausible distributions, build diagnostics, then filter models that do not fit the data or the betting question.
+
+## Current Outcome Shapes
+
+```{r outcome-metrics, echo=FALSE, results="asis"}
+if (nrow(goals_frame) > 0 && "y_goals_for" %in% names(goals_frame)) {
+  goal_counts <- table(goals_frame$y_goals_for)
+  goal_mean <- mean(goals_frame$y_goals_for, na.rm = TRUE)
+  goal_var <- stats::var(goals_frame$y_goals_for, na.rm = TRUE)
+  zero_share <- mean(goals_frame$y_goals_for == 0, na.rm = TRUE)
+
+  cat(metric_cards(data.frame(
+    label = c("Mean Goals", "Goal Variance", "Zero-Goal Share", "Max Goals"),
+    value = c(
+      fmt_number(goal_mean, 3),
+      fmt_number(goal_var, 3),
+      fmt_percent(zero_share, 1),
+      fmt_integer(max(goals_frame$y_goals_for, na.rm = TRUE))
+    ),
+    note = c("team-match rows", "compare with mean", "possible count-model clue", "tail check")
+  )))
+}
+```
+
+```{r goal-distribution-table}
+if (nrow(goals_frame) > 0 && "y_goals_for" %in% names(goals_frame)) {
+  goals_frame |>
+    dplyr::count(y_goals_for, name = "rows") |>
+    dplyr::mutate(
+      share = fmt_percent(rows / sum(rows), 1),
+      rows = fmt_integer(rows)
+    ) |>
+    display_table(caption = "Observed team-goal distribution.", max_rows = 12)
+} else {
+  display_table(empty_note("Goal distribution is generated locally from the modeling frame."))
+}
+```
+
+```{r goal-distribution-plot, fig.cap="Observed team-goal counts with a Poisson reference curve using the empirical mean."}
+if (nrow(goals_frame) > 0 && "y_goals_for" %in% names(goals_frame) && requireNamespace("ggplot2", quietly = TRUE)) {
+  lambda_hat <- mean(goals_frame$y_goals_for, na.rm = TRUE)
+  observed <- goals_frame |>
+    dplyr::count(y_goals_for, name = "observed_rows") |>
+    dplyr::mutate(observed_share = observed_rows / sum(observed_rows))
+  poisson_ref <- data.frame(
+    y_goals_for = seq(0, max(goals_frame$y_goals_for, na.rm = TRUE)),
+    poisson_share = stats::dpois(seq(0, max(goals_frame$y_goals_for, na.rm = TRUE)), lambda = lambda_hat)
+  )
+
+  ggplot2::ggplot(observed, ggplot2::aes(x = y_goals_for, y = observed_share)) +
+    ggplot2::geom_col(fill = "#157878", alpha = 0.82, width = 0.75) +
+    ggplot2::geom_line(data = poisson_ref, ggplot2::aes(y = poisson_share), color = "#f2a65a", linewidth = 1.1) +
+    ggplot2::geom_point(data = poisson_ref, ggplot2::aes(y = poisson_share), color = "#f2a65a", size = 2) +
+    ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+    ggplot2::labs(
+      title = "Observed goals versus simple Poisson reference",
+      x = "Goals scored by team",
+      y = "Share of team-match rows"
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Goal distribution plot is generated locally.")
+}
+```
+
+## Candidate Distributions
+
+<div class="distribution-grid">
+  <div class="distribution-card"><strong>Goals scored</strong>Poisson, negative binomial, zero-inflated count models, bivariate Poisson, Skellam goal difference.<small>Start here because goals are low nonnegative counts.</small></div>
+  <div class="distribution-card"><strong>Match result</strong>Ordinal logistic, multinomial logistic, adjacent-category models, paired-score simulation.<small>Useful for win/draw/loss odds comparison.</small></div>
+  <div class="distribution-card"><strong>Player and news counts</strong>Poisson or negative binomial with exposure offsets where needed.<small>Useful for goals, mentions, injuries, cards, and appearances.</small></div>
+  <div class="distribution-card"><strong>Probabilities</strong>Beta, Dirichlet, calibration curves, Brier/log-loss summaries.<small>Useful once predictions are compared with market-implied probabilities.</small></div>
+  <div class="distribution-card"><strong>Continuous context</strong>Normal, t, lognormal, gamma, empirical splines, or transformed variables.<small>Useful for weather, travel, rest, Elo differences, and player minutes.</small></div>
+  <div class="distribution-card"><strong>Latent team strength</strong>Gaussian random effects, dynamic state-space ratings, hierarchical priors.<small>Useful when teams have uneven schedule strength and sparse recent games.</small></div>
+</div>
+
+```{r candidate-table}
+candidate_models <- data.frame(
+  data_family = c(
+    "Team goals",
+    "Goal difference",
+    "Win/draw/loss",
+    "News article counts",
+    "Player availability",
+    "Market probabilities",
+    "Weather and travel"
+  ),
+  statistical_shape = c(
+    "Low nonnegative count",
+    "Integer contrast",
+    "Ordered or nominal category",
+    "Sparse count",
+    "Binary or proportion",
+    "Compositional probabilities",
+    "Continuous context"
+  ),
+  first_models = c(
+    "Poisson, negative binomial, bivariate Poisson",
+    "Skellam, ordered result model",
+    "Ordinal logistic, multinomial logistic",
+    "Poisson, negative binomial, topic indicators",
+    "Logistic regression, hierarchical availability prior",
+    "Calibration, beta/Dirichlet summaries, log loss",
+    "Splines, t errors, transformed linear effects"
+  ),
+  diagnostic = c(
+    "Mean-variance check, zero share, tail fit",
+    "Symmetry and draw concentration",
+    "Class balance, calibration by class",
+    "Overdispersion and burstiness",
+    "Missingness and source reliability",
+    "Reliability curves and bookmaker margin",
+    "Nonlinearity, skew, outliers"
+  )
+)
+
+display_table(candidate_models, caption = "Distribution candidates to build and filter.")
+```
+
+## Review Notes Captured
+
+The public materials reviewed emphasize a few habits that fit this project well:
+
+- Use computing to build intuition, not just final answers.
+- Put distribution assumptions beside visuals so model choices are auditable.
+- Compare models on held-out or cross-validated performance, not training fit alone.
+- Teach the reader the data grain before showing the model.
+- Keep source code reproducible while making the public page readable.
+
+Sources reviewed include Professor Justin Post's personal/course site, his ST 558 course repository, his Shiny teaching app page, and the Distributome project linked from those teaching resources.
+
+Reference links:
+
+- [Justin B. Post personal site](https://jbpost2.github.io/)
+- [ST 558 Data Science for Statisticians](https://jbpost2.github.io/ST-558-Data-Science-for-Statisticians/)
+- [R Shiny teaching apps](https://jbpost2.github.io/pages/ShinyApps.html)
+- [Distributome](https://distributome.org/)
+
+## Next Build List
+
+1. Add full-goals distribution diagnostics by tournament era and confederation.
+2. Add mean-versus-variance checks for count features.
+3. Add calibration plots for ordinal result probabilities.
+4. Add cross-validation by time split, not random split only.
+5. Add richer plots for predicted versus observed W/D/L rates by probability bucket.

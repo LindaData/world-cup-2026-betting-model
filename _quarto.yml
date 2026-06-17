@@ -5,6 +5,7 @@ project:
     - index.qmd
     - reports/01_goals_linear_regression.qmd
     - reports/02_ordinal_result_model.qmd
+    - reports/03_distribution_review.qmd
 
 website:
   title: "2026 World Cup Betting Model"
@@ -20,6 +21,8 @@ website:
         text: Goals Model
       - href: reports/02_ordinal_result_model.qmd
         text: Result Model
+      - href: reports/03_distribution_review.qmd
+        text: Distributions
     right:
       - text: LindaData
         href: https://lindadata.github.io/
