@@ -1,0 +1,191 @@
+[
+  {
+    "objectID": "reports/02_ordinal_result_model.html",
+    "href": "reports/02_ordinal_result_model.html",
+    "title": "Ordinal Result Model",
+    "section": "",
+    "text": "This report adds the first result-probability model.\nThe ordered outcome is:\n\\[\nY_{i,m}^{ord} \\in \\{\\text{loss}, \\text{draw}, \\text{win}\\}\n\\]\nwith:\n\\[\n\\text{loss} &lt; \\text{draw} &lt; \\text{win}\n\\]\nThis is closer to betting-market comparison because it estimates match outcome probabilities."
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#purpose",
+    "href": "reports/02_ordinal_result_model.html#purpose",
+    "title": "Ordinal Result Model",
+    "section": "",
+    "text": "This report adds the first result-probability model.\nThe ordered outcome is:\n\\[\nY_{i,m}^{ord} \\in \\{\\text{loss}, \\text{draw}, \\text{win}\\}\n\\]\nwith:\n\\[\n\\text{loss} &lt; \\text{draw} &lt; \\text{win}\n\\]\nThis is closer to betting-market comparison because it estimates match outcome probabilities."
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#unit-of-observation",
+    "href": "reports/02_ordinal_result_model.html#unit-of-observation",
+    "title": "Ordinal Result Model",
+    "section": "2 Unit Of Observation",
+    "text": "2 Unit Of Observation\nThe data has one row per team-match.\nIf Argentina plays France, there are two rows:\n\nArgentina result versus France.\nFrance result versus Argentina."
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#embedded-sample-rows",
+    "href": "reports/02_ordinal_result_model.html#embedded-sample-rows",
+    "title": "Ordinal Result Model",
+    "section": "3 Embedded Sample Rows",
+    "text": "3 Embedded Sample Rows\nNo sample CSV is published with the website. These rows are embedded into the rendered HTML from the local model frame.\n\n\nShow code\nsample_data &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"result_ordinal_model_sample_1000.csv\"))\n\nif (nrow(sample_data) &gt; 0) {\n  head(sample_data, 10)\n} else {\n  data.frame(note = \"Sample rows are generated locally by R/11_fit_ordinal_result_model.R.\")\n}\n\n\n# A tibble: 10 x 14\n   source_match_id date       team     opponent tournament listed_home neutral\n             &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;lgl&gt;       &lt;lgl&gt;  \n 1               1 1872-11-30 Scotland England  Friendly   TRUE        FALSE  \n 2               1 1872-11-30 England  Scotland Friendly   FALSE       FALSE  \n 3               2 1873-03-08 England  Scotland Friendly   TRUE        FALSE  \n 4               2 1873-03-08 Scotland England  Friendly   FALSE       FALSE  \n 5               3 1874-03-07 Scotland England  Friendly   TRUE        FALSE  \n 6               3 1874-03-07 England  Scotland Friendly   FALSE       FALSE  \n 7               4 1875-03-06 England  Scotland Friendly   TRUE        FALSE  \n 8               4 1875-03-06 Scotland England  Friendly   FALSE       FALSE  \n 9               5 1876-03-04 Scotland England  Friendly   TRUE        FALSE  \n10               5 1876-03-04 England  Scotland Friendly   FALSE       FALSE  \n# i 7 more variables: goals_for &lt;dbl&gt;, goals_against &lt;dbl&gt;,\n#   y_result_ordered &lt;chr&gt;, pre_elo &lt;dbl&gt;, opponent_pre_elo &lt;dbl&gt;,\n#   elo_diff &lt;dbl&gt;, pre_match_expected_result &lt;dbl&gt;"
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#model",
+    "href": "reports/02_ordinal_result_model.html#model",
+    "title": "Ordinal Result Model",
+    "section": "4 Model",
+    "text": "4 Model\nThe proportional-odds ordinal logistic model is:\n\\[\n\\text{logit}\\left(P(Y_{i,m}^{ord} \\leq k)\\right)\n= \\theta_k - X_{i,m}\\beta\n\\]\nwhere:\n\\[\nk \\in \\{\\text{loss}, \\text{draw}\\}\n\\]\nand:\n\\[\nX_{i,m}\\beta\n= \\beta_1 E_{i,m}^{pre}\n+ \\beta_2 E_{j,m}^{pre}\n+ \\beta_3 p_{i,m}\n+ \\beta_4 I(\\text{listed home}_{i,m})\n+ \\beta_5 I(\\text{neutral site}_m)\n\\]"
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#results",
+    "href": "reports/02_ordinal_result_model.html#results",
+    "title": "Ordinal Result Model",
+    "section": "5 Results",
+    "text": "5 Results\n\n\nShow code\nmetrics &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"result_ordinal_model_metrics.csv\"))\nclass_distribution &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"result_ordinal_model_class_distribution.csv\"))\ncoefficients &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"result_ordinal_model_coefficients.csv\"))\nconfusion &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"result_ordinal_model_confusion_matrix.csv\"))\npredictions &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"result_ordinal_model_test_predictions.csv\"))\n\nif (nrow(metrics) &gt; 0) metrics else data.frame(note = \"Metrics are generated locally.\")\n\n\n# A tibble: 1 x 8\n  rows_total rows_train rows_test predictors_after_encoding test_accuracy\n       &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;                     &lt;dbl&gt;         &lt;dbl&gt;\n1      98810      79122     19688                         5         0.585\n# i 3 more variables: test_log_loss &lt;dbl&gt;, test_multiclass_brier &lt;dbl&gt;,\n#   baseline_majority_accuracy &lt;dbl&gt;"
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#class-balance",
+    "href": "reports/02_ordinal_result_model.html#class-balance",
+    "title": "Ordinal Result Model",
+    "section": "6 Class Balance",
+    "text": "6 Class Balance\n\n\nShow code\nif (nrow(class_distribution) &gt; 0) class_distribution else data.frame(note = \"Class balance is generated locally.\")\n\n\n# A tibble: 3 x 3\n  result  rows share\n  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;\n1 loss   38172 0.386\n2 draw   22466 0.227\n3 win    38172 0.386"
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#coefficients",
+    "href": "reports/02_ordinal_result_model.html#coefficients",
+    "title": "Ordinal Result Model",
+    "section": "7 Coefficients",
+    "text": "7 Coefficients\n\n\nShow code\nif (nrow(coefficients) &gt; 0) coefficients else data.frame(note = \"Coefficients are generated locally.\")\n\n\n# A tibble: 7 x 6\n  component term                      estimate std_error  t_value p_value_approx\n  &lt;chr&gt;     &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;\n1 slope     pre_elo                    0.00231 0.0000404   57.3            0    \n2 slope     opponent_pre_elo          -0.00233 0.0000398  -58.5            0    \n3 slope     pre_match_expected_result  2.33    0.00218   1067.             0    \n4 slope     listed_homeTRUE            0.597   0.0141      42.3            0    \n5 slope     neutralTRUE               -0.00993 0.0161      -0.617          0.537\n6 threshold loss|draw                  0.837   0.000397  2107.             0    \n7 threshold draw|win                   2.04    0.00819    249.             0    \n\n\nPositive slope coefficients move probability mass toward better outcomes."
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#test-prediction-examples",
+    "href": "reports/02_ordinal_result_model.html#test-prediction-examples",
+    "title": "Ordinal Result Model",
+    "section": "8 Test Prediction Examples",
+    "text": "8 Test Prediction Examples\n\n\nShow code\nif (nrow(predictions) &gt; 0) {\n  head(\n    predictions[\n      ,\n      c(\n        \"date\",\n        \"team\",\n        \"opponent\",\n        \"y_result_ordered\",\n        \"predicted_result\",\n        \"pred_prob_loss\",\n        \"pred_prob_draw\",\n        \"pred_prob_win\"\n      )\n    ],\n    12\n  )\n} else {\n  data.frame(note = \"Predictions are generated locally.\")\n}\n\n\n# A tibble: 12 x 8\n   date       team     opponent y_result_ordered predicted_result pred_prob_loss\n   &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;                     &lt;dbl&gt;\n 1 1873-03-08 England  Scotland win              win                       0.221\n 2 1875-03-06 Scotland England  draw             loss                      0.519\n 3 1880-03-13 Scotland England  win              win                       0.145\n 4 1880-03-13 England  Scotland loss             loss                      0.638\n 5 1880-03-27 Scotland Wales    win              win                       0.114\n 6 1881-03-14 Scotland Wales    win              win                       0.265\n 7 1882-02-18 England  Norther~ win              loss                      0.566\n 8 1882-02-25 Wales    Norther~ win              win                       0.269\n 9 1882-03-11 England  Scotland loss             loss                      0.667\n10 1882-03-13 England  Wales    loss             loss                      0.431\n11 1883-02-03 Wales    England  loss             loss                      0.549\n12 1883-02-24 Norther~ England  loss             loss                      0.566\n# i 2 more variables: pred_prob_draw &lt;dbl&gt;, pred_prob_win &lt;dbl&gt;"
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#confusion-matrix",
+    "href": "reports/02_ordinal_result_model.html#confusion-matrix",
+    "title": "Ordinal Result Model",
+    "section": "9 Confusion Matrix",
+    "text": "9 Confusion Matrix\n\n\nShow code\nif (nrow(confusion) &gt; 0) confusion else data.frame(note = \"Confusion matrix is generated locally.\")\n\n\n# A tibble: 6 x 3\n  actual_result predicted_result  rows\n  &lt;chr&gt;         &lt;chr&gt;            &lt;dbl&gt;\n1 draw          loss              2223\n2 loss          loss              5783\n3 win           loss              1859\n4 draw          win               2264\n5 loss          win               1821\n6 win           win               5738"
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#interpretation",
+    "href": "reports/02_ordinal_result_model.html#interpretation",
+    "title": "Ordinal Result Model",
+    "section": "10 Interpretation",
+    "text": "10 Interpretation\nThe model produces:\n\\[\nP(\\text{loss}), \\quad P(\\text{draw}), \\quad P(\\text{win})\n\\]\nThis is the shape needed for future odds comparison.\nStill, this is a baseline:\n\nThe proportional-odds assumption may be too restrictive.\nPaired team-match rows are not independent.\nDraws usually need richer features.\nMarket odds will be the key benchmark once added."
+  },
+  {
+    "objectID": "reports/02_ordinal_result_model.html#reproduce-locally",
+    "href": "reports/02_ordinal_result_model.html#reproduce-locally",
+    "title": "Ordinal Result Model",
+    "section": "11 Reproduce Locally",
+    "text": "11 Reproduce Locally\n\n\nShow code\nsource(\"R/01_build_duckdb.R\")\nsource(\"R/11_fit_ordinal_result_model.R\")"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "2026 World Cup Betting Model",
+    "section": "",
+    "text": "This site is the public-facing project notebook. It keeps the rendered analysis in HTML, hides code by default, and lets readers expand code with Show code.\nNo raw datasets, processed databases, API keys, .Renviron, credentials, or private files are published here."
+  },
+  {
+    "objectID": "index.html#current-models",
+    "href": "index.html#current-models",
+    "title": "2026 World Cup Betting Model",
+    "section": "1 Current Models",
+    "text": "1 Current Models\n\n\nShow code\ngoals_metrics &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_metrics.csv\"))\nordinal_metrics &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"result_ordinal_model_metrics.csv\"))\n\nif (nrow(goals_metrics) &gt; 0 && nrow(ordinal_metrics) &gt; 0) {\n  data.frame(\n    model = c(\"Goals OLS\", \"Ordinal result logistic\"),\n    target = c(\"team goals\", \"loss &lt; draw &lt; win\"),\n    rows_total = c(goals_metrics$rows_total[[1]], ordinal_metrics$rows_total[[1]]),\n    primary_metric = c(\"test RMSE\", \"test accuracy\"),\n    value = c(\n      round(goals_metrics$test_rmse[[1]], 4),\n      round(ordinal_metrics$test_accuracy[[1]], 4)\n    ),\n    baseline_context = c(\n      paste(\"mean test goals:\", round(goals_metrics$mean_y_test[[1]], 4)),\n      paste(\"majority baseline:\", round(ordinal_metrics$baseline_majority_accuracy[[1]], 4))\n    )\n  )\n} else {\n  data.frame(note = \"Model metrics are generated locally before rendering.\")\n}\n\n\n                    model            target rows_total primary_metric  value\n1               Goals OLS        team goals      98810      test RMSE 1.4632\n2 Ordinal result logistic loss &lt; draw &lt; win      98810  test accuracy 0.5852\n           baseline_context\n1   mean test goals: 1.4652\n2 majority baseline: 0.3864"
+  },
+  {
+    "objectID": "index.html#reports",
+    "href": "index.html#reports",
+    "title": "2026 World Cup Betting Model",
+    "section": "2 Reports",
+    "text": "2 Reports\n\n\n\n2.1 Goals Model\nOLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.\nOpen goals report\n\n\n\n2.2 Result Model\nOrdinal logistic baseline for loss &lt; draw &lt; win, producing win/draw/loss probability estimates.\nOpen result report"
+  },
+  {
+    "objectID": "index.html#data-status",
+    "href": "index.html#data-status",
+    "title": "2026 World Cup Betting Model",
+    "section": "3 Data Status",
+    "text": "3 Data Status\n\n\nShow code\ninventory &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"metadata\", \"table_inventory.csv\"))\n\nif (nrow(inventory) &gt; 0) {\n  inventory |&gt;\n    dplyr::arrange(table_name) |&gt;\n    head(20)\n} else {\n  data.frame(note = \"Table inventory is generated locally by R/07_export_metadata.R.\")\n}\n\n\n# A tibble: 20 x 2\n   table_name                             row_count\n   &lt;chr&gt;                                      &lt;dbl&gt;\n 1 agg_news_query_counts_gdelt                    8\n 2 agg_player_international_goals             15821\n 3 agg_team_elo_latest                          336\n 4 agg_team_history                             336\n 5 agg_team_recent_form                         262\n 6 dim_2026_world_cup_squad_players            1248\n 7 dim_locations_from_results                  2214\n 8 dim_player_wikidata                         1248\n 9 fact_2026_world_cup_fixtures                  72\n10 fact_fixture_weather_hourly_open_meteo       480\n11 fact_international_matches_team_long       98954\n12 fact_news_articles_gdelt                     172\n13 fact_player_goals                          47647\n14 fact_team_elo_match_history                98842\n15 football_data_matches                          0\n16 odds_snapshots                                 0\n17 raw_manifests                                  2\n18 raw_snapshot_files                            19\n19 seed_venues                                   16\n20 stg_international_goalscorers              47647"
+  },
+  {
+    "objectID": "index.html#refresh-options",
+    "href": "index.html#refresh-options",
+    "title": "2026 World Cup Betting Model",
+    "section": "4 Refresh Options",
+    "text": "4 Refresh Options\nRun these from RStudio.\n\n4.1 Local Rebuild\nDoes not hit APIs or spend quota.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(profile = \"local-rebuild\")\n\n\n\n\n4.2 Free Source Refresh\nPulls free/no-key public sources and rebuilds the local site.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(profile = \"free-refresh\")\n\n\n\n\n4.3 Keyed APIs Later\nUse after .env is configured locally.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(\n  profile = \"free-refresh\",\n  include_keyed_apis = TRUE\n)\n\n\nOdds pulls require explicit quota permission.\n\n\nShow code\nsource(\"R/20_refresh_all.R\")\nrefresh_world_cup_data(\n  profile = \"free-refresh\",\n  include_keyed_apis = TRUE,\n  include_odds_quota = TRUE\n)"
+  },
+  {
+    "objectID": "index.html#next-work",
+    "href": "index.html#next-work",
+    "title": "2026 World Cup Betting Model",
+    "section": "5 Next Work",
+    "text": "5 Next Work\n\nAdd rolling recent-form features.\nAdd squad-strength and player-availability signals.\nAdd news-derived injury and lineup signals.\nAdd odds-implied probabilities.\nCompare ordinal logistic, multinomial logistic, and paired-goal models.\nCalibrate predicted probabilities."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html",
+    "href": "reports/01_goals_linear_regression.html",
+    "title": "Goals Linear Regression",
+    "section": "",
+    "text": "This report documents the first transparent baseline model for the World Cup prediction project.\nThe target is team goals scored in a historical international match:\n\\[\nY_{i,m} = \\text{goals scored by team } i \\text{ in match } m\n\\]\nThis is a baseline, not the final soccer model. Goals are non-negative counts, so future versions should compare Poisson, negative-binomial, bivariate Poisson, or Skellam-style models."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#purpose",
+    "href": "reports/01_goals_linear_regression.html#purpose",
+    "title": "Goals Linear Regression",
+    "section": "",
+    "text": "This report documents the first transparent baseline model for the World Cup prediction project.\nThe target is team goals scored in a historical international match:\n\\[\nY_{i,m} = \\text{goals scored by team } i \\text{ in match } m\n\\]\nThis is a baseline, not the final soccer model. Goals are non-negative counts, so future versions should compare Poisson, negative-binomial, bivariate Poisson, or Skellam-style models."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#unit-of-observation",
+    "href": "reports/01_goals_linear_regression.html#unit-of-observation",
+    "title": "Goals Linear Regression",
+    "section": "2 Unit Of Observation",
+    "text": "2 Unit Of Observation\nThe modeling frame has one row per team-match.\nIf Argentina plays France, the data has two rows:\n\nArgentina’s goals as the target, with France as the opponent.\nFrance’s goals as the target, with Argentina as the opponent."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#sample-rows-embedded-in-report",
+    "href": "reports/01_goals_linear_regression.html#sample-rows-embedded-in-report",
+    "title": "Goals Linear Regression",
+    "section": "3 Sample Rows Embedded In Report",
+    "text": "3 Sample Rows Embedded In Report\nNo sample CSV is published with the website. These rows are embedded into the rendered HTML from the local model frame.\n\n\nShow code\nsample_data &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_sample_1000.csv\"))\n\nif (nrow(sample_data) &gt; 0) {\n  head(sample_data, 10)\n} else {\n  data.frame(note = \"Sample rows are generated locally by R/10_fit_linear_goals_model.R.\")\n}\n\n\n# A tibble: 10 x 12\n   source_match_id date       team     opponent tournament listed_home neutral\n             &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;lgl&gt;       &lt;lgl&gt;  \n 1               1 1872-11-30 Scotland England  Friendly   TRUE        FALSE  \n 2               1 1872-11-30 England  Scotland Friendly   FALSE       FALSE  \n 3               2 1873-03-08 England  Scotland Friendly   TRUE        FALSE  \n 4               2 1873-03-08 Scotland England  Friendly   FALSE       FALSE  \n 5               3 1874-03-07 Scotland England  Friendly   TRUE        FALSE  \n 6               3 1874-03-07 England  Scotland Friendly   FALSE       FALSE  \n 7               4 1875-03-06 England  Scotland Friendly   TRUE        FALSE  \n 8               4 1875-03-06 Scotland England  Friendly   FALSE       FALSE  \n 9               5 1876-03-04 Scotland England  Friendly   TRUE        FALSE  \n10               5 1876-03-04 England  Scotland Friendly   FALSE       FALSE  \n# i 5 more variables: y_goals_for &lt;dbl&gt;, pre_elo &lt;dbl&gt;, opponent_pre_elo &lt;dbl&gt;,\n#   elo_diff &lt;dbl&gt;, pre_match_expected_result &lt;dbl&gt;"
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#elo-feature",
+    "href": "reports/01_goals_linear_regression.html#elo-feature",
+    "title": "Goals Linear Regression",
+    "section": "4 Elo Feature",
+    "text": "4 Elo Feature\nFor team \\(i\\) against opponent \\(j\\), expected result before kickoff is:\n\\[\np_{i,m} =\n\\frac{1}\n{1 + 10^{-\\left(E_{i,m}^{pre} + H_m - E_{j,m}^{pre}\\right)/400}}\n\\]\nWhere:\n\n\\(E_{i,m}^{pre}\\) is team \\(i\\)’s pre-match Elo.\n\\(E_{j,m}^{pre}\\) is opponent pre-match Elo.\n\\(H_m\\) is the home advantage adjustment.\n\\(p_{i,m}\\) is expected result on a 0 to 1 scale."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#model",
+    "href": "reports/01_goals_linear_regression.html#model",
+    "title": "Goals Linear Regression",
+    "section": "5 Model",
+    "text": "5 Model\nThe first regression is:\n\\[\nY_{i,m}\n= \\beta_0\n+ \\beta_1 E_{i,m}^{pre}\n+ \\beta_2 E_{j,m}^{pre}\n+ \\beta_3 p_{i,m}\n+ \\beta_4 I(\\text{listed home}_{i,m})\n+ \\beta_5 I(\\text{neutral site}_m)\n+ \\epsilon_{i,m}\n\\]\nwith:\n\\[\n\\epsilon_{i,m} \\sim N(0, \\sigma^2)\n\\]"
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#results",
+    "href": "reports/01_goals_linear_regression.html#results",
+    "title": "Goals Linear Regression",
+    "section": "6 Results",
+    "text": "6 Results\n\n\nShow code\nmetrics &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_metrics.csv\"))\ncoefficients &lt;- read_csv_if_exists(file.path(root, \"data\", \"processed\", \"modeling\", \"goals_linear_model_coefficients.csv\"))\n\nif (nrow(metrics) &gt; 0) metrics else data.frame(note = \"Metrics are generated locally.\")\n\n\n# A tibble: 1 x 9\n  rows_total rows_train rows_test predictors_after_encoding train_r_squared\n       &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;                     &lt;dbl&gt;           &lt;dbl&gt;\n1      98810      79122     19688                         5           0.186\n# i 4 more variables: train_adj_r_squared &lt;dbl&gt;, test_rmse &lt;dbl&gt;,\n#   test_mae &lt;dbl&gt;, mean_y_test &lt;dbl&gt;\n\n\n\n\nShow code\nif (nrow(coefficients) &gt; 0) coefficients else data.frame(note = \"Coefficients are generated locally.\")\n\n\n# A tibble: 6 x 5\n  term                      estimate std_error t_value   p_value\n  &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;\n1 (Intercept)                1.94    0.0552      35.1  2.25e-268\n2 pre_elo                    0.00160 0.0000751   21.3  1.12e-100\n3 opponent_pre_elo          -0.00228 0.0000751  -30.3  4.72e-201\n4 pre_match_expected_result  0.773   0.0707      10.9  8.33e- 28\n5 listed_homeTRUE            0.395   0.0154      25.7  9.21e-145\n6 neutralTRUE                0.0623  0.0118       5.28 1.33e-  7"
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#interpretation",
+    "href": "reports/01_goals_linear_regression.html#interpretation",
+    "title": "Goals Linear Regression",
+    "section": "7 Interpretation",
+    "text": "7 Interpretation\nThe signs match soccer intuition:\n\npre_elo is positive: stronger teams score more.\nopponent_pre_elo is negative: stronger opponents suppress scoring.\npre_match_expected_result is positive: teams expected to perform better score more.\nlisted_homeTRUE is positive: listed home teams score more."
+  },
+  {
+    "objectID": "reports/01_goals_linear_regression.html#reproduce-locally",
+    "href": "reports/01_goals_linear_regression.html#reproduce-locally",
+    "title": "Goals Linear Regression",
+    "section": "8 Reproduce Locally",
+    "text": "8 Reproduce Locally\n\n\nShow code\nsource(\"R/01_build_duckdb.R\")\nsource(\"R/10_fit_linear_goals_model.R\")"
+  }
+]
