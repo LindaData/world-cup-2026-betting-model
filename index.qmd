@@ -77,6 +77,82 @@ Sources: [API-Football pricing](https://www.api-football.com/pricing), [The Odds
 
 After subscribing, add the API key only to local `.env` as `API_FOOTBALL_KEY`. Do not commit the key.
 
+## Model Blueprint
+
+This section defines the regression plan before the API data is used for fitting. The structure follows the teaching pattern I like from Statistics by Jim: name the target, write the equation, translate the coefficient into plain English, then state the checks that decide whether the model is trustworthy.
+
+No new coefficients or prediction tables are estimated here. The regressions are fit after the API pull defines the final modeling table.
+
+::: {.model-blueprint}
+::: {.model-card}
+### 1. Simple OLS Goals Model
+
+**Question:** how many goals should a team score in one match?
+
+The first simple model uses one predictor, such as team strength difference:
+
+$$
+\text{Goals} = \beta_0 + \beta_1\text{Strength Difference} + \epsilon
+$$
+
+In words, `beta_1` is the average change in expected goals for a one-unit increase in strength difference.
+
+**Why start here:** OLS is easy to explain, fast to diagnose, and gives a clear benchmark before count models.
+
+**Main issues to check:**
+
+- Goals are counts, so OLS can predict impossible values below 0.
+- Soccer scores are low and skewed, so residuals may not look normal.
+- Error variance can change by team strength or opponent strength.
+- Team-match rows are not fully independent because each match creates two rows.
+- Missing roster, injury, rest, venue, and market data can bias coefficients.
+:::
+
+::: {.model-card}
+### 2. Three-Outcome Result Model
+
+**Question:** what is the probability of win, draw, or loss?
+
+The first three-outcome model is an ordinal logistic regression because the team result has a natural order:
+
+$$
+\text{loss} < \text{draw} < \text{win}
+$$
+
+The model uses cumulative logits:
+
+$$
+\text{logit}\{P(\text{Result} \leq k)\}
+= \theta_k - \eta
+$$
+
+with:
+
+$$
+\eta = \beta_1\text{Strength Difference}
++ \beta_2\text{Roster Strength}
++ \beta_3\text{Rest}
++ \beta_4\text{Venue}
+$$
+
+The output is three probabilities:
+
+$$
+P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
+$$
+
+**Main issues to check:**
+
+- The proportional-odds assumption may be too strong.
+- Draws are not simply halfway between loss and win.
+- A multinomial logit may fit better if win, draw, and loss behave as separate categories.
+- Calibration matters more than raw accuracy for betting comparison.
+- Market odds should be the benchmark once API odds are available.
+:::
+:::
+
+References for teaching style and model framing: [Statistics by Jim on OLS assumptions](https://statisticsbyjim.com/regression/ols-linear-regression-assumptions/), [logistic regression](https://statisticsbyjim.com/regression/logistic-regression/), and [multinomial logistic regression](https://statisticsbyjim.com/regression/multinomial-logistic-regression/).
+
 ## Project Map
 
 ::: {.panel-tabset}
