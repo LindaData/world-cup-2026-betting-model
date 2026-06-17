@@ -8,14 +8,23 @@ project:
 
 website:
   title: "2026 World Cup Betting Model"
+  site-url: "https://lindadata.github.io/world-cup-2026-betting-model/"
+  repo-url: "https://github.com/LindaData/world-cup-2026-betting-model"
+  repo-actions: [source]
   navbar:
+    background: "#157878"
     left:
       - href: index.qmd
-        text: Overview
+        text: About
       - href: reports/01_goals_linear_regression.qmd
         text: Goals Model
       - href: reports/02_ordinal_result_model.qmd
         text: Result Model
+    right:
+      - text: LindaData
+        href: https://lindadata.github.io/
+      - text: GitHub
+        href: https://github.com/LindaData/world-cup-2026-betting-model
   page-footer:
     left: "Research project. Not betting advice."
     right: "Built with R, Python, SQL, DuckDB, and Quarto."
@@ -32,6 +41,7 @@ format:
     code-summary: "Show code"
     smooth-scroll: true
     link-external-newwindow: true
+    fig-align: center
 
 execute:
   echo: true

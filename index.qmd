@@ -1,6 +1,6 @@
 ---
 title: "2026 World Cup Betting Model"
-subtitle: "Reproducible data, models, and reports for a World Cup prediction workflow"
+subtitle: "An RStudio-first modeling lab for public soccer data, explainable baselines, and future betting-market comparison"
 ---
 
 ```{r setup, include=FALSE}
@@ -15,11 +15,72 @@ read_csv_if_exists <- function(path) {
 }
 ```
 
-This site is the public-facing project notebook. It keeps the rendered analysis in HTML, hides code by default, and lets readers expand code with **Show code**.
+<div class="hero-actions">
+  <a class="btn" href="https://github.com/LindaData/world-cup-2026-betting-model">View on GitHub</a>
+  <a class="btn" href="reports/01_goals_linear_regression.html">Goals Model</a>
+  <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a>
+  <a class="btn" href="https://lindadata.github.io/">LindaData Home</a>
+</div>
+
+This site is the public-facing project notebook. It follows the same teaching-report style as the earlier COVID analysis: explain the data pull, show the transformed data, write the model math, then render plots and results.
+
+Code is hidden by default so the report reads cleanly. Use **Show code** when you want to inspect the R steps.
 
 No raw datasets, processed databases, API keys, `.Renviron`, credentials, or private files are published here.
 
-## Current Models
+## Project Map
+
+::: {.panel-tabset}
+
+## About
+
+This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup. The current public version is a transparent baseline, not a final betting system.
+
+The project is designed around four layers:
+
+- **Data collection:** public match history, Elo ratings, 2026 venues, weather, player metadata, and news signals.
+- **Data storage:** local files and DuckDB tables for modeling.
+- **Modeling:** interpretable first-pass models in R, with Python handling API pulls and heavier data jobs.
+- **Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.
+
+## Data Exploration
+
+The starting modeling unit is one row per team-match. A single game creates two observations, one for each team.
+
+```{r goals-sample}
+goals_sample <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_sample_1000.csv"))
+
+if (nrow(goals_sample) > 0) {
+  head(goals_sample, 10)
+} else {
+  data.frame(note = "Sample rows are generated locally by R/10_fit_linear_goals_model.R.")
+}
+```
+
+```{r goals-plot, fig.cap="Distribution of goals in the public sample used for the baseline model."}
+if (nrow(goals_sample) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(goals_sample, ggplot2::aes(x = y_goals_for)) +
+    ggplot2::geom_histogram(binwidth = 1, boundary = -0.5, fill = "#157878", color = "white") +
+    ggplot2::labs(
+      title = "Goals scored by team-match row",
+      x = "Goals scored",
+      y = "Team-match rows"
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Goals sample is generated locally before rendering.")
+}
+```
+
+## Modeling
+
+The first two models are intentionally simple:
+
+- **Goals OLS:** predicts goals scored.
+- **Ordinal logistic:** predicts `loss < draw < win`.
+
+This mirrors the Shiny layout you used before: start with descriptive analytics, then model fitting, then prediction outputs.
 
 ```{r model-summary}
 goals_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_metrics.csv"))
@@ -45,31 +106,9 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
 }
 ```
 
-## Reports
+## Data
 
-::: {.columns}
-::: {.column width="50%"}
-::: {.project-card}
-### Goals Model
-
-OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.
-
-[Open goals report](reports/01_goals_linear_regression.html)
-:::
-:::
-
-::: {.column width="50%"}
-::: {.project-card}
-### Result Model
-
-Ordinal logistic baseline for `loss < draw < win`, producing win/draw/loss probability estimates.
-
-[Open result report](reports/02_ordinal_result_model.html)
-:::
-:::
-:::
-
-## Data Status
+The local database contains more tables than the public site publishes. The rendered site shows metadata only, which keeps credentials and source data off GitHub.
 
 ```{r table-inventory}
 inventory <- read_csv_if_exists(file.path(root, "data", "processed", "metadata", "table_inventory.csv"))
@@ -82,6 +121,51 @@ if (nrow(inventory) > 0) {
   data.frame(note = "Table inventory is generated locally by R/07_export_metadata.R.")
 }
 ```
+
+:::
+
+## Current Models
+
+<div class="metric-strip">
+  <div class="metric"><strong>Primary target</strong><span>Goals</span></div>
+  <div class="metric"><strong>Result target</strong><span>W / D / L</span></div>
+  <div class="metric"><strong>Workflow</strong><span>R + Python + SQL</span></div>
+  <div class="metric"><strong>Publishing</strong><span>Quarto HTML</span></div>
+</div>
+
+## Reports
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.project-card}
+### Goals Model
+
+OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.
+
+<a class="project-button" href="reports/01_goals_linear_regression.html">Open goals report</a>
+:::
+:::
+
+::: {.column width="50%"}
+::: {.project-card}
+### Result Model
+
+Ordinal logistic baseline for `loss < draw < win`, producing win/draw/loss probability estimates.
+
+<a class="project-button" href="reports/02_ordinal_result_model.html">Open result report</a>
+:::
+:::
+:::
+
+## Interactive App Direction
+
+::: {.shiny-panel}
+### Shiny First, Streamlit Later If Needed
+
+Your older Shiny code used `navbarPage()`, `sidebarLayout()`, `DT` tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.
+
+GitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet.
+:::
 
 ## Refresh Options
 

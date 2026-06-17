@@ -2,7 +2,7 @@
 
 This project is a reproducible data and modeling scaffold for the 2026 FIFA World Cup. It is designed to be worked on from RStudio while using Python for data acquisition and SQL/DuckDB for storage.
 
-The current baseline estimates team goals using historical international match data. Later iterations will move toward win/draw/loss probabilities, market comparison, and app presentation in Shiny or Streamlit.
+The current baselines estimate team goals and win/draw/loss probabilities using historical international match data. Later iterations will add market comparison, roster strength, player availability, and news signals.
 
 The intended workflow is three-language:
 
@@ -18,10 +18,7 @@ DuckDB is the default SQL engine because it is free, embedded, works from R and 
 - Rendered GitHub Pages site: `docs/`
 - Goals model walkthrough: `reports/01_goals_linear_regression.qmd`
 - Ordinal result model report: `reports/02_ordinal_result_model.qmd`
-- Data inventory: `docs/current_data_status.md`
-- Source landscape and pricing: `docs/source_landscape.md`
-- Local refresh workflow: `docs/local_update_workflow.md`
-- GitHub publishing plan: `docs/github_publish_plan.md`
+- Local Shiny prototype: `apps/shiny_world_cup/app.R`
 
 Render the Quarto site from RStudio:
 
@@ -63,7 +60,7 @@ python scripts/check_connections.py
 python scripts/fetch_raw_data.py --sources public
 ```
 
-On this machine, the current Windows Python launcher appears broken. Fixing the Python install is the next practical step before running the scripts locally. R and Quarto also are not on PATH from the Codex shell, though they may still be available inside RStudio.
+On this machine, the project uses the local `.venv` for Python and the Quarto copy bundled with RStudio.
 
 ## RStudio Workflow
 
@@ -95,7 +92,15 @@ For app readiness checks:
 source("R/05_check_app_readiness.R")
 ```
 
-The first app should probably be Shiny because this machine already has most of the R app stack installed. Streamlit can use the same DuckDB file later after Python app packages are installed.
+The first interactive app is Shiny because this machine already has the R app stack installed and the existing coursework examples use Shiny patterns.
+
+Run the local app from RStudio:
+
+```r
+shiny::runApp("apps/shiny_world_cup")
+```
+
+Streamlit can use the same DuckDB/model outputs later if a Python-first app becomes useful.
 
 ## Current Data Build
 
@@ -140,7 +145,7 @@ source("R/01_build_duckdb.R")
 source("R/06_data_inventory.R")
 ```
 
-See `docs/data_inventory.md` and `docs/api_key_setup.md` for what is already pulled and what still needs API keys.
+Use the rendered Quarto site for the current public data inventory and model summaries.
 
 To pull free GDELT news metadata later:
 

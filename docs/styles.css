@@ -1,14 +1,82 @@
 body {
-  line-height: 1.55;
+  line-height: 1.58;
+  color: #263238;
+  background: #ffffff;
+}
+
+a {
+  color: #157878;
+}
+
+a:hover {
+  color: #0f5f5f;
+}
+
+.navbar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.quarto-title-block.default {
+  background: #157878;
+  color: #ffffff;
+  margin-bottom: 2rem;
+}
+
+.quarto-title-block.default .quarto-title {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 3rem 1rem 2.6rem;
+  text-align: center;
 }
 
 .quarto-title-block .title {
   letter-spacing: 0;
+  font-weight: 700;
+}
+
+.quarto-title-block .subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
 }
 
 .lead {
   font-size: 1.08rem;
   color: #4b5563;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 1.25rem 0 0.25rem;
+}
+
+.hero-actions .btn,
+.project-button {
+  border: 1px solid #9cc7c7;
+  border-radius: 6px;
+  padding: 0.58rem 0.9rem;
+  color: #0f5f5f;
+  background: #f5fbfb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.hero-actions .btn {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.hero-actions .btn:hover,
+.project-button:hover {
+  background: #e7f4f4;
+  color: #0f5f5f;
+}
+
+.hero-actions .btn:hover {
+  background: #ffffff;
 }
 
 .callout {
@@ -23,7 +91,8 @@ pre code {
   white-space: pre-wrap;
 }
 
-.project-card {
+.project-card,
+.shiny-panel {
   border: 1px solid #d9dee8;
   border-radius: 8px;
   padding: 1rem;
@@ -31,7 +100,55 @@ pre code {
   background: #fff;
 }
 
-.project-card h3 {
+.project-card h3,
+.shiny-panel h3 {
   margin-top: 0;
   font-size: 1.05rem;
+}
+
+.metric-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.85rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.metric {
+  border-left: 4px solid #f2a65a;
+  background: #fbfbf8;
+  padding: 0.85rem;
+}
+
+.metric strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #52616b;
+  text-transform: uppercase;
+}
+
+.metric span {
+  display: block;
+  font-size: 1.25rem;
+  color: #17252a;
+  font-weight: 700;
+}
+
+.panel-tabset {
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .quarto-title-block.default .quarto-title {
+    padding: 2rem 1rem;
+  }
+
+  .hero-actions {
+    justify-content: stretch;
+  }
+
+  .hero-actions .btn,
+  .project-button {
+    width: 100%;
+    text-align: center;
+  }
 }
