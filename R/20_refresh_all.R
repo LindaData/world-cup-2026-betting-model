@@ -31,6 +31,9 @@ refresh_world_cup_data <- function(
     skip_model = FALSE,
     skip_render = FALSE,
     continue_on_error = FALSE,
+    include_api_football_advanced = FALSE,
+    api_football_max_fixtures = 0,
+    api_football_max_player_pages = 1,
     max_weather_fixtures = NULL,
     max_news_records = NULL,
     news_timespan = NULL) {
@@ -45,6 +48,15 @@ refresh_world_cup_data <- function(
   }
   if (include_odds_quota) {
     args <- c(args, "--include-odds-quota")
+  }
+  if (include_api_football_advanced) {
+    args <- c(args, "--api-football-advanced")
+  }
+  if (!is.null(api_football_max_fixtures)) {
+    args <- c(args, "--api-football-max-fixtures", as.character(api_football_max_fixtures))
+  }
+  if (!is.null(api_football_max_player_pages)) {
+    args <- c(args, "--api-football-max-player-pages", as.character(api_football_max_player_pages))
   }
   if (skip_news) {
     args <- c(args, "--skip-news")

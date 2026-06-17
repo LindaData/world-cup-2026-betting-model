@@ -29,6 +29,69 @@ def _write_json(path: Path, payload: object) -> None:
     path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
 
 
+def _response_items(payload: object) -> list[object]:
+    if isinstance(payload, dict) and isinstance(payload.get("response"), list):
+        return payload["response"]
+    return []
+
+
+def _select_api_football_league_id(payload: object, season: int) -> str:
+    rows = _response_items(payload)
+    fallback = ""
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        league = row.get("league") if isinstance(row.get("league"), dict) else {}
+        league_name = str(league.get("name", ""))
+        league_id = str(league.get("id", ""))
+        if league_name.lower() != "world cup" or not league_id:
+            continue
+        fallback = fallback or league_id
+        seasons = row.get("seasons") if isinstance(row.get("seasons"), list) else []
+        if any(isinstance(item, dict) and item.get("year") == season for item in seasons):
+            return league_id
+    return fallback
+
+
+def _api_manifest(response) -> dict[str, object]:
+    detail: dict[str, object] = {
+        "status_code": response.status_code,
+        "url": response.url,
+    }
+    try:
+        payload = response.json()
+    except json.JSONDecodeError:
+        return detail
+    if isinstance(payload, dict):
+        paging = payload.get("paging")
+        errors = payload.get("errors")
+        results = payload.get("results")
+        if paging:
+            detail["paging"] = paging
+        if errors:
+            detail["errors"] = errors
+        if results is not None:
+            detail["results"] = results
+    return detail
+
+
+def _write_api_response(destination: Path, filename: str, response) -> None:
+    if response.ok:
+        _write_json(destination / filename, response.json())
+
+
+def _fixture_ids_from_payload(payload: object) -> list[str]:
+    fixture_ids: list[str] = []
+    for row in _response_items(payload):
+        if not isinstance(row, dict):
+            continue
+        fixture = row.get("fixture") if isinstance(row.get("fixture"), dict) else {}
+        fixture_id = fixture.get("id")
+        if fixture_id not in (None, ""):
+            fixture_ids.append(str(fixture_id))
+    return fixture_ids
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Fetch raw World Cup model data.")
     parser.add_argument(
@@ -42,6 +105,23 @@ def main() -> int:
         "--include-quota-odds",
         action="store_true",
         help="Fetch odds data. This can consume Odds API quota.",
+    )
+    parser.add_argument(
+        "--api-football-advanced",
+        action="store_true",
+        help="Fetch API-Football injuries, odds, players, and capped fixture-level details.",
+    )
+    parser.add_argument(
+        "--api-football-max-fixtures",
+        type=int,
+        default=0,
+        help="Maximum API-Football fixtures to expand into lineups/events/statistics/predictions.",
+    )
+    parser.add_argument(
+        "--api-football-max-player-pages",
+        type=int,
+        default=1,
+        help="Maximum API-Football player-stat pages to request when advanced pulls are enabled.",
     )
     args = parser.parse_args()
 
@@ -133,35 +213,99 @@ def main() -> int:
             manifest["sources"]["api-football"] = {"skipped": "API_FOOTBALL_KEY is not set"}
         else:
             client = ApiFootballClient(settings.api_football_key, host=settings.api_football_host)
+            manifest["sources"]["api-football"] = {
+                "daily_limit_note": "Default pull is quota-light for the 100 requests/day plan."
+            }
+
+            status = client.status()
+            _write_api_response(destination, "api_football_status.json", status)
+            manifest["sources"]["api-football"]["status"] = _api_manifest(status)
+
             leagues = client.leagues(search="World Cup")
             if leagues.ok:
                 _write_json(destination / "api_football_world_cup_leagues.json", leagues.json())
-            manifest["sources"]["api-football"] = {
-                "leagues": {"status_code": leagues.status_code, "url": leagues.url}
-            }
+            manifest["sources"]["api-football"]["leagues"] = _api_manifest(leagues)
 
-            if settings.api_football_world_cup_league_id:
+            league_id = settings.api_football_world_cup_league_id
+            if leagues.ok:
+                league_id = league_id or _select_api_football_league_id(
+                    leagues.json(), settings.api_football_season
+                )
+            manifest["sources"]["api-football"]["selected_league_id"] = league_id or ""
+
+            fixtures_payload: object = {}
+            if league_id:
                 fixtures = client.fixtures(
-                    league=settings.api_football_world_cup_league_id,
+                    league=league_id,
                     season=settings.api_football_season,
                 )
                 if fixtures.ok:
-                    _write_json(destination / "api_football_world_cup_fixtures.json", fixtures.json())
+                    fixtures_payload = fixtures.json()
+                    _write_json(destination / "api_football_world_cup_fixtures.json", fixtures_payload)
                 manifest["sources"]["api-football"]["fixtures"] = {
                     "status_code": fixtures.status_code,
                     "url": fixtures.url,
                 }
 
-                odds = client.odds(
-                    league=settings.api_football_world_cup_league_id,
+                teams = client.teams(
+                    league=league_id,
                     season=settings.api_football_season,
                 )
-                if odds.ok:
-                    _write_json(destination / "api_football_world_cup_odds.json", odds.json())
-                manifest["sources"]["api-football"]["odds"] = {
-                    "status_code": odds.status_code,
-                    "url": odds.url,
-                }
+                _write_api_response(destination, "api_football_world_cup_teams.json", teams)
+                manifest["sources"]["api-football"]["teams"] = _api_manifest(teams)
+
+                standings = client.standings(
+                    league=league_id,
+                    season=settings.api_football_season,
+                )
+                _write_api_response(destination, "api_football_world_cup_standings.json", standings)
+                manifest["sources"]["api-football"]["standings"] = _api_manifest(standings)
+
+                if args.api_football_advanced:
+                    injuries = client.injuries(league=league_id, season=settings.api_football_season)
+                    _write_api_response(destination, "api_football_world_cup_injuries.json", injuries)
+                    manifest["sources"]["api-football"]["injuries"] = _api_manifest(injuries)
+
+                    odds = client.odds(league=league_id, season=settings.api_football_season, page=1)
+                    _write_api_response(destination, "api_football_world_cup_odds_page_1.json", odds)
+                    manifest["sources"]["api-football"]["odds_page_1"] = _api_manifest(odds)
+
+                    player_pages: dict[str, object] = {}
+                    max_pages = max(0, args.api_football_max_player_pages)
+                    for page in range(1, max_pages + 1):
+                        players = client.players(
+                            league=league_id,
+                            season=settings.api_football_season,
+                            page=page,
+                        )
+                        filename = f"api_football_world_cup_players_page_{page}.json"
+                        _write_api_response(destination, filename, players)
+                        player_pages[f"page_{page}"] = _api_manifest(players)
+                        if not players.ok:
+                            break
+                        payload = players.json()
+                        paging = payload.get("paging") if isinstance(payload, dict) else {}
+                        if isinstance(paging, dict) and page >= int(paging.get("total", page) or page):
+                            break
+                    manifest["sources"]["api-football"]["players"] = player_pages
+
+                    fixture_ids = _fixture_ids_from_payload(fixtures_payload)
+                    expanded: dict[str, object] = {}
+                    max_fixtures = max(0, args.api_football_max_fixtures)
+                    for fixture_id in fixture_ids[:max_fixtures]:
+                        expanded[fixture_id] = {}
+                        detail_calls = {
+                            "lineups": client.fixture_lineups(fixture_id),
+                            "events": client.fixture_events(fixture_id),
+                            "fixture_statistics": client.fixture_statistics(fixture_id),
+                            "fixture_player_statistics": client.fixture_player_statistics(fixture_id),
+                            "predictions": client.predictions(fixture_id),
+                        }
+                        for label, response in detail_calls.items():
+                            filename = f"api_football_fixture_{fixture_id}_{label}.json"
+                            _write_api_response(destination, filename, response)
+                            expanded[fixture_id][label] = _api_manifest(response)
+                    manifest["sources"]["api-football"]["fixture_detail"] = expanded
 
     _write_json(destination / "manifest.json", manifest)
     print(f"Wrote raw snapshot to {destination}")

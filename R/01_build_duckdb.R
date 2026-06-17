@@ -13,7 +13,35 @@ processed_csv_root <- file.path(project_root, "data", "processed", "public_csv")
 
 dir.create(dirname(db_path), recursive = TRUE, showWarnings = FALSE)
 
-drv <- duckdb::duckdb(dbdir = db_path)
+open_duckdb <- function(path) {
+  tryCatch(
+    duckdb::duckdb(dbdir = path),
+    error = function(err) {
+      message_text <- conditionMessage(err)
+      if (!grepl("version number", message_text, fixed = TRUE)) {
+        stop(err)
+      }
+
+      stamp <- format(Sys.time(), "%Y%m%dT%H%M%S")
+      backup_path <- paste0(path, ".incompatible_", stamp, ".bak")
+      warning(
+        "Existing DuckDB file uses an incompatible storage version. ",
+        "Archiving it to: ", backup_path,
+        call. = FALSE
+      )
+      if (file.exists(path)) {
+        file.rename(path, backup_path)
+      }
+      wal_path <- paste0(path, ".wal")
+      if (file.exists(wal_path)) {
+        file.rename(wal_path, paste0(backup_path, ".wal"))
+      }
+      duckdb::duckdb(dbdir = path)
+    }
+  )
+}
+
+drv <- open_duckdb(db_path)
 con <- DBI::dbConnect(drv)
 closed_connection <- FALSE
 close_duckdb <- function() {
@@ -56,6 +84,17 @@ if (length(processed_csv_files) > 0) {
 
 snapshot_dirs <- list.dirs(raw_root, recursive = FALSE, full.names = TRUE)
 snapshot_dirs <- snapshot_dirs[file.exists(file.path(snapshot_dirs, "manifest.json"))]
+snapshot_has_model_data <- function(path) {
+  expected_files <- c(
+    "international_results.csv",
+    "international_goalscorers.csv",
+    "api_football_world_cup_fixtures.json",
+    "api_football_world_cup_teams.json",
+    "api_football_world_cup_standings.json"
+  )
+  any(file.exists(file.path(path, expected_files)))
+}
+snapshot_dirs <- snapshot_dirs[vapply(snapshot_dirs, snapshot_has_model_data, logical(1))]
 
 if (length(snapshot_dirs) == 0) {
   message("No raw snapshots found yet. Run: python scripts\\fetch_raw_data.py --sources public")

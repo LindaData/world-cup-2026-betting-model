@@ -20,13 +20,15 @@ read_csv_if_exists <- function(path) {
 
 <div class="hero-actions">
   <a class="btn" href="https://github.com/LindaData/world-cup-2026-betting-model">View on GitHub</a>
+  <a class="btn" href="#data-sources-and-expense-overview">Data Sources</a>
   <a class="btn" href="reports/01_goals_linear_regression.html">Goals Model</a>
   <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a>
   <a class="btn" href="reports/03_distribution_review.html">Distributions</a>
+  <a class="btn" href="#dictionary">Dictionary</a>
   <a class="btn" href="https://lindadata.github.io/">LindaData Home</a>
 </div>
 
-This dashboard organizes the 2026 World Cup betting model, model diagnostics, and data-source decision in one shareable site.
+This site presents the 2026 World Cup betting model, the data used to support it, and the model results in one shareable place.
 
 Code is hidden by default so the report reads cleanly. Use **Show code** to inspect the R steps.
 
@@ -45,43 +47,51 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
       fmt_percent(ordinal_metrics$test_accuracy[[1]], 1),
       fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1)
     ),
-    note = c("team-match rows", "lower is better", "test set", "reference class")
+    note = c("team-match rows", "typical goal miss", "exact result hit rate", "simple comparison")
   )))
 }
 ```
 
-## Data API Decision
+## Data Sources and Expense Overview
 
 ::: {.api-choice}
-**Recommended API: API-Football Pro**
+**Primary live source: API-Football by API-Sports**
 
-Use one paid API as the primary data connection: API-Football Pro at **$19/month**. Current spend is **$10/month**, so the projected monthly total is **$29/month**, well under the $100 cap.
+The model uses API-Football for World Cup fixtures, teams, standings, player/squad data, injuries, lineups, match events, player statistics, odds, and predictions where coverage is available.
 :::
 
-```{r api-decision, echo=FALSE}
-api_options <- data.frame(
-  provider = c("API-Football Pro", "The Odds API 20K", "football-data.org ML / Deep Data", "Sportmonks Starter"),
-  price = c("$19/mo", "$30/mo", "EUR29/mo before add-ons", "EUR29/mo before add-ons"),
-  fit = c(
-    "Best one-API fit: fixtures, teams, players/coaches, lineups, injuries, statistics, predictions, and pre-match odds.",
-    "Excellent odds feed, but not enough team/player model data by itself.",
-    "Good football data, but odds and statistics are add-ons and coverage is narrower for this use case.",
-    "Strong football data, but useful betting/advanced features add monthly cost."
+```{r data-sources, echo=FALSE}
+data_sources <- data.frame(
+  layer = c(
+    "Live football API",
+    "Historical match results",
+    "Player and squad context",
+    "Venue, weather, and news context",
+    "Publishing"
   ),
-  decision = c("Recommended", "Use for odds validation", "Defer", "Defer")
+  source = c(
+    "API-Football / API-Sports",
+    "Public international results and goalscorer datasets",
+    "API-Football plus public squad references",
+    "Open venue/weather/news sources",
+    "GitHub Pages"
+  ),
+  use_in_model = c(
+    "Fixtures, teams, standings, injuries, lineups, odds, and match details",
+    "Team form, goals scored, results, Elo-style strength features",
+    "Roster strength, player goal history, availability indicators",
+    "Travel, venue, weather, and news-derived context features",
+    "Shareable HTML reports and model summaries"
+  )
 )
-display_table(api_options, caption = "Paid API options reviewed for the primary data connection.")
+display_table(data_sources, caption = "Data sources used by the modeling workflow.")
 ```
 
-Sources: [API-Football pricing](https://www.api-football.com/pricing), [The Odds API pricing](https://the-odds-api.com/), [football-data.org pricing](https://www.football-data.org/pricing), and [Sportmonks pricing](https://www.sportmonks.com/football-api/).
+The public site is hosted without an additional hosting bill. The live football data subscription is the main recurring project expense, and the project is kept within the monthly budget cap.
 
-After subscribing, add the API key only to local `.env` as `API_FOOTBALL_KEY`. Do not commit the key.
+## Model Iterations
 
-## Model Blueprint
-
-This section defines the regression plan before the API data is used for fitting. The structure follows the teaching pattern I like from Statistics by Jim: name the target, write the equation, translate the coefficient into plain English, then state the checks that decide whether the model is trustworthy.
-
-No new coefficients or prediction tables are estimated here. The regressions are fit after the API pull defines the final modeling table.
+The model section is organized around interpretable iterations. Each iteration names the prediction target, shows the equation, explains the coefficients in plain English, and lists the checks that determine whether the model is trustworthy.
 
 ::: {.model-blueprint}
 ::: {.model-card}
@@ -89,7 +99,7 @@ No new coefficients or prediction tables are estimated here. The regressions are
 
 **Question:** how many goals should a team score in one match?
 
-The first simple model uses one predictor, such as team strength difference:
+The simple goals model starts with team strength difference:
 
 $$
 \text{Goals} = \beta_0 + \beta_1\text{Strength Difference} + \epsilon
@@ -151,7 +161,31 @@ $$
 :::
 :::
 
-References for teaching style and model framing: [Statistics by Jim on OLS assumptions](https://statisticsbyjim.com/regression/ols-linear-regression-assumptions/), [logistic regression](https://statisticsbyjim.com/regression/logistic-regression/), and [multinomial logistic regression](https://statisticsbyjim.com/regression/multinomial-logistic-regression/).
+## Dictionary
+
+Use this as the quick reference for acronyms and modeling terms that appear across the site.
+
+| Term | Plain-English Meaning | Why It Matters Here |
+|---|---|---|
+| `Y` or target | The thing the model is trying to predict. | For the goals model, `Y` is goals scored. For the result model, `Y` is win, draw, or loss. |
+| `X` or predictor | An input used to make the prediction. | Team strength, opponent strength, rest, venue, injuries, and odds can all be predictors. |
+| Regression | A model that estimates how a target changes with predictors. | It gives a structured way to turn soccer information into expected goals or probabilities. |
+| OLS | Ordinary Least Squares. A line-fitting method that chooses coefficients by minimizing squared prediction errors. | It is the first goals benchmark because it is easy to explain and diagnose. |
+| RMSE | Root Mean Squared Error. A typical prediction miss, measured in the same units as the target. | If goals RMSE is 1.46, the model is often off by roughly 1 to 2 goals, with big misses punished more. Lower is better. |
+| Coefficient | The estimated effect of one predictor, holding the other predictors fixed. | A positive strength coefficient means stronger teams are expected to score more, all else equal. |
+| Residual | Observed value minus predicted value. | Residual plots show whether the model is missing patterns. |
+| Logit | A transformation that converts a probability into log odds. | Logistic models use logits so probabilities stay between 0 and 1. |
+| Odds | Probability of an event divided by probability of it not happening. | Model probabilities can be compared with betting-market odds after converting both to the same scale. |
+| Ordinal logistic regression | A logistic model for ordered outcomes. | It fits `loss < draw < win` while producing probabilities for all three outcomes. |
+| Multinomial logistic regression | A logistic model for three or more categories without assuming an order. | It is the backup if draws behave like their own special category rather than the middle of loss and win. |
+| Accuracy | Share of predictions where the top predicted class matches the actual result. | Useful for a quick check, but not enough for betting because probability quality matters too. |
+| Calibration | Whether predicted probabilities match real frequencies. | If the model says 60% win chance, well-calibrated teams should win about 60% of those cases. |
+| Log loss | A probability score that penalizes confident wrong predictions. | Better than accuracy when the model outputs win/draw/loss probabilities. Lower is better. |
+| Brier score | Average squared error between predicted probabilities and actual outcomes. | Another way to judge probability quality. Lower is better. |
+| Test set | Data held out from fitting and used only to evaluate performance. | It helps estimate how the model performs on games it has not already seen. |
+| Overfitting | When a model learns noise in past data instead of repeatable signal. | A model can look good historically and still fail on new World Cup matches. |
+| Data grain | What one row means in a dataset. | The main modeling grain is one team in one match. One match creates two team-match rows. |
+| API | Application Programming Interface. A structured way to pull data from a provider. | API-Football is the primary live football data source. |
 
 ## Project Map
 
@@ -165,7 +199,7 @@ The workflow has four layers:
 
 - **Data collection:** match history, Elo ratings, 2026 venues, weather, player metadata, odds, and news signals.
 - **Data storage:** local files and DuckDB tables for modeling.
-- **Modeling:** interpretable models in R, with Python handling API pulls and heavier data jobs.
+- **Modeling:** interpretable models in R, with Python handling source refreshes and heavier data jobs.
 - **Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.
 
 ## Data Exploration
@@ -247,7 +281,7 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
 
 ## Data
 
-The local database contains more tables than the public site publishes. The rendered site shows metadata only, which keeps credentials and source data off GitHub.
+The modeling database stores raw and transformed tables. The rendered site publishes metadata and model outputs, while credentials and private source files stay local.
 
 ```{r table-inventory}
 inventory <- read_csv_if_exists(file.path(root, "data", "processed", "metadata", "table_inventory.csv"))
@@ -304,37 +338,3 @@ Distribution notes for deciding whether soccer features are counts, continuous v
 
 <a class="project-button" href="reports/03_distribution_review.html">Open distribution review</a>
 :::
-
-## Refresh Commands
-
-Run these from RStudio.
-
-### Local Rebuild
-
-Does not hit APIs or spend quota.
-
-```{r local-refresh, eval=FALSE}
-source("R/20_refresh_all.R")
-refresh_world_cup_data(profile = "local-rebuild")
-```
-
-### Free Source Refresh
-
-Pulls free/no-key public sources and rebuilds the local site.
-
-```{r free-refresh, eval=FALSE}
-source("R/20_refresh_all.R")
-refresh_world_cup_data(profile = "free-refresh")
-```
-
-### API-Football Refresh
-
-Use after `.env` has `API_FOOTBALL_KEY`.
-
-```{r keyed-refresh, eval=FALSE}
-source("R/20_refresh_all.R")
-refresh_world_cup_data(
-  profile = "free-refresh",
-  include_keyed_apis = TRUE
-)
-```

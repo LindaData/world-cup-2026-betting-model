@@ -12,6 +12,9 @@ class ApiFootballClient:
             headers={"x-apisports-key": api_key},
         )
 
+    def status(self) -> HttpResponse:
+        return self.client.get("/status")
+
     def leagues(self, search: str = "World Cup") -> HttpResponse:
         return self.client.get("/leagues", params={"search": search})
 
@@ -33,8 +36,17 @@ class ApiFootballClient:
     def standings(self, league: str, season: int = 2026) -> HttpResponse:
         return self.client.get("/standings", params={"league": league, "season": season})
 
-    def odds(self, league: str, season: int = 2026) -> HttpResponse:
-        return self.client.get("/odds", params={"league": league, "season": season})
+    def injuries(self, league: str, season: int = 2026) -> HttpResponse:
+        return self.client.get("/injuries", params={"league": league, "season": season})
+
+    def odds(self, league: str, season: int = 2026, page: int = 1) -> HttpResponse:
+        return self.client.get("/odds", params={"league": league, "season": season, "page": page})
+
+    def predictions(self, fixture: str) -> HttpResponse:
+        return self.client.get("/predictions", params={"fixture": fixture})
+
+    def fixture_statistics(self, fixture: str) -> HttpResponse:
+        return self.client.get("/fixtures/statistics", params={"fixture": fixture})
 
     def fixture_lineups(self, fixture: str) -> HttpResponse:
         return self.client.get("/fixtures/lineups", params={"fixture": fixture})

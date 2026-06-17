@@ -80,7 +80,7 @@ def load_settings(env_path: Path | None = None) -> Settings:
         api_football_key=_get("API_FOOTBALL_KEY", env_file_values),
         api_football_host=_get("API_FOOTBALL_HOST", env_file_values, "v3.football.api-sports.io"),
         api_football_world_cup_league_id=_get(
-            "API_FOOTBALL_WORLD_CUP_LEAGUE_ID", env_file_values
+            "API_FOOTBALL_WORLD_CUP_LEAGUE_ID", env_file_values, "1"
         ),
         api_football_season=int(_get("API_FOOTBALL_SEASON", env_file_values, "2026")),
         openfootball_cup_url=_get(

@@ -330,6 +330,12 @@ def build_steps(args: argparse.Namespace, python_exe: str, rscript_exe: str) -> 
         command = [python_exe, "scripts/fetch_raw_data.py", "--sources", *fetch_sources]
         if args.include_odds_quota:
             command.append("--include-quota-odds")
+        if args.api_football_advanced:
+            command.append("--api-football-advanced")
+        if args.api_football_max_fixtures is not None:
+            command.extend(["--api-football-max-fixtures", str(args.api_football_max_fixtures)])
+        if args.api_football_max_player_pages is not None:
+            command.extend(["--api-football-max-player-pages", str(args.api_football_max_player_pages)])
         steps.append(Step("Fetch raw source snapshots", command))
 
     steps.append(Step("Build processed public CSVs", [python_exe, "scripts/build_public_processed_csv.py"]))
@@ -390,6 +396,13 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Allow quota-consuming odds pulls when THE_ODDS_API_KEY is configured.",
     )
+    parser.add_argument(
+        "--api-football-advanced",
+        action="store_true",
+        help="Fetch API-Football advanced data such as injuries, odds, players, and capped fixture details.",
+    )
+    parser.add_argument("--api-football-max-fixtures", type=int, default=0)
+    parser.add_argument("--api-football-max-player-pages", type=int, default=1)
     parser.add_argument("--skip-wikidata", action="store_true")
     parser.add_argument("--skip-weather", action="store_true")
     parser.add_argument("--skip-news", action="store_true")
