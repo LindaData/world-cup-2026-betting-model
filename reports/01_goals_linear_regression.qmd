@@ -1,0 +1,118 @@
+---
+title: "Goals Linear Regression"
+subtitle: "Baseline model for team goals scored"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed/modeling")) "." else ".."
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+```
+
+## Purpose
+
+This report documents the first transparent baseline model for the World Cup prediction project.
+
+The target is team goals scored in a historical international match:
+
+$$
+Y_{i,m} = \text{goals scored by team } i \text{ in match } m
+$$
+
+This is a baseline, not the final soccer model. Goals are non-negative counts, so future versions should compare Poisson, negative-binomial, bivariate Poisson, or Skellam-style models.
+
+## Unit Of Observation
+
+The modeling frame has one row per **team-match**.
+
+If Argentina plays France, the data has two rows:
+
+- Argentina's goals as the target, with France as the opponent.
+- France's goals as the target, with Argentina as the opponent.
+
+## Sample Rows Embedded In Report
+
+No sample CSV is published with the website. These rows are embedded into the rendered HTML from the local model frame.
+
+```{r sample-rows}
+sample_data <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_sample_1000.csv"))
+
+if (nrow(sample_data) > 0) {
+  head(sample_data, 10)
+} else {
+  data.frame(note = "Sample rows are generated locally by R/10_fit_linear_goals_model.R.")
+}
+```
+
+## Elo Feature
+
+For team $i$ against opponent $j$, expected result before kickoff is:
+
+$$
+p_{i,m} =
+\frac{1}
+{1 + 10^{-\left(E_{i,m}^{pre} + H_m - E_{j,m}^{pre}\right)/400}}
+$$
+
+Where:
+
+- $E_{i,m}^{pre}$ is team $i$'s pre-match Elo.
+- $E_{j,m}^{pre}$ is opponent pre-match Elo.
+- $H_m$ is the home advantage adjustment.
+- $p_{i,m}$ is expected result on a 0 to 1 scale.
+
+## Model
+
+The first regression is:
+
+$$
+Y_{i,m}
+= \beta_0
++ \beta_1 E_{i,m}^{pre}
++ \beta_2 E_{j,m}^{pre}
++ \beta_3 p_{i,m}
++ \beta_4 I(\text{listed home}_{i,m})
++ \beta_5 I(\text{neutral site}_m)
++ \epsilon_{i,m}
+$$
+
+with:
+
+$$
+\epsilon_{i,m} \sim N(0, \sigma^2)
+$$
+
+## Results
+
+```{r metrics}
+metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_metrics.csv"))
+coefficients <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_coefficients.csv"))
+
+if (nrow(metrics) > 0) metrics else data.frame(note = "Metrics are generated locally.")
+```
+
+```{r coefficients}
+if (nrow(coefficients) > 0) coefficients else data.frame(note = "Coefficients are generated locally.")
+```
+
+## Interpretation
+
+The signs match soccer intuition:
+
+- `pre_elo` is positive: stronger teams score more.
+- `opponent_pre_elo` is negative: stronger opponents suppress scoring.
+- `pre_match_expected_result` is positive: teams expected to perform better score more.
+- `listed_homeTRUE` is positive: listed home teams score more.
+
+## Reproduce Locally
+
+```{r reproduce, eval=FALSE}
+source("R/01_build_duckdb.R")
+source("R/10_fit_linear_goals_model.R")
+```

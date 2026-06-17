@@ -1,0 +1,40 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - reports/01_goals_linear_regression.qmd
+    - reports/02_ordinal_result_model.qmd
+
+website:
+  title: "2026 World Cup Betting Model"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: reports/01_goals_linear_regression.qmd
+        text: Goals Model
+      - href: reports/02_ordinal_result_model.qmd
+        text: Result Model
+  page-footer:
+    left: "Research project. Not betting advice."
+    right: "Built with R, Python, SQL, DuckDB, and Quarto."
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    code-summary: "Show code"
+    smooth-scroll: true
+    link-external-newwindow: true
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: false

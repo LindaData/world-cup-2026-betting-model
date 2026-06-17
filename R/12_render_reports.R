@@ -1,26 +1,36 @@
-# Render presentation reports.
+# Render the Quarto website.
 #
 # Run from RStudio:
 # source("R/12_render_reports.R")
 
 source("R/00_setup.R")
 
-rstudio_pandoc <- "C:/Program Files/RStudio/bin/pandoc"
-if (dir.exists(rstudio_pandoc)) {
-  Sys.setenv(RSTUDIO_PANDOC = rstudio_pandoc)
+find_quarto <- function() {
+  quarto_on_path <- Sys.which("quarto")
+  if (nzchar(quarto_on_path)) {
+    return(unname(quarto_on_path))
+  }
+
+  bundled <- "C:/Program Files/RStudio/resources/app/bin/quarto/bin/quarto.exe"
+  if (file.exists(bundled)) {
+    return(bundled)
+  }
+
+  stop("Quarto was not found. Install Quarto or open this project in a recent RStudio.")
 }
 
-if (!requireNamespace("rmarkdown", quietly = TRUE)) {
-  install.packages("rmarkdown", repos = "https://cloud.r-project.org")
+quarto <- find_quarto()
+message("Using Quarto: ", quarto)
+
+result <- system2(quarto, args = c("render"), stdout = TRUE, stderr = TRUE)
+cat(paste(result, collapse = "\n"), "\n")
+
+status <- attr(result, "status")
+if (!is.null(status) && status != 0) {
+  stop("Quarto render failed with status ", status)
 }
 
-reports <- c(
-  "reports/00_project_overview.Rmd",
-  "reports/01_goals_linear_regression.Rmd",
-  "reports/02_ordinal_result_model.Rmd"
-)
+dir.create("docs", showWarnings = FALSE)
+file.create(file.path("docs", ".nojekyll"))
 
-for (report in reports) {
-  rmarkdown::render(report, quiet = FALSE)
-  message("Rendered ", sub("\\.Rmd$", ".html", report))
-}
+message("Rendered Quarto site to docs/")

@@ -1,0 +1,164 @@
+---
+title: "Ordinal Result Model"
+subtitle: "Baseline model for loss, draw, and win probabilities"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed/modeling")) "." else ".."
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+```
+
+## Purpose
+
+This report adds the first result-probability model.
+
+The ordered outcome is:
+
+$$
+Y_{i,m}^{ord} \in \{\text{loss}, \text{draw}, \text{win}\}
+$$
+
+with:
+
+$$
+\text{loss} < \text{draw} < \text{win}
+$$
+
+This is closer to betting-market comparison because it estimates match outcome probabilities.
+
+## Unit Of Observation
+
+The data has one row per **team-match**.
+
+If Argentina plays France, there are two rows:
+
+- Argentina result versus France.
+- France result versus Argentina.
+
+## Embedded Sample Rows
+
+No sample CSV is published with the website. These rows are embedded into the rendered HTML from the local model frame.
+
+```{r sample-rows}
+sample_data <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_sample_1000.csv"))
+
+if (nrow(sample_data) > 0) {
+  head(sample_data, 10)
+} else {
+  data.frame(note = "Sample rows are generated locally by R/11_fit_ordinal_result_model.R.")
+}
+```
+
+## Model
+
+The proportional-odds ordinal logistic model is:
+
+$$
+\text{logit}\left(P(Y_{i,m}^{ord} \leq k)\right)
+= \theta_k - X_{i,m}\beta
+$$
+
+where:
+
+$$
+k \in \{\text{loss}, \text{draw}\}
+$$
+
+and:
+
+$$
+X_{i,m}\beta
+= \beta_1 E_{i,m}^{pre}
++ \beta_2 E_{j,m}^{pre}
++ \beta_3 p_{i,m}
++ \beta_4 I(\text{listed home}_{i,m})
++ \beta_5 I(\text{neutral site}_m)
+$$
+
+## Results
+
+```{r metrics}
+metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_metrics.csv"))
+class_distribution <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_class_distribution.csv"))
+coefficients <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_coefficients.csv"))
+confusion <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_confusion_matrix.csv"))
+predictions <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_test_predictions.csv"))
+
+if (nrow(metrics) > 0) metrics else data.frame(note = "Metrics are generated locally.")
+```
+
+## Class Balance
+
+```{r class-balance}
+if (nrow(class_distribution) > 0) class_distribution else data.frame(note = "Class balance is generated locally.")
+```
+
+## Coefficients
+
+```{r coefficients}
+if (nrow(coefficients) > 0) coefficients else data.frame(note = "Coefficients are generated locally.")
+```
+
+Positive slope coefficients move probability mass toward better outcomes.
+
+## Test Prediction Examples
+
+```{r predictions}
+if (nrow(predictions) > 0) {
+  head(
+    predictions[
+      ,
+      c(
+        "date",
+        "team",
+        "opponent",
+        "y_result_ordered",
+        "predicted_result",
+        "pred_prob_loss",
+        "pred_prob_draw",
+        "pred_prob_win"
+      )
+    ],
+    12
+  )
+} else {
+  data.frame(note = "Predictions are generated locally.")
+}
+```
+
+## Confusion Matrix
+
+```{r confusion}
+if (nrow(confusion) > 0) confusion else data.frame(note = "Confusion matrix is generated locally.")
+```
+
+## Interpretation
+
+The model produces:
+
+$$
+P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
+$$
+
+This is the shape needed for future odds comparison.
+
+Still, this is a baseline:
+
+- The proportional-odds assumption may be too restrictive.
+- Paired team-match rows are not independent.
+- Draws usually need richer features.
+- Market odds will be the key benchmark once added.
+
+## Reproduce Locally
+
+```{r reproduce, eval=FALSE}
+source("R/01_build_duckdb.R")
+source("R/11_fit_ordinal_result_model.R")
+```

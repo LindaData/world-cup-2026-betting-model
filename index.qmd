@@ -1,0 +1,138 @@
+---
+title: "2026 World Cup Betting Model"
+subtitle: "Reproducible data, models, and reports for a World Cup prediction workflow"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed/modeling")) "." else ".."
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+```
+
+This site is the public-facing project notebook. It keeps the rendered analysis in HTML, hides code by default, and lets readers expand code with **Show code**.
+
+No raw datasets, processed databases, API keys, `.Renviron`, credentials, or private files are published here.
+
+## Current Models
+
+```{r model-summary}
+goals_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_metrics.csv"))
+ordinal_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_metrics.csv"))
+
+if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
+  data.frame(
+    model = c("Goals OLS", "Ordinal result logistic"),
+    target = c("team goals", "loss < draw < win"),
+    rows_total = c(goals_metrics$rows_total[[1]], ordinal_metrics$rows_total[[1]]),
+    primary_metric = c("test RMSE", "test accuracy"),
+    value = c(
+      round(goals_metrics$test_rmse[[1]], 4),
+      round(ordinal_metrics$test_accuracy[[1]], 4)
+    ),
+    baseline_context = c(
+      paste("mean test goals:", round(goals_metrics$mean_y_test[[1]], 4)),
+      paste("majority baseline:", round(ordinal_metrics$baseline_majority_accuracy[[1]], 4))
+    )
+  )
+} else {
+  data.frame(note = "Model metrics are generated locally before rendering.")
+}
+```
+
+## Reports
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.project-card}
+### Goals Model
+
+OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.
+
+[Open goals report](reports/01_goals_linear_regression.html)
+:::
+:::
+
+::: {.column width="50%"}
+::: {.project-card}
+### Result Model
+
+Ordinal logistic baseline for `loss < draw < win`, producing win/draw/loss probability estimates.
+
+[Open result report](reports/02_ordinal_result_model.html)
+:::
+:::
+:::
+
+## Data Status
+
+```{r table-inventory}
+inventory <- read_csv_if_exists(file.path(root, "data", "processed", "metadata", "table_inventory.csv"))
+
+if (nrow(inventory) > 0) {
+  inventory |>
+    dplyr::arrange(table_name) |>
+    head(20)
+} else {
+  data.frame(note = "Table inventory is generated locally by R/07_export_metadata.R.")
+}
+```
+
+## Refresh Options
+
+Run these from RStudio.
+
+### Local Rebuild
+
+Does not hit APIs or spend quota.
+
+```{r local-refresh, eval=FALSE}
+source("R/20_refresh_all.R")
+refresh_world_cup_data(profile = "local-rebuild")
+```
+
+### Free Source Refresh
+
+Pulls free/no-key public sources and rebuilds the local site.
+
+```{r free-refresh, eval=FALSE}
+source("R/20_refresh_all.R")
+refresh_world_cup_data(profile = "free-refresh")
+```
+
+### Keyed APIs Later
+
+Use after `.env` is configured locally.
+
+```{r keyed-refresh, eval=FALSE}
+source("R/20_refresh_all.R")
+refresh_world_cup_data(
+  profile = "free-refresh",
+  include_keyed_apis = TRUE
+)
+```
+
+Odds pulls require explicit quota permission.
+
+```{r odds-refresh, eval=FALSE}
+source("R/20_refresh_all.R")
+refresh_world_cup_data(
+  profile = "free-refresh",
+  include_keyed_apis = TRUE,
+  include_odds_quota = TRUE
+)
+```
+
+## Next Work
+
+1. Add rolling recent-form features.
+2. Add squad-strength and player-availability signals.
+3. Add news-derived injury and lineup signals.
+4. Add odds-implied probabilities.
+5. Compare ordinal logistic, multinomial logistic, and paired-goal models.
+6. Calibrate predicted probabilities.

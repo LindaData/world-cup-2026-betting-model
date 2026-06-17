@@ -187,28 +187,11 @@ def copy_if_exists(source: Path, destination: Path) -> bool:
 
 
 def sync_publishable_artifacts() -> list[str]:
-    copied: list[str] = []
-
-    sample_files = [
-        "goals_linear_model_sample_1000.csv",
-        "result_ordinal_model_sample_1000.csv",
-    ]
-    for filename in sample_files:
-        model_sample = ROOT / "data" / "processed" / "modeling" / filename
-        for destination in [
-            ROOT / "data" / "samples" / filename,
-            ROOT / "docs" / "samples" / filename,
-        ]:
-            if copy_if_exists(model_sample, destination):
-                copied.append(str(destination.relative_to(ROOT)))
-
-    report_dir = ROOT / "reports"
-    for report_html in sorted(report_dir.glob("*.html")):
-        docs_report = ROOT / "docs" / "reports" / report_html.name
-        if copy_if_exists(report_html, docs_report):
-            copied.append(str(docs_report.relative_to(ROOT)))
-
-    return copied
+    docs_dir = ROOT / "docs"
+    docs_dir.mkdir(parents=True, exist_ok=True)
+    nojekyll = docs_dir / ".nojekyll"
+    nojekyll.touch()
+    return [str(nojekyll.relative_to(ROOT))]
 
 
 def table_count_rows() -> list[dict[str, str]]:

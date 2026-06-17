@@ -14,17 +14,16 @@ DuckDB is the default SQL engine because it is free, embedded, works from R and 
 
 ## Presentable Outputs
 
-- R Markdown overview: `reports/00_project_overview.Rmd`
-- Goals model walkthrough: `reports/01_goals_linear_regression.Rmd`
-- Ordinal result model report: `reports/02_ordinal_result_model.Rmd`
-- Sample modeling dataset: `data/samples/goals_linear_model_sample_1000.csv`
-- Sample ordinal result dataset: `data/samples/result_ordinal_model_sample_1000.csv`
+- Quarto website source: `_quarto.yml`, `index.qmd`, and `reports/*.qmd`
+- Rendered GitHub Pages site: `docs/`
+- Goals model walkthrough: `reports/01_goals_linear_regression.qmd`
+- Ordinal result model report: `reports/02_ordinal_result_model.qmd`
 - Data inventory: `docs/current_data_status.md`
 - Source landscape and pricing: `docs/source_landscape.md`
 - Local refresh workflow: `docs/local_update_workflow.md`
 - GitHub publishing plan: `docs/github_publish_plan.md`
 
-Render the first report from RStudio:
+Render the Quarto site from RStudio:
 
 ```r
 source("R/12_render_reports.R")
