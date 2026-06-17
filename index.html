@@ -167,19 +167,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#project-map" id="toc-project-map" class="nav-link active" data-scroll-target="#project-map"><span class="header-section-number">1</span> Project Map</a></li>
-  <li><a href="#current-models" id="toc-current-models" class="nav-link" data-scroll-target="#current-models"><span class="header-section-number">2</span> Current Models</a></li>
-  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports"><span class="header-section-number">3</span> Reports</a></li>
-  <li><a href="#interactive-app-direction" id="toc-interactive-app-direction" class="nav-link" data-scroll-target="#interactive-app-direction"><span class="header-section-number">4</span> Interactive App Direction</a>
+  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports"><span class="header-section-number">2</span> Reports</a></li>
+  <li><a href="#interactive-app-direction" id="toc-interactive-app-direction" class="nav-link" data-scroll-target="#interactive-app-direction"><span class="header-section-number">3</span> Interactive App Direction</a>
   <ul class="collapse">
-  <li><a href="#shiny-first-streamlit-later-if-needed" id="toc-shiny-first-streamlit-later-if-needed" class="nav-link" data-scroll-target="#shiny-first-streamlit-later-if-needed"><span class="header-section-number">4.1</span> Shiny First, Streamlit Later If Needed</a></li>
+  <li><a href="#shiny-first-streamlit-later-if-needed" id="toc-shiny-first-streamlit-later-if-needed" class="nav-link" data-scroll-target="#shiny-first-streamlit-later-if-needed"><span class="header-section-number">3.1</span> Shiny First, Streamlit Later If Needed</a></li>
   </ul></li>
-  <li><a href="#refresh-options" id="toc-refresh-options" class="nav-link" data-scroll-target="#refresh-options"><span class="header-section-number">5</span> Refresh Options</a>
+  <li><a href="#refresh-options" id="toc-refresh-options" class="nav-link" data-scroll-target="#refresh-options"><span class="header-section-number">4</span> Refresh Options</a>
   <ul class="collapse">
-  <li><a href="#local-rebuild" id="toc-local-rebuild" class="nav-link" data-scroll-target="#local-rebuild"><span class="header-section-number">5.1</span> Local Rebuild</a></li>
-  <li><a href="#free-source-refresh" id="toc-free-source-refresh" class="nav-link" data-scroll-target="#free-source-refresh"><span class="header-section-number">5.2</span> Free Source Refresh</a></li>
-  <li><a href="#keyed-apis-later" id="toc-keyed-apis-later" class="nav-link" data-scroll-target="#keyed-apis-later"><span class="header-section-number">5.3</span> Keyed APIs Later</a></li>
+  <li><a href="#local-rebuild" id="toc-local-rebuild" class="nav-link" data-scroll-target="#local-rebuild"><span class="header-section-number">4.1</span> Local Rebuild</a></li>
+  <li><a href="#free-source-refresh" id="toc-free-source-refresh" class="nav-link" data-scroll-target="#free-source-refresh"><span class="header-section-number">4.2</span> Free Source Refresh</a></li>
+  <li><a href="#keyed-apis-later" id="toc-keyed-apis-later" class="nav-link" data-scroll-target="#keyed-apis-later"><span class="header-section-number">4.3</span> Keyed APIs Later</a></li>
   </ul></li>
-  <li><a href="#next-work" id="toc-next-work" class="nav-link" data-scroll-target="#next-work"><span class="header-section-number">6</span> Next Work</a></li>
+  <li><a href="#next-work" id="toc-next-work" class="nav-link" data-scroll-target="#next-work"><span class="header-section-number">5</span> Next Work</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/LindaData/world-cup-2026-betting-model/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
     </div>
@@ -212,10 +211,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This site is the public-facing project notebook. It follows the same teaching-report style as the earlier COVID analysis: explain the data pull, show the transformed data, write the model math, then render plots and results.</p>
 <p>Code is hidden by default so the report reads cleanly. Use <strong>Show code</strong> when you want to inspect the R steps.</p>
 <p>No raw datasets, processed databases, API keys, <code>.Renviron</code>, credentials, or private files are published here.</p>
+<div class="metric-strip">
+<div class="metric">
+<strong>Rows Modeled</strong><span>98,810</span><small>team-match rows</small>
+</div>
+<div class="metric">
+<strong>Goals RMSE</strong><span>1.463</span><small>lower is better</small>
+</div>
+<div class="metric">
+<strong>Result Accuracy</strong><span>58.5%</span><small>test set</small>
+</div>
+<div class="metric">
+<strong>Majority Baseline</strong><span>38.6%</span><small>comparison point</small>
+</div>
+</div>
 <section id="project-map" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="project-map"><span class="header-section-number">1</span> Project Map</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">About</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Data Exploration</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Modeling</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Data</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">About</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Data Exploration</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Modeling</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Display Standards</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup. The current public version is a transparent baseline, not a final betting system.</p>
@@ -235,45 +248,143 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>goals_sample <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_sample_1000.csv"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(goals_sample, <span class="dv">10</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">note =</span> <span class="st">"Sample rows are generated locally by R/10_fit_linear_goals_model.R."</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  goals_sample <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      date,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      team,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      opponent,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      tournament,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      y_goals_for,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      pre_elo,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      opponent_pre_elo,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      pre_match_expected_result</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_match_expected_result =</span> <span class="fu">fmt_percent</span>(pre_match_expected_result, <span class="dv">1</span>),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_elo =</span> <span class="fu">round</span>(pre_elo, <span class="dv">0</span>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">opponent_pre_elo =</span> <span class="fu">round</span>(opponent_pre_elo, <span class="dv">0</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Sample of the team-match modeling grain."</span>, <span class="at">max_rows =</span> <span class="dv">8</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Sample rows are generated locally by R/10_fit_linear_goals_model.R."</span>))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 x 12
-   source_match_id date       team     opponent tournament listed_home neutral
-             &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;lgl&gt;       &lt;lgl&gt;  
- 1               1 1872-11-30 Scotland England  Friendly   TRUE        FALSE  
- 2               1 1872-11-30 England  Scotland Friendly   FALSE       FALSE  
- 3               2 1873-03-08 England  Scotland Friendly   TRUE        FALSE  
- 4               2 1873-03-08 Scotland England  Friendly   FALSE       FALSE  
- 5               3 1874-03-07 Scotland England  Friendly   TRUE        FALSE  
- 6               3 1874-03-07 England  Scotland Friendly   FALSE       FALSE  
- 7               4 1875-03-06 England  Scotland Friendly   TRUE        FALSE  
- 8               4 1875-03-06 Scotland England  Friendly   FALSE       FALSE  
- 9               5 1876-03-04 Scotland England  Friendly   TRUE        FALSE  
-10               5 1876-03-04 England  Scotland Friendly   FALSE       FALSE  
-# i 5 more variables: y_goals_for &lt;dbl&gt;, pre_elo &lt;dbl&gt;, opponent_pre_elo &lt;dbl&gt;,
-#   elo_diff &lt;dbl&gt;, pre_match_expected_result &lt;dbl&gt;</code></pre>
+<div class="cell-output-display">
+<table class="clean-table caption-top table table-sm table-striped small">
+<caption>Sample of the team-match modeling grain.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Date</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Team</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Opponent</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Tournament</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">y Goals for</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Pre Elo</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Opponent Pre Elo</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Pre Match Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1872-11-30</td>
+<td style="text-align: left;">Scotland</td>
+<td style="text-align: left;">England</td>
+<td style="text-align: left;">Friendly</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1500</td>
+<td style="text-align: right;">1500</td>
+<td style="text-align: left;">64.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1872-11-30</td>
+<td style="text-align: left;">England</td>
+<td style="text-align: left;">Scotland</td>
+<td style="text-align: left;">Friendly</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1500</td>
+<td style="text-align: right;">1500</td>
+<td style="text-align: left;">36.0%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1873-03-08</td>
+<td style="text-align: left;">England</td>
+<td style="text-align: left;">Scotland</td>
+<td style="text-align: left;">Friendly</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1503</td>
+<td style="text-align: right;">1497</td>
+<td style="text-align: left;">64.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1873-03-08</td>
+<td style="text-align: left;">Scotland</td>
+<td style="text-align: left;">England</td>
+<td style="text-align: left;">Friendly</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1497</td>
+<td style="text-align: right;">1503</td>
+<td style="text-align: left;">35.3%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1874-03-07</td>
+<td style="text-align: left;">Scotland</td>
+<td style="text-align: left;">England</td>
+<td style="text-align: left;">Friendly</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1487</td>
+<td style="text-align: right;">1513</td>
+<td style="text-align: left;">60.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1874-03-07</td>
+<td style="text-align: left;">England</td>
+<td style="text-align: left;">Scotland</td>
+<td style="text-align: left;">Friendly</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1513</td>
+<td style="text-align: right;">1487</td>
+<td style="text-align: left;">39.6%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1875-03-06</td>
+<td style="text-align: left;">England</td>
+<td style="text-align: left;">Scotland</td>
+<td style="text-align: left;">Friendly</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1505</td>
+<td style="text-align: right;">1495</td>
+<td style="text-align: left;">65.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1875-03-06</td>
+<td style="text-align: left;">Scotland</td>
+<td style="text-align: left;">England</td>
+<td style="text-align: left;">Friendly</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1495</td>
+<td style="text-align: right;">1505</td>
+<td style="text-align: left;">34.6%</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(goals_sample, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> y_goals_for)) <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"#157878"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Goals scored by team-match row"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Goals scored"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Team-match rows"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot.new</span>()</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">"Goals sample is generated locally before rendering."</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(goals_sample, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> y_goals_for)) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"#157878"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Goals scored by team-match row"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Goals scored"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Team-match rows"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot.new</span>()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">"Goals sample is generated locally before rendering."</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -295,35 +406,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>goals_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_metrics.csv"</span>))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ordinal_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"result_ordinal_model_metrics.csv"</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Goals OLS"</span>, <span class="st">"Ordinal result logistic"</span>),</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">c</span>(<span class="st">"team goals"</span>, <span class="st">"loss &lt; draw &lt; win"</span>),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows_total =</span> <span class="fu">c</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]], ordinal_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">primary_metric =</span> <span class="fu">c</span>(<span class="st">"test RMSE"</span>, <span class="st">"test accuracy"</span>),</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">4</span>),</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">4</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">baseline_context =</span> <span class="fu">c</span>(</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"mean test goals:"</span>, <span class="fu">round</span>(goals_metrics<span class="sc">$</span>mean_y_test[[<span class="dv">1</span>]], <span class="dv">4</span>)),</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"majority baseline:"</span>, <span class="fu">round</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">4</span>))</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">note =</span> <span class="st">"Model metrics are generated locally before rendering."</span>)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Goals OLS"</span>, <span class="st">"Ordinal result logistic"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">c</span>(<span class="st">"team goals"</span>, <span class="st">"loss &lt; draw &lt; win"</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">fmt_integer</span>(<span class="fu">c</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]], ordinal_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]])),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">primary_metric =</span> <span class="fu">c</span>(<span class="st">"Test RMSE"</span>, <span class="st">"Test accuracy"</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">context =</span> <span class="fu">c</span>(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Mean test goals:"</span>, <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>mean_y_test[[<span class="dv">1</span>]], <span class="dv">3</span>)),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Majority baseline:"</span>, <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current baseline model performance."</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model metrics are generated locally before rendering."</span>))</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>                    model            target rows_total primary_metric  value
-1               Goals OLS        team goals      98810      test RMSE 1.4632
-2 Ordinal result logistic loss &lt; draw &lt; win      98810  test accuracy 0.5852
-           baseline_context
-1   mean test goals: 1.4652
-2 majority baseline: 0.3864</code></pre>
+<div class="cell-output-display">
+<table class="clean-table caption-top table table-sm table-striped small">
+<caption>Current baseline model performance.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Model</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Target</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Rows</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Primary Metric</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Value</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Context</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Goals OLS</td>
+<td style="text-align: left;">team goals</td>
+<td style="text-align: left;">98,810</td>
+<td style="text-align: left;">Test RMSE</td>
+<td style="text-align: left;">1.463</td>
+<td style="text-align: left;">Mean test goals: 1.465</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ordinal result logistic</td>
+<td style="text-align: left;">loss &lt; draw &lt; win</td>
+<td style="text-align: left;">98,810</td>
+<td style="text-align: left;">Test accuracy</td>
+<td style="text-align: left;">58.5%</td>
+<td style="text-align: left;">Majority baseline: 38.6%</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -332,143 +466,195 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"metadata"</span>, <span class="st">"table_inventory.csv"</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(inventory) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  inventory <span class="sc">|&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(table_name) <span class="sc">|&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">20</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">note =</span> <span class="st">"Table inventory is generated locally by R/07_export_metadata.R."</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"metadata"</span>, <span class="st">"table_inventory.csv"</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(inventory) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  inventory <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(table_name) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">row_count =</span> <span class="fu">fmt_integer</span>(row_count)) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Local tables available for modeling."</span>, <span class="at">max_rows =</span> <span class="dv">16</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Table inventory is generated locally by R/07_export_metadata.R."</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 x 2
-   table_name                             row_count
-   &lt;chr&gt;                                      &lt;dbl&gt;
- 1 agg_news_query_counts_gdelt                    8
- 2 agg_player_international_goals             15821
- 3 agg_team_elo_latest                          336
- 4 agg_team_history                             336
- 5 agg_team_recent_form                         262
- 6 dim_2026_world_cup_squad_players            1248
- 7 dim_locations_from_results                  2214
- 8 dim_player_wikidata                         1248
- 9 fact_2026_world_cup_fixtures                  72
-10 fact_fixture_weather_hourly_open_meteo       480
-11 fact_international_matches_team_long       98954
-12 fact_news_articles_gdelt                     172
-13 fact_player_goals                          47647
-14 fact_team_elo_match_history                98842
-15 football_data_matches                          0
-16 odds_snapshots                                 0
-17 raw_manifests                                  2
-18 raw_snapshot_files                            19
-19 seed_venues                                   16
-20 stg_international_goalscorers              47647</code></pre>
+<div class="cell-output-display">
+<table class="clean-table caption-top table table-sm table-striped small">
+<caption>Local tables available for modeling.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Table Name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Row Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">agg_news_query_counts_gdelt</td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">agg_player_international_goals</td>
+<td style="text-align: left;">15,821</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">agg_team_elo_latest</td>
+<td style="text-align: left;">336</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">agg_team_history</td>
+<td style="text-align: left;">336</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">agg_team_recent_form</td>
+<td style="text-align: left;">262</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dim_2026_world_cup_squad_players</td>
+<td style="text-align: left;">1,248</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dim_locations_from_results</td>
+<td style="text-align: left;">2,214</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dim_player_wikidata</td>
+<td style="text-align: left;">1,248</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">fact_2026_world_cup_fixtures</td>
+<td style="text-align: left;">72</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fact_fixture_weather_hourly_open_meteo</td>
+<td style="text-align: left;">480</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">fact_international_matches_team_long</td>
+<td style="text-align: left;">98,954</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fact_news_articles_gdelt</td>
+<td style="text-align: left;">172</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">fact_player_goals</td>
+<td style="text-align: left;">47,647</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fact_team_elo_match_history</td>
+<td style="text-align: left;">98,842</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">football_data_matches</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">odds_snapshots</td>
+<td style="text-align: left;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<div class="principles">
+<div class="principle">
+<strong>One grain per table</strong>Rows should mean one thing: team-match, match, player, venue, or API pull.
+</div>
+<div class="principle">
+<strong>Readable labels</strong>Keep machine-safe names in source files; convert them to readable labels only in reports.
+</div>
+<div class="principle">
+<strong>Round for display only</strong>Do not round model inputs or stored outputs. Round the rendered table so readers can scan it.
+</div>
+<div class="principle">
+<strong>Separate public and private</strong>Publish metadata and rendered results, not raw datasets, databases, keys, or credentials.
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="current-models" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="current-models"><span class="header-section-number">2</span> Current Models</h2>
-<div class="metric-strip">
-<div class="metric">
-<strong>Primary target</strong><span>Goals</span>
-</div>
-<div class="metric">
-<strong>Result target</strong><span>W / D / L</span>
-</div>
-<div class="metric">
-<strong>Workflow</strong><span>R + Python + SQL</span>
-</div>
-<div class="metric">
-<strong>Publishing</strong><span>Quarto HTML</span>
-</div>
-</div>
-</section>
-<section id="reports" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="reports"><span class="header-section-number">3</span> Reports</h2>
+<section id="reports" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="reports"><span class="header-section-number">2</span> Reports</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<section id="goals-model" class="level3 project-card" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="goals-model"><span class="header-section-number">3.1</span> Goals Model</h3>
+<section id="goals-model" class="level3 project-card" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="goals-model"><span class="header-section-number">2.1</span> Goals Model</h3>
 <p>OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</p>
 <p><a class="project-button" href="reports/01_goals_linear_regression.html">Open goals report</a></p>
 </section>
 </div><div class="column" style="width:50%;">
-<section id="result-model" class="level3 project-card" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="result-model"><span class="header-section-number">3.2</span> Result Model</h3>
+<section id="result-model" class="level3 project-card" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="result-model"><span class="header-section-number">2.2</span> Result Model</h3>
 <p>Ordinal logistic baseline for <code>loss &lt; draw &lt; win</code>, producing win/draw/loss probability estimates.</p>
 <p><a class="project-button" href="reports/02_ordinal_result_model.html">Open result report</a></p>
 </section>
 </div>
 </div>
 </section>
-<section id="interactive-app-direction" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="interactive-app-direction"><span class="header-section-number">4</span> Interactive App Direction</h2>
-<section id="shiny-first-streamlit-later-if-needed" class="level3 shiny-panel" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="shiny-first-streamlit-later-if-needed"><span class="header-section-number">4.1</span> Shiny First, Streamlit Later If Needed</h3>
+<section id="interactive-app-direction" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="interactive-app-direction"><span class="header-section-number">3</span> Interactive App Direction</h2>
+<section id="shiny-first-streamlit-later-if-needed" class="level3 shiny-panel" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="shiny-first-streamlit-later-if-needed"><span class="header-section-number">3.1</span> Shiny First, Streamlit Later If Needed</h3>
 <p>Your older Shiny code used <code>navbarPage()</code>, <code>sidebarLayout()</code>, <code>DT</code> tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.</p>
 <p>GitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet.</p>
 </section>
 </section>
-<section id="refresh-options" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="refresh-options"><span class="header-section-number">5</span> Refresh Options</h2>
+<section id="refresh-options" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="refresh-options"><span class="header-section-number">4</span> Refresh Options</h2>
 <p>Run these from RStudio.</p>
-<section id="local-rebuild" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="local-rebuild"><span class="header-section-number">5.1</span> Local Rebuild</h3>
+<section id="local-rebuild" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="local-rebuild"><span class="header-section-number">4.1</span> Local Rebuild</h3>
 <p>Does not hit APIs or spend quota.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"local-rebuild"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"local-rebuild"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
-<section id="free-source-refresh" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="free-source-refresh"><span class="header-section-number">5.2</span> Free Source Refresh</h3>
+<section id="free-source-refresh" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="free-source-refresh"><span class="header-section-number">4.2</span> Free Source Refresh</h3>
 <p>Pulls free/no-key public sources and rebuilds the local site.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"free-refresh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"free-refresh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
-<section id="keyed-apis-later" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="keyed-apis-later"><span class="header-section-number">5.3</span> Keyed APIs Later</h3>
+<section id="keyed-apis-later" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="keyed-apis-later"><span class="header-section-number">4.3</span> Keyed APIs Later</h3>
 <p>Use after <code>.env</code> is configured locally.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Odds pulls require explicit quota permission.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_odds_quota =</span> <span class="cn">TRUE</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_odds_quota =</span> <span class="cn">TRUE</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
 </section>
-<section id="next-work" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="next-work"><span class="header-section-number">6</span> Next Work</h2>
+<section id="next-work" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="next-work"><span class="header-section-number">5</span> Next Work</h2>
 <ol type="1">
 <li>Add rolling recent-form features.</li>
 <li>Add squad-strength and player-availability signals.</li>
@@ -940,228 +1126,262 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2026 World Cup Betting Model"</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "An RStudio-first modeling lab for public soccer data, explainable baselines, and future betting-market comparison"</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>, <span class="at">warning =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>root <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"data/processed/modeling"</span>)) <span class="st">"."</span> <span class="cf">else</span> <span class="st">".."</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>read_csv_if_exists <span class="ot">&lt;-</span> <span class="cf">function</span>(path) {</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">file.exists</span>(path)) {</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">read_csv</span>(path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>()</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"hero-actions"</span><span class="dt">&gt;</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://github.com/LindaData/world-cup-2026-betting-model"</span><span class="dt">&gt;</span>View on GitHub<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Goals Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Result Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://lindadata.github.io/"</span><span class="dt">&gt;</span>LindaData Home<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>This site is the public-facing project notebook. It follows the same teaching-report style as the earlier COVID analysis: explain the data pull, show the transformed data, write the model math, then render plots and results.</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>Code is hidden by default so the report reads cleanly. Use **Show code** when you want to inspect the R steps.</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>No raw datasets, processed databases, API keys, <span class="in">`.Renviron`</span>, credentials, or private files are published here.</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Project Map</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## About</span></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup. The current public version is a transparent baseline, not a final betting system.</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>The project is designed around four layers:</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data collection:** public match history, Elo ratings, 2026 venues, weather, player metadata, and news signals.</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data storage:** local files and DuckDB tables for modeling.</span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Modeling:** interpretable first-pass models in R, with Python handling API pulls and heavier data jobs.</span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.</span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Exploration</span></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>The starting modeling unit is one row per team-match. A single game creates two observations, one for each team.</span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-sample}</span></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>goals_sample <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_sample_1000.csv"</span>))</span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(goals_sample, <span class="dv">10</span>)</span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">note =</span> <span class="st">"Sample rows are generated locally by R/10_fit_linear_goals_model.R."</span>)</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-plot, fig.cap="Distribution of goals in the public sample used for the baseline model."}</span></span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(goals_sample, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> y_goals_for)) <span class="sc">+</span></span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"#157878"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Goals scored by team-match row"</span>,</span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Goals scored"</span>,</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Team-match rows"</span></span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot.new</span>()</span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">"Goals sample is generated locally before rendering."</span>)</span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="fu">## Modeling</span></span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>The first two models are intentionally simple:</span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Goals OLS:** predicts goals scored.</span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Ordinal logistic:** predicts <span class="in">`loss &lt; draw &lt; win`</span>.</span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>This mirrors the Shiny layout you used before: start with descriptive analytics, then model fitting, then prediction outputs.</span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary}</span></span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>goals_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_metrics.csv"</span>))</span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>ordinal_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"result_ordinal_model_metrics.csv"</span>))</span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Goals OLS"</span>, <span class="st">"Ordinal result logistic"</span>),</span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">c</span>(<span class="st">"team goals"</span>, <span class="st">"loss &lt; draw &lt; win"</span>),</span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows_total =</span> <span class="fu">c</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]], ordinal_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">primary_metric =</span> <span class="fu">c</span>(<span class="st">"test RMSE"</span>, <span class="st">"test accuracy"</span>),</span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">4</span>),</span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">4</span>)</span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>    <span class="at">baseline_context =</span> <span class="fu">c</span>(</span>
-<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"mean test goals:"</span>, <span class="fu">round</span>(goals_metrics<span class="sc">$</span>mean_y_test[[<span class="dv">1</span>]], <span class="dv">4</span>)),</span>
-<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"majority baseline:"</span>, <span class="fu">round</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">4</span>))</span>
-<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">note =</span> <span class="st">"Model metrics are generated locally before rendering."</span>)</span>
-<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>The local database contains more tables than the public site publishes. The rendered site shows metadata only, which keeps credentials and source data off GitHub.</span>
-<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-inventory}</span></span>
-<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"metadata"</span>, <span class="st">"table_inventory.csv"</span>))</span>
-<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(inventory) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>  inventory <span class="sc">|&gt;</span></span>
-<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(table_name) <span class="sc">|&gt;</span></span>
-<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">20</span>)</span>
-<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">note =</span> <span class="st">"Table inventory is generated locally by R/07_export_metadata.R."</span>)</span>
-<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a><span class="fu">## Current Models</span></span>
-<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"metric-strip"</span><span class="dt">&gt;</span></span>
-<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"metric"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Primary target<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;&lt;</span><span class="kw">span</span><span class="dt">&gt;</span>Goals<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"metric"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Result target<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;&lt;</span><span class="kw">span</span><span class="dt">&gt;</span>W / D / L<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"metric"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Workflow<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;&lt;</span><span class="kw">span</span><span class="dt">&gt;</span>R + Python + SQL<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"metric"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Publishing<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;&lt;</span><span class="kw">span</span><span class="dt">&gt;</span>Quarto HTML<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reports</span></span>
-<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a>::: {.columns}</span>
-<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
-<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
-<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="fu">### Goals Model</span></span>
-<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</span>
-<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Open goals report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
-<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
-<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a><span class="fu">### Result Model</span></span>
-<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a>Ordinal logistic baseline for <span class="in">`loss &lt; draw &lt; win`</span>, producing win/draw/loss probability estimates.</span>
-<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Open result report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interactive App Direction</span></span>
-<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a>::: {.shiny-panel}</span>
-<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shiny First, Streamlit Later If Needed</span></span>
-<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>Your older Shiny code used <span class="in">`navbarPage()`</span>, <span class="in">`sidebarLayout()`</span>, <span class="in">`DT`</span> tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.</span>
-<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a>GitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet.</span>
-<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## Refresh Options</span></span>
-<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>Run these from RStudio.</span>
-<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a><span class="fu">### Local Rebuild</span></span>
-<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>Does not hit APIs or spend quota.</span>
-<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r local-refresh, eval=FALSE}</span></span>
-<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"local-rebuild"</span>)</span>
-<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a><span class="fu">### Free Source Refresh</span></span>
-<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>Pulls free/no-key public sources and rebuilds the local site.</span>
-<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r free-refresh, eval=FALSE}</span></span>
-<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"free-refresh"</span>)</span>
-<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a><span class="fu">### Keyed APIs Later</span></span>
-<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a>Use after <span class="in">`.env`</span> is configured locally.</span>
-<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r keyed-refresh, eval=FALSE}</span></span>
-<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
-<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
-<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span></span>
-<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a>Odds pulls require explicit quota permission.</span>
-<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a><span class="in">```{r odds-refresh, eval=FALSE}</span></span>
-<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
-<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
-<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_odds_quota =</span> <span class="cn">TRUE</span></span>
-<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Work</span></span>
-<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add rolling recent-form features.</span>
-<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add squad-strength and player-availability signals.</span>
-<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Add news-derived injury and lineup signals.</span>
-<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Add odds-implied probabilities.</span>
-<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Compare ordinal logistic, multinomial logistic, and paired-goal models.</span>
-<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Calibrate predicted probabilities.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2026 World Cup Betting Model"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "An RStudio-first modeling lab for public soccer data, explainable baselines, and future betting-market comparison"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>, <span class="at">warning =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>root <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"data/processed/modeling"</span>)) <span class="st">"."</span> <span class="cf">else</span> <span class="st">".."</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">file.path</span>(root, <span class="st">"R"</span>, <span class="st">"report_helpers.R"</span>))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>read_csv_if_exists <span class="ot">&lt;-</span> <span class="cf">function</span>(path) {</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">file.exists</span>(path)) {</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">read_csv</span>(path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>()</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"hero-actions"</span><span class="dt">&gt;</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://github.com/LindaData/world-cup-2026-betting-model"</span><span class="dt">&gt;</span>View on GitHub<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Goals Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Result Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://lindadata.github.io/"</span><span class="dt">&gt;</span>LindaData Home<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>This site is the public-facing project notebook. It follows the same teaching-report style as the earlier COVID analysis: explain the data pull, show the transformed data, write the model math, then render plots and results.</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>Code is hidden by default so the report reads cleanly. Use **Show code** when you want to inspect the R steps.</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>No raw datasets, processed databases, API keys, <span class="in">`.Renviron`</span>, credentials, or private files are published here.</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hero-metrics, echo=FALSE, results="asis"}</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>goals_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_metrics.csv"</span>))</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>ordinal_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"result_ordinal_model_metrics.csv"</span>))</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">metric_cards</span>(<span class="fu">data.frame</span>(</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Rows Modeled"</span>, <span class="st">"Goals RMSE"</span>, <span class="st">"Result Accuracy"</span>, <span class="st">"Majority Baseline"</span>),</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_integer</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">note =</span> <span class="fu">c</span>(<span class="st">"team-match rows"</span>, <span class="st">"lower is better"</span>, <span class="st">"test set"</span>, <span class="st">"comparison point"</span>)</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>  )))</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## Project Map</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## About</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup. The current public version is a transparent baseline, not a final betting system.</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>The project is designed around four layers:</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data collection:** public match history, Elo ratings, 2026 venues, weather, player metadata, and news signals.</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data storage:** local files and DuckDB tables for modeling.</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Modeling:** interpretable first-pass models in R, with Python handling API pulls and heavier data jobs.</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Exploration</span></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>The starting modeling unit is one row per team-match. A single game creates two observations, one for each team.</span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-sample}</span></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>goals_sample <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_sample_1000.csv"</span>))</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>  goals_sample <span class="sc">|&gt;</span></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>      date,</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>      team,</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>      opponent,</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>      tournament,</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>      y_goals_for,</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>      pre_elo,</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>      opponent_pre_elo,</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>      pre_match_expected_result</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_match_expected_result =</span> <span class="fu">fmt_percent</span>(pre_match_expected_result, <span class="dv">1</span>),</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_elo =</span> <span class="fu">round</span>(pre_elo, <span class="dv">0</span>),</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>      <span class="at">opponent_pre_elo =</span> <span class="fu">round</span>(opponent_pre_elo, <span class="dv">0</span>)</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Sample of the team-match modeling grain."</span>, <span class="at">max_rows =</span> <span class="dv">8</span>)</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Sample rows are generated locally by R/10_fit_linear_goals_model.R."</span>))</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-plot, fig.cap="Distribution of goals in the public sample used for the baseline model."}</span></span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(goals_sample, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> y_goals_for)) <span class="sc">+</span></span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"#157878"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Goals scored by team-match row"</span>,</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Goals scored"</span>,</span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Team-match rows"</span></span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot.new</span>()</span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">"Goals sample is generated locally before rendering."</span>)</span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Modeling</span></span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>The first two models are intentionally simple:</span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Goals OLS:** predicts goals scored.</span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Ordinal logistic:** predicts <span class="in">`loss &lt; draw &lt; win`</span>.</span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>This mirrors the Shiny layout you used before: start with descriptive analytics, then model fitting, then prediction outputs.</span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary}</span></span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Goals OLS"</span>, <span class="st">"Ordinal result logistic"</span>),</span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">c</span>(<span class="st">"team goals"</span>, <span class="st">"loss &lt; draw &lt; win"</span>),</span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">fmt_integer</span>(<span class="fu">c</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]], ordinal_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]])),</span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>    <span class="at">primary_metric =</span> <span class="fu">c</span>(<span class="st">"Test RMSE"</span>, <span class="st">"Test accuracy"</span>),</span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>    <span class="at">context =</span> <span class="fu">c</span>(</span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Mean test goals:"</span>, <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>mean_y_test[[<span class="dv">1</span>]], <span class="dv">3</span>)),</span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Majority baseline:"</span>, <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>))</span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current baseline model performance."</span>)</span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model metrics are generated locally before rendering."</span>))</span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
+<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>The local database contains more tables than the public site publishes. The rendered site shows metadata only, which keeps credentials and source data off GitHub.</span>
+<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-inventory}</span></span>
+<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"metadata"</span>, <span class="st">"table_inventory.csv"</span>))</span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(inventory) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a>  inventory <span class="sc">|&gt;</span></span>
+<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(table_name) <span class="sc">|&gt;</span></span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">row_count =</span> <span class="fu">fmt_integer</span>(row_count)) <span class="sc">|&gt;</span></span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Local tables available for modeling."</span>, <span class="at">max_rows =</span> <span class="dv">16</span>)</span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Table inventory is generated locally by R/07_export_metadata.R."</span>))</span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Display Standards</span></span>
+<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principles"</span><span class="dt">&gt;</span></span>
+<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>One grain per table<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Rows should mean one thing: team-match, match, player, venue, or API pull.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Readable labels<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Keep machine-safe names in source files; convert them to readable labels only in reports.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Round for display only<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Do not round model inputs or stored outputs. Round the rendered table so readers can scan it.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Separate public and private<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Publish metadata and rendered results, not raw datasets, databases, keys, or credentials.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reports</span></span>
+<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a>::: {.columns}</span>
+<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a><span class="fu">### Goals Model</span></span>
+<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a>OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</span>
+<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-179"><a href="#cb9-179" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Open goals report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb9-180"><a href="#cb9-180" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-181"><a href="#cb9-181" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-182"><a href="#cb9-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-183"><a href="#cb9-183" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb9-184"><a href="#cb9-184" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### Result Model</span></span>
+<span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-187"><a href="#cb9-187" aria-hidden="true" tabindex="-1"></a>Ordinal logistic baseline for <span class="in">`loss &lt; draw &lt; win`</span>, producing win/draw/loss probability estimates.</span>
+<span id="cb9-188"><a href="#cb9-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-189"><a href="#cb9-189" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Open result report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb9-190"><a href="#cb9-190" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interactive App Direction</span></span>
+<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a>::: {.shiny-panel}</span>
+<span id="cb9-197"><a href="#cb9-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shiny First, Streamlit Later If Needed</span></span>
+<span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a>Your older Shiny code used <span class="in">`navbarPage()`</span>, <span class="in">`sidebarLayout()`</span>, <span class="in">`DT`</span> tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.</span>
+<span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a>GitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet.</span>
+<span id="cb9-202"><a href="#cb9-202" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-203"><a href="#cb9-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-204"><a href="#cb9-204" aria-hidden="true" tabindex="-1"></a><span class="fu">## Refresh Options</span></span>
+<span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a>Run these from RStudio.</span>
+<span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a><span class="fu">### Local Rebuild</span></span>
+<span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a>Does not hit APIs or spend quota.</span>
+<span id="cb9-211"><a href="#cb9-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-212"><a href="#cb9-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r local-refresh, eval=FALSE}</span></span>
+<span id="cb9-213"><a href="#cb9-213" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb9-214"><a href="#cb9-214" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"local-rebuild"</span>)</span>
+<span id="cb9-215"><a href="#cb9-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-216"><a href="#cb9-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-217"><a href="#cb9-217" aria-hidden="true" tabindex="-1"></a><span class="fu">### Free Source Refresh</span></span>
+<span id="cb9-218"><a href="#cb9-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-219"><a href="#cb9-219" aria-hidden="true" tabindex="-1"></a>Pulls free/no-key public sources and rebuilds the local site.</span>
+<span id="cb9-220"><a href="#cb9-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-221"><a href="#cb9-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r free-refresh, eval=FALSE}</span></span>
+<span id="cb9-222"><a href="#cb9-222" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb9-223"><a href="#cb9-223" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"free-refresh"</span>)</span>
+<span id="cb9-224"><a href="#cb9-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-225"><a href="#cb9-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-226"><a href="#cb9-226" aria-hidden="true" tabindex="-1"></a><span class="fu">### Keyed APIs Later</span></span>
+<span id="cb9-227"><a href="#cb9-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-228"><a href="#cb9-228" aria-hidden="true" tabindex="-1"></a>Use after <span class="in">`.env`</span> is configured locally.</span>
+<span id="cb9-229"><a href="#cb9-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-230"><a href="#cb9-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r keyed-refresh, eval=FALSE}</span></span>
+<span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
+<span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
+<span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-235"><a href="#cb9-235" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-236"><a href="#cb9-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-237"><a href="#cb9-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-238"><a href="#cb9-238" aria-hidden="true" tabindex="-1"></a>Odds pulls require explicit quota permission.</span>
+<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-240"><a href="#cb9-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r odds-refresh, eval=FALSE}</span></span>
+<span id="cb9-241"><a href="#cb9-241" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
+<span id="cb9-243"><a href="#cb9-243" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
+<span id="cb9-244"><a href="#cb9-244" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-245"><a href="#cb9-245" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_odds_quota =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-246"><a href="#cb9-246" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Work</span></span>
+<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add rolling recent-form features.</span>
+<span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add squad-strength and player-availability signals.</span>
+<span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Add news-derived injury and lineup signals.</span>
+<span id="cb9-254"><a href="#cb9-254" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Add odds-implied probabilities.</span>
+<span id="cb9-255"><a href="#cb9-255" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Compare ordinal logistic, multinomial logistic, and paired-goal models.</span>
+<span id="cb9-256"><a href="#cb9-256" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Calibrate predicted probabilities.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
