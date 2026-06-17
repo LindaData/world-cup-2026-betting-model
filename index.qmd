@@ -1,6 +1,6 @@
 ---
 title: "2026 World Cup Betting Model"
-subtitle: "An RStudio-first modeling lab for public soccer data, explainable baselines, and future betting-market comparison"
+subtitle: "Goals, match-result probabilities, and data diagnostics for the 2026 FIFA World Cup"
 ---
 
 ```{r setup, include=FALSE}
@@ -16,16 +16,19 @@ read_csv_if_exists <- function(path) {
 }
 ```
 
+<div class="draft-label">DRAFT</div>
+
 <div class="hero-actions">
   <a class="btn" href="https://github.com/LindaData/world-cup-2026-betting-model">View on GitHub</a>
   <a class="btn" href="reports/01_goals_linear_regression.html">Goals Model</a>
   <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a>
+  <a class="btn" href="reports/03_distribution_review.html">Distributions</a>
   <a class="btn" href="https://lindadata.github.io/">LindaData Home</a>
 </div>
 
-This site is the public-facing project notebook. It follows the same teaching-report style as the earlier COVID analysis: explain the data pull, show the transformed data, write the model math, then render plots and results.
+This dashboard organizes the 2026 World Cup betting model, model diagnostics, and data-source decision in one shareable site.
 
-Code is hidden by default so the report reads cleanly. Use **Show code** when you want to inspect the R steps.
+Code is hidden by default so the report reads cleanly. Use **Show code** to inspect the R steps.
 
 No raw datasets, processed databases, API keys, `.Renviron`, credentials, or private files are published here.
 
@@ -35,17 +38,44 @@ ordinal_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "mode
 
 if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
   cat(metric_cards(data.frame(
-    label = c("Rows Modeled", "Goals RMSE", "Result Accuracy", "Majority Baseline"),
+    label = c("Rows Modeled", "Goals RMSE", "Result Accuracy", "Reference Accuracy"),
     value = c(
       fmt_integer(goals_metrics$rows_total[[1]]),
       fmt_number(goals_metrics$test_rmse[[1]], 3),
       fmt_percent(ordinal_metrics$test_accuracy[[1]], 1),
       fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1)
     ),
-    note = c("team-match rows", "lower is better", "test set", "comparison point")
+    note = c("team-match rows", "lower is better", "test set", "reference class")
   )))
 }
 ```
+
+## Data API Decision
+
+::: {.api-choice}
+**Recommended API: API-Football Pro**
+
+Use one paid API as the primary data connection: API-Football Pro at **$19/month**. Current spend is **$10/month**, so the projected monthly total is **$29/month**, well under the $100 cap.
+:::
+
+```{r api-decision, echo=FALSE}
+api_options <- data.frame(
+  provider = c("API-Football Pro", "The Odds API 20K", "football-data.org ML / Deep Data", "Sportmonks Starter"),
+  price = c("$19/mo", "$30/mo", "EUR29/mo before add-ons", "EUR29/mo before add-ons"),
+  fit = c(
+    "Best one-API fit: fixtures, teams, players/coaches, lineups, injuries, statistics, predictions, and pre-match odds.",
+    "Excellent odds feed, but not enough team/player model data by itself.",
+    "Good football data, but odds and statistics are add-ons and coverage is narrower for this use case.",
+    "Strong football data, but useful betting/advanced features add monthly cost."
+  ),
+  decision = c("Recommended", "Use for odds validation", "Defer", "Defer")
+)
+display_table(api_options, caption = "Paid API options reviewed for the primary data connection.")
+```
+
+Sources: [API-Football pricing](https://www.api-football.com/pricing), [The Odds API pricing](https://the-odds-api.com/), [football-data.org pricing](https://www.football-data.org/pricing), and [Sportmonks pricing](https://www.sportmonks.com/football-api/).
+
+After subscribing, add the API key only to local `.env` as `API_FOOTBALL_KEY`. Do not commit the key.
 
 ## Project Map
 
@@ -53,13 +83,13 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
 
 ## About
 
-This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup. The current public version is a transparent baseline, not a final betting system.
+This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup.
 
-The project is designed around four layers:
+The workflow has four layers:
 
-- **Data collection:** public match history, Elo ratings, 2026 venues, weather, player metadata, and news signals.
+- **Data collection:** match history, Elo ratings, 2026 venues, weather, player metadata, odds, and news signals.
 - **Data storage:** local files and DuckDB tables for modeling.
-- **Modeling:** interpretable first-pass models in R, with Python handling API pulls and heavier data jobs.
+- **Modeling:** interpretable models in R, with Python handling API pulls and heavier data jobs.
 - **Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.
 
 ## Data Exploration
@@ -92,7 +122,7 @@ if (nrow(goals_sample) > 0) {
 }
 ```
 
-```{r goals-plot, fig.cap="Distribution of goals in the public sample used for the baseline model."}
+```{r goals-plot, fig.cap="Distribution of goals in the public sample used for the goals model."}
 if (nrow(goals_sample) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
   ggplot2::ggplot(goals_sample, ggplot2::aes(x = y_goals_for)) +
     ggplot2::geom_histogram(binwidth = 1, boundary = -0.5, fill = "#157878", color = "white") +
@@ -110,12 +140,12 @@ if (nrow(goals_sample) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
 
 ## Modeling
 
-The first two models are intentionally simple:
+The model suite has two core outputs:
 
 - **Goals OLS:** predicts goals scored.
 - **Ordinal logistic:** predicts `loss < draw < win`.
 
-This mirrors the Shiny layout you used before: start with descriptive analytics, then model fitting, then prediction outputs.
+The reports show the model target, data grain, math, coefficients, predictions, and diagnostics.
 
 ```{r model-summary}
 if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
@@ -130,10 +160,10 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
     ),
     context = c(
       paste("Mean test goals:", fmt_number(goals_metrics$mean_y_test[[1]], 3)),
-      paste("Majority baseline:", fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1))
+      paste("Reference accuracy:", fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1))
     )
   ) |>
-    display_table(caption = "Current baseline model performance.")
+    display_table(caption = "Current model performance.")
 } else {
   display_table(empty_note("Model metrics are generated locally before rendering."))
 }
@@ -174,7 +204,7 @@ if (nrow(inventory) > 0) {
 ::: {.project-card}
 ### Goals Model
 
-OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.
+OLS model for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.
 
 <a class="project-button" href="reports/01_goals_linear_regression.html">Open goals report</a>
 :::
@@ -184,7 +214,7 @@ OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected re
 ::: {.project-card}
 ### Result Model
 
-Ordinal logistic baseline for `loss < draw < win`, producing win/draw/loss probability estimates.
+Ordinal logistic model for `loss < draw < win`, producing win/draw/loss probability estimates.
 
 <a class="project-button" href="reports/02_ordinal_result_model.html">Open result report</a>
 :::
@@ -194,22 +224,12 @@ Ordinal logistic baseline for `loss < draw < win`, producing win/draw/loss proba
 ::: {.project-card}
 ### Distribution Review
 
-Distribution-first notes for deciding whether soccer features should be modeled as counts, continuous variables, ordered outcomes, probabilities, or mixture processes.
+Distribution notes for deciding whether soccer features are counts, continuous variables, ordered outcomes, probabilities, or mixture processes.
 
 <a class="project-button" href="reports/03_distribution_review.html">Open distribution review</a>
 :::
 
-## Interactive App Direction
-
-::: {.shiny-panel}
-### Shiny First, Streamlit Later If Needed
-
-Your older Shiny code used `navbarPage()`, `sidebarLayout()`, `DT` tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.
-
-GitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet.
-:::
-
-## Refresh Options
+## Refresh Commands
 
 Run these from RStudio.
 
@@ -231,9 +251,9 @@ source("R/20_refresh_all.R")
 refresh_world_cup_data(profile = "free-refresh")
 ```
 
-### Keyed APIs Later
+### API-Football Refresh
 
-Use after `.env` is configured locally.
+Use after `.env` has `API_FOOTBALL_KEY`.
 
 ```{r keyed-refresh, eval=FALSE}
 source("R/20_refresh_all.R")
@@ -242,23 +262,3 @@ refresh_world_cup_data(
   include_keyed_apis = TRUE
 )
 ```
-
-Odds pulls require explicit quota permission.
-
-```{r odds-refresh, eval=FALSE}
-source("R/20_refresh_all.R")
-refresh_world_cup_data(
-  profile = "free-refresh",
-  include_keyed_apis = TRUE,
-  include_odds_quota = TRUE
-)
-```
-
-## Next Work
-
-1. Add rolling recent-form features.
-2. Add squad-strength and player-availability signals.
-3. Add news-derived injury and lineup signals.
-4. Add odds-implied probabilities.
-5. Compare ordinal logistic, multinomial logistic, and paired-goal models.
-6. Calibrate predicted probabilities.

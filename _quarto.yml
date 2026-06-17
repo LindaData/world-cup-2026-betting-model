@@ -29,7 +29,7 @@ website:
       - text: GitHub
         href: https://github.com/LindaData/world-cup-2026-betting-model
   page-footer:
-    left: "Research project. Not betting advice."
+    left: "LindaData 2026 World Cup model."
     right: "Built with R, Python, SQL, DuckDB, and Quarto."
 
 format:

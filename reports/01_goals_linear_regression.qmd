@@ -1,6 +1,6 @@
 ---
-title: "Goals Linear Regression"
-subtitle: "Baseline model for team goals scored"
+title: "Goals Model"
+subtitle: "Team goals scored from strength, opponent strength, and match context"
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +18,7 @@ read_csv_if_exists <- function(path) {
 
 ## Purpose
 
-This report documents the first transparent baseline model for the World Cup prediction project.
+This report documents the goals model for the World Cup prediction project.
 
 The target is team goals scored in a historical international match:
 
@@ -26,7 +26,7 @@ $$
 Y_{i,m} = \text{goals scored by team } i \text{ in match } m
 $$
 
-This is a baseline, not the final soccer model. Goals are non-negative counts, so future versions should compare Poisson, negative-binomial, bivariate Poisson, or Skellam-style models.
+Goals are non-negative counts. The distribution report compares count-model shapes used for soccer scoring.
 
 ## Unit Of Observation
 
@@ -69,34 +69,33 @@ if (nrow(sample_data) > 0) {
 
 ## Elo Feature
 
-For team $i$ against opponent $j$, expected result before kickoff is:
+For one team against one opponent, the expected result before kickoff is:
 
 $$
-p_{i,m} =
-\frac{1}
-{1 + 10^{-\left(E_{i,m}^{pre} + H_m - E_{j,m}^{pre}\right)/400}}
+p =
+\frac{1}{1 + 10^{-\left(\text{Team Elo} + \text{Home Adv.} - \text{Opponent Elo}\right)/400}}
 $$
 
 Where:
 
-- $E_{i,m}^{pre}$ is team $i$'s pre-match Elo.
-- $E_{j,m}^{pre}$ is opponent pre-match Elo.
-- $H_m$ is the home advantage adjustment.
-- $p_{i,m}$ is expected result on a 0 to 1 scale.
+- `Team Elo` is the team's pre-match rating.
+- `Opponent Elo` is the opponent's pre-match rating.
+- `Home Adv.` is the home advantage adjustment.
+- `p` is the expected result on a 0 to 1 scale.
 
 ## Model
 
-The first regression is:
+The regression is:
 
 $$
-Y_{i,m}
+\text{Goals}
 = \beta_0
-+ \beta_1 E_{i,m}^{pre}
-+ \beta_2 E_{j,m}^{pre}
-+ \beta_3 p_{i,m}
-+ \beta_4 I(\text{listed home}_{i,m})
-+ \beta_5 I(\text{neutral site}_m)
-+ \epsilon_{i,m}
++ \beta_1\text{Team Elo}
++ \beta_2\text{Opponent Elo}
++ \beta_3\text{Expected Result}
++ \beta_4\text{Listed Home}
++ \beta_5\text{Neutral Site}
++ \epsilon
 $$
 
 with:

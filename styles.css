@@ -52,6 +52,19 @@ a:hover {
   margin: 1.25rem 0 0.25rem;
 }
 
+.draft-label {
+  display: inline-block;
+  margin: 0 auto 1rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #f2a65a;
+  border-radius: 6px;
+  background: #fff8ed;
+  color: #8a4b08;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
 .hero-actions .btn,
 .project-button {
   border: 1px solid #9cc7c7;
@@ -228,6 +241,20 @@ pre code {
   display: block;
   color: #52616b;
   margin-top: 0.35rem;
+}
+
+.api-choice {
+  border: 1px solid #9cc7c7;
+  border-radius: 8px;
+  background: #f5fbfb;
+  padding: 1rem;
+  margin: 1rem 0 1.4rem;
+}
+
+.api-choice strong {
+  display: block;
+  font-size: 1.05rem;
+  color: #17252a;
 }
 
 .panel-tabset {

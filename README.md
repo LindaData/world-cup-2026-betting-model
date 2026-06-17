@@ -2,7 +2,7 @@
 
 This project is a reproducible data and modeling scaffold for the 2026 FIFA World Cup. It is designed to be worked on from RStudio while using Python for data acquisition and SQL/DuckDB for storage.
 
-The current baselines estimate team goals and win/draw/loss probabilities using historical international match data. Later iterations will add market comparison, roster strength, player availability, and news signals.
+The current model estimates team goals and win/draw/loss probabilities using historical international match data, with market comparison, roster strength, player availability, and news signals organized in the project workflow.
 
 The intended workflow is three-language:
 
@@ -100,7 +100,7 @@ Run the local app from RStudio:
 shiny::runApp("apps/shiny_world_cup")
 ```
 
-Streamlit can use the same DuckDB/model outputs later if a Python-first app becomes useful.
+Streamlit can use the same DuckDB/model outputs if a Python-first app becomes useful.
 
 ## Current Data Build
 
@@ -147,7 +147,7 @@ source("R/06_data_inventory.R")
 
 Use the rendered Quarto site for the current public data inventory and model summaries.
 
-To pull free GDELT news metadata later:
+To pull free GDELT news metadata:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\fetch_news_gdelt.py --include-team-queries

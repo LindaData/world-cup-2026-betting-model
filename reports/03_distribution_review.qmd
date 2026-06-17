@@ -1,6 +1,6 @@
 ---
-title: "Distribution Review"
-subtitle: "Candidate probability models and diagnostics for the World Cup modeling workflow"
+title: "Distributions"
+subtitle: "Probability models and diagnostics for the World Cup modeling workflow"
 ---
 
 ```{r setup, include=FALSE}
@@ -22,14 +22,14 @@ result_distribution <- read_csv_if_exists(file.path(root, "data", "processed", "
 ```
 
 ::: {.reference-note}
-This page is a project-specific synthesis, not copied course material. The style direction comes from reviewing public NC State statistics teaching resources: short conceptual framing, visible math, reproducible R/Quarto code, and simulation/diagnostic thinking.
+These original project notes are influenced by public NC State statistics teaching resources: short conceptual framing, visible math, reproducible R/Quarto code, and simulation/diagnostic thinking.
 :::
 
-## Why This Page Exists
+## Purpose
 
-Before adding bigger models, each variable should have an explicit statistical shape. Soccer data mixes low-count outcomes, ordered categorical results, probabilities, text/news counts, player availability flags, and continuous context variables.
+Each variable has an explicit statistical shape. Soccer data mixes low-count outcomes, ordered categorical results, probabilities, text/news counts, player availability flags, and continuous context variables.
 
-The first pass should be generous: list plausible distributions, build diagnostics, then filter models that do not fit the data or the betting question.
+The workflow lists plausible distributions, builds diagnostics, and filters models that do not fit the data or the betting question.
 
 ## Current Outcome Shapes
 
@@ -98,7 +98,7 @@ if (nrow(goals_frame) > 0 && "y_goals_for" %in% names(goals_frame) && requireNam
 ## Candidate Distributions
 
 <div class="distribution-grid">
-  <div class="distribution-card"><strong>Goals scored</strong>Poisson, negative binomial, zero-inflated count models, bivariate Poisson, Skellam goal difference.<small>Start here because goals are low nonnegative counts.</small></div>
+  <div class="distribution-card"><strong>Goals scored</strong>Poisson, negative binomial, zero-inflated count models, bivariate Poisson, Skellam goal difference.<small>Goals are low nonnegative counts.</small></div>
   <div class="distribution-card"><strong>Match result</strong>Ordinal logistic, multinomial logistic, adjacent-category models, paired-score simulation.<small>Useful for win/draw/loss odds comparison.</small></div>
   <div class="distribution-card"><strong>Player and news counts</strong>Poisson or negative binomial with exposure offsets where needed.<small>Useful for goals, mentions, injuries, cards, and appearances.</small></div>
   <div class="distribution-card"><strong>Probabilities</strong>Beta, Dirichlet, calibration curves, Brier/log-loss summaries.<small>Useful once predictions are compared with market-implied probabilities.</small></div>
@@ -126,7 +126,7 @@ candidate_models <- data.frame(
     "Compositional probabilities",
     "Continuous context"
   ),
-  first_models = c(
+  model_options = c(
     "Poisson, negative binomial, bivariate Poisson",
     "Skellam, ordered result model",
     "Ordinal logistic, multinomial logistic",
@@ -146,7 +146,7 @@ candidate_models <- data.frame(
   )
 )
 
-display_table(candidate_models, caption = "Distribution candidates to build and filter.")
+display_table(candidate_models, caption = "Distribution options for the model.")
 ```
 
 ## Review Notes Captured
@@ -168,10 +168,10 @@ Reference links:
 - [R Shiny teaching apps](https://jbpost2.github.io/pages/ShinyApps.html)
 - [Distributome](https://distributome.org/)
 
-## Next Build List
+## Model Quality Checklist
 
-1. Add full-goals distribution diagnostics by tournament era and confederation.
-2. Add mean-versus-variance checks for count features.
-3. Add calibration plots for ordinal result probabilities.
-4. Add cross-validation by time split, not random split only.
-5. Add richer plots for predicted versus observed W/D/L rates by probability bucket.
+1. Goals distribution diagnostics by tournament era and confederation.
+2. Mean-versus-variance checks for count features.
+3. Calibration plots for ordinal result probabilities.
+4. Cross-validation by time split.
+5. Predicted versus observed W/D/L rates by probability bucket.

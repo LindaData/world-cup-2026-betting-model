@@ -1,6 +1,6 @@
 ---
-title: "Ordinal Result Model"
-subtitle: "Baseline model for loss, draw, and win probabilities"
+title: "Result Probability Model"
+subtitle: "Loss, draw, and win probabilities"
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +18,7 @@ read_csv_if_exists <- function(path) {
 
 ## Purpose
 
-This report adds the first result-probability model.
+This report documents the result-probability model.
 
 The ordered outcome is:
 
@@ -32,7 +32,7 @@ $$
 \text{loss} < \text{draw} < \text{win}
 $$
 
-This is closer to betting-market comparison because it estimates match outcome probabilities.
+This output supports betting-market comparison because it estimates match outcome probabilities.
 
 ## Unit Of Observation
 
@@ -74,11 +74,11 @@ if (nrow(sample_data) > 0) {
 
 ## Model
 
-The proportional-odds ordinal logistic model is:
+The model estimates the chance that a team result is at or below each ordered level:
 
 $$
-\text{logit}\left(P(Y_{i,m}^{ord} \leq k)\right)
-= \theta_k - X_{i,m}\beta
+\text{logit}\left(P(\text{Result} \leq k)\right)
+= \theta_k - \text{Team Score}
 $$
 
 where:
@@ -90,12 +90,12 @@ $$
 and:
 
 $$
-X_{i,m}\beta
-= \beta_1 E_{i,m}^{pre}
-+ \beta_2 E_{j,m}^{pre}
-+ \beta_3 p_{i,m}
-+ \beta_4 I(\text{listed home}_{i,m})
-+ \beta_5 I(\text{neutral site}_m)
+\text{Team Score}
+= \beta_1\text{Team Elo}
++ \beta_2\text{Opponent Elo}
++ \beta_3\text{Expected Result}
++ \beta_4\text{Listed Home}
++ \beta_5\text{Neutral Site}
 $$
 
 ## Results
@@ -113,7 +113,7 @@ if (nrow(metrics) > 0) {
     rows_train = fmt_integer(metrics$rows_train),
     rows_test = fmt_integer(metrics$rows_test),
     test_accuracy = fmt_percent(metrics$test_accuracy, 1),
-    baseline_majority_accuracy = fmt_percent(metrics$baseline_majority_accuracy, 1),
+    reference_accuracy = fmt_percent(metrics$baseline_majority_accuracy, 1),
     test_log_loss = fmt_number(metrics$test_log_loss, 3),
     test_multiclass_brier = fmt_number(metrics$test_multiclass_brier, 3)
   ) |>
@@ -223,14 +223,14 @@ $$
 P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 $$
 
-This is the shape needed for future odds comparison.
+These probabilities are the shape used for odds comparison.
 
-Still, this is a baseline:
+Model checks tracked here:
 
-- The proportional-odds assumption may be too restrictive.
-- Paired team-match rows are not independent.
-- Draws usually need richer features.
-- Market odds will be the key benchmark once added.
+- Proportional-odds fit.
+- Paired team-match dependence.
+- Draw calibration.
+- Comparison against market-implied probabilities.
 
 ## Reproduce Locally
 
