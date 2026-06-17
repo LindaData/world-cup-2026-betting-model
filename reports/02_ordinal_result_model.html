@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Ordinal Result Model – 2026 World Cup Betting Model</title>
+<title>Result Probability Model – 2026 World Cup Betting Model</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -218,8 +218,8 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Ordinal Result Model</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
-<p class="subtitle lead">Baseline model for loss, draw, and win probabilities</p>
+<div class="quarto-title-block"><div><h1 class="title">Result Probability Model</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<p class="subtitle lead">Loss, draw, and win probabilities</p>
 </div>
 
 
@@ -238,7 +238,7 @@ window.Quarto = {
 
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
-<p>This report adds the first result-probability model.</p>
+<p>This report documents the result-probability model.</p>
 <p>The ordered outcome is:</p>
 <p><span class="math display">\[
 Y_{i,m}^{ord} \in \{\text{loss}, \text{draw}, \text{win}\}
@@ -247,7 +247,7 @@ Y_{i,m}^{ord} \in \{\text{loss}, \text{draw}, \text{win}\}
 <p><span class="math display">\[
 \text{loss} &lt; \text{draw} &lt; \text{win}
 \]</span></p>
-<p>This is closer to betting-market comparison because it estimates match outcome probabilities.</p>
+<p>This output supports betting-market comparison because it estimates match outcome probabilities.</p>
 </section>
 <section id="unit-of-observation" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="unit-of-observation"><span class="header-section-number">2</span> Unit Of Observation</h2>
@@ -399,10 +399,10 @@ Y_{i,m}^{ord} \in \{\text{loss}, \text{draw}, \text{win}\}
 </section>
 <section id="model" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="model"><span class="header-section-number">4</span> Model</h2>
-<p>The proportional-odds ordinal logistic model is:</p>
+<p>The model estimates the chance that a team result is at or below each ordered level:</p>
 <p><span class="math display">\[
-\text{logit}\left(P(Y_{i,m}^{ord} \leq k)\right)
-= \theta_k - X_{i,m}\beta
+\text{logit}\left(P(\text{Result} \leq k)\right)
+= \theta_k - \text{Team Score}
 \]</span></p>
 <p>where:</p>
 <p><span class="math display">\[
@@ -410,12 +410,12 @@ k \in \{\text{loss}, \text{draw}\}
 \]</span></p>
 <p>and:</p>
 <p><span class="math display">\[
-X_{i,m}\beta
-= \beta_1 E_{i,m}^{pre}
-+ \beta_2 E_{j,m}^{pre}
-+ \beta_3 p_{i,m}
-+ \beta_4 I(\text{listed home}_{i,m})
-+ \beta_5 I(\text{neutral site}_m)
+\text{Team Score}
+= \beta_1\text{Team Elo}
++ \beta_2\text{Opponent Elo}
++ \beta_3\text{Expected Result}
++ \beta_4\text{Listed Home}
++ \beta_5\text{Neutral Site}
 \]</span></p>
 </section>
 <section id="results" class="level2" data-number="5">
@@ -435,7 +435,7 @@ X_{i,m}\beta
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows_train =</span> <span class="fu">fmt_integer</span>(metrics<span class="sc">$</span>rows_train),</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows_test =</span> <span class="fu">fmt_integer</span>(metrics<span class="sc">$</span>rows_test),</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">test_accuracy =</span> <span class="fu">fmt_percent</span>(metrics<span class="sc">$</span>test_accuracy, <span class="dv">1</span>),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">baseline_majority_accuracy =</span> <span class="fu">fmt_percent</span>(metrics<span class="sc">$</span>baseline_majority_accuracy, <span class="dv">1</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">reference_accuracy =</span> <span class="fu">fmt_percent</span>(metrics<span class="sc">$</span>baseline_majority_accuracy, <span class="dv">1</span>),</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">test_log_loss =</span> <span class="fu">fmt_number</span>(metrics<span class="sc">$</span>test_log_loss, <span class="dv">3</span>),</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">test_multiclass_brier =</span> <span class="fu">fmt_number</span>(metrics<span class="sc">$</span>test_multiclass_brier, <span class="dv">3</span>)</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
@@ -453,7 +453,7 @@ X_{i,m}\beta
 <th style="text-align: left;" data-quarto-table-cell-role="th">Rows Train</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Rows Test</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Test Accuracy</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Baseline Majority Accuracy</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Reference Accuracy</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Test log Loss</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Test Multiclass Brier</th>
 </tr>
@@ -877,13 +877,13 @@ X_{i,m}\beta
 <p><span class="math display">\[
 P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 \]</span></p>
-<p>This is the shape needed for future odds comparison.</p>
-<p>Still, this is a baseline:</p>
+<p>These probabilities are the shape used for odds comparison.</p>
+<p>Model checks tracked here:</p>
 <ul>
-<li>The proportional-odds assumption may be too restrictive.</li>
-<li>Paired team-match rows are not independent.</li>
-<li>Draws usually need richer features.</li>
-<li>Market odds will be the key benchmark once added.</li>
+<li>Proportional-odds fit.</li>
+<li>Paired team-match dependence.</li>
+<li>Draw calibration.</li>
+<li>Comparison against market-implied probabilities.</li>
 </ul>
 </section>
 <section id="reproduce-locally" class="level2" data-number="11">
@@ -1359,8 +1359,8 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Ordinal Result Model"</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Baseline model for loss, draw, and win probabilities"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Result Probability Model"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Loss, draw, and win probabilities"</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
@@ -1378,7 +1378,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Purpose</span></span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>This report adds the first result-probability model.</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>This report documents the result-probability model.</span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>The ordered outcome is:</span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
@@ -1392,7 +1392,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>\text{loss} &lt; \text{draw} &lt; \text{win}</span>
 <span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>This is closer to betting-market comparison because it estimates match outcome probabilities.</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>This output supports betting-market comparison because it estimates match outcome probabilities.</span>
 <span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unit Of Observation</span></span>
 <span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
@@ -1434,11 +1434,11 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model</span></span>
 <span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>The proportional-odds ordinal logistic model is:</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>The model estimates the chance that a team result is at or below each ordered level:</span>
 <span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>\text{logit}\left(P(Y_{i,m}^{ord} \leq k)\right)</span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>= \theta_k - X_{i,m}\beta</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>\text{logit}\left(P(\text{Result} \leq k)\right)</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>= \theta_k - \text{Team Score}</span>
 <span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>where:</span>
@@ -1450,12 +1450,12 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>and:</span>
 <span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>X_{i,m}\beta</span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>= \beta_1 E_{i,m}^{pre}</span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_2 E_{j,m}^{pre}</span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_3 p_{i,m}</span>
-<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_4 I(\text{listed home}_{i,m})</span>
-<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_5 I(\text{neutral site}_m)</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>\text{Team Score}</span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>= \beta_1\text{Team Elo}</span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_2\text{Opponent Elo}</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_3\text{Expected Result}</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_4\text{Listed Home}</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_5\text{Neutral Site}</span>
 <span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
@@ -1473,7 +1473,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows_train =</span> <span class="fu">fmt_integer</span>(metrics<span class="sc">$</span>rows_train),</span>
 <span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows_test =</span> <span class="fu">fmt_integer</span>(metrics<span class="sc">$</span>rows_test),</span>
 <span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">test_accuracy =</span> <span class="fu">fmt_percent</span>(metrics<span class="sc">$</span>test_accuracy, <span class="dv">1</span>),</span>
-<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">baseline_majority_accuracy =</span> <span class="fu">fmt_percent</span>(metrics<span class="sc">$</span>baseline_majority_accuracy, <span class="dv">1</span>),</span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">reference_accuracy =</span> <span class="fu">fmt_percent</span>(metrics<span class="sc">$</span>baseline_majority_accuracy, <span class="dv">1</span>),</span>
 <span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">test_log_loss =</span> <span class="fu">fmt_number</span>(metrics<span class="sc">$</span>test_log_loss, <span class="dv">3</span>),</span>
 <span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">test_multiclass_brier =</span> <span class="fu">fmt_number</span>(metrics<span class="sc">$</span>test_multiclass_brier, <span class="dv">3</span>)</span>
 <span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
@@ -1583,14 +1583,14 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <span id="cb9-223"><a href="#cb9-223" aria-hidden="true" tabindex="-1"></a>P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})</span>
 <span id="cb9-224"><a href="#cb9-224" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb9-225"><a href="#cb9-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-226"><a href="#cb9-226" aria-hidden="true" tabindex="-1"></a>This is the shape needed for future odds comparison.</span>
+<span id="cb9-226"><a href="#cb9-226" aria-hidden="true" tabindex="-1"></a>These probabilities are the shape used for odds comparison.</span>
 <span id="cb9-227"><a href="#cb9-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-228"><a href="#cb9-228" aria-hidden="true" tabindex="-1"></a>Still, this is a baseline:</span>
+<span id="cb9-228"><a href="#cb9-228" aria-hidden="true" tabindex="-1"></a>Model checks tracked here:</span>
 <span id="cb9-229"><a href="#cb9-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-230"><a href="#cb9-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The proportional-odds assumption may be too restrictive.</span>
-<span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Paired team-match rows are not independent.</span>
-<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Draws usually need richer features.</span>
-<span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Market odds will be the key benchmark once added.</span>
+<span id="cb9-230"><a href="#cb9-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Proportional-odds fit.</span>
+<span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Paired team-match dependence.</span>
+<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Draw calibration.</span>
+<span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Comparison against market-implied probabilities.</span>
 <span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-235"><a href="#cb9-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproduce Locally</span></span>
 <span id="cb9-236"><a href="#cb9-236" aria-hidden="true" tabindex="-1"></a></span>
@@ -1603,7 +1603,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Research project. Not betting advice.</p>
+<p>LindaData 2026 World Cup model.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

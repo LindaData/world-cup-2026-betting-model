@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Distribution Review – 2026 World Cup Betting Model</title>
+<title>Distributions – 2026 World Cup Betting Model</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -170,11 +170,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-this-page-exists" id="toc-why-this-page-exists" class="nav-link active" data-scroll-target="#why-this-page-exists"><span class="header-section-number">1</span> Why This Page Exists</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#current-outcome-shapes" id="toc-current-outcome-shapes" class="nav-link" data-scroll-target="#current-outcome-shapes"><span class="header-section-number">2</span> Current Outcome Shapes</a></li>
   <li><a href="#candidate-distributions" id="toc-candidate-distributions" class="nav-link" data-scroll-target="#candidate-distributions"><span class="header-section-number">3</span> Candidate Distributions</a></li>
   <li><a href="#review-notes-captured" id="toc-review-notes-captured" class="nav-link" data-scroll-target="#review-notes-captured"><span class="header-section-number">4</span> Review Notes Captured</a></li>
-  <li><a href="#next-build-list" id="toc-next-build-list" class="nav-link" data-scroll-target="#next-build-list"><span class="header-section-number">5</span> Next Build List</a></li>
+  <li><a href="#model-quality-checklist" id="toc-model-quality-checklist" class="nav-link" data-scroll-target="#model-quality-checklist"><span class="header-section-number">5</span> Model Quality Checklist</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/LindaData/world-cup-2026-betting-model/blob/main/reports/03_distribution_review.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
     </div>
@@ -183,8 +183,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Distribution Review</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
-<p class="subtitle lead">Candidate probability models and diagnostics for the World Cup modeling workflow</p>
+<div class="quarto-title-block"><div><h1 class="title">Distributions</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<p class="subtitle lead">Probability models and diagnostics for the World Cup modeling workflow</p>
 </div>
 
 
@@ -202,12 +202,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="reference-note">
-<p>This page is a project-specific synthesis, not copied course material. The style direction comes from reviewing public NC State statistics teaching resources: short conceptual framing, visible math, reproducible R/Quarto code, and simulation/diagnostic thinking.</p>
+<p>These original project notes are influenced by public NC State statistics teaching resources: short conceptual framing, visible math, reproducible R/Quarto code, and simulation/diagnostic thinking.</p>
 </div>
-<section id="why-this-page-exists" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="why-this-page-exists"><span class="header-section-number">1</span> Why This Page Exists</h2>
-<p>Before adding bigger models, each variable should have an explicit statistical shape. Soccer data mixes low-count outcomes, ordered categorical results, probabilities, text/news counts, player availability flags, and continuous context variables.</p>
-<p>The first pass should be generous: list plausible distributions, build diagnostics, then filter models that do not fit the data or the betting question.</p>
+<section id="purpose" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> Purpose</h2>
+<p>Each variable has an explicit statistical shape. Soccer data mixes low-count outcomes, ordered categorical results, probabilities, text/news counts, player availability flags, and continuous context variables.</p>
+<p>The workflow lists plausible distributions, builds diagnostics, and filters models that do not fit the data or the betting question.</p>
 </section>
 <section id="current-outcome-shapes" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="current-outcome-shapes"><span class="header-section-number">2</span> Current Outcome Shapes</h2>
@@ -358,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="3" class="anchored" data-anchor-id="candidate-distributions"><span class="header-section-number">3</span> Candidate Distributions</h2>
 <div class="distribution-grid">
 <div class="distribution-card">
-<strong>Goals scored</strong>Poisson, negative binomial, zero-inflated count models, bivariate Poisson, Skellam goal difference.<small>Start here because goals are low nonnegative counts.</small>
+<strong>Goals scored</strong>Poisson, negative binomial, zero-inflated count models, bivariate Poisson, Skellam goal difference.<small>Goals are low nonnegative counts.</small>
 </div>
 <div class="distribution-card">
 <strong>Match result</strong>Ordinal logistic, multinomial logistic, adjacent-category models, paired-score simulation.<small>Useful for win/draw/loss odds comparison.</small>
@@ -398,7 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Compositional probabilities"</span>,</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Continuous context"</span></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">first_models =</span> <span class="fu">c</span>(</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">model_options =</span> <span class="fu">c</span>(</span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Poisson, negative binomial, bivariate Poisson"</span>,</span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Skellam, ordered result model"</span>,</span>
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Ordinal logistic, multinomial logistic"</span>,</span>
@@ -418,16 +418,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="fu">display_table</span>(candidate_models, <span class="at">caption =</span> <span class="st">"Distribution candidates to build and filter."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="fu">display_table</span>(candidate_models, <span class="at">caption =</span> <span class="st">"Distribution options for the model."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="clean-table caption-top table table-sm table-striped small">
-<caption>Distribution candidates to build and filter.</caption>
+<caption>Distribution options for the model.</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Data Family</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Statistical Shape</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">First Models</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Model Options</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Diagnostic</th>
 </tr>
 </thead>
@@ -498,14 +498,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://distributome.org/">Distributome</a></li>
 </ul>
 </section>
-<section id="next-build-list" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="next-build-list"><span class="header-section-number">5</span> Next Build List</h2>
+<section id="model-quality-checklist" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="model-quality-checklist"><span class="header-section-number">5</span> Model Quality Checklist</h2>
 <ol type="1">
-<li>Add full-goals distribution diagnostics by tournament era and confederation.</li>
-<li>Add mean-versus-variance checks for count features.</li>
-<li>Add calibration plots for ordinal result probabilities.</li>
-<li>Add cross-validation by time split, not random split only.</li>
-<li>Add richer plots for predicted versus observed W/D/L rates by probability bucket.</li>
+<li>Goals distribution diagnostics by tournament era and confederation.</li>
+<li>Mean-versus-variance checks for count features.</li>
+<li>Calibration plots for ordinal result probabilities.</li>
+<li>Cross-validation by time split.</li>
+<li>Predicted versus observed W/D/L rates by probability bucket.</li>
 </ol>
 
 
@@ -971,8 +971,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Distribution Review"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Candidate probability models and diagnostics for the World Cup modeling workflow"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Distributions"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Probability models and diagnostics for the World Cup modeling workflow"</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
@@ -994,14 +994,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>::: {.reference-note}</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>This page is a project-specific synthesis, not copied course material. The style direction comes from reviewing public NC State statistics teaching resources: short conceptual framing, visible math, reproducible R/Quarto code, and simulation/diagnostic thinking.</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>These original project notes are influenced by public NC State statistics teaching resources: short conceptual framing, visible math, reproducible R/Quarto code, and simulation/diagnostic thinking.</span>
 <span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why This Page Exists</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Purpose</span></span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>Before adding bigger models, each variable should have an explicit statistical shape. Soccer data mixes low-count outcomes, ordered categorical results, probabilities, text/news counts, player availability flags, and continuous context variables.</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>Each variable has an explicit statistical shape. Soccer data mixes low-count outcomes, ordered categorical results, probabilities, text/news counts, player availability flags, and continuous context variables.</span>
 <span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>The first pass should be generous: list plausible distributions, build diagnostics, then filter models that do not fit the data or the betting question.</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>The workflow lists plausible distributions, builds diagnostics, and filters models that do not fit the data or the betting question.</span>
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Current Outcome Shapes</span></span>
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
@@ -1070,7 +1070,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="fu">## Candidate Distributions</span></span>
 <span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"distribution-grid"</span><span class="dt">&gt;</span></span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"distribution-card"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Goals scored<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Poisson, negative binomial, zero-inflated count models, bivariate Poisson, Skellam goal difference.<span class="dt">&lt;</span><span class="kw">small</span><span class="dt">&gt;</span>Start here because goals are low nonnegative counts.<span class="dt">&lt;/</span><span class="kw">small</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"distribution-card"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Goals scored<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Poisson, negative binomial, zero-inflated count models, bivariate Poisson, Skellam goal difference.<span class="dt">&lt;</span><span class="kw">small</span><span class="dt">&gt;</span>Goals are low nonnegative counts.<span class="dt">&lt;/</span><span class="kw">small</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
 <span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"distribution-card"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Match result<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Ordinal logistic, multinomial logistic, adjacent-category models, paired-score simulation.<span class="dt">&lt;</span><span class="kw">small</span><span class="dt">&gt;</span>Useful for win/draw/loss odds comparison.<span class="dt">&lt;/</span><span class="kw">small</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
 <span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"distribution-card"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Player and news counts<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Poisson or negative binomial with exposure offsets where needed.<span class="dt">&lt;</span><span class="kw">small</span><span class="dt">&gt;</span>Useful for goals, mentions, injuries, cards, and appearances.<span class="dt">&lt;/</span><span class="kw">small</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
 <span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"distribution-card"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Probabilities<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Beta, Dirichlet, calibration curves, Brier/log-loss summaries.<span class="dt">&lt;</span><span class="kw">small</span><span class="dt">&gt;</span>Useful once predictions are compared with market-implied probabilities.<span class="dt">&lt;/</span><span class="kw">small</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
@@ -1098,7 +1098,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Compositional probabilities"</span>,</span>
 <span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Continuous context"</span></span>
 <span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a>  <span class="at">first_models =</span> <span class="fu">c</span>(</span>
+<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a>  <span class="at">model_options =</span> <span class="fu">c</span>(</span>
 <span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Poisson, negative binomial, bivariate Poisson"</span>,</span>
 <span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Skellam, ordered result model"</span>,</span>
 <span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Ordinal logistic, multinomial logistic"</span>,</span>
@@ -1118,7 +1118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a><span class="fu">display_table</span>(candidate_models, <span class="at">caption =</span> <span class="st">"Distribution candidates to build and filter."</span>)</span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a><span class="fu">display_table</span>(candidate_models, <span class="at">caption =</span> <span class="st">"Distribution options for the model."</span>)</span>
 <span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review Notes Captured</span></span>
@@ -1140,19 +1140,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">R Shiny teaching apps</span><span class="co">](https://jbpost2.github.io/pages/ShinyApps.html)</span></span>
 <span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Distributome</span><span class="co">](https://distributome.org/)</span></span>
 <span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Build List</span></span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Quality Checklist</span></span>
 <span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add full-goals distribution diagnostics by tournament era and confederation.</span>
-<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add mean-versus-variance checks for count features.</span>
-<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Add calibration plots for ordinal result probabilities.</span>
-<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Add cross-validation by time split, not random split only.</span>
-<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Add richer plots for predicted versus observed W/D/L rates by probability bucket.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Goals distribution diagnostics by tournament era and confederation.</span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Mean-versus-variance checks for count features.</span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Calibration plots for ordinal result probabilities.</span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Cross-validation by time split.</span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Predicted versus observed W/D/L rates by probability bucket.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Research project. Not betting advice.</p>
+<p>LindaData 2026 World Cup model.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

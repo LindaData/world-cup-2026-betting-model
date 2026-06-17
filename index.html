@@ -170,22 +170,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#project-map" id="toc-project-map" class="nav-link active" data-scroll-target="#project-map"><span class="header-section-number">1</span> Project Map</a></li>
-  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports"><span class="header-section-number">2</span> Reports</a>
+  <li><a href="#data-api-decision" id="toc-data-api-decision" class="nav-link active" data-scroll-target="#data-api-decision"><span class="header-section-number">1</span> Data API Decision</a></li>
+  <li><a href="#project-map" id="toc-project-map" class="nav-link" data-scroll-target="#project-map"><span class="header-section-number">2</span> Project Map</a></li>
+  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports"><span class="header-section-number">3</span> Reports</a>
   <ul class="collapse">
-  <li><a href="#distribution-review" id="toc-distribution-review" class="nav-link" data-scroll-target="#distribution-review"><span class="header-section-number">2.3</span> Distribution Review</a></li>
+  <li><a href="#distribution-review" id="toc-distribution-review" class="nav-link" data-scroll-target="#distribution-review"><span class="header-section-number">3.3</span> Distribution Review</a></li>
   </ul></li>
-  <li><a href="#interactive-app-direction" id="toc-interactive-app-direction" class="nav-link" data-scroll-target="#interactive-app-direction"><span class="header-section-number">3</span> Interactive App Direction</a>
-  <ul class="collapse">
-  <li><a href="#shiny-first-streamlit-later-if-needed" id="toc-shiny-first-streamlit-later-if-needed" class="nav-link" data-scroll-target="#shiny-first-streamlit-later-if-needed"><span class="header-section-number">3.1</span> Shiny First, Streamlit Later If Needed</a></li>
-  </ul></li>
-  <li><a href="#refresh-options" id="toc-refresh-options" class="nav-link" data-scroll-target="#refresh-options"><span class="header-section-number">4</span> Refresh Options</a>
+  <li><a href="#refresh-commands" id="toc-refresh-commands" class="nav-link" data-scroll-target="#refresh-commands"><span class="header-section-number">4</span> Refresh Commands</a>
   <ul class="collapse">
   <li><a href="#local-rebuild" id="toc-local-rebuild" class="nav-link" data-scroll-target="#local-rebuild"><span class="header-section-number">4.1</span> Local Rebuild</a></li>
   <li><a href="#free-source-refresh" id="toc-free-source-refresh" class="nav-link" data-scroll-target="#free-source-refresh"><span class="header-section-number">4.2</span> Free Source Refresh</a></li>
-  <li><a href="#keyed-apis-later" id="toc-keyed-apis-later" class="nav-link" data-scroll-target="#keyed-apis-later"><span class="header-section-number">4.3</span> Keyed APIs Later</a></li>
+  <li><a href="#api-football-refresh" id="toc-api-football-refresh" class="nav-link" data-scroll-target="#api-football-refresh"><span class="header-section-number">4.3</span> API-Football Refresh</a></li>
   </ul></li>
-  <li><a href="#next-work" id="toc-next-work" class="nav-link" data-scroll-target="#next-work"><span class="header-section-number">5</span> Next Work</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/LindaData/world-cup-2026-betting-model/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
     </div>
@@ -195,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">2026 World Cup Betting Model</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
-<p class="subtitle lead">An RStudio-first modeling lab for public soccer data, explainable baselines, and future betting-market comparison</p>
+<p class="subtitle lead">Goals, match-result probabilities, and data diagnostics for the 2026 FIFA World Cup</p>
 </div>
 
 
@@ -212,11 +208,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="hero-actions">
-<p><a class="btn" href="https://github.com/LindaData/world-cup-2026-betting-model">View on GitHub</a> <a class="btn" href="reports/01_goals_linear_regression.html">Goals Model</a> <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a> <a class="btn" href="https://lindadata.github.io/">LindaData Home</a></p>
+<div class="draft-label">
+DRAFT
 </div>
-<p>This site is the public-facing project notebook. It follows the same teaching-report style as the earlier COVID analysis: explain the data pull, show the transformed data, write the model math, then render plots and results.</p>
-<p>Code is hidden by default so the report reads cleanly. Use <strong>Show code</strong> when you want to inspect the R steps.</p>
+<div class="hero-actions">
+<p><a class="btn" href="https://github.com/LindaData/world-cup-2026-betting-model">View on GitHub</a> <a class="btn" href="reports/01_goals_linear_regression.html">Goals Model</a> <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a> <a class="btn" href="reports/03_distribution_review.html">Distributions</a> <a class="btn" href="https://lindadata.github.io/">LindaData Home</a></p>
+</div>
+<p>This dashboard organizes the 2026 World Cup betting model, model diagnostics, and data-source decision in one shareable site.</p>
+<p>Code is hidden by default so the report reads cleanly. Use <strong>Show code</strong> to inspect the R steps.</p>
 <p>No raw datasets, processed databases, API keys, <code>.Renviron</code>, credentials, or private files are published here.</p>
 <div class="metric-strip">
 <div class="metric">
@@ -229,21 +228,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <strong>Result Accuracy</strong><span>58.5%</span><small>test set</small>
 </div>
 <div class="metric">
-<strong>Majority Baseline</strong><span>38.6%</span><small>comparison point</small>
+<strong>Reference Accuracy</strong><span>38.6%</span><small>reference class</small>
 </div>
 </div>
-<section id="project-map" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="project-map"><span class="header-section-number">1</span> Project Map</h2>
+<section id="data-api-decision" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="data-api-decision"><span class="header-section-number">1</span> Data API Decision</h2>
+<div class="api-choice">
+<p><strong>Recommended API: API-Football Pro</strong></p>
+<p>Use one paid API as the primary data connection: API-Football Pro at <strong>$19/month</strong>. Current spend is <strong>$10/month</strong>, so the projected monthly total is <strong>$29/month</strong>, well under the $100 cap.</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="clean-table caption-top table table-sm table-striped small">
+<caption>Paid API options reviewed for the primary data connection.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Provider</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Price</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Fit</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">API-Football Pro</td>
+<td style="text-align: left;">$19/mo</td>
+<td style="text-align: left;">Best one-API fit: fixtures, teams, players/coaches, lineups, injuries, statistics, predictions, and pre-match odds.</td>
+<td style="text-align: left;">Recommended</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">The Odds API 20K</td>
+<td style="text-align: left;">$30/mo</td>
+<td style="text-align: left;">Excellent odds feed, but not enough team/player model data by itself.</td>
+<td style="text-align: left;">Use for odds validation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">football-data.org ML / Deep Data</td>
+<td style="text-align: left;">EUR29/mo before add-ons</td>
+<td style="text-align: left;">Good football data, but odds and statistics are add-ons and coverage is narrower for this use case.</td>
+<td style="text-align: left;">Defer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sportmonks Starter</td>
+<td style="text-align: left;">EUR29/mo before add-ons</td>
+<td style="text-align: left;">Strong football data, but useful betting/advanced features add monthly cost.</td>
+<td style="text-align: left;">Defer</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Sources: <a href="https://www.api-football.com/pricing">API-Football pricing</a>, <a href="https://the-odds-api.com/">The Odds API pricing</a>, <a href="https://www.football-data.org/pricing">football-data.org pricing</a>, and <a href="https://www.sportmonks.com/football-api/">Sportmonks pricing</a>.</p>
+<p>After subscribing, add the API key only to local <code>.env</code> as <code>API_FOOTBALL_KEY</code>. Do not commit the key.</p>
+</section>
+<section id="project-map" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="project-map"><span class="header-section-number">2</span> Project Map</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">About</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Data Exploration</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Modeling</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Display Standards</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup. The current public version is a transparent baseline, not a final betting system.</p>
-<p>The project is designed around four layers:</p>
+<p>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup.</p>
+<p>The workflow has four layers:</p>
 <ul>
-<li><strong>Data collection:</strong> public match history, Elo ratings, 2026 venues, weather, player metadata, and news signals.</li>
+<li><strong>Data collection:</strong> match history, Elo ratings, 2026 venues, weather, player metadata, odds, and news signals.</li>
 <li><strong>Data storage:</strong> local files and DuckDB tables for modeling.</li>
-<li><strong>Modeling:</strong> interpretable first-pass models in R, with Python handling API pulls and heavier data jobs.</li>
+<li><strong>Modeling:</strong> interpretable models in R, with Python handling API pulls and heavier data jobs.</li>
 <li><strong>Publishing:</strong> Quarto renders a shareable GitHub Pages site from the local analysis.</li>
 </ul>
 </div>
@@ -397,19 +446,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="index_files/figure-html/goals-plot-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Distribution of goals in the public sample used for the baseline model.</figcaption>
+<figcaption>Distribution of goals in the public sample used for the goals model.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>The first two models are intentionally simple:</p>
+<p>The model suite has two core outputs:</p>
 <ul>
 <li><strong>Goals OLS:</strong> predicts goals scored.</li>
 <li><strong>Ordinal logistic:</strong> predicts <code>loss &lt; draw &lt; win</code>.</li>
 </ul>
-<p>This mirrors the Shiny layout you used before: start with descriptive analytics, then model fitting, then prediction outputs.</p>
+<p>The reports show the model target, data grain, math, coefficients, predictions, and diagnostics.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -425,17 +474,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">context =</span> <span class="fu">c</span>(</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Mean test goals:"</span>, <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>mean_y_test[[<span class="dv">1</span>]], <span class="dv">3</span>)),</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Majority baseline:"</span>, <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>))</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Reference accuracy:"</span>, <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>))</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current baseline model performance."</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current model performance."</span>)</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model metrics are generated locally before rendering."</span>))</span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="clean-table caption-top table table-sm table-striped small">
-<caption>Current baseline model performance.</caption>
+<caption>Current model performance.</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Model</th>
@@ -461,7 +510,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">98,810</td>
 <td style="text-align: left;">Test accuracy</td>
 <td style="text-align: left;">58.5%</td>
-<td style="text-align: left;">Majority baseline: 38.6%</td>
+<td style="text-align: left;">Reference accuracy: 38.6%</td>
 </tr>
 </tbody>
 </table>
@@ -582,39 +631,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="reports" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="reports"><span class="header-section-number">2</span> Reports</h2>
+<section id="reports" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="reports"><span class="header-section-number">3</span> Reports</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<section id="goals-model" class="level3 project-card" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="goals-model"><span class="header-section-number">2.1</span> Goals Model</h3>
-<p>OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</p>
+<section id="goals-model" class="level3 project-card" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="goals-model"><span class="header-section-number">3.1</span> Goals Model</h3>
+<p>OLS model for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</p>
 <p><a class="project-button" href="reports/01_goals_linear_regression.html">Open goals report</a></p>
 </section>
 </div><div class="column" style="width:50%;">
-<section id="result-model" class="level3 project-card" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="result-model"><span class="header-section-number">2.2</span> Result Model</h3>
-<p>Ordinal logistic baseline for <code>loss &lt; draw &lt; win</code>, producing win/draw/loss probability estimates.</p>
+<section id="result-model" class="level3 project-card" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="result-model"><span class="header-section-number">3.2</span> Result Model</h3>
+<p>Ordinal logistic model for <code>loss &lt; draw &lt; win</code>, producing win/draw/loss probability estimates.</p>
 <p><a class="project-button" href="reports/02_ordinal_result_model.html">Open result report</a></p>
 </section>
 </div>
 </div>
-<section id="distribution-review" class="level3 project-card" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="distribution-review"><span class="header-section-number">2.3</span> Distribution Review</h3>
-<p>Distribution-first notes for deciding whether soccer features should be modeled as counts, continuous variables, ordered outcomes, probabilities, or mixture processes.</p>
+<section id="distribution-review" class="level3 project-card" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="distribution-review"><span class="header-section-number">3.3</span> Distribution Review</h3>
+<p>Distribution notes for deciding whether soccer features are counts, continuous variables, ordered outcomes, probabilities, or mixture processes.</p>
 <p><a class="project-button" href="reports/03_distribution_review.html">Open distribution review</a></p>
 </section>
 </section>
-<section id="interactive-app-direction" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="interactive-app-direction"><span class="header-section-number">3</span> Interactive App Direction</h2>
-<section id="shiny-first-streamlit-later-if-needed" class="level3 shiny-panel" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="shiny-first-streamlit-later-if-needed"><span class="header-section-number">3.1</span> Shiny First, Streamlit Later If Needed</h3>
-<p>Your older Shiny code used <code>navbarPage()</code>, <code>sidebarLayout()</code>, <code>DT</code> tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.</p>
-<p>GitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet.</p>
-</section>
-</section>
-<section id="refresh-options" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="refresh-options"><span class="header-section-number">4</span> Refresh Options</h2>
+<section id="refresh-commands" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="refresh-commands"><span class="header-section-number">4</span> Refresh Commands</h2>
 <p>Run these from RStudio.</p>
 <section id="local-rebuild" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="local-rebuild"><span class="header-section-number">4.1</span> Local Rebuild</h3>
@@ -638,9 +679,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="keyed-apis-later" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="keyed-apis-later"><span class="header-section-number">4.3</span> Keyed APIs Later</h3>
-<p>Use after <code>.env</code> is configured locally.</p>
+<section id="api-football-refresh" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="api-football-refresh"><span class="header-section-number">4.3</span> API-Football Refresh</h3>
+<p>Use after <code>.env</code> has <code>API_FOOTBALL_KEY</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -651,34 +692,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Odds pulls require explicit quota permission.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_odds_quota =</span> <span class="cn">TRUE</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-</section>
-<section id="next-work" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="next-work"><span class="header-section-number">5</span> Next Work</h2>
-<ol type="1">
-<li>Add rolling recent-form features.</li>
-<li>Add squad-strength and player-availability signals.</li>
-<li>Add news-derived injury and lineup signals.</li>
-<li>Add odds-implied probabilities.</li>
-<li>Compare ordinal logistic, multinomial logistic, and paired-goal models.</li>
-<li>Calibrate predicted probabilities.</li>
-</ol>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1138,276 +1156,276 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2026 World Cup Betting Model"</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "An RStudio-first modeling lab for public soccer data, explainable baselines, and future betting-market comparison"</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>, <span class="at">warning =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>root <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"data/processed/modeling"</span>)) <span class="st">"."</span> <span class="cf">else</span> <span class="st">".."</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">file.path</span>(root, <span class="st">"R"</span>, <span class="st">"report_helpers.R"</span>))</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>read_csv_if_exists <span class="ot">&lt;-</span> <span class="cf">function</span>(path) {</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">file.exists</span>(path)) {</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">read_csv</span>(path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>()</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"hero-actions"</span><span class="dt">&gt;</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://github.com/LindaData/world-cup-2026-betting-model"</span><span class="dt">&gt;</span>View on GitHub<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Goals Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Result Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://lindadata.github.io/"</span><span class="dt">&gt;</span>LindaData Home<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>This site is the public-facing project notebook. It follows the same teaching-report style as the earlier COVID analysis: explain the data pull, show the transformed data, write the model math, then render plots and results.</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>Code is hidden by default so the report reads cleanly. Use **Show code** when you want to inspect the R steps.</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>No raw datasets, processed databases, API keys, <span class="in">`.Renviron`</span>, credentials, or private files are published here.</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hero-metrics, echo=FALSE, results="asis"}</span></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>goals_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_metrics.csv"</span>))</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>ordinal_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"result_ordinal_model_metrics.csv"</span>))</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">metric_cards</span>(<span class="fu">data.frame</span>(</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Rows Modeled"</span>, <span class="st">"Goals RMSE"</span>, <span class="st">"Result Accuracy"</span>, <span class="st">"Majority Baseline"</span>),</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_integer</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">note =</span> <span class="fu">c</span>(<span class="st">"team-match rows"</span>, <span class="st">"lower is better"</span>, <span class="st">"test set"</span>, <span class="st">"comparison point"</span>)</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>  )))</span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## Project Map</span></span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## About</span></span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup. The current public version is a transparent baseline, not a final betting system.</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>The project is designed around four layers:</span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data collection:** public match history, Elo ratings, 2026 venues, weather, player metadata, and news signals.</span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data storage:** local files and DuckDB tables for modeling.</span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Modeling:** interpretable first-pass models in R, with Python handling API pulls and heavier data jobs.</span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.</span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Exploration</span></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>The starting modeling unit is one row per team-match. A single game creates two observations, one for each team.</span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-sample}</span></span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>goals_sample <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_sample_1000.csv"</span>))</span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>  goals_sample <span class="sc">|&gt;</span></span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>      date,</span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>      team,</span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>      opponent,</span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>      tournament,</span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>      y_goals_for,</span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>      pre_elo,</span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>      opponent_pre_elo,</span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>      pre_match_expected_result</span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_match_expected_result =</span> <span class="fu">fmt_percent</span>(pre_match_expected_result, <span class="dv">1</span>),</span>
-<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_elo =</span> <span class="fu">round</span>(pre_elo, <span class="dv">0</span>),</span>
-<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>      <span class="at">opponent_pre_elo =</span> <span class="fu">round</span>(opponent_pre_elo, <span class="dv">0</span>)</span>
-<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Sample of the team-match modeling grain."</span>, <span class="at">max_rows =</span> <span class="dv">8</span>)</span>
-<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Sample rows are generated locally by R/10_fit_linear_goals_model.R."</span>))</span>
-<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-plot, fig.cap="Distribution of goals in the public sample used for the baseline model."}</span></span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(goals_sample, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> y_goals_for)) <span class="sc">+</span></span>
-<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"#157878"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
-<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Goals scored by team-match row"</span>,</span>
-<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Goals scored"</span>,</span>
-<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Team-match rows"</span></span>
-<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
-<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot.new</span>()</span>
-<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">"Goals sample is generated locally before rendering."</span>)</span>
-<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Modeling</span></span>
-<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>The first two models are intentionally simple:</span>
-<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Goals OLS:** predicts goals scored.</span>
-<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Ordinal logistic:** predicts <span class="in">`loss &lt; draw &lt; win`</span>.</span>
-<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>This mirrors the Shiny layout you used before: start with descriptive analytics, then model fitting, then prediction outputs.</span>
-<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary}</span></span>
-<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Goals OLS"</span>, <span class="st">"Ordinal result logistic"</span>),</span>
-<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">c</span>(<span class="st">"team goals"</span>, <span class="st">"loss &lt; draw &lt; win"</span>),</span>
-<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">fmt_integer</span>(<span class="fu">c</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]], ordinal_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]])),</span>
-<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>    <span class="at">primary_metric =</span> <span class="fu">c</span>(<span class="st">"Test RMSE"</span>, <span class="st">"Test accuracy"</span>),</span>
-<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
-<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
-<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
-<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>    <span class="at">context =</span> <span class="fu">c</span>(</span>
-<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Mean test goals:"</span>, <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>mean_y_test[[<span class="dv">1</span>]], <span class="dv">3</span>)),</span>
-<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Majority baseline:"</span>, <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>))</span>
-<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current baseline model performance."</span>)</span>
-<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model metrics are generated locally before rendering."</span>))</span>
-<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
-<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>The local database contains more tables than the public site publishes. The rendered site shows metadata only, which keeps credentials and source data off GitHub.</span>
-<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-inventory}</span></span>
-<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"metadata"</span>, <span class="st">"table_inventory.csv"</span>))</span>
-<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(inventory) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a>  inventory <span class="sc">|&gt;</span></span>
-<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(table_name) <span class="sc">|&gt;</span></span>
-<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">row_count =</span> <span class="fu">fmt_integer</span>(row_count)) <span class="sc">|&gt;</span></span>
-<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Local tables available for modeling."</span>, <span class="at">max_rows =</span> <span class="dv">16</span>)</span>
-<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Table inventory is generated locally by R/07_export_metadata.R."</span>))</span>
-<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Display Standards</span></span>
-<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principles"</span><span class="dt">&gt;</span></span>
-<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>One grain per table<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Rows should mean one thing: team-match, match, player, venue, or API pull.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Readable labels<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Keep machine-safe names in source files; convert them to readable labels only in reports.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Round for display only<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Do not round model inputs or stored outputs. Round the rendered table so readers can scan it.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Separate public and private<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Publish metadata and rendered results, not raw datasets, databases, keys, or credentials.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reports</span></span>
-<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a>::: {.columns}</span>
-<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
-<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
-<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a><span class="fu">### Goals Model</span></span>
-<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a>OLS baseline for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</span>
-<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-179"><a href="#cb9-179" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Open goals report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb9-180"><a href="#cb9-180" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-181"><a href="#cb9-181" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-182"><a href="#cb9-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-183"><a href="#cb9-183" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
-<span id="cb9-184"><a href="#cb9-184" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
-<span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### Result Model</span></span>
-<span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-187"><a href="#cb9-187" aria-hidden="true" tabindex="-1"></a>Ordinal logistic baseline for <span class="in">`loss &lt; draw &lt; win`</span>, producing win/draw/loss probability estimates.</span>
-<span id="cb9-188"><a href="#cb9-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-189"><a href="#cb9-189" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Open result report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb9-190"><a href="#cb9-190" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
-<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribution Review</span></span>
-<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-197"><a href="#cb9-197" aria-hidden="true" tabindex="-1"></a>Distribution-first notes for deciding whether soccer features should be modeled as counts, continuous variables, ordered outcomes, probabilities, or mixture processes.</span>
-<span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/03_distribution_review.html"</span><span class="dt">&gt;</span>Open distribution review<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-202"><a href="#cb9-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interactive App Direction</span></span>
-<span id="cb9-203"><a href="#cb9-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-204"><a href="#cb9-204" aria-hidden="true" tabindex="-1"></a>::: {.shiny-panel}</span>
-<span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shiny First, Streamlit Later If Needed</span></span>
-<span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a>Your older Shiny code used <span class="in">`navbarPage()`</span>, <span class="in">`sidebarLayout()`</span>, <span class="in">`DT`</span> tables, model controls, and MathJax. That is the right pattern for the local interactive version because you already work in RStudio.</span>
-<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a>GitHub Pages can host this static Quarto report for free. A true Shiny app needs a running R server, usually ShinyApps.io, Posit Connect, or your own cloud VM. Streamlit would have the same hosting issue, so it is not better for the public static site yet.</span>
-<span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-211"><a href="#cb9-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-212"><a href="#cb9-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Refresh Options</span></span>
-<span id="cb9-213"><a href="#cb9-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-214"><a href="#cb9-214" aria-hidden="true" tabindex="-1"></a>Run these from RStudio.</span>
-<span id="cb9-215"><a href="#cb9-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-216"><a href="#cb9-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### Local Rebuild</span></span>
-<span id="cb9-217"><a href="#cb9-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-218"><a href="#cb9-218" aria-hidden="true" tabindex="-1"></a>Does not hit APIs or spend quota.</span>
-<span id="cb9-219"><a href="#cb9-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-220"><a href="#cb9-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r local-refresh, eval=FALSE}</span></span>
-<span id="cb9-221"><a href="#cb9-221" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb9-222"><a href="#cb9-222" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"local-rebuild"</span>)</span>
-<span id="cb9-223"><a href="#cb9-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-224"><a href="#cb9-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-225"><a href="#cb9-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Free Source Refresh</span></span>
-<span id="cb9-226"><a href="#cb9-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-227"><a href="#cb9-227" aria-hidden="true" tabindex="-1"></a>Pulls free/no-key public sources and rebuilds the local site.</span>
-<span id="cb9-228"><a href="#cb9-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-229"><a href="#cb9-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r free-refresh, eval=FALSE}</span></span>
-<span id="cb9-230"><a href="#cb9-230" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"free-refresh"</span>)</span>
-<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a><span class="fu">### Keyed APIs Later</span></span>
-<span id="cb9-235"><a href="#cb9-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-236"><a href="#cb9-236" aria-hidden="true" tabindex="-1"></a>Use after <span class="in">`.env`</span> is configured locally.</span>
-<span id="cb9-237"><a href="#cb9-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-238"><a href="#cb9-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r keyed-refresh, eval=FALSE}</span></span>
-<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb9-240"><a href="#cb9-240" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
-<span id="cb9-241"><a href="#cb9-241" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
-<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span></span>
-<span id="cb9-243"><a href="#cb9-243" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-244"><a href="#cb9-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-245"><a href="#cb9-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-246"><a href="#cb9-246" aria-hidden="true" tabindex="-1"></a>Odds pulls require explicit quota permission.</span>
-<span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r odds-refresh, eval=FALSE}</span></span>
-<span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
-<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
-<span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
-<span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_odds_quota =</span> <span class="cn">TRUE</span></span>
-<span id="cb9-254"><a href="#cb9-254" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-255"><a href="#cb9-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-256"><a href="#cb9-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-257"><a href="#cb9-257" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Work</span></span>
-<span id="cb9-258"><a href="#cb9-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-259"><a href="#cb9-259" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add rolling recent-form features.</span>
-<span id="cb9-260"><a href="#cb9-260" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add squad-strength and player-availability signals.</span>
-<span id="cb9-261"><a href="#cb9-261" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Add news-derived injury and lineup signals.</span>
-<span id="cb9-262"><a href="#cb9-262" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Add odds-implied probabilities.</span>
-<span id="cb9-263"><a href="#cb9-263" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Compare ordinal logistic, multinomial logistic, and paired-goal models.</span>
-<span id="cb9-264"><a href="#cb9-264" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Calibrate predicted probabilities.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2026 World Cup Betting Model"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Goals, match-result probabilities, and data diagnostics for the 2026 FIFA World Cup"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>, <span class="at">warning =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>root <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"data/processed/modeling"</span>)) <span class="st">"."</span> <span class="cf">else</span> <span class="st">".."</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">file.path</span>(root, <span class="st">"R"</span>, <span class="st">"report_helpers.R"</span>))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>read_csv_if_exists <span class="ot">&lt;-</span> <span class="cf">function</span>(path) {</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">file.exists</span>(path)) {</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">read_csv</span>(path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>()</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"draft-label"</span><span class="dt">&gt;</span>DRAFT<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"hero-actions"</span><span class="dt">&gt;</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://github.com/LindaData/world-cup-2026-betting-model"</span><span class="dt">&gt;</span>View on GitHub<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Goals Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Result Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/03_distribution_review.html"</span><span class="dt">&gt;</span>Distributions<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://lindadata.github.io/"</span><span class="dt">&gt;</span>LindaData Home<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>This dashboard organizes the 2026 World Cup betting model, model diagnostics, and data-source decision in one shareable site.</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>Code is hidden by default so the report reads cleanly. Use **Show code** to inspect the R steps.</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>No raw datasets, processed databases, API keys, <span class="in">`.Renviron`</span>, credentials, or private files are published here.</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hero-metrics, echo=FALSE, results="asis"}</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>goals_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_metrics.csv"</span>))</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>ordinal_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"result_ordinal_model_metrics.csv"</span>))</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">metric_cards</span>(<span class="fu">data.frame</span>(</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Rows Modeled"</span>, <span class="st">"Goals RMSE"</span>, <span class="st">"Result Accuracy"</span>, <span class="st">"Reference Accuracy"</span>),</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_integer</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">note =</span> <span class="fu">c</span>(<span class="st">"team-match rows"</span>, <span class="st">"lower is better"</span>, <span class="st">"test set"</span>, <span class="st">"reference class"</span>)</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>  )))</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data API Decision</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>::: {.api-choice}</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>**Recommended API: API-Football Pro**</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>Use one paid API as the primary data connection: API-Football Pro at **$19/month**. Current spend is **$10/month**, so the projected monthly total is **$29/month**, well under the $100 cap.</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="in">```{r api-decision, echo=FALSE}</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>api_options <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">provider =</span> <span class="fu">c</span>(<span class="st">"API-Football Pro"</span>, <span class="st">"The Odds API 20K"</span>, <span class="st">"football-data.org ML / Deep Data"</span>, <span class="st">"Sportmonks Starter"</span>),</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">price =</span> <span class="fu">c</span>(<span class="st">"$19/mo"</span>, <span class="st">"$30/mo"</span>, <span class="st">"EUR29/mo before add-ons"</span>, <span class="st">"EUR29/mo before add-ons"</span>),</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit =</span> <span class="fu">c</span>(</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Best one-API fit: fixtures, teams, players/coaches, lineups, injuries, statistics, predictions, and pre-match odds."</span>,</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Excellent odds feed, but not enough team/player model data by itself."</span>,</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Good football data, but odds and statistics are add-ons and coverage is narrower for this use case."</span>,</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Strong football data, but useful betting/advanced features add monthly cost."</span></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>  <span class="at">decision =</span> <span class="fu">c</span>(<span class="st">"Recommended"</span>, <span class="st">"Use for odds validation"</span>, <span class="st">"Defer"</span>, <span class="st">"Defer"</span>)</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="fu">display_table</span>(api_options, <span class="at">caption =</span> <span class="st">"Paid API options reviewed for the primary data connection."</span>)</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>Sources: <span class="co">[</span><span class="ot">API-Football pricing</span><span class="co">](https://www.api-football.com/pricing)</span>, <span class="co">[</span><span class="ot">The Odds API pricing</span><span class="co">](https://the-odds-api.com/)</span>, <span class="co">[</span><span class="ot">football-data.org pricing</span><span class="co">](https://www.football-data.org/pricing)</span>, and <span class="co">[</span><span class="ot">Sportmonks pricing</span><span class="co">](https://www.sportmonks.com/football-api/)</span>.</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>After subscribing, add the API key only to local <span class="in">`.env`</span> as <span class="in">`API_FOOTBALL_KEY`</span>. Do not commit the key.</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Project Map</span></span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="fu">## About</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup.</span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>The workflow has four layers:</span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data collection:** match history, Elo ratings, 2026 venues, weather, player metadata, odds, and news signals.</span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data storage:** local files and DuckDB tables for modeling.</span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Modeling:** interpretable models in R, with Python handling API pulls and heavier data jobs.</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Exploration</span></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>The starting modeling unit is one row per team-match. A single game creates two observations, one for each team.</span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-sample}</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>goals_sample <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_sample_1000.csv"</span>))</span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>  goals_sample <span class="sc">|&gt;</span></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>      date,</span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>      team,</span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>      opponent,</span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>      tournament,</span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>      y_goals_for,</span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>      pre_elo,</span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>      opponent_pre_elo,</span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>      pre_match_expected_result</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_match_expected_result =</span> <span class="fu">fmt_percent</span>(pre_match_expected_result, <span class="dv">1</span>),</span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_elo =</span> <span class="fu">round</span>(pre_elo, <span class="dv">0</span>),</span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>      <span class="at">opponent_pre_elo =</span> <span class="fu">round</span>(opponent_pre_elo, <span class="dv">0</span>)</span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Sample of the team-match modeling grain."</span>, <span class="at">max_rows =</span> <span class="dv">8</span>)</span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Sample rows are generated locally by R/10_fit_linear_goals_model.R."</span>))</span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-plot, fig.cap="Distribution of goals in the public sample used for the goals model."}</span></span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(goals_sample, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> y_goals_for)) <span class="sc">+</span></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"#157878"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Goals scored by team-match row"</span>,</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Goals scored"</span>,</span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Team-match rows"</span></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot.new</span>()</span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">"Goals sample is generated locally before rendering."</span>)</span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Modeling</span></span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>The model suite has two core outputs:</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Goals OLS:** predicts goals scored.</span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Ordinal logistic:** predicts <span class="in">`loss &lt; draw &lt; win`</span>.</span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>The reports show the model target, data grain, math, coefficients, predictions, and diagnostics.</span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary}</span></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Goals OLS"</span>, <span class="st">"Ordinal result logistic"</span>),</span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">c</span>(<span class="st">"team goals"</span>, <span class="st">"loss &lt; draw &lt; win"</span>),</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">fmt_integer</span>(<span class="fu">c</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]], ordinal_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]])),</span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>    <span class="at">primary_metric =</span> <span class="fu">c</span>(<span class="st">"Test RMSE"</span>, <span class="st">"Test accuracy"</span>),</span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">context =</span> <span class="fu">c</span>(</span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Mean test goals:"</span>, <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>mean_y_test[[<span class="dv">1</span>]], <span class="dv">3</span>)),</span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Reference accuracy:"</span>, <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>))</span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current model performance."</span>)</span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model metrics are generated locally before rendering."</span>))</span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>The local database contains more tables than the public site publishes. The rendered site shows metadata only, which keeps credentials and source data off GitHub.</span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-inventory}</span></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"metadata"</span>, <span class="st">"table_inventory.csv"</span>))</span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(inventory) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a>  inventory <span class="sc">|&gt;</span></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(table_name) <span class="sc">|&gt;</span></span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">row_count =</span> <span class="fu">fmt_integer</span>(row_count)) <span class="sc">|&gt;</span></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Local tables available for modeling."</span>, <span class="at">max_rows =</span> <span class="dv">16</span>)</span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Table inventory is generated locally by R/07_export_metadata.R."</span>))</span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a><span class="fu">## Display Standards</span></span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principles"</span><span class="dt">&gt;</span></span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>One grain per table<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Rows should mean one thing: team-match, match, player, venue, or API pull.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Readable labels<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Keep machine-safe names in source files; convert them to readable labels only in reports.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Round for display only<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Do not round model inputs or stored outputs. Round the rendered table so readers can scan it.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Separate public and private<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Publish metadata and rendered results, not raw datasets, databases, keys, or credentials.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reports</span></span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a>::: {.columns}</span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### Goals Model</span></span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>OLS model for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Open goals report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="fu">### Result Model</span></span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a>Ordinal logistic model for <span class="in">`loss &lt; draw &lt; win`</span>, producing win/draw/loss probability estimates.</span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Open result report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribution Review</span></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a>Distribution notes for deciding whether soccer features are counts, continuous variables, ordered outcomes, probabilities, or mixture processes.</span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/03_distribution_review.html"</span><span class="dt">&gt;</span>Open distribution review<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Refresh Commands</span></span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a>Run these from RStudio.</span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="fu">### Local Rebuild</span></span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>Does not hit APIs or spend quota.</span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r local-refresh, eval=FALSE}</span></span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"local-rebuild"</span>)</span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a><span class="fu">### Free Source Refresh</span></span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>Pulls free/no-key public sources and rebuilds the local site.</span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a><span class="in">```{r free-refresh, eval=FALSE}</span></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(<span class="at">profile =</span> <span class="st">"free-refresh"</span>)</span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a><span class="fu">### API-Football Refresh</span></span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>Use after <span class="in">`.env`</span> has <span class="in">`API_FOOTBALL_KEY`</span>.</span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r keyed-refresh, eval=FALSE}</span></span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/20_refresh_all.R"</span>)</span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a><span class="fu">refresh_world_cup_data</span>(</span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>  <span class="at">profile =</span> <span class="st">"free-refresh"</span>,</span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_keyed_apis =</span> <span class="cn">TRUE</span></span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Research project. Not betting advice.</p>
+<p>LindaData 2026 World Cup model.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
