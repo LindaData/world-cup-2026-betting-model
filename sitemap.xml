@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lindadata.github.io/world-cup-2026-betting-model/reports/02_ordinal_result_model.html</loc>
-    <lastmod>2026-06-17T02:41:57.294Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lindadata.github.io/world-cup-2026-betting-model/index.html</loc>
-    <lastmod>2026-06-17T02:41:56.755Z</lastmod>
+    <loc>https://lindadata.github.io/world-cup-2026-betting-model/reports/03_distribution_review.html</loc>
+    <lastmod>2026-06-17T13:22:39.686Z</lastmod>
   </url>
   <url>
     <loc>https://lindadata.github.io/world-cup-2026-betting-model/reports/01_goals_linear_regression.html</loc>
     <lastmod>2026-06-17T02:41:57.040Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lindadata.github.io/world-cup-2026-betting-model/index.html</loc>
+    <lastmod>2026-06-17T13:20:55.367Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lindadata.github.io/world-cup-2026-betting-model/reports/02_ordinal_result_model.html</loc>
+    <lastmod>2026-06-17T02:41:57.294Z</lastmod>
   </url>
 </urlset>
