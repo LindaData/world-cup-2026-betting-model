@@ -257,6 +257,29 @@ pre code {
   color: #17252a;
 }
 
+.model-blueprint {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 1.35rem;
+}
+
+.model-card {
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+.model-card h3 {
+  margin-top: 0;
+  color: #17252a;
+}
+
+.model-card ul {
+  padding-left: 1.1rem;
+}
+
 .panel-tabset {
   margin-top: 1rem;
 }
