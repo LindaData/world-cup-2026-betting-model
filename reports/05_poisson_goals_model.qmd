@@ -127,7 +127,7 @@ if (nrow(predictions) > 0) {
 
 ## Interpretation
 
-This model is still intentionally simple. It does not yet know the final 2026 rosters, injuries, lineups, odds, or live form signals. Its job is to create a stronger free-data baseline before live enrichment data flows into the pipeline.
+This model is intentionally compact. It supplies a count-based expected-goals benchmark, while roster, injury, lineup, odds, and live-form signals are handled as enrichment features in the broader scoring workflow.
 
 ## Reproduce Locally
 

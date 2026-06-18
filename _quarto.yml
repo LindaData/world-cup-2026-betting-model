@@ -7,6 +7,8 @@ project:
     - reports/01_goals_linear_regression.qmd
     - reports/05_poisson_goals_model.qmd
     - reports/02_ordinal_result_model.qmd
+    - reports/06_regression_diagnostics.qmd
+    - reports/07_fixture_predictions.qmd
     - reports/03_distribution_review.qmd
     - reports/04_knn_similarity_model.qmd
 
@@ -30,6 +32,10 @@ website:
         text: Result Model
       - href: reports/04_knn_similarity_model.qmd
         text: KNN Model
+      - href: reports/06_regression_diagnostics.qmd
+        text: Diagnostics
+      - href: reports/07_fixture_predictions.qmd
+        text: Predictions
       - href: reports/03_distribution_review.qmd
         text: Distributions
     right:

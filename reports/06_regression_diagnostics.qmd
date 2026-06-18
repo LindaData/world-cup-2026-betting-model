@@ -1,0 +1,154 @@
+---
+title: "Regression Diagnostics"
+subtitle: "Collinearity, residual checks, and count-model fit"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed/modeling")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+```
+
+## Purpose
+
+This report checks whether the first regression models are behaving well enough to interpret.
+
+The checks focus on three practical questions:
+
+- Are the predictors repeating the same information?
+- Do residuals show patterns the model missed?
+- Is a count model a better shape for goals than simple linear regression?
+
+## Summary
+
+```{r summary-table}
+diagnostics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "regression_diagnostics_summary.csv"))
+
+if (nrow(diagnostics) > 0) {
+  diagnostics |>
+    dplyr::mutate(
+      value = dplyr::case_when(
+        statistic %in% c("Breusch-Pagan p-value", "Jarque-Bera p-value") ~ fmt_p_value(value),
+        TRUE ~ fmt_number(value, 3)
+      )
+    ) |>
+    dplyr::select(check, statistic, value, status, public_interpretation) |>
+    display_table(caption = "Regression diagnostic summary.")
+} else {
+  display_table(empty_note("Regression diagnostics are available after the local model refresh."))
+}
+```
+
+## Data Used By The Models
+
+```{r source-usage}
+source_usage <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "api_capture_model_usage.csv"))
+
+if (nrow(source_usage) > 0) {
+  source_usage |>
+    dplyr::mutate(rows_available = fmt_integer(rows_available)) |>
+    display_table(caption = "Local data coverage used for modeling and scoring.")
+} else {
+  display_table(empty_note("Data coverage is available after the diagnostics refresh."))
+}
+```
+
+## Collinearity
+
+Collinearity means two or more predictors are carrying nearly the same signal. It does not always ruin predictions, but it can make individual coefficients unstable.
+
+**VIF** means variance inflation factor. A VIF near 1 is clean. Values above 5 deserve attention. Values above 10 are usually too high for coefficient interpretation.
+
+```{r vif-table}
+vif <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_model_vif.csv"))
+
+if (nrow(vif) > 0) {
+  vif |>
+    dplyr::arrange(dplyr::desc(vif)) |>
+    dplyr::mutate(vif = fmt_number(vif, 3)) |>
+    display_table(caption = "Variance inflation factors for goals-model predictors.")
+} else {
+  display_table(empty_note("VIF results are available after the diagnostics refresh."))
+}
+```
+
+```{r correlation-table}
+correlations <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_model_predictor_correlations.csv"))
+
+if (nrow(correlations) > 0) {
+  correlations |>
+    dplyr::arrange(dplyr::desc(abs_correlation)) |>
+    dplyr::mutate(
+      correlation = fmt_number(correlation, 3),
+      abs_correlation = fmt_number(abs_correlation, 3)
+    ) |>
+    display_table(caption = "Largest pairwise predictor correlations.", max_rows = 10)
+} else {
+  display_table(empty_note("Predictor correlations are available after the diagnostics refresh."))
+}
+```
+
+## Residual Checks
+
+A residual is:
+
+$$
+\text{Residual} = \text{Observed Goals} - \text{Predicted Goals}
+$$
+
+For OLS, residuals should not show strong structure after the model has done its work.
+
+```{r residual-diagnostics}
+residuals <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_model_residual_diagnostics.csv"))
+
+if (nrow(residuals) > 0) {
+  residuals |>
+    dplyr::mutate(value = dplyr::case_when(
+      grepl("p_value", diagnostic) ~ fmt_p_value(value),
+      TRUE ~ fmt_number(value, 4)
+    )) |>
+    display_table(caption = "OLS residual diagnostics.")
+} else {
+  display_table(empty_note("Residual diagnostics are available after the diagnostics refresh."))
+}
+```
+
+## Poisson Checks
+
+Poisson regression is a natural model for goals because goals are counts. The main issue is **overdispersion**.
+
+Overdispersion means the observed goal counts vary more than a basic Poisson model expects. If this is large, the next goals model should consider a negative-binomial or paired-goal approach.
+
+```{r poisson-diagnostics}
+poisson <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "poisson_model_diagnostics.csv"))
+
+if (nrow(poisson) > 0) {
+  poisson |>
+    dplyr::mutate(value = fmt_number(value, 4)) |>
+    display_table(caption = "Poisson model diagnostics.")
+} else {
+  display_table(empty_note("Poisson diagnostics are available after the diagnostics refresh."))
+}
+```
+
+## Interpretation
+
+These diagnostics are the gate before model comparison:
+
+- If VIF is low, coefficient directions are easier to trust.
+- If Durbin-Watson is close to 2, residuals are not strongly sequential in the ordered rows.
+- If heteroskedasticity appears, OLS standard errors should be treated carefully.
+- If Poisson overdispersion appears, expected-goal predictions may still be useful, but uncertainty intervals need a wider model.
+
+## Reproduce Locally
+
+```{r reproduce, eval=FALSE}
+source("R/15_regression_diagnostics.R")
+```

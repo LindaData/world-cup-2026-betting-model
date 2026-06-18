@@ -25,6 +25,8 @@ read_csv_if_exists <- function(path) {
   <a class="btn" href="reports/05_poisson_goals_model.html">Poisson Model</a>
   <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a>
   <a class="btn" href="reports/04_knn_similarity_model.html">KNN Model</a>
+  <a class="btn" href="reports/06_regression_diagnostics.html">Diagnostics</a>
+  <a class="btn" href="reports/07_fixture_predictions.html">Predictions</a>
   <a class="btn" href="reports/03_distribution_review.html">Distributions</a>
   <a class="btn" href="#dictionary">Dictionary</a>
 </div>
@@ -39,17 +41,49 @@ goals_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeli
 poisson_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_poisson_model_metrics.csv"))
 ordinal_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_metrics.csv"))
 knn_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "knn_similarity_model_metrics.csv"))
+diagnostics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "regression_diagnostics_summary.csv"))
+fixture_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "world_cup_2026_fixture_prediction_metrics.csv"))
+
+metric_value <- function(metrics, metric_name) {
+  if (nrow(metrics) == 0 || !"metric" %in% names(metrics)) {
+    return(NA_real_)
+  }
+  value <- metrics$value[metrics$metric == metric_name]
+  if (length(value) == 0) NA_real_ else value[[1]]
+}
+
+diagnostic_value <- function(summary, check_name) {
+  if (nrow(summary) == 0 || !"check" %in% names(summary)) {
+    return(NA_real_)
+  }
+  value <- summary$value[summary$check == check_name]
+  if (length(value) == 0) NA_real_ else value[[1]]
+}
 
 if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
+  poisson_random <- if (nrow(poisson_metrics) > 0) {
+    poisson_metrics[poisson_metrics$validation_type == "random_80_20", ]
+  } else {
+    data.frame()
+  }
   cat(metric_cards(data.frame(
-    label = c("Rows Modeled", "Goals RMSE", "Result Accuracy", "Reference Accuracy"),
+    label = c("Rows Modeled", "OLS Goals RMSE", "Poisson Goals RMSE", "Result Accuracy", "Fixtures Scored", "Max VIF"),
     value = c(
       fmt_integer(goals_metrics$rows_total[[1]]),
       fmt_number(goals_metrics$test_rmse[[1]], 3),
+      if (nrow(poisson_random) > 0) fmt_number(poisson_random$test_rmse[[1]], 3) else "pending",
       fmt_percent(ordinal_metrics$test_accuracy[[1]], 1),
-      fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1)
+      if (nrow(fixture_metrics) > 0) fmt_integer(metric_value(fixture_metrics, "fixtures_scored")) else "pending",
+      if (nrow(diagnostics) > 0) fmt_number(diagnostic_value(diagnostics, "Collinearity"), 2) else "pending"
     ),
-    note = c("team-match rows", "typical goal miss", "exact result hit rate", "simple comparison")
+    note = c(
+      "team-match rows",
+      "typical goal miss",
+      "count-model benchmark",
+      "exact result hit rate",
+      "2026 fixtures",
+      "collinearity check"
+    )
   )))
 }
 ```
@@ -57,9 +91,9 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
 ## Data Sources and Expense Overview
 
 ::: {.api-choice}
-**Current baseline: free and public data first**
+**Model data foundation**
 
-The model starts with open historical match results, goalscorer history, Elo-style team strength, public 2026 fixture/venue references, weather, and news metadata. API-Football is connected as a later live-data layer, but the current model baseline does not depend on live enrichment data.
+The model uses open historical match results, goalscorer history, Elo-style team strength, public 2026 fixture/venue references, weather, news metadata, and connected football API coverage summaries. The public site presents model-ready summaries and results, not raw operational files.
 :::
 
 ```{r data-sources, echo=FALSE}
@@ -92,7 +126,7 @@ data_sources <- data.frame(
 display_table(data_sources, caption = "Data sources used by the modeling workflow.")
 ```
 
-The current model iteration can be reproduced with free data. Live API data is treated as a later enrichment layer after the baseline models are stable.
+This model version is reproducible with free data and connected API coverage metadata. Detailed match, player, lineup, injury, and odds fields are structured enrichment layers for future scoring updates.
 
 ## Model Iterations
 
@@ -216,6 +250,33 @@ KNN stands for **K-Nearest Neighbors**. The model finds the closest historical t
 
 <a class="project-button" href="reports/04_knn_similarity_model.html">Open KNN report</a>
 :::
+
+::: {.model-card}
+### 5. Regression Diagnostics
+
+**Question:** are the regression results stable enough to interpret?
+
+Before the regression results are shown, the workflow checks collinearity, residual patterns, heteroskedasticity, and Poisson overdispersion.
+
+**Outputs:**
+
+- VIF values for predictor overlap.
+- Durbin-Watson and lagged residual correlation.
+- Breusch-Pagan and Jarque-Bera diagnostic checks.
+- Poisson dispersion checks for goals.
+
+<a class="project-button" href="reports/06_regression_diagnostics.html">Open diagnostics report</a>
+:::
+
+::: {.model-card}
+### 6. Fixture Predictions
+
+**Question:** what does the current model predict for the 2026 fixture list?
+
+The fixture table applies the trained local models to 2026 matches and shows expected goals, win/draw/loss probabilities, completed-fixture checks, and weather context.
+
+<a class="project-button" href="reports/07_fixture_predictions.html">Open predictions report</a>
+:::
 :::
 
 ## Dictionary
@@ -231,8 +292,14 @@ Use this as the quick reference for acronyms and modeling terms that appear acro
 | Poisson regression | A regression model for count outcomes. | Goals are counts, so Poisson is a natural next model after OLS. |
 | Lambda | The expected count in a Poisson model. | In the Poisson goals model, lambda is expected team goals. |
 | RMSE | Root Mean Squared Error. A typical prediction miss, measured in the same units as the target. | If goals RMSE is 1.46, the model is often off by roughly 1 to 2 goals, with big misses punished more. Lower is better. |
+| MAE | Mean Absolute Error. The average size of the prediction miss, ignoring direction. | Easier to read than RMSE because every miss is weighted evenly. Lower is better. |
 | Coefficient | The estimated effect of one predictor, holding the other predictors fixed. | A positive strength coefficient means stronger teams are expected to score more, all else equal. |
 | Residual | Observed value minus predicted value. | Residual plots show whether the model is missing patterns. |
+| VIF | Variance Inflation Factor. A check for predictors that repeat the same information. | High VIF makes individual regression coefficients harder to trust. |
+| Autocorrelation | A pattern where one residual is related to the residual before it. | Strong autocorrelation means model errors are not acting independently. |
+| Durbin-Watson | A residual autocorrelation check. Values near 2 are usually cleaner. | It is a quick test for sequential structure in ordered model errors. |
+| Heteroskedasticity | Uneven residual spread across predictor values. | It can make OLS standard errors too optimistic. |
+| Overdispersion | When a count outcome varies more than a basic Poisson model expects. | If goals are overdispersed, a negative-binomial or paired-goal model may handle uncertainty better. |
 | Logit | A transformation that converts a probability into log odds. | Logistic models use logits so probabilities stay between 0 and 1. |
 | Odds | Probability of an event divided by probability of it not happening. | Model probabilities can be compared with betting-market odds after converting both to the same scale. |
 | Ordinal logistic regression | A logistic model for ordered outcomes. | It fits `loss < draw < win` while producing probabilities for all three outcomes. |
@@ -374,6 +441,35 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
       )
     )
   }
+  if (nrow(diagnostics) > 0) {
+    model_rows <- rbind(
+      model_rows,
+      data.frame(
+        model = "Regression diagnostics",
+        target = "model quality checks",
+        rows = fmt_integer(goals_metrics$rows_total[[1]]),
+        primary_metric = "Max VIF",
+        value = fmt_number(diagnostic_value(diagnostics, "Collinearity"), 3),
+        context = paste("Poisson dispersion:", fmt_number(diagnostic_value(diagnostics, "Poisson overdispersion"), 3))
+      )
+    )
+  }
+  if (nrow(fixture_metrics) > 0) {
+    model_rows <- rbind(
+      model_rows,
+      data.frame(
+        model = "2026 fixture scoring",
+        target = "match goals and result probabilities",
+        rows = fmt_integer(metric_value(fixture_metrics, "fixtures_scored")),
+        primary_metric = "Completed fixture check",
+        value = paste0(
+          "Poisson RMSE ",
+          fmt_number(metric_value(fixture_metrics, "poisson_completed_fixture_rmse"), 3)
+        ),
+        context = paste("Weather rows:", fmt_integer(metric_value(fixture_metrics, "fixtures_with_weather_context")))
+      )
+    )
+  }
   model_rows |>
     display_table(caption = "Current model performance.")
 } else {
@@ -461,6 +557,28 @@ Ordinal logistic model for `loss < draw < win`, producing win/draw/loss probabil
 Similarity model that compares each team-match row with nearby historical cases.
 
 <a class="project-button" href="reports/04_knn_similarity_model.html">Open KNN report</a>
+:::
+:::
+
+::: {.column width="50%"}
+::: {.project-card}
+### Diagnostics
+
+Regression checks for collinearity, residual structure, heteroskedasticity, and count-model dispersion.
+
+<a class="project-button" href="reports/06_regression_diagnostics.html">Open diagnostics report</a>
+:::
+:::
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.project-card}
+### Fixture Predictions
+
+Expected goals, win/draw/loss probabilities, completed-fixture checks, and weather context for the 2026 fixture list.
+
+<a class="project-button" href="reports/07_fixture_predictions.html">Open predictions report</a>
 :::
 :::
 

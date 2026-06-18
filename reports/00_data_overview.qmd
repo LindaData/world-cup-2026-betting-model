@@ -18,7 +18,7 @@ read_csv_if_exists <- function(path) {
 
 ## What Data Is Available
 
-The current model starts with free and public data. The live API layer is wired for later enrichment, but the baseline models are built from open historical match, player, venue, weather, and news metadata.
+The model starts with free and public data, then uses connected football API coverage as a structured enrichment layer. The regression baseline is built from open historical match, player, venue, weather, and news metadata.
 
 ```{r available-data}
 available_data <- data.frame(
@@ -40,7 +40,7 @@ available_data <- data.frame(
     "Partially available",
     "Available for scheduled venues",
     "Available as article metadata",
-    "Connected; used later as coverage expands"
+    "Connected as a coverage and enrichment layer"
   ),
   modeling_use = c(
     "Results, goals for/against, tournament context, neutral-site flag",
@@ -188,6 +188,6 @@ if (nrow(result_frame) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
 }
 ```
 
-## Known Gaps
+## Coverage Notes
 
-The free baseline does not fully capture late-breaking match information. The largest missing pieces are confirmed starting lineups, injury status, suspensions, player minutes, event-level player statistics, and betting market movement. Those fields are designed as later enrichment layers after the baseline model is stable.
+Late-breaking match information is treated as structured enrichment: confirmed starting lineups, injury status, suspensions, player minutes, event-level player statistics, and betting market movement can be added as model inputs as those fields become available.

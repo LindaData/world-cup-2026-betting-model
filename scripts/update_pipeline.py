@@ -236,26 +236,17 @@ def write_current_status(
     )
     copied_md = "\n".join(f"- `{path}`" for path in copied) if copied else "- No public artifacts copied."
 
-    status_text = f"""# Current Data Status
+    status_text = f"""# Current Model Data Status
 
 Last refreshed: {iso(run_started)}.
 
 Refresh profile: `{args.profile}`.
 
-Local run folder:
-
-```text
-{run_dir.relative_to(ROOT)}
-```
-
 ## Short Answer
 
-The local refresh pipeline is now the source of truth for this project. It can rebuild from
-existing local files or pull free/no-key public sources, then rebuild DuckDB, metadata,
-model outputs, and shareable report artifacts.
-
-APIs that have free tiers but require your personal API key are wired but only run when keys
-are added to `.env` and the updater is called with `--include-keyed-apis`.
+The local refresh pipeline rebuilds the modeling database, metadata, diagnostics,
+model outputs, and shareable Quarto reports. The public site presents summarized
+results only; raw datasets and access files are kept out of the published site.
 
 ## Stored In DuckDB
 
@@ -288,25 +279,20 @@ data/processed/metadata/column_inventory.csv
 
 {copied_md}
 
-## Wired But Waiting For Your Key
+## Data Coverage Summary
 
-| Source | Key needed | What it adds |
-| --- | --- | --- |
-| football-data.org | Yes | Fixtures, standings, scorers, squads depending on plan |
-| The Odds API | Yes | Odds snapshots, market probabilities, historical odds on paid tier |
-| API-Football | Yes | Lineups, injuries, events, player stats, odds, predictions |
+| Area | Current role |
+| --- | --- |
+| Historical match results | Regression training data |
+| Team strength history | Pre-match strength and opponent-strength features |
+| 2026 fixtures and venues | Fixture scoring frame |
+| Weather and news metadata | Context features and diagnostics |
+| Football API enrichment | Coverage metadata now; richer match/player fields when populated |
 
-## Known Missing Model Inputs
+## Planned Enrichment
 
-These are not fully available from current no-key sources:
-
-- Confirmed starting lineups.
-- Substitutions and minutes played.
-- Player-match statistics.
-- Injuries and suspensions.
-- Cards, shots, possession, saves, xG.
-- Odds movement and closing lines.
-- Complete player identity enrichment for every squad player.
+The model is designed to add lineups, player availability, player-match statistics,
+event detail, and market-implied probabilities as structured coverage expands.
 """
 
     if failures:
@@ -370,6 +356,8 @@ def build_steps(args: argparse.Namespace, python_exe: str, rscript_exe: str) -> 
             Step("Fit ordinal result model", [rscript_exe, "R/11_fit_ordinal_result_model.R"])
         )
         steps.append(Step("Fit KNN similarity model", [rscript_exe, "R/13_fit_knn_similarity_model.R"]))
+        steps.append(Step("Run regression diagnostics", [rscript_exe, "R/15_regression_diagnostics.R"]))
+        steps.append(Step("Score 2026 fixtures", [rscript_exe, "R/16_score_2026_fixtures.R"]))
     if not args.skip_render:
         steps.append(Step("Render R Markdown reports", [rscript_exe, "R/12_render_reports.R"], required=False))
 
