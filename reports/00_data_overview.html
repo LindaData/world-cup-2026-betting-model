@@ -153,6 +153,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">KNN Model</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../reports/06_regression_diagnostics.html"> 
+<span class="menu-text">Diagnostics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/07_fixture_predictions.html"> 
+<span class="menu-text">Predictions</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../reports/03_distribution_review.html"> 
 <span class="menu-text">Distributions</span></a>
   </li>  
@@ -186,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sample-modeling-dataset" id="toc-sample-modeling-dataset" class="nav-link" data-scroll-target="#sample-modeling-dataset"><span class="header-section-number">2</span> Sample Modeling Dataset</a></li>
   <li><a href="#metadata" id="toc-metadata" class="nav-link" data-scroll-target="#metadata"><span class="header-section-number">3</span> Metadata</a></li>
   <li><a href="#simple-visuals" id="toc-simple-visuals" class="nav-link" data-scroll-target="#simple-visuals"><span class="header-section-number">4</span> Simple Visuals</a></li>
-  <li><a href="#known-gaps" id="toc-known-gaps" class="nav-link" data-scroll-target="#known-gaps"><span class="header-section-number">5</span> Known Gaps</a></li>
+  <li><a href="#coverage-notes" id="toc-coverage-notes" class="nav-link" data-scroll-target="#coverage-notes"><span class="header-section-number">5</span> Coverage Notes</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/LindaData/world-cup-2026-betting-model/blob/main/reports/00_data_overview.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
     </div>
@@ -215,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="what-data-is-available" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="what-data-is-available"><span class="header-section-number">1</span> What Data Is Available</h2>
-<p>The current model starts with free and public data. The live API layer is wired for later enrichment, but the baseline models are built from open historical match, player, venue, weather, and news metadata.</p>
+<p>The model starts with free and public data, then uses connected football API coverage as a structured enrichment layer. The regression baseline is built from open historical match, player, venue, weather, and news metadata.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -238,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Partially available"</span>,</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Available for scheduled venues"</span>,</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Available as article metadata"</span>,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Connected; used later as coverage expands"</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Connected as a coverage and enrichment layer"</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">modeling_use =</span> <span class="fu">c</span>(</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Results, goals for/against, tournament context, neutral-site flag"</span>,</span>
@@ -303,7 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td style="text-align: left;">Live football API layer</td>
-<td style="text-align: left;">Connected; used later as coverage expands</td>
+<td style="text-align: left;">Connected as a coverage and enrichment layer</td>
 <td style="text-align: left;">Fixtures, teams, standings, lineups, injuries, odds, events, and player stats</td>
 </tr>
 </tbody>
@@ -950,9 +958,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="known-gaps" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="known-gaps"><span class="header-section-number">5</span> Known Gaps</h2>
-<p>The free baseline does not fully capture late-breaking match information. The largest missing pieces are confirmed starting lineups, injury status, suspensions, player minutes, event-level player statistics, and betting market movement. Those fields are designed as later enrichment layers after the baseline model is stable.</p>
+<section id="coverage-notes" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="coverage-notes"><span class="header-section-number">5</span> Coverage Notes</h2>
+<p>Late-breaking match information is treated as structured enrichment: confirmed starting lineups, injury status, suspensions, player minutes, event-level player statistics, and betting market movement can be added as model inputs as those fields become available.</p>
 
 
 <!-- -->
@@ -1436,7 +1444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## What Data Is Available</span></span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>The current model starts with free and public data. The live API layer is wired for later enrichment, but the baseline models are built from open historical match, player, venue, weather, and news metadata.</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>The model starts with free and public data, then uses connected football API coverage as a structured enrichment layer. The regression baseline is built from open historical match, player, venue, weather, and news metadata.</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r available-data}</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>available_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
@@ -1458,7 +1466,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Partially available"</span>,</span>
 <span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Available for scheduled venues"</span>,</span>
 <span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Available as article metadata"</span>,</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Connected; used later as coverage expands"</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Connected as a coverage and enrichment layer"</span></span>
 <span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">modeling_use =</span> <span class="fu">c</span>(</span>
 <span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Results, goals for/against, tournament context, neutral-site flag"</span>,</span>
@@ -1606,9 +1614,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## Known Gaps</span></span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## Coverage Notes</span></span>
 <span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a>The free baseline does not fully capture late-breaking match information. The largest missing pieces are confirmed starting lineups, injury status, suspensions, player minutes, event-level player statistics, and betting market movement. Those fields are designed as later enrichment layers after the baseline model is stable.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a>Late-breaking match information is treated as structured enrichment: confirmed starting lineups, injury status, suspensions, player minutes, event-level player statistics, and betting market movement can be added as model inputs as those fields become available.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
