@@ -63,7 +63,7 @@ if (nrow(goals_frame) > 0 && "y_goals_for" %in% names(goals_frame)) {
     ) |>
     display_table(caption = "Observed team-goal distribution.", max_rows = 12)
 } else {
-  display_table(empty_note("Goal distribution is generated locally from the modeling frame."))
+  display_table(empty_note("Goal distribution is available after the modeling refresh."))
 }
 ```
 
@@ -91,7 +91,7 @@ if (nrow(goals_frame) > 0 && "y_goals_for" %in% names(goals_frame) && requireNam
     ggplot2::theme_minimal(base_size = 12)
 } else {
   plot.new()
-  text(0.5, 0.5, "Goal distribution plot is generated locally.")
+  text(0.5, 0.5, "Goal distribution plot is available after the modeling refresh.")
 }
 ```
 

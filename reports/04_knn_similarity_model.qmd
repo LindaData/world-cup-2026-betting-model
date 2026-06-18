@@ -1,0 +1,124 @@
+---
+title: "KNN Similarity Model"
+subtitle: "Nearest-neighbor comparison model for goals and match results"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("../data/processed/modeling")) ".." else "."
+source(file.path(root, "R", "report_helpers.R"))
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+```
+
+## Purpose
+
+The KNN model is a similarity model. For a team in a match, it finds historical team-match rows that look most similar, then summarizes what happened in those nearby games.
+
+This gives the project a useful contrast:
+
+- OLS explains average goal changes with coefficients.
+- Ordinal logistic explains ordered win/draw/loss probabilities.
+- KNN asks: "What happened when past teams looked like this team in this matchup?"
+
+## How It Works
+
+KNN stands for **K-Nearest Neighbors**.
+
+For each test row, the model:
+
+1. Standardizes the model inputs so all features are on comparable scales.
+2. Finds the `25` closest historical team-match rows.
+3. Predicts goals by averaging the goals scored by those neighbors.
+4. Predicts loss, draw, and win probabilities by counting neighbor outcomes.
+
+```{r features}
+features <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "knn_similarity_model_features.csv"))
+
+if (nrow(features) > 0) {
+  display_table(features, caption = "Features used to find similar team-match rows.")
+} else {
+  display_table(empty_note("KNN feature metadata is available after the KNN refresh."))
+}
+```
+
+## Results
+
+```{r metrics}
+metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "knn_similarity_model_metrics.csv"))
+
+if (nrow(metrics) > 0) {
+  metrics |>
+    dplyr::transmute(
+      rows_total = fmt_integer(rows_total),
+      rows_train_evaluated = fmt_integer(rows_train_evaluated),
+      rows_test_evaluated = fmt_integer(rows_test_evaluated),
+      k_neighbors = k_neighbors,
+      goals_rmse = fmt_number(goals_rmse, 3),
+      goals_mae = fmt_number(goals_mae, 3),
+      result_accuracy = fmt_percent(result_accuracy, 1),
+      result_log_loss = fmt_number(result_log_loss, 3),
+      result_multiclass_brier = fmt_number(result_multiclass_brier, 3),
+      reference_accuracy = fmt_percent(reference_accuracy, 1)
+    ) |>
+    display_table(caption = "KNN model performance.")
+} else {
+  display_table(empty_note("KNN metrics are available after the KNN refresh."))
+}
+```
+
+## Sample Predictions
+
+```{r sample-predictions}
+predictions <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "knn_similarity_model_sample_predictions.csv"))
+
+if (nrow(predictions) > 0) {
+  predictions |>
+    dplyr::select(
+      date,
+      team,
+      opponent,
+      tournament,
+      goals_for,
+      pred_goals_for_knn,
+      actual_result,
+      predicted_result,
+      pred_prob_loss,
+      pred_prob_draw,
+      pred_prob_win
+    ) |>
+    dplyr::mutate(
+      pred_goals_for_knn = fmt_number(pred_goals_for_knn, 2),
+      pred_prob_loss = fmt_percent(pred_prob_loss, 1),
+      pred_prob_draw = fmt_percent(pred_prob_draw, 1),
+      pred_prob_win = fmt_percent(pred_prob_win, 1)
+    ) |>
+    display_table(caption = "Sample KNN predictions.", max_rows = 12)
+} else {
+  display_table(empty_note("KNN predictions are available after the KNN refresh."))
+}
+```
+
+## Interpretation
+
+KNN is easy to explain because the prediction comes from comparable historical cases. That is also its limitation.
+
+The model depends heavily on:
+
+- The features used to define similarity.
+- The number of neighbors.
+- Whether older matches should count the same as recent matches.
+- Whether rare outcomes, especially draws, are represented well enough in the neighbor set.
+
+KNN is strongest as a comparison model. If it beats the simpler regression models, the feature set probably contains useful nonlinear patterns. If it loses, the added flexibility is not earning its keep.
+
+## Reproduce Locally
+
+```{r reproduce, eval=FALSE}
+source("R/13_fit_knn_similarity_model.R")
+```

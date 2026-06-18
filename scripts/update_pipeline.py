@@ -364,10 +364,11 @@ def build_steps(args: argparse.Namespace, python_exe: str, rscript_exe: str) -> 
     )
 
     if not args.skip_model:
-        steps.append(Step("Fit baseline goals model", [rscript_exe, "R/10_fit_linear_goals_model.R"]))
+        steps.append(Step("Fit goals model", [rscript_exe, "R/10_fit_linear_goals_model.R"]))
         steps.append(
             Step("Fit ordinal result model", [rscript_exe, "R/11_fit_ordinal_result_model.R"])
         )
+        steps.append(Step("Fit KNN similarity model", [rscript_exe, "R/13_fit_knn_similarity_model.R"]))
     if not args.skip_render:
         steps.append(Step("Render R Markdown reports", [rscript_exe, "R/12_render_reports.R"], required=False))
 

@@ -19,24 +19,23 @@ read_csv_if_exists <- function(path) {
 <div class="draft-label">DRAFT</div>
 
 <div class="hero-actions">
-  <a class="btn" href="https://github.com/LindaData/world-cup-2026-betting-model">View on GitHub</a>
   <a class="btn" href="#data-sources-and-expense-overview">Data Sources</a>
   <a class="btn" href="reports/01_goals_linear_regression.html">Goals Model</a>
   <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a>
+  <a class="btn" href="reports/04_knn_similarity_model.html">KNN Model</a>
   <a class="btn" href="reports/03_distribution_review.html">Distributions</a>
   <a class="btn" href="#dictionary">Dictionary</a>
-  <a class="btn" href="https://lindadata.github.io/">LindaData Home</a>
 </div>
 
-This site presents the 2026 World Cup betting model, the data used to support it, and the model results in one shareable place.
-
-Code is hidden by default so the report reads cleanly. Use **Show code** to inspect the R steps.
-
-No raw datasets, processed databases, API keys, `.Renviron`, credentials, or private files are published here.
+<div class="site-summary">
+  <p>This site presents the 2026 World Cup betting model, the data used to support it, and the model results in one shareable place.</p>
+  <p>Method details are available through the <strong>Show code</strong> controls. The public page focuses on model inputs, diagnostics, and results.</p>
+</div>
 
 ```{r hero-metrics, echo=FALSE, results="asis"}
 goals_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_metrics.csv"))
 ordinal_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_metrics.csv"))
+knn_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "knn_similarity_model_metrics.csv"))
 
 if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
   cat(metric_cards(data.frame(
@@ -91,7 +90,7 @@ The public site is hosted without an additional hosting bill. The live football 
 
 ## Model Iterations
 
-The model section is organized around interpretable iterations. Each iteration names the prediction target, shows the equation, explains the coefficients in plain English, and lists the checks that determine whether the model is trustworthy.
+The model section is organized around interpretable iterations. Each model card names the prediction target, explains the method, and lists the checks that determine whether the model is trustworthy.
 
 ::: {.model-blueprint}
 ::: {.model-card}
@@ -159,6 +158,30 @@ $$
 - Calibration matters more than raw accuracy for betting comparison.
 - Market odds should be the benchmark once API odds are available.
 :::
+
+::: {.model-card}
+### 3. KNN Similarity Model
+
+**Question:** what happened in historical matchups that looked similar?
+
+KNN stands for **K-Nearest Neighbors**. The model finds the closest historical team-match rows, then averages those neighbors.
+
+**Outputs:**
+
+- Expected goals from the average goals scored by similar teams.
+- Loss, draw, and win probabilities from the neighbor outcomes.
+- A flexible comparison against the regression models.
+
+**Main issues to check:**
+
+- Similarity depends on which features are included.
+- Features must be standardized so one large-scale number does not dominate.
+- The choice of `K` controls the smoothness of predictions.
+- KNN can copy noise when the neighbor set is too small.
+- KNN is harder to explain with coefficients because it is case-based, not equation-based.
+
+<a class="project-button" href="reports/04_knn_similarity_model.html">Open KNN report</a>
+:::
 :::
 
 ## Dictionary
@@ -167,8 +190,8 @@ Use this as the quick reference for acronyms and modeling terms that appear acro
 
 | Term | Plain-English Meaning | Why It Matters Here |
 |---|---|---|
-| `Y` or target | The thing the model is trying to predict. | For the goals model, `Y` is goals scored. For the result model, `Y` is win, draw, or loss. |
-| `X` or predictor | An input used to make the prediction. | Team strength, opponent strength, rest, venue, injuries, and odds can all be predictors. |
+| Target variable | The thing the model is trying to predict. | For the goals model, the target is goals scored. For the result model, the target is win, draw, or loss. |
+| Predictor variable | An input used to make the prediction. | Team strength, opponent strength, rest, venue, injuries, and odds can all be predictors. |
 | Regression | A model that estimates how a target changes with predictors. | It gives a structured way to turn soccer information into expected goals or probabilities. |
 | OLS | Ordinary Least Squares. A line-fitting method that chooses coefficients by minimizing squared prediction errors. | It is the first goals benchmark because it is easy to explain and diagnose. |
 | RMSE | Root Mean Squared Error. A typical prediction miss, measured in the same units as the target. | If goals RMSE is 1.46, the model is often off by roughly 1 to 2 goals, with big misses punished more. Lower is better. |
@@ -178,6 +201,7 @@ Use this as the quick reference for acronyms and modeling terms that appear acro
 | Odds | Probability of an event divided by probability of it not happening. | Model probabilities can be compared with betting-market odds after converting both to the same scale. |
 | Ordinal logistic regression | A logistic model for ordered outcomes. | It fits `loss < draw < win` while producing probabilities for all three outcomes. |
 | Multinomial logistic regression | A logistic model for three or more categories without assuming an order. | It is the backup if draws behave like their own special category rather than the middle of loss and win. |
+| KNN | K-Nearest Neighbors. A model that predicts from similar historical examples. | It lets the project compare regression models against a flexible similarity-based method. |
 | Accuracy | Share of predictions where the top predicted class matches the actual result. | Useful for a quick check, but not enough for betting because probability quality matters too. |
 | Calibration | Whether predicted probabilities match real frequencies. | If the model says 60% win chance, well-calibrated teams should win about 60% of those cases. |
 | Log loss | A probability score that penalizes confident wrong predictions. | Better than accuracy when the model outputs win/draw/loss probabilities. Lower is better. |
@@ -228,7 +252,7 @@ if (nrow(goals_sample) > 0) {
     ) |>
     display_table(caption = "Sample of the team-match modeling grain.", max_rows = 8)
 } else {
-  display_table(empty_note("Sample rows are generated locally by R/10_fit_linear_goals_model.R."))
+  display_table(empty_note("Sample rows are available after the goals model refresh."))
 }
 ```
 
@@ -244,22 +268,23 @@ if (nrow(goals_sample) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
     ggplot2::theme_minimal(base_size = 12)
 } else {
   plot.new()
-  text(0.5, 0.5, "Goals sample is generated locally before rendering.")
+  text(0.5, 0.5, "Goals sample is available after the model refresh.")
 }
 ```
 
 ## Modeling
 
-The model suite has two core outputs:
+The model suite has three core outputs:
 
 - **Goals OLS:** predicts goals scored.
 - **Ordinal logistic:** predicts `loss < draw < win`.
+- **KNN similarity:** predicts goals and result probabilities from nearby historical matchups.
 
 The reports show the model target, data grain, math, coefficients, predictions, and diagnostics.
 
 ```{r model-summary}
 if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
-  data.frame(
+  model_rows <- data.frame(
     model = c("Goals OLS", "Ordinal result logistic"),
     target = c("team goals", "loss < draw < win"),
     rows = fmt_integer(c(goals_metrics$rows_total[[1]], ordinal_metrics$rows_total[[1]])),
@@ -272,16 +297,34 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
       paste("Mean test goals:", fmt_number(goals_metrics$mean_y_test[[1]], 3)),
       paste("Reference accuracy:", fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1))
     )
-  ) |>
+  )
+  if (nrow(knn_metrics) > 0) {
+    model_rows <- rbind(
+      model_rows,
+      data.frame(
+        model = "KNN similarity",
+        target = "team goals and loss/draw/win",
+        rows = fmt_integer(knn_metrics$rows_total[[1]]),
+        primary_metric = "Accuracy / RMSE",
+        value = paste0(
+          fmt_percent(knn_metrics$result_accuracy[[1]], 1),
+          " / ",
+          fmt_number(knn_metrics$goals_rmse[[1]], 3)
+        ),
+        context = paste("Neighbors:", knn_metrics$k_neighbors[[1]])
+      )
+    )
+  }
+  model_rows |>
     display_table(caption = "Current model performance.")
 } else {
-  display_table(empty_note("Model metrics are generated locally before rendering."))
+  display_table(empty_note("Model metrics are available after the model refresh."))
 }
 ```
 
 ## Data
 
-The modeling database stores raw and transformed tables. The rendered site publishes metadata and model outputs, while credentials and private source files stay local.
+The analysis uses a local modeling database and publishes the resulting metadata, diagnostics, and model outputs here.
 
 ```{r table-inventory}
 inventory <- read_csv_if_exists(file.path(root, "data", "processed", "metadata", "table_inventory.csv"))
@@ -290,9 +333,9 @@ if (nrow(inventory) > 0) {
   inventory |>
     dplyr::arrange(table_name) |>
     dplyr::mutate(row_count = fmt_integer(row_count)) |>
-    display_table(caption = "Local tables available for modeling.", max_rows = 16)
+    display_table(caption = "Modeling tables available for analysis.", max_rows = 16)
 } else {
-  display_table(empty_note("Table inventory is generated locally by R/07_export_metadata.R."))
+  display_table(empty_note("Table inventory is available after the metadata refresh."))
 }
 ```
 
@@ -302,7 +345,7 @@ if (nrow(inventory) > 0) {
   <div class="principle"><strong>One grain per table</strong>Rows should mean one thing: team-match, match, player, venue, or API pull.</div>
   <div class="principle"><strong>Readable labels</strong>Keep machine-safe names in source files; convert them to readable labels only in reports.</div>
   <div class="principle"><strong>Round for display only</strong>Do not round model inputs or stored outputs. Round the rendered table so readers can scan it.</div>
-  <div class="principle"><strong>Separate public and private</strong>Publish metadata and rendered results, not raw datasets, databases, keys, or credentials.</div>
+  <div class="principle"><strong>Publication boundary</strong>Present summaries and rendered results; keep operational files out of the public site.</div>
 </div>
 
 :::
@@ -310,7 +353,7 @@ if (nrow(inventory) > 0) {
 ## Reports
 
 ::: {.columns}
-::: {.column width="50%"}
+::: {.column width="33%"}
 ::: {.project-card}
 ### Goals Model
 
@@ -320,13 +363,23 @@ OLS model for team goals scored from pre-match Elo, opponent Elo, expected resul
 :::
 :::
 
-::: {.column width="50%"}
+::: {.column width="33%"}
 ::: {.project-card}
 ### Result Model
 
 Ordinal logistic model for `loss < draw < win`, producing win/draw/loss probability estimates.
 
 <a class="project-button" href="reports/02_ordinal_result_model.html">Open result report</a>
+:::
+:::
+
+::: {.column width="33%"}
+::: {.project-card}
+### KNN Model
+
+Similarity model that compares each team-match row with nearby historical cases.
+
+<a class="project-button" href="reports/04_knn_similarity_model.html">Open KNN report</a>
 :::
 :::
 :::

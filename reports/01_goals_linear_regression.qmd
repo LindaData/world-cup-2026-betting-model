@@ -63,7 +63,7 @@ if (nrow(sample_data) > 0) {
     ) |>
     display_table(caption = "Team-match sample used by the goals model.", max_rows = 10)
 } else {
-  display_table(empty_note("Sample rows are generated locally by R/10_fit_linear_goals_model.R."))
+  display_table(empty_note("Sample rows are available after the goals model refresh."))
 }
 ```
 
@@ -122,7 +122,7 @@ if (nrow(metrics) > 0) {
   ) |>
     display_table(caption = "Goals model fit summary.")
 } else {
-  display_table(empty_note("Metrics are generated locally."))
+  display_table(empty_note("Metrics are available after the goals model refresh."))
 }
 ```
 
@@ -137,7 +137,7 @@ if (nrow(coefficients) > 0) {
     ) |>
     display_table(caption = "Regression coefficients. Positive estimates increase expected goals.")
 } else {
-  display_table(empty_note("Coefficients are generated locally."))
+  display_table(empty_note("Coefficients are available after the goals model refresh."))
 }
 ```
 
@@ -157,7 +157,7 @@ if (nrow(coefficients) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
     ggplot2::theme_minimal(base_size = 12)
 } else {
   plot.new()
-  text(0.5, 0.5, "Coefficient plot is generated locally.")
+  text(0.5, 0.5, "Coefficient plot is available after the goals model refresh.")
 }
 ```
 

@@ -68,7 +68,7 @@ if (nrow(sample_data) > 0) {
     ) |>
     display_table(caption = "Team-match sample used by the result model.", max_rows = 10)
 } else {
-  display_table(empty_note("Sample rows are generated locally by R/11_fit_ordinal_result_model.R."))
+  display_table(empty_note("Sample rows are available after the result model refresh."))
 }
 ```
 
@@ -119,7 +119,7 @@ if (nrow(metrics) > 0) {
   ) |>
     display_table(caption = "Ordinal model fit summary.")
 } else {
-  display_table(empty_note("Metrics are generated locally."))
+  display_table(empty_note("Metrics are available after the result model refresh."))
 }
 ```
 
@@ -134,7 +134,7 @@ if (nrow(class_distribution) > 0) {
     ) |>
     display_table(caption = "Outcome balance in the modeling frame.")
 } else {
-  display_table(empty_note("Class balance is generated locally."))
+  display_table(empty_note("Class balance is available after the result model refresh."))
 }
 ```
 
@@ -151,7 +151,7 @@ if (nrow(coefficients) > 0) {
     ) |>
     display_table(caption = "Ordinal logistic coefficients and thresholds.")
 } else {
-  display_table(empty_note("Coefficients are generated locally."))
+  display_table(empty_note("Coefficients are available after the result model refresh."))
 }
 ```
 
@@ -179,7 +179,7 @@ if (nrow(predictions) > 0) {
     ) |>
     display_table(caption = "Example test-set predictions.", max_rows = 12)
 } else {
-  display_table(empty_note("Predictions are generated locally."))
+  display_table(empty_note("Predictions are available after the result model refresh."))
 }
 ```
 
@@ -191,7 +191,7 @@ if (nrow(confusion) > 0) {
     dplyr::mutate(rows = fmt_integer(rows)) |>
     display_table(caption = "Confusion matrix counts by actual and predicted result.")
 } else {
-  display_table(empty_note("Confusion matrix is generated locally."))
+  display_table(empty_note("Confusion matrix is available after the result model refresh."))
 }
 ```
 
@@ -211,7 +211,7 @@ if (nrow(confusion) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
     ggplot2::theme_minimal(base_size = 12)
 } else {
   plot.new()
-  text(0.5, 0.5, "Confusion matrix plot is generated locally.")
+  text(0.5, 0.5, "Confusion matrix plot is available after the result model refresh.")
 }
 ```
 

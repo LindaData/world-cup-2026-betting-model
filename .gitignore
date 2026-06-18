@@ -32,4 +32,6 @@ docs/samples/*.csv
 reports/*.html
 
 /.quarto/
+.quarto-deno-cache/
+index_files/
 **/*.quarto_ipynb

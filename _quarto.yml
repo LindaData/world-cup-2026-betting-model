@@ -6,6 +6,7 @@ project:
     - reports/01_goals_linear_regression.qmd
     - reports/02_ordinal_result_model.qmd
     - reports/03_distribution_review.qmd
+    - reports/04_knn_similarity_model.qmd
 
 website:
   title: "2026 World Cup Betting Model"
@@ -13,7 +14,7 @@ website:
   repo-url: "https://github.com/LindaData/world-cup-2026-betting-model"
   repo-actions: [source]
   navbar:
-    background: "#157878"
+    background: "#102a43"
     left:
       - href: index.qmd
         text: About
@@ -21,6 +22,8 @@ website:
         text: Goals Model
       - href: reports/02_ordinal_result_model.qmd
         text: Result Model
+      - href: reports/04_knn_similarity_model.qmd
+        text: KNN Model
       - href: reports/03_distribution_review.qmd
         text: Distributions
     right:
