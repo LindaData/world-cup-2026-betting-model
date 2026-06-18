@@ -1,0 +1,193 @@
+---
+title: "Data Overview"
+subtitle: "Available data, sample modeling rows, metadata, and simple diagnostics"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed/modeling")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+```
+
+## What Data Is Available
+
+The current model starts with free and public data. The live API layer is wired for later enrichment, but the baseline models are built from open historical match, player, venue, weather, and news metadata.
+
+```{r available-data}
+available_data <- data.frame(
+  data_area = c(
+    "International match history",
+    "Team strength history",
+    "Player goals",
+    "2026 fixtures and venues",
+    "Squad/player references",
+    "Weather signals",
+    "News metadata",
+    "Live football API layer"
+  ),
+  current_status = c(
+    "Available",
+    "Available",
+    "Available",
+    "Available",
+    "Partially available",
+    "Available for scheduled venues",
+    "Available as article metadata",
+    "Connected; used later as coverage expands"
+  ),
+  modeling_use = c(
+    "Results, goals for/against, tournament context, neutral-site flag",
+    "Pre-match Elo-style strength, opponent strength, expected result",
+    "Historical scorer context and player goal totals",
+    "Future match shell, host cities, venues, travel context",
+    "Roster context and player identity enrichment where public references match",
+    "Temperature, wind, humidity, and match-window conditions",
+    "Team and tournament news volume/context features",
+    "Fixtures, teams, standings, lineups, injuries, odds, events, and player stats"
+  ),
+  stringsAsFactors = FALSE
+)
+
+display_table(available_data, caption = "Available data areas and modeling use.")
+```
+
+## Sample Modeling Dataset
+
+The core modeling grain is **one team in one match**. A single match appears twice: once from each team's perspective.
+
+```{r sample-modeling-data}
+sample_data <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_sample_1000.csv"))
+
+if (nrow(sample_data) > 0) {
+  sample_data |>
+    dplyr::select(
+      date,
+      team,
+      opponent,
+      tournament,
+      y_goals_for,
+      pre_elo,
+      opponent_pre_elo,
+      pre_match_expected_result,
+      listed_home,
+      neutral
+    ) |>
+    dplyr::mutate(
+      pre_elo = round(pre_elo, 0),
+      opponent_pre_elo = round(opponent_pre_elo, 0),
+      pre_match_expected_result = fmt_percent(pre_match_expected_result, 1)
+    ) |>
+    display_table(caption = "Sample team-match rows used by the free-data model baseline.", max_rows = 12)
+} else {
+  display_table(empty_note("Sample modeling rows are available after the goals model refresh."))
+}
+```
+
+## Metadata
+
+The table inventory shows what is available in the local modeling database. The rendered site embeds metadata summaries, not raw data files.
+
+```{r table-inventory}
+inventory <- read_csv_if_exists(file.path(root, "data", "processed", "metadata", "table_inventory.csv"))
+
+if (nrow(inventory) > 0) {
+  inventory |>
+    dplyr::arrange(dplyr::desc(row_count)) |>
+    dplyr::mutate(row_count = fmt_integer(row_count)) |>
+    display_table(caption = "Modeling table inventory.", max_rows = 20)
+} else {
+  display_table(empty_note("Table inventory is available after the metadata refresh."))
+}
+```
+
+```{r column-inventory}
+columns <- read_csv_if_exists(file.path(root, "data", "processed", "metadata", "column_inventory.csv"))
+
+if (nrow(columns) > 0) {
+  type_column <- if ("data_type" %in% names(columns)) "data_type" else "column_type"
+  columns |>
+    dplyr::filter(table_name %in% c(
+      "vw_goals_linear_model_frame",
+      "vw_result_ordinal_model_frame",
+      "vw_2026_fixture_model_frame",
+      "vw_2026_team_model_features"
+    )) |>
+    dplyr::select(table_name, column_name, data_type = dplyr::all_of(type_column)) |>
+    display_table(caption = "Selected metadata for model-ready tables.", max_rows = 40)
+} else {
+  display_table(empty_note("Column inventory is available after the metadata refresh."))
+}
+```
+
+## Simple Visuals
+
+```{r row-counts-plot, fig.cap="Largest modeling tables by row count."}
+if (nrow(inventory) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  inventory |>
+    dplyr::arrange(dplyr::desc(row_count)) |>
+    dplyr::slice_head(n = 12) |>
+    ggplot2::ggplot(ggplot2::aes(x = stats::reorder(table_name, row_count), y = row_count)) +
+    ggplot2::geom_col(fill = "#0f6b68") +
+    ggplot2::coord_flip() +
+    ggplot2::scale_y_continuous(labels = function(x) format(x, big.mark = ",", scientific = FALSE, trim = TRUE)) +
+    ggplot2::labs(
+      title = "Largest tables in the modeling database",
+      x = NULL,
+      y = "Rows"
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Row-count chart is available after the metadata refresh.")
+}
+```
+
+```{r goals-plot, fig.cap="Goals scored per team-match row in the model sample."}
+if (nrow(sample_data) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(sample_data, ggplot2::aes(x = y_goals_for)) +
+    ggplot2::geom_histogram(binwidth = 1, boundary = -0.5, fill = "#d9a441", color = "white") +
+    ggplot2::labs(
+      title = "Goals scored by team-match row",
+      x = "Goals scored",
+      y = "Rows"
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Goals chart is available after the model refresh.")
+}
+```
+
+```{r result-distribution, fig.cap="Observed win/draw/loss distribution from historical team-match rows."}
+result_frame <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_frame.csv"))
+
+if (nrow(result_frame) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  result_frame |>
+    dplyr::count(y_result_ordered, name = "rows") |>
+    dplyr::mutate(y_result_ordered = factor(y_result_ordered, levels = c("loss", "draw", "win"))) |>
+    ggplot2::ggplot(ggplot2::aes(x = y_result_ordered, y = rows, fill = y_result_ordered)) +
+    ggplot2::geom_col(show.legend = FALSE) +
+    ggplot2::scale_y_continuous(labels = function(x) format(x, big.mark = ",", scientific = FALSE, trim = TRUE)) +
+    ggplot2::scale_fill_manual(values = c("#b85c5c", "#d9a441", "#0f6b68")) +
+    ggplot2::labs(
+      title = "Historical result distribution",
+      x = "Result from team perspective",
+      y = "Rows"
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Result distribution is available after the result model refresh.")
+}
+```
+
+## Known Gaps
+
+The free baseline does not fully capture late-breaking match information. The largest missing pieces are confirmed starting lineups, injury status, suspensions, player minutes, event-level player statistics, and betting market movement. Those fields are designed as later enrichment layers after the baseline model is stable.

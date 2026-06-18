@@ -3,7 +3,9 @@ project:
   output-dir: docs
   render:
     - index.qmd
+    - reports/00_data_overview.qmd
     - reports/01_goals_linear_regression.qmd
+    - reports/05_poisson_goals_model.qmd
     - reports/02_ordinal_result_model.qmd
     - reports/03_distribution_review.qmd
     - reports/04_knn_similarity_model.qmd
@@ -18,8 +20,12 @@ website:
     left:
       - href: index.qmd
         text: About
+      - href: reports/00_data_overview.qmd
+        text: Data
       - href: reports/01_goals_linear_regression.qmd
         text: Goals Model
+      - href: reports/05_poisson_goals_model.qmd
+        text: Poisson Model
       - href: reports/02_ordinal_result_model.qmd
         text: Result Model
       - href: reports/04_knn_similarity_model.qmd

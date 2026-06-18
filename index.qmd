@@ -20,7 +20,9 @@ read_csv_if_exists <- function(path) {
 
 <div class="hero-actions">
   <a class="btn" href="#data-sources-and-expense-overview">Data Sources</a>
+  <a class="btn" href="reports/00_data_overview.html">Data Overview</a>
   <a class="btn" href="reports/01_goals_linear_regression.html">Goals Model</a>
+  <a class="btn" href="reports/05_poisson_goals_model.html">Poisson Model</a>
   <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a>
   <a class="btn" href="reports/04_knn_similarity_model.html">KNN Model</a>
   <a class="btn" href="reports/03_distribution_review.html">Distributions</a>
@@ -34,6 +36,7 @@ read_csv_if_exists <- function(path) {
 
 ```{r hero-metrics, echo=FALSE, results="asis"}
 goals_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_metrics.csv"))
+poisson_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_poisson_model_metrics.csv"))
 ordinal_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_metrics.csv"))
 knn_metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "knn_similarity_model_metrics.csv"))
 
@@ -54,39 +57,42 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
 ## Data Sources and Expense Overview
 
 ::: {.api-choice}
-**Primary live source: API-Football by API-Sports**
+**Current baseline: free and public data first**
 
-The model uses API-Football for World Cup fixtures, teams, standings, player/squad data, injuries, lineups, match events, player statistics, odds, and predictions where coverage is available.
+The model starts with open historical match results, goalscorer history, Elo-style team strength, public 2026 fixture/venue references, weather, and news metadata. API-Football is connected as a later live-data layer, but the current model baseline does not depend on live enrichment data.
 :::
 
 ```{r data-sources, echo=FALSE}
 data_sources <- data.frame(
   layer = c(
-    "Live football API",
     "Historical match results",
+    "Team strength history",
     "Player and squad context",
     "Venue, weather, and news context",
+    "Live football API",
     "Publishing"
   ),
   source = c(
-    "API-Football / API-Sports",
     "Public international results and goalscorer datasets",
-    "API-Football plus public squad references",
+    "Derived Elo-style ratings from historical results",
+    "Public squad references and Wikidata enrichment",
     "Open venue/weather/news sources",
+    "API-Football / API-Sports",
     "GitHub Pages"
   ),
   use_in_model = c(
-    "Fixtures, teams, standings, injuries, lineups, odds, and match details",
     "Team form, goals scored, results, Elo-style strength features",
+    "Pre-match strength, opponent strength, and expected result",
     "Roster strength, player goal history, availability indicators",
     "Travel, venue, weather, and news-derived context features",
+    "Later enrichment for teams, standings, injuries, lineups, odds, and match details",
     "Shareable HTML reports and model summaries"
   )
 )
 display_table(data_sources, caption = "Data sources used by the modeling workflow.")
 ```
 
-The public site is hosted without an additional hosting bill. The live football data subscription is the main recurring project expense, and the project is kept within the monthly budget cap.
+The current model iteration can be reproduced with free data. Live API data is treated as a later enrichment layer after the baseline models are stable.
 
 ## Model Iterations
 
@@ -118,7 +124,35 @@ In words, `beta_1` is the average change in expected goals for a one-unit increa
 :::
 
 ::: {.model-card}
-### 2. Three-Outcome Result Model
+### 2. Poisson Goals Model
+
+**Question:** how many goals should a team score when the target is a count?
+
+The Poisson model predicts a positive expected-goals number:
+
+$$
+\log(\lambda)
+= \beta_0
++ \beta_1\text{Team Elo}
++ \beta_2\text{Opponent Elo}
++ \beta_3\text{Expected Result}
++ \beta_4\text{Match Context}
+$$
+
+In words, `lambda` is expected goals. This is a better shape for soccer scoring than OLS because goals cannot be negative.
+
+**Main issues to check:**
+
+- The basic Poisson assumes the mean and variance are tied together.
+- Soccer can be overdispersed, meaning the variance may be larger than the mean.
+- A negative binomial model may be needed if Poisson is too tight.
+- Forward-time validation matters more than random validation for future matches.
+
+<a class="project-button" href="reports/05_poisson_goals_model.html">Open Poisson report</a>
+:::
+
+::: {.model-card}
+### 3. Three-Outcome Result Model
 
 **Question:** what is the probability of win, draw, or loss?
 
@@ -160,7 +194,7 @@ $$
 :::
 
 ::: {.model-card}
-### 3. KNN Similarity Model
+### 4. KNN Similarity Model
 
 **Question:** what happened in historical matchups that looked similar?
 
@@ -194,6 +228,8 @@ Use this as the quick reference for acronyms and modeling terms that appear acro
 | Predictor variable | An input used to make the prediction. | Team strength, opponent strength, rest, venue, injuries, and odds can all be predictors. |
 | Regression | A model that estimates how a target changes with predictors. | It gives a structured way to turn soccer information into expected goals or probabilities. |
 | OLS | Ordinary Least Squares. A line-fitting method that chooses coefficients by minimizing squared prediction errors. | It is the first goals benchmark because it is easy to explain and diagnose. |
+| Poisson regression | A regression model for count outcomes. | Goals are counts, so Poisson is a natural next model after OLS. |
+| Lambda | The expected count in a Poisson model. | In the Poisson goals model, lambda is expected team goals. |
 | RMSE | Root Mean Squared Error. A typical prediction miss, measured in the same units as the target. | If goals RMSE is 1.46, the model is often off by roughly 1 to 2 goals, with big misses punished more. Lower is better. |
 | Coefficient | The estimated effect of one predictor, holding the other predictors fixed. | A positive strength coefficient means stronger teams are expected to score more, all else equal. |
 | Residual | Observed value minus predicted value. | Residual plots show whether the model is missing patterns. |
@@ -207,9 +243,10 @@ Use this as the quick reference for acronyms and modeling terms that appear acro
 | Log loss | A probability score that penalizes confident wrong predictions. | Better than accuracy when the model outputs win/draw/loss probabilities. Lower is better. |
 | Brier score | Average squared error between predicted probabilities and actual outcomes. | Another way to judge probability quality. Lower is better. |
 | Test set | Data held out from fitting and used only to evaluate performance. | It helps estimate how the model performs on games it has not already seen. |
+| Forward-time validation | Training on older games and testing on newer games. | This is closer to the real task: using past matches to predict future matches. |
 | Overfitting | When a model learns noise in past data instead of repeatable signal. | A model can look good historically and still fail on new World Cup matches. |
 | Data grain | What one row means in a dataset. | The main modeling grain is one team in one match. One match creates two team-match rows. |
-| API | Application Programming Interface. A structured way to pull data from a provider. | API-Football is the primary live football data source. |
+| API | Application Programming Interface. A structured way to pull data from a provider. | API-Football is the live enrichment source once the baseline model is stable. |
 
 ## Project Map
 
@@ -221,7 +258,7 @@ This project builds a reproducible data and modeling workflow for the 2026 FIFA 
 
 The workflow has four layers:
 
-- **Data collection:** match history, Elo ratings, 2026 venues, weather, player metadata, odds, and news signals.
+- **Data collection:** free match history, Elo-style ratings, 2026 venues, weather, player metadata, and news signals.
 - **Data storage:** local files and DuckDB tables for modeling.
 - **Modeling:** interpretable models in R, with Python handling source refreshes and heavier data jobs.
 - **Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.
@@ -274,9 +311,10 @@ if (nrow(goals_sample) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
 
 ## Modeling
 
-The model suite has three core outputs:
+The model suite has four core outputs:
 
 - **Goals OLS:** predicts goals scored.
+- **Poisson goals:** predicts expected goals as a count.
 - **Ordinal logistic:** predicts `loss < draw < win`.
 - **KNN similarity:** predicts goals and result probabilities from nearby historical matchups.
 
@@ -298,6 +336,27 @@ if (nrow(goals_metrics) > 0 && nrow(ordinal_metrics) > 0) {
       paste("Reference accuracy:", fmt_percent(ordinal_metrics$baseline_majority_accuracy[[1]], 1))
     )
   )
+  if (nrow(poisson_metrics) > 0) {
+    poisson_random <- poisson_metrics[poisson_metrics$validation_type == "random_80_20", ]
+    poisson_forward <- poisson_metrics[poisson_metrics$validation_type == "train_through_2018_test_2019_plus", ]
+    if (nrow(poisson_random) > 0) {
+      model_rows <- rbind(
+        model_rows,
+        data.frame(
+          model = "Poisson goals",
+          target = "team goals",
+          rows = fmt_integer(poisson_random$rows_total[[1]]),
+          primary_metric = "RMSE",
+          value = fmt_number(poisson_random$test_rmse[[1]], 3),
+          context = if (nrow(poisson_forward) > 0) {
+            paste("Forward-time RMSE:", fmt_number(poisson_forward$test_rmse[[1]], 3))
+          } else {
+            "Count-model benchmark"
+          }
+        )
+      )
+    }
+  }
   if (nrow(knn_metrics) > 0) {
     model_rows <- rbind(
       model_rows,
@@ -353,7 +412,17 @@ if (nrow(inventory) > 0) {
 ## Reports
 
 ::: {.columns}
-::: {.column width="33%"}
+::: {.column width="25%"}
+::: {.project-card}
+### Data Overview
+
+Available datasets, sample modeling rows, metadata, and simple diagnostics.
+
+<a class="project-button" href="reports/00_data_overview.html">Open data report</a>
+:::
+:::
+
+::: {.column width="25%"}
 ::: {.project-card}
 ### Goals Model
 
@@ -363,7 +432,17 @@ OLS model for team goals scored from pre-match Elo, opponent Elo, expected resul
 :::
 :::
 
-::: {.column width="33%"}
+::: {.column width="25%"}
+::: {.project-card}
+### Poisson Model
+
+Count model for expected team goals, with random and forward-time validation.
+
+<a class="project-button" href="reports/05_poisson_goals_model.html">Open Poisson report</a>
+:::
+:::
+
+::: {.column width="25%"}
 ::: {.project-card}
 ### Result Model
 
@@ -372,8 +451,10 @@ Ordinal logistic model for `loss < draw < win`, producing win/draw/loss probabil
 <a class="project-button" href="reports/02_ordinal_result_model.html">Open result report</a>
 :::
 :::
+:::
 
-::: {.column width="33%"}
+::: {.columns}
+::: {.column width="50%"}
 ::: {.project-card}
 ### KNN Model
 
@@ -382,12 +463,14 @@ Similarity model that compares each team-match row with nearby historical cases.
 <a class="project-button" href="reports/04_knn_similarity_model.html">Open KNN report</a>
 :::
 :::
-:::
 
+::: {.column width="50%"}
 ::: {.project-card}
 ### Distribution Review
 
 Distribution notes for deciding whether soccer features are counts, continuous variables, ordered outcomes, probabilities, or mixture processes.
 
 <a class="project-button" href="reports/03_distribution_review.html">Open distribution review</a>
+:::
+:::
 :::

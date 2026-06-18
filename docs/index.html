@@ -162,8 +162,16 @@ window.Quarto = {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./reports/00_data_overview.html"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./reports/01_goals_linear_regression.html"> 
 <span class="menu-text">Goals Model</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reports/05_poisson_goals_model.html"> 
+<span class="menu-text">Poisson Model</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./reports/02_ordinal_result_model.html"> 
@@ -207,10 +215,7 @@ window.Quarto = {
   <li><a href="#model-iterations" id="toc-model-iterations" class="nav-link" data-scroll-target="#model-iterations"><span class="header-section-number">2</span> Model Iterations</a></li>
   <li><a href="#dictionary" id="toc-dictionary" class="nav-link" data-scroll-target="#dictionary"><span class="header-section-number">3</span> Dictionary</a></li>
   <li><a href="#project-map" id="toc-project-map" class="nav-link" data-scroll-target="#project-map"><span class="header-section-number">4</span> Project Map</a></li>
-  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports"><span class="header-section-number">5</span> Reports</a>
-  <ul class="collapse">
-  <li><a href="#distribution-review" id="toc-distribution-review" class="nav-link" data-scroll-target="#distribution-review"><span class="header-section-number">5.4</span> Distribution Review</a></li>
-  </ul></li>
+  <li><a href="#reports" id="toc-reports" class="nav-link" data-scroll-target="#reports"><span class="header-section-number">5</span> Reports</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/LindaData/world-cup-2026-betting-model/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
     </div>
@@ -241,7 +246,7 @@ window.Quarto = {
 DRAFT
 </div>
 <div class="hero-actions">
-<p><a class="btn" href="#data-sources-and-expense-overview">Data Sources</a> <a class="btn" href="reports/01_goals_linear_regression.html">Goals Model</a> <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a> <a class="btn" href="reports/04_knn_similarity_model.html">KNN Model</a> <a class="btn" href="reports/03_distribution_review.html">Distributions</a> <a class="btn" href="#dictionary">Dictionary</a></p>
+<p><a class="btn" href="#data-sources-and-expense-overview">Data Sources</a> <a class="btn" href="reports/00_data_overview.html">Data Overview</a> <a class="btn" href="reports/01_goals_linear_regression.html">Goals Model</a> <a class="btn" href="reports/05_poisson_goals_model.html">Poisson Model</a> <a class="btn" href="reports/02_ordinal_result_model.html">Result Model</a> <a class="btn" href="reports/04_knn_similarity_model.html">KNN Model</a> <a class="btn" href="reports/03_distribution_review.html">Distributions</a> <a class="btn" href="#dictionary">Dictionary</a></p>
 </div>
 <div class="site-summary">
 <p>
@@ -268,8 +273,8 @@ Method details are available through the <strong>Show code</strong> controls. Th
 <section id="data-sources-and-expense-overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="data-sources-and-expense-overview"><span class="header-section-number">1</span> Data Sources and Expense Overview</h2>
 <div class="api-choice">
-<p><strong>Primary live source: API-Football by API-Sports</strong></p>
-<p>The model uses API-Football for World Cup fixtures, teams, standings, player/squad data, injuries, lineups, match events, player statistics, odds, and predictions where coverage is available.</p>
+<p><strong>Current baseline: free and public data first</strong></p>
+<p>The model starts with open historical match results, goalscorer history, Elo-style team strength, public 2026 fixture/venue references, weather, and news metadata. API-Football is connected as a later live-data layer, but the current model baseline does not depend on live enrichment data.</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -284,18 +289,18 @@ Method details are available through the <strong>Show code</strong> controls. Th
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Live football API</td>
-<td style="text-align: left;">API-Football / API-Sports</td>
-<td style="text-align: left;">Fixtures, teams, standings, injuries, lineups, odds, and match details</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Historical match results</td>
 <td style="text-align: left;">Public international results and goalscorer datasets</td>
 <td style="text-align: left;">Team form, goals scored, results, Elo-style strength features</td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">Team strength history</td>
+<td style="text-align: left;">Derived Elo-style ratings from historical results</td>
+<td style="text-align: left;">Pre-match strength, opponent strength, and expected result</td>
+</tr>
 <tr class="odd">
 <td style="text-align: left;">Player and squad context</td>
-<td style="text-align: left;">API-Football plus public squad references</td>
+<td style="text-align: left;">Public squad references and Wikidata enrichment</td>
 <td style="text-align: left;">Roster strength, player goal history, availability indicators</td>
 </tr>
 <tr class="even">
@@ -304,6 +309,11 @@ Method details are available through the <strong>Show code</strong> controls. Th
 <td style="text-align: left;">Travel, venue, weather, and news-derived context features</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Live football API</td>
+<td style="text-align: left;">API-Football / API-Sports</td>
+<td style="text-align: left;">Later enrichment for teams, standings, injuries, lineups, odds, and match details</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Publishing</td>
 <td style="text-align: left;">GitHub Pages</td>
 <td style="text-align: left;">Shareable HTML reports and model summaries</td>
@@ -312,7 +322,7 @@ Method details are available through the <strong>Show code</strong> controls. Th
 </table>
 </div>
 </div>
-<p>The public site is hosted without an additional hosting bill. The live football data subscription is the main recurring project expense, and the project is kept within the monthly budget cap.</p>
+<p>The current model iteration can be reproduced with free data. Live API data is treated as a later enrichment layer after the baseline models are stable.</p>
 </section>
 <section id="model-iterations" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="model-iterations"><span class="header-section-number">2</span> Model Iterations</h2>
@@ -336,8 +346,30 @@ Method details are available through the <strong>Show code</strong> controls. Th
 <li>Missing roster, injury, rest, venue, and market data can bias coefficients.</li>
 </ul>
 </section>
-<section id="three-outcome-result-model" class="level3 model-card" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="three-outcome-result-model"><span class="header-section-number">2.2</span> 2. Three-Outcome Result Model</h3>
+<section id="poisson-goals-model" class="level3 model-card" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="poisson-goals-model"><span class="header-section-number">2.2</span> 2. Poisson Goals Model</h3>
+<p><strong>Question:</strong> how many goals should a team score when the target is a count?</p>
+<p>The Poisson model predicts a positive expected-goals number:</p>
+<p><span class="math display">\[
+\log(\lambda)
+= \beta_0
++ \beta_1\text{Team Elo}
++ \beta_2\text{Opponent Elo}
++ \beta_3\text{Expected Result}
++ \beta_4\text{Match Context}
+\]</span></p>
+<p>In words, <code>lambda</code> is expected goals. This is a better shape for soccer scoring than OLS because goals cannot be negative.</p>
+<p><strong>Main issues to check:</strong></p>
+<ul>
+<li>The basic Poisson assumes the mean and variance are tied together.</li>
+<li>Soccer can be overdispersed, meaning the variance may be larger than the mean.</li>
+<li>A negative binomial model may be needed if Poisson is too tight.</li>
+<li>Forward-time validation matters more than random validation for future matches.</li>
+</ul>
+<p><a class="project-button" href="reports/05_poisson_goals_model.html">Open Poisson report</a></p>
+</section>
+<section id="three-outcome-result-model" class="level3 model-card" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="three-outcome-result-model"><span class="header-section-number">2.3</span> 3. Three-Outcome Result Model</h3>
 <p><strong>Question:</strong> what is the probability of win, draw, or loss?</p>
 <p>The first three-outcome model is an ordinal logistic regression because the team result has a natural order:</p>
 <p><span class="math display">\[
@@ -368,8 +400,8 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <li>Market odds should be the benchmark once API odds are available.</li>
 </ul>
 </section>
-<section id="knn-similarity-model" class="level3 model-card" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="knn-similarity-model"><span class="header-section-number">2.3</span> 3. KNN Similarity Model</h3>
+<section id="knn-similarity-model" class="level3 model-card" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="knn-similarity-model"><span class="header-section-number">2.4</span> 4. KNN Similarity Model</h3>
 <p><strong>Question:</strong> what happened in historical matchups that looked similar?</p>
 <p>KNN stands for <strong>K-Nearest Neighbors</strong>. The model finds the closest historical team-match rows, then averages those neighbors.</p>
 <p><strong>Outputs:</strong></p>
@@ -426,6 +458,16 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <td>OLS</td>
 <td>Ordinary Least Squares. A line-fitting method that chooses coefficients by minimizing squared prediction errors.</td>
 <td>It is the first goals benchmark because it is easy to explain and diagnose.</td>
+</tr>
+<tr class="odd">
+<td>Poisson regression</td>
+<td>A regression model for count outcomes.</td>
+<td>Goals are counts, so Poisson is a natural next model after OLS.</td>
+</tr>
+<tr class="even">
+<td>Lambda</td>
+<td>The expected count in a Poisson model.</td>
+<td>In the Poisson goals model, lambda is expected team goals.</td>
 </tr>
 <tr class="odd">
 <td>RMSE</td>
@@ -493,19 +535,24 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <td>It helps estimate how the model performs on games it has not already seen.</td>
 </tr>
 <tr class="even">
+<td>Forward-time validation</td>
+<td>Training on older games and testing on newer games.</td>
+<td>This is closer to the real task: using past matches to predict future matches.</td>
+</tr>
+<tr class="odd">
 <td>Overfitting</td>
 <td>When a model learns noise in past data instead of repeatable signal.</td>
 <td>A model can look good historically and still fail on new World Cup matches.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Data grain</td>
 <td>What one row means in a dataset.</td>
 <td>The main modeling grain is one team in one match. One match creates two team-match rows.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>API</td>
 <td>Application Programming Interface. A structured way to pull data from a provider.</td>
-<td>API-Football is the primary live football data source.</td>
+<td>API-Football is the live enrichment source once the baseline model is stable.</td>
 </tr>
 </tbody>
 </table>
@@ -519,7 +566,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <p>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup.</p>
 <p>The workflow has four layers:</p>
 <ul>
-<li><strong>Data collection:</strong> match history, Elo ratings, 2026 venues, weather, player metadata, odds, and news signals.</li>
+<li><strong>Data collection:</strong> free match history, Elo-style ratings, 2026 venues, weather, player metadata, and news signals.</li>
 <li><strong>Data storage:</strong> local files and DuckDB tables for modeling.</li>
 <li><strong>Modeling:</strong> interpretable models in R, with Python handling source refreshes and heavier data jobs.</li>
 <li><strong>Publishing:</strong> Quarto renders a shareable GitHub Pages site from the local analysis.</li>
@@ -682,9 +729,10 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>The model suite has three core outputs:</p>
+<p>The model suite has four core outputs:</p>
 <ul>
 <li><strong>Goals OLS:</strong> predicts goals scored.</li>
+<li><strong>Poisson goals:</strong> predicts expected goals as a count.</li>
 <li><strong>Ordinal logistic:</strong> predicts <code>loss &lt; draw &lt; win</code>.</li>
 <li><strong>KNN similarity:</strong> predicts goals and result probabilities from nearby historical matchups.</li>
 </ul>
@@ -707,28 +755,49 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Reference accuracy:"</span>, <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>))</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(knn_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    model_rows <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>      model_rows,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">model =</span> <span class="st">"KNN similarity"</span>,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">target =</span> <span class="st">"team goals and loss/draw/win"</span>,</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">rows =</span> <span class="fu">fmt_integer</span>(knn_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">primary_metric =</span> <span class="st">"Accuracy / RMSE"</span>,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">value =</span> <span class="fu">paste0</span>(</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_percent</span>(knn_metrics<span class="sc">$</span>result_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>          <span class="st">" / "</span>,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_number</span>(knn_metrics<span class="sc">$</span>goals_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">context =</span> <span class="fu">paste</span>(<span class="st">"Neighbors:"</span>, knn_metrics<span class="sc">$</span>k_neighbors[[<span class="dv">1</span>]])</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  model_rows <span class="sc">|&gt;</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current model performance."</span>)</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model metrics are available after the model refresh."</span>))</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(poisson_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    poisson_random <span class="ot">&lt;-</span> poisson_metrics[poisson_metrics<span class="sc">$</span>validation_type <span class="sc">==</span> <span class="st">"random_80_20"</span>, ]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    poisson_forward <span class="ot">&lt;-</span> poisson_metrics[poisson_metrics<span class="sc">$</span>validation_type <span class="sc">==</span> <span class="st">"train_through_2018_test_2019_plus"</span>, ]</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">nrow</span>(poisson_random) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      model_rows <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        model_rows,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">data.frame</span>(</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">model =</span> <span class="st">"Poisson goals"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">target =</span> <span class="st">"team goals"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>          <span class="at">rows =</span> <span class="fu">fmt_integer</span>(poisson_random<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>          <span class="at">primary_metric =</span> <span class="st">"RMSE"</span>,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>          <span class="at">value =</span> <span class="fu">fmt_number</span>(poisson_random<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">context =</span> <span class="cf">if</span> (<span class="fu">nrow</span>(poisson_forward) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>            <span class="fu">paste</span>(<span class="st">"Forward-time RMSE:"</span>, <span class="fu">fmt_number</span>(poisson_forward<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>))</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>          } <span class="cf">else</span> {</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Count-model benchmark"</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(knn_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    model_rows <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>      model_rows,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        <span class="at">model =</span> <span class="st">"KNN similarity"</span>,</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="at">target =</span> <span class="st">"team goals and loss/draw/win"</span>,</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">rows =</span> <span class="fu">fmt_integer</span>(knn_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        <span class="at">primary_metric =</span> <span class="st">"Accuracy / RMSE"</span>,</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        <span class="at">value =</span> <span class="fu">paste0</span>(</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_percent</span>(knn_metrics<span class="sc">$</span>result_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>          <span class="st">" / "</span>,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_number</span>(knn_metrics<span class="sc">$</span>goals_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>        <span class="at">context =</span> <span class="fu">paste</span>(<span class="st">"Neighbors:"</span>, knn_metrics<span class="sc">$</span>k_neighbors[[<span class="dv">1</span>]])</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  model_rows <span class="sc">|&gt;</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current model performance."</span>)</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model metrics are available after the model refresh."</span>))</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="clean-table caption-top table table-sm table-striped small">
@@ -761,6 +830,14 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <td style="text-align: left;">Reference accuracy: 38.6%</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Poisson goals</td>
+<td style="text-align: left;">team goals</td>
+<td style="text-align: left;">98,810</td>
+<td style="text-align: left;">RMSE</td>
+<td style="text-align: left;">1.443</td>
+<td style="text-align: left;">Forward-time RMSE: 1.297</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">KNN similarity</td>
 <td style="text-align: left;">team goals and loss/draw/win</td>
 <td style="text-align: left;">98,810</td>
@@ -890,31 +967,47 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <section id="reports" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="reports"><span class="header-section-number">5</span> Reports</h2>
 <div class="columns">
-<div class="column" style="width:33%;">
-<section id="goals-model" class="level3 project-card" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="goals-model"><span class="header-section-number">5.1</span> Goals Model</h3>
+<div class="column" style="width:25%;">
+<section id="data-overview" class="level3 project-card" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="data-overview"><span class="header-section-number">5.1</span> Data Overview</h3>
+<p>Available datasets, sample modeling rows, metadata, and simple diagnostics.</p>
+<p><a class="project-button" href="reports/00_data_overview.html">Open data report</a></p>
+</section>
+</div><div class="column" style="width:25%;">
+<section id="goals-model" class="level3 project-card" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="goals-model"><span class="header-section-number">5.2</span> Goals Model</h3>
 <p>OLS model for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</p>
 <p><a class="project-button" href="reports/01_goals_linear_regression.html">Open goals report</a></p>
 </section>
-</div><div class="column" style="width:33%;">
-<section id="result-model" class="level3 project-card" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="result-model"><span class="header-section-number">5.2</span> Result Model</h3>
+</div><div class="column" style="width:25%;">
+<section id="poisson-model" class="level3 project-card" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="poisson-model"><span class="header-section-number">5.3</span> Poisson Model</h3>
+<p>Count model for expected team goals, with random and forward-time validation.</p>
+<p><a class="project-button" href="reports/05_poisson_goals_model.html">Open Poisson report</a></p>
+</section>
+</div><div class="column" style="width:25%;">
+<section id="result-model" class="level3 project-card" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="result-model"><span class="header-section-number">5.4</span> Result Model</h3>
 <p>Ordinal logistic model for <code>loss &lt; draw &lt; win</code>, producing win/draw/loss probability estimates.</p>
 <p><a class="project-button" href="reports/02_ordinal_result_model.html">Open result report</a></p>
 </section>
-</div><div class="column" style="width:33%;">
-<section id="knn-model" class="level3 project-card" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="knn-model"><span class="header-section-number">5.3</span> KNN Model</h3>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<section id="knn-model" class="level3 project-card" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="knn-model"><span class="header-section-number">5.5</span> KNN Model</h3>
 <p>Similarity model that compares each team-match row with nearby historical cases.</p>
 <p><a class="project-button" href="reports/04_knn_similarity_model.html">Open KNN report</a></p>
 </section>
-</div>
-</div>
-<section id="distribution-review" class="level3 project-card" data-number="5.4">
-<h3 data-number="5.4" class="anchored" data-anchor-id="distribution-review"><span class="header-section-number">5.4</span> Distribution Review</h3>
+</div><div class="column" style="width:50%;">
+<section id="distribution-review" class="level3 project-card" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="distribution-review"><span class="header-section-number">5.6</span> Distribution Review</h3>
 <p>Distribution notes for deciding whether soccer features are counts, continuous variables, ordered outcomes, probabilities, or mixture processes.</p>
 <p><a class="project-button" href="reports/03_distribution_review.html">Open distribution review</a></p>
 </section>
+</div>
+</div>
 
 
 <!-- -->
@@ -1400,377 +1493,460 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"hero-actions"</span><span class="dt">&gt;</span></span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"#data-sources-and-expense-overview"</span><span class="dt">&gt;</span>Data Sources<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Goals Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Result Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/04_knn_similarity_model.html"</span><span class="dt">&gt;</span>KNN Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/03_distribution_review.html"</span><span class="dt">&gt;</span>Distributions<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"#dictionary"</span><span class="dt">&gt;</span>Dictionary<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"site-summary"</span><span class="dt">&gt;</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This site presents the 2026 World Cup betting model, the data used to support it, and the model results in one shareable place.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Method details are available through the <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Show code<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> controls. The public page focuses on model inputs, diagnostics, and results.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hero-metrics, echo=FALSE, results="asis"}</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>goals_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_metrics.csv"</span>))</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>ordinal_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"result_ordinal_model_metrics.csv"</span>))</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>knn_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"knn_similarity_model_metrics.csv"</span>))</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">metric_cards</span>(<span class="fu">data.frame</span>(</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Rows Modeled"</span>, <span class="st">"Goals RMSE"</span>, <span class="st">"Result Accuracy"</span>, <span class="st">"Reference Accuracy"</span>),</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_integer</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">note =</span> <span class="fu">c</span>(<span class="st">"team-match rows"</span>, <span class="st">"typical goal miss"</span>, <span class="st">"exact result hit rate"</span>, <span class="st">"simple comparison"</span>)</span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  )))</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Sources and Expense Overview</span></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>::: {.api-choice}</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>**Primary live source: API-Football by API-Sports**</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/00_data_overview.html"</span><span class="dt">&gt;</span>Data Overview<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Goals Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/05_poisson_goals_model.html"</span><span class="dt">&gt;</span>Poisson Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Result Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/04_knn_similarity_model.html"</span><span class="dt">&gt;</span>KNN Model<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/03_distribution_review.html"</span><span class="dt">&gt;</span>Distributions<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"btn"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"#dictionary"</span><span class="dt">&gt;</span>Dictionary<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"site-summary"</span><span class="dt">&gt;</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This site presents the 2026 World Cup betting model, the data used to support it, and the model results in one shareable place.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Method details are available through the <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Show code<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> controls. The public page focuses on model inputs, diagnostics, and results.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hero-metrics, echo=FALSE, results="asis"}</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>goals_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_metrics.csv"</span>))</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>poisson_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_poisson_model_metrics.csv"</span>))</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>ordinal_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"result_ordinal_model_metrics.csv"</span>))</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>knn_metrics <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"knn_similarity_model_metrics.csv"</span>))</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">metric_cards</span>(<span class="fu">data.frame</span>(</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Rows Modeled"</span>, <span class="st">"Goals RMSE"</span>, <span class="st">"Result Accuracy"</span>, <span class="st">"Reference Accuracy"</span>),</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_integer</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">note =</span> <span class="fu">c</span>(<span class="st">"team-match rows"</span>, <span class="st">"typical goal miss"</span>, <span class="st">"exact result hit rate"</span>, <span class="st">"simple comparison"</span>)</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>  )))</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Sources and Expense Overview</span></span>
 <span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>The model uses API-Football for World Cup fixtures, teams, standings, player/squad data, injuries, lineups, match events, player statistics, odds, and predictions where coverage is available.</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>::: {.api-choice}</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>**Current baseline: free and public data first**</span>
 <span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{r data-sources, echo=FALSE}</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>data_sources <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer =</span> <span class="fu">c</span>(</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Live football API"</span>,</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Historical match results"</span>,</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Player and squad context"</span>,</span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Venue, weather, and news context"</span>,</span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Publishing"</span></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>  <span class="at">source =</span> <span class="fu">c</span>(</span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>    <span class="st">"API-Football / API-Sports"</span>,</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Public international results and goalscorer datasets"</span>,</span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>    <span class="st">"API-Football plus public squad references"</span>,</span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Open venue/weather/news sources"</span>,</span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GitHub Pages"</span></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>  <span class="at">use_in_model =</span> <span class="fu">c</span>(</span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Fixtures, teams, standings, injuries, lineups, odds, and match details"</span>,</span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Team form, goals scored, results, Elo-style strength features"</span>,</span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Roster strength, player goal history, availability indicators"</span>,</span>
-<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Travel, venue, weather, and news-derived context features"</span>,</span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Shareable HTML reports and model summaries"</span></span>
-<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="fu">display_table</span>(data_sources, <span class="at">caption =</span> <span class="st">"Data sources used by the modeling workflow."</span>)</span>
-<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>The public site is hosted without an additional hosting bill. The live football data subscription is the main recurring project expense, and the project is kept within the monthly budget cap.</span>
-<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Iterations</span></span>
-<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>The model section is organized around interpretable iterations. Each model card names the prediction target, explains the method, and lists the checks that determine whether the model is trustworthy.</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>The model starts with open historical match results, goalscorer history, Elo-style team strength, public 2026 fixture/venue references, weather, and news metadata. API-Football is connected as a later live-data layer, but the current model baseline does not depend on live enrichment data.</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r data-sources, echo=FALSE}</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>data_sources <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer =</span> <span class="fu">c</span>(</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Historical match results"</span>,</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Team strength history"</span>,</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Player and squad context"</span>,</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Venue, weather, and news context"</span>,</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Live football API"</span>,</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Publishing"</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>  <span class="at">source =</span> <span class="fu">c</span>(</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Public international results and goalscorer datasets"</span>,</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Derived Elo-style ratings from historical results"</span>,</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Public squad references and Wikidata enrichment"</span>,</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Open venue/weather/news sources"</span>,</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"API-Football / API-Sports"</span>,</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GitHub Pages"</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>  <span class="at">use_in_model =</span> <span class="fu">c</span>(</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Team form, goals scored, results, Elo-style strength features"</span>,</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pre-match strength, opponent strength, and expected result"</span>,</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Roster strength, player goal history, availability indicators"</span>,</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Travel, venue, weather, and news-derived context features"</span>,</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Later enrichment for teams, standings, injuries, lineups, odds, and match details"</span>,</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Shareable HTML reports and model summaries"</span></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="fu">display_table</span>(data_sources, <span class="at">caption =</span> <span class="st">"Data sources used by the modeling workflow."</span>)</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>::: {.model-blueprint}</span>
-<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>::: {.model-card}</span>
-<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Simple OLS Goals Model</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>The current model iteration can be reproduced with free data. Live API data is treated as a later enrichment layer after the baseline models are stable.</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Iterations</span></span>
 <span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>**Question:** how many goals should a team score in one match?</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>The model section is organized around interpretable iterations. Each model card names the prediction target, explains the method, and lists the checks that determine whether the model is trustworthy.</span>
 <span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>The simple goals model starts with team strength difference:</span>
-<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>\text{Goals} = \beta_0 + \beta_1\text{Strength Difference} + \epsilon</span>
-<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>::: {.model-blueprint}</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>::: {.model-card}</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Simple OLS Goals Model</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>**Question:** how many goals should a team score in one match?</span>
 <span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>In words, <span class="in">`beta_1`</span> is the average change in expected goals for a one-unit increase in strength difference.</span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>The simple goals model starts with team strength difference:</span>
 <span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>**Why start here:** OLS is easy to explain, fast to diagnose, and gives a clear benchmark before count models.</span>
-<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>**Main issues to check:**</span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>\text{Goals} = \beta_0 + \beta_1\text{Strength Difference} + \epsilon</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Goals are counts, so OLS can predict impossible values below 0.</span>
-<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Soccer scores are low and skewed, so residuals may not look normal.</span>
-<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Error variance can change by team strength or opponent strength.</span>
-<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Team-match rows are not fully independent because each match creates two rows.</span>
-<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Missing roster, injury, rest, venue, and market data can bias coefficients.</span>
-<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>::: {.model-card}</span>
-<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Three-Outcome Result Model</span></span>
-<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>**Question:** what is the probability of win, draw, or loss?</span>
-<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a>The first three-outcome model is an ordinal logistic regression because the team result has a natural order:</span>
-<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>\text{loss} &lt; \text{draw} &lt; \text{win}</span>
-<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>In words, <span class="in">`beta_1`</span> is the average change in expected goals for a one-unit increase in strength difference.</span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>**Why start here:** OLS is easy to explain, fast to diagnose, and gives a clear benchmark before count models.</span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>**Main issues to check:**</span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Goals are counts, so OLS can predict impossible values below 0.</span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Soccer scores are low and skewed, so residuals may not look normal.</span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Error variance can change by team strength or opponent strength.</span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Team-match rows are not fully independent because each match creates two rows.</span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Missing roster, injury, rest, venue, and market data can bias coefficients.</span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>::: {.model-card}</span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Poisson Goals Model</span></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>**Question:** how many goals should a team score when the target is a count?</span>
 <span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>The model uses cumulative logits:</span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>The Poisson model predicts a positive expected-goals number:</span>
 <span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a>\text{logit}<span class="sc">\{</span>P(\text{Result} \leq k)<span class="sc">\}</span></span>
-<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>= \theta_k - \eta</span>
-<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>with:</span>
-<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a>\log(\lambda)</span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>= \beta_0</span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_1\text{Team Elo}</span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_2\text{Opponent Elo}</span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_3\text{Expected Result}</span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_4\text{Match Context}</span>
 <span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>\eta = \beta_1\text{Strength Difference}</span>
-<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_2\text{Roster Strength}</span>
-<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_3\text{Rest}</span>
-<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_4\text{Venue}</span>
-<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a>The output is three probabilities:</span>
-<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a>P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})</span>
-<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>**Main issues to check:**</span>
-<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The proportional-odds assumption may be too strong.</span>
-<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Draws are not simply halfway between loss and win.</span>
-<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A multinomial logit may fit better if win, draw, and loss behave as separate categories.</span>
-<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Calibration matters more than raw accuracy for betting comparison.</span>
-<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Market odds should be the benchmark once API odds are available.</span>
-<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>::: {.model-card}</span>
-<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. KNN Similarity Model</span></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>In words, <span class="in">`lambda`</span> is expected goals. This is a better shape for soccer scoring than OLS because goals cannot be negative.</span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a>**Main issues to check:**</span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The basic Poisson assumes the mean and variance are tied together.</span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Soccer can be overdispersed, meaning the variance may be larger than the mean.</span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A negative binomial model may be needed if Poisson is too tight.</span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Forward-time validation matters more than random validation for future matches.</span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/05_poisson_goals_model.html"</span><span class="dt">&gt;</span>Open Poisson report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>::: {.model-card}</span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Three-Outcome Result Model</span></span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a>**Question:** what is the probability of win, draw, or loss?</span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>The first three-outcome model is an ordinal logistic regression because the team result has a natural order:</span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>\text{loss} &lt; \text{draw} &lt; \text{win}</span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>**Question:** what happened in historical matchups that looked similar?</span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>The model uses cumulative logits:</span>
 <span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a>KNN stands for **K-Nearest Neighbors**. The model finds the closest historical team-match rows, then averages those neighbors.</span>
-<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a>**Outputs:**</span>
-<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expected goals from the average goals scored by similar teams.</span>
-<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Loss, draw, and win probabilities from the neighbor outcomes.</span>
-<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A flexible comparison against the regression models.</span>
-<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>**Main issues to check:**</span>
-<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Similarity depends on which features are included.</span>
-<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Features must be standardized so one large-scale number does not dominate.</span>
-<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The choice of <span class="in">`K`</span> controls the smoothness of predictions.</span>
-<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>KNN can copy noise when the neighbor set is too small.</span>
-<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>KNN is harder to explain with coefficients because it is case-based, not equation-based.</span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>\text{logit}<span class="sc">\{</span>P(\text{Result} \leq k)<span class="sc">\}</span></span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a>= \theta_k - \eta</span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a>with:</span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>\eta = \beta_1\text{Strength Difference}</span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_2\text{Roster Strength}</span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_3\text{Rest}</span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>\beta_4\text{Venue}</span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a>The output is three probabilities:</span>
 <span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/04_knn_similarity_model.html"</span><span class="dt">&gt;</span>Open KNN report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})</span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dictionary</span></span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a>**Main issues to check:**</span>
 <span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a>Use this as the quick reference for acronyms and modeling terms that appear across the site.</span>
-<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Term <span class="pp">|</span> Plain-English Meaning <span class="pp">|</span> Why It Matters Here <span class="pp">|</span></span>
-<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Target variable <span class="pp">|</span> The thing the model is trying to predict. <span class="pp">|</span> For the goals model, the target is goals scored. For the result model, the target is win, draw, or loss. <span class="pp">|</span></span>
-<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Predictor variable <span class="pp">|</span> An input used to make the prediction. <span class="pp">|</span> Team strength, opponent strength, rest, venue, injuries, and odds can all be predictors. <span class="pp">|</span></span>
-<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Regression <span class="pp">|</span> A model that estimates how a target changes with predictors. <span class="pp">|</span> It gives a structured way to turn soccer information into expected goals or probabilities. <span class="pp">|</span></span>
-<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> OLS <span class="pp">|</span> Ordinary Least Squares. A line-fitting method that chooses coefficients by minimizing squared prediction errors. <span class="pp">|</span> It is the first goals benchmark because it is easy to explain and diagnose. <span class="pp">|</span></span>
-<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> RMSE <span class="pp">|</span> Root Mean Squared Error. A typical prediction miss, measured in the same units as the target. <span class="pp">|</span> If goals RMSE is 1.46, the model is often off by roughly 1 to 2 goals, with big misses punished more. Lower is better. <span class="pp">|</span></span>
-<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Coefficient <span class="pp">|</span> The estimated effect of one predictor, holding the other predictors fixed. <span class="pp">|</span> A positive strength coefficient means stronger teams are expected to score more, all else equal. <span class="pp">|</span></span>
-<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Residual <span class="pp">|</span> Observed value minus predicted value. <span class="pp">|</span> Residual plots show whether the model is missing patterns. <span class="pp">|</span></span>
-<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Logit <span class="pp">|</span> A transformation that converts a probability into log odds. <span class="pp">|</span> Logistic models use logits so probabilities stay between 0 and 1. <span class="pp">|</span></span>
-<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Odds <span class="pp">|</span> Probability of an event divided by probability of it not happening. <span class="pp">|</span> Model probabilities can be compared with betting-market odds after converting both to the same scale. <span class="pp">|</span></span>
-<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ordinal logistic regression <span class="pp">|</span> A logistic model for ordered outcomes. <span class="pp">|</span> It fits <span class="in">`loss &lt; draw &lt; win`</span> while producing probabilities for all three outcomes. <span class="pp">|</span></span>
-<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Multinomial logistic regression <span class="pp">|</span> A logistic model for three or more categories without assuming an order. <span class="pp">|</span> It is the backup if draws behave like their own special category rather than the middle of loss and win. <span class="pp">|</span></span>
-<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> KNN <span class="pp">|</span> K-Nearest Neighbors. A model that predicts from similar historical examples. <span class="pp">|</span> It lets the project compare regression models against a flexible similarity-based method. <span class="pp">|</span></span>
-<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Accuracy <span class="pp">|</span> Share of predictions where the top predicted class matches the actual result. <span class="pp">|</span> Useful for a quick check, but not enough for betting because probability quality matters too. <span class="pp">|</span></span>
-<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Calibration <span class="pp">|</span> Whether predicted probabilities match real frequencies. <span class="pp">|</span> If the model says 60% win chance, well-calibrated teams should win about 60% of those cases. <span class="pp">|</span></span>
-<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Log loss <span class="pp">|</span> A probability score that penalizes confident wrong predictions. <span class="pp">|</span> Better than accuracy when the model outputs win/draw/loss probabilities. Lower is better. <span class="pp">|</span></span>
-<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Brier score <span class="pp">|</span> Average squared error between predicted probabilities and actual outcomes. <span class="pp">|</span> Another way to judge probability quality. Lower is better. <span class="pp">|</span></span>
-<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Test set <span class="pp">|</span> Data held out from fitting and used only to evaluate performance. <span class="pp">|</span> It helps estimate how the model performs on games it has not already seen. <span class="pp">|</span></span>
-<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Overfitting <span class="pp">|</span> When a model learns noise in past data instead of repeatable signal. <span class="pp">|</span> A model can look good historically and still fail on new World Cup matches. <span class="pp">|</span></span>
-<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data grain <span class="pp">|</span> What one row means in a dataset. <span class="pp">|</span> The main modeling grain is one team in one match. One match creates two team-match rows. <span class="pp">|</span></span>
-<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> API <span class="pp">|</span> Application Programming Interface. A structured way to pull data from a provider. <span class="pp">|</span> API-Football is the primary live football data source. <span class="pp">|</span></span>
-<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Project Map</span></span>
-<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
-<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## About</span></span>
-<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup.</span>
-<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a>The workflow has four layers:</span>
-<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data collection:** match history, Elo ratings, 2026 venues, weather, player metadata, odds, and news signals.</span>
-<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data storage:** local files and DuckDB tables for modeling.</span>
-<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Modeling:** interpretable models in R, with Python handling source refreshes and heavier data jobs.</span>
-<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.</span>
-<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Exploration</span></span>
-<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a>The starting modeling unit is one row per team-match. A single game creates two observations, one for each team.</span>
-<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-sample}</span></span>
-<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a>goals_sample <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_sample_1000.csv"</span>))</span>
-<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a>  goals_sample <span class="sc">|&gt;</span></span>
-<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a>      date,</span>
-<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a>      team,</span>
-<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a>      opponent,</span>
-<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a>      tournament,</span>
-<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a>      y_goals_for,</span>
-<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a>      pre_elo,</span>
-<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a>      opponent_pre_elo,</span>
-<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a>      pre_match_expected_result</span>
-<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_match_expected_result =</span> <span class="fu">fmt_percent</span>(pre_match_expected_result, <span class="dv">1</span>),</span>
-<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_elo =</span> <span class="fu">round</span>(pre_elo, <span class="dv">0</span>),</span>
-<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a>      <span class="at">opponent_pre_elo =</span> <span class="fu">round</span>(opponent_pre_elo, <span class="dv">0</span>)</span>
-<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Sample of the team-match modeling grain."</span>, <span class="at">max_rows =</span> <span class="dv">8</span>)</span>
-<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Sample rows are available after the goals model refresh."</span>))</span>
-<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The proportional-odds assumption may be too strong.</span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Draws are not simply halfway between loss and win.</span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A multinomial logit may fit better if win, draw, and loss behave as separate categories.</span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Calibration matters more than raw accuracy for betting comparison.</span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Market odds should be the benchmark once API odds are available.</span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a>::: {.model-card}</span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4. KNN Similarity Model</span></span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a>**Question:** what happened in historical matchups that looked similar?</span>
+<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a>KNN stands for **K-Nearest Neighbors**. The model finds the closest historical team-match rows, then averages those neighbors.</span>
+<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a>**Outputs:**</span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expected goals from the average goals scored by similar teams.</span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Loss, draw, and win probabilities from the neighbor outcomes.</span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A flexible comparison against the regression models.</span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a>**Main issues to check:**</span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Similarity depends on which features are included.</span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Features must be standardized so one large-scale number does not dominate.</span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The choice of <span class="in">`K`</span> controls the smoothness of predictions.</span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>KNN can copy noise when the neighbor set is too small.</span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>KNN is harder to explain with coefficients because it is case-based, not equation-based.</span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/04_knn_similarity_model.html"</span><span class="dt">&gt;</span>Open KNN report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dictionary</span></span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a>Use this as the quick reference for acronyms and modeling terms that appear across the site.</span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Term <span class="pp">|</span> Plain-English Meaning <span class="pp">|</span> Why It Matters Here <span class="pp">|</span></span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Target variable <span class="pp">|</span> The thing the model is trying to predict. <span class="pp">|</span> For the goals model, the target is goals scored. For the result model, the target is win, draw, or loss. <span class="pp">|</span></span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Predictor variable <span class="pp">|</span> An input used to make the prediction. <span class="pp">|</span> Team strength, opponent strength, rest, venue, injuries, and odds can all be predictors. <span class="pp">|</span></span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Regression <span class="pp">|</span> A model that estimates how a target changes with predictors. <span class="pp">|</span> It gives a structured way to turn soccer information into expected goals or probabilities. <span class="pp">|</span></span>
+<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> OLS <span class="pp">|</span> Ordinary Least Squares. A line-fitting method that chooses coefficients by minimizing squared prediction errors. <span class="pp">|</span> It is the first goals benchmark because it is easy to explain and diagnose. <span class="pp">|</span></span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Poisson regression <span class="pp">|</span> A regression model for count outcomes. <span class="pp">|</span> Goals are counts, so Poisson is a natural next model after OLS. <span class="pp">|</span></span>
+<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Lambda <span class="pp">|</span> The expected count in a Poisson model. <span class="pp">|</span> In the Poisson goals model, lambda is expected team goals. <span class="pp">|</span></span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> RMSE <span class="pp">|</span> Root Mean Squared Error. A typical prediction miss, measured in the same units as the target. <span class="pp">|</span> If goals RMSE is 1.46, the model is often off by roughly 1 to 2 goals, with big misses punished more. Lower is better. <span class="pp">|</span></span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Coefficient <span class="pp">|</span> The estimated effect of one predictor, holding the other predictors fixed. <span class="pp">|</span> A positive strength coefficient means stronger teams are expected to score more, all else equal. <span class="pp">|</span></span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Residual <span class="pp">|</span> Observed value minus predicted value. <span class="pp">|</span> Residual plots show whether the model is missing patterns. <span class="pp">|</span></span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Logit <span class="pp">|</span> A transformation that converts a probability into log odds. <span class="pp">|</span> Logistic models use logits so probabilities stay between 0 and 1. <span class="pp">|</span></span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Odds <span class="pp">|</span> Probability of an event divided by probability of it not happening. <span class="pp">|</span> Model probabilities can be compared with betting-market odds after converting both to the same scale. <span class="pp">|</span></span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ordinal logistic regression <span class="pp">|</span> A logistic model for ordered outcomes. <span class="pp">|</span> It fits <span class="in">`loss &lt; draw &lt; win`</span> while producing probabilities for all three outcomes. <span class="pp">|</span></span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Multinomial logistic regression <span class="pp">|</span> A logistic model for three or more categories without assuming an order. <span class="pp">|</span> It is the backup if draws behave like their own special category rather than the middle of loss and win. <span class="pp">|</span></span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> KNN <span class="pp">|</span> K-Nearest Neighbors. A model that predicts from similar historical examples. <span class="pp">|</span> It lets the project compare regression models against a flexible similarity-based method. <span class="pp">|</span></span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Accuracy <span class="pp">|</span> Share of predictions where the top predicted class matches the actual result. <span class="pp">|</span> Useful for a quick check, but not enough for betting because probability quality matters too. <span class="pp">|</span></span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Calibration <span class="pp">|</span> Whether predicted probabilities match real frequencies. <span class="pp">|</span> If the model says 60% win chance, well-calibrated teams should win about 60% of those cases. <span class="pp">|</span></span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Log loss <span class="pp">|</span> A probability score that penalizes confident wrong predictions. <span class="pp">|</span> Better than accuracy when the model outputs win/draw/loss probabilities. Lower is better. <span class="pp">|</span></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Brier score <span class="pp">|</span> Average squared error between predicted probabilities and actual outcomes. <span class="pp">|</span> Another way to judge probability quality. Lower is better. <span class="pp">|</span></span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Test set <span class="pp">|</span> Data held out from fitting and used only to evaluate performance. <span class="pp">|</span> It helps estimate how the model performs on games it has not already seen. <span class="pp">|</span></span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Forward-time validation <span class="pp">|</span> Training on older games and testing on newer games. <span class="pp">|</span> This is closer to the real task: using past matches to predict future matches. <span class="pp">|</span></span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Overfitting <span class="pp">|</span> When a model learns noise in past data instead of repeatable signal. <span class="pp">|</span> A model can look good historically and still fail on new World Cup matches. <span class="pp">|</span></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data grain <span class="pp">|</span> What one row means in a dataset. <span class="pp">|</span> The main modeling grain is one team in one match. One match creates two team-match rows. <span class="pp">|</span></span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> API <span class="pp">|</span> Application Programming Interface. A structured way to pull data from a provider. <span class="pp">|</span> API-Football is the live enrichment source once the baseline model is stable. <span class="pp">|</span></span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a><span class="fu">## Project Map</span></span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a><span class="fu">## About</span></span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a>This project builds a reproducible data and modeling workflow for the 2026 FIFA World Cup.</span>
 <span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-plot, fig.cap="Distribution of goals in the public sample used for the goals model."}</span></span>
-<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(goals_sample, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> y_goals_for)) <span class="sc">+</span></span>
-<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"#157878"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
-<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Goals scored by team-match row"</span>,</span>
-<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Goals scored"</span>,</span>
-<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Team-match rows"</span></span>
-<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
-<span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot.new</span>()</span>
-<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">"Goals sample is available after the model refresh."</span>)</span>
-<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a><span class="fu">## Modeling</span></span>
-<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a>The model suite has three core outputs:</span>
-<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-279"><a href="#cb5-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Goals OLS:** predicts goals scored.</span>
-<span id="cb5-280"><a href="#cb5-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Ordinal logistic:** predicts <span class="in">`loss &lt; draw &lt; win`</span>.</span>
-<span id="cb5-281"><a href="#cb5-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**KNN similarity:** predicts goals and result probabilities from nearby historical matchups.</span>
-<span id="cb5-282"><a href="#cb5-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-283"><a href="#cb5-283" aria-hidden="true" tabindex="-1"></a>The reports show the model target, data grain, math, coefficients, predictions, and diagnostics.</span>
-<span id="cb5-284"><a href="#cb5-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-285"><a href="#cb5-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary}</span></span>
-<span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb5-287"><a href="#cb5-287" aria-hidden="true" tabindex="-1"></a>  model_rows <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb5-288"><a href="#cb5-288" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Goals OLS"</span>, <span class="st">"Ordinal result logistic"</span>),</span>
-<span id="cb5-289"><a href="#cb5-289" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">c</span>(<span class="st">"team goals"</span>, <span class="st">"loss &lt; draw &lt; win"</span>),</span>
-<span id="cb5-290"><a href="#cb5-290" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">fmt_integer</span>(<span class="fu">c</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]], ordinal_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]])),</span>
-<span id="cb5-291"><a href="#cb5-291" aria-hidden="true" tabindex="-1"></a>    <span class="at">primary_metric =</span> <span class="fu">c</span>(<span class="st">"Test RMSE"</span>, <span class="st">"Test accuracy"</span>),</span>
-<span id="cb5-292"><a href="#cb5-292" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
-<span id="cb5-293"><a href="#cb5-293" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
-<span id="cb5-294"><a href="#cb5-294" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
-<span id="cb5-295"><a href="#cb5-295" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb5-296"><a href="#cb5-296" aria-hidden="true" tabindex="-1"></a>    <span class="at">context =</span> <span class="fu">c</span>(</span>
-<span id="cb5-297"><a href="#cb5-297" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Mean test goals:"</span>, <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>mean_y_test[[<span class="dv">1</span>]], <span class="dv">3</span>)),</span>
-<span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Reference accuracy:"</span>, <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>))</span>
-<span id="cb5-299"><a href="#cb5-299" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-300"><a href="#cb5-300" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-301"><a href="#cb5-301" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(knn_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb5-302"><a href="#cb5-302" aria-hidden="true" tabindex="-1"></a>    model_rows <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb5-303"><a href="#cb5-303" aria-hidden="true" tabindex="-1"></a>      model_rows,</span>
-<span id="cb5-304"><a href="#cb5-304" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(</span>
-<span id="cb5-305"><a href="#cb5-305" aria-hidden="true" tabindex="-1"></a>        <span class="at">model =</span> <span class="st">"KNN similarity"</span>,</span>
-<span id="cb5-306"><a href="#cb5-306" aria-hidden="true" tabindex="-1"></a>        <span class="at">target =</span> <span class="st">"team goals and loss/draw/win"</span>,</span>
-<span id="cb5-307"><a href="#cb5-307" aria-hidden="true" tabindex="-1"></a>        <span class="at">rows =</span> <span class="fu">fmt_integer</span>(knn_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
-<span id="cb5-308"><a href="#cb5-308" aria-hidden="true" tabindex="-1"></a>        <span class="at">primary_metric =</span> <span class="st">"Accuracy / RMSE"</span>,</span>
-<span id="cb5-309"><a href="#cb5-309" aria-hidden="true" tabindex="-1"></a>        <span class="at">value =</span> <span class="fu">paste0</span>(</span>
-<span id="cb5-310"><a href="#cb5-310" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_percent</span>(knn_metrics<span class="sc">$</span>result_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
-<span id="cb5-311"><a href="#cb5-311" aria-hidden="true" tabindex="-1"></a>          <span class="st">" / "</span>,</span>
-<span id="cb5-312"><a href="#cb5-312" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_number</span>(knn_metrics<span class="sc">$</span>goals_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>)</span>
-<span id="cb5-313"><a href="#cb5-313" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb5-314"><a href="#cb5-314" aria-hidden="true" tabindex="-1"></a>        <span class="at">context =</span> <span class="fu">paste</span>(<span class="st">"Neighbors:"</span>, knn_metrics<span class="sc">$</span>k_neighbors[[<span class="dv">1</span>]])</span>
-<span id="cb5-315"><a href="#cb5-315" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb5-316"><a href="#cb5-316" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-317"><a href="#cb5-317" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb5-318"><a href="#cb5-318" aria-hidden="true" tabindex="-1"></a>  model_rows <span class="sc">|&gt;</span></span>
-<span id="cb5-319"><a href="#cb5-319" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current model performance."</span>)</span>
-<span id="cb5-320"><a href="#cb5-320" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb5-321"><a href="#cb5-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model metrics are available after the model refresh."</span>))</span>
-<span id="cb5-322"><a href="#cb5-322" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-323"><a href="#cb5-323" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-324"><a href="#cb5-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-325"><a href="#cb5-325" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
-<span id="cb5-326"><a href="#cb5-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-327"><a href="#cb5-327" aria-hidden="true" tabindex="-1"></a>The analysis uses a local modeling database and publishes the resulting metadata, diagnostics, and model outputs here.</span>
-<span id="cb5-328"><a href="#cb5-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-329"><a href="#cb5-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-inventory}</span></span>
-<span id="cb5-330"><a href="#cb5-330" aria-hidden="true" tabindex="-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"metadata"</span>, <span class="st">"table_inventory.csv"</span>))</span>
-<span id="cb5-331"><a href="#cb5-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-332"><a href="#cb5-332" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(inventory) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb5-333"><a href="#cb5-333" aria-hidden="true" tabindex="-1"></a>  inventory <span class="sc">|&gt;</span></span>
-<span id="cb5-334"><a href="#cb5-334" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(table_name) <span class="sc">|&gt;</span></span>
-<span id="cb5-335"><a href="#cb5-335" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">row_count =</span> <span class="fu">fmt_integer</span>(row_count)) <span class="sc">|&gt;</span></span>
-<span id="cb5-336"><a href="#cb5-336" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Modeling tables available for analysis."</span>, <span class="at">max_rows =</span> <span class="dv">16</span>)</span>
-<span id="cb5-337"><a href="#cb5-337" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb5-338"><a href="#cb5-338" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Table inventory is available after the metadata refresh."</span>))</span>
-<span id="cb5-339"><a href="#cb5-339" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-340"><a href="#cb5-340" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-341"><a href="#cb5-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-342"><a href="#cb5-342" aria-hidden="true" tabindex="-1"></a><span class="fu">## Display Standards</span></span>
-<span id="cb5-343"><a href="#cb5-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-344"><a href="#cb5-344" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principles"</span><span class="dt">&gt;</span></span>
-<span id="cb5-345"><a href="#cb5-345" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>One grain per table<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Rows should mean one thing: team-match, match, player, venue, or API pull.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb5-346"><a href="#cb5-346" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Readable labels<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Keep machine-safe names in source files; convert them to readable labels only in reports.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb5-347"><a href="#cb5-347" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Round for display only<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Do not round model inputs or stored outputs. Round the rendered table so readers can scan it.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb5-348"><a href="#cb5-348" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Publication boundary<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Present summaries and rendered results; keep operational files out of the public site.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb5-349"><a href="#cb5-349" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb5-350"><a href="#cb5-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-351"><a href="#cb5-351" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-352"><a href="#cb5-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-353"><a href="#cb5-353" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reports</span></span>
-<span id="cb5-354"><a href="#cb5-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-355"><a href="#cb5-355" aria-hidden="true" tabindex="-1"></a>::: {.columns}</span>
-<span id="cb5-356"><a href="#cb5-356" aria-hidden="true" tabindex="-1"></a>::: {.column width="33%"}</span>
-<span id="cb5-357"><a href="#cb5-357" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
-<span id="cb5-358"><a href="#cb5-358" aria-hidden="true" tabindex="-1"></a><span class="fu">### Goals Model</span></span>
-<span id="cb5-359"><a href="#cb5-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-360"><a href="#cb5-360" aria-hidden="true" tabindex="-1"></a>OLS model for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</span>
-<span id="cb5-361"><a href="#cb5-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-362"><a href="#cb5-362" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Open goals report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-363"><a href="#cb5-363" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-364"><a href="#cb5-364" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-365"><a href="#cb5-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-366"><a href="#cb5-366" aria-hidden="true" tabindex="-1"></a>::: {.column width="33%"}</span>
-<span id="cb5-367"><a href="#cb5-367" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
-<span id="cb5-368"><a href="#cb5-368" aria-hidden="true" tabindex="-1"></a><span class="fu">### Result Model</span></span>
-<span id="cb5-369"><a href="#cb5-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-370"><a href="#cb5-370" aria-hidden="true" tabindex="-1"></a>Ordinal logistic model for <span class="in">`loss &lt; draw &lt; win`</span>, producing win/draw/loss probability estimates.</span>
-<span id="cb5-371"><a href="#cb5-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-372"><a href="#cb5-372" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Open result report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-373"><a href="#cb5-373" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-374"><a href="#cb5-374" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-375"><a href="#cb5-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-376"><a href="#cb5-376" aria-hidden="true" tabindex="-1"></a>::: {.column width="33%"}</span>
-<span id="cb5-377"><a href="#cb5-377" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
-<span id="cb5-378"><a href="#cb5-378" aria-hidden="true" tabindex="-1"></a><span class="fu">### KNN Model</span></span>
-<span id="cb5-379"><a href="#cb5-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-380"><a href="#cb5-380" aria-hidden="true" tabindex="-1"></a>Similarity model that compares each team-match row with nearby historical cases.</span>
-<span id="cb5-381"><a href="#cb5-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-382"><a href="#cb5-382" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/04_knn_similarity_model.html"</span><span class="dt">&gt;</span>Open KNN report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-383"><a href="#cb5-383" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-384"><a href="#cb5-384" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-385"><a href="#cb5-385" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-386"><a href="#cb5-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-387"><a href="#cb5-387" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
-<span id="cb5-388"><a href="#cb5-388" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribution Review</span></span>
-<span id="cb5-389"><a href="#cb5-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-390"><a href="#cb5-390" aria-hidden="true" tabindex="-1"></a>Distribution notes for deciding whether soccer features are counts, continuous variables, ordered outcomes, probabilities, or mixture processes.</span>
-<span id="cb5-391"><a href="#cb5-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-392"><a href="#cb5-392" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/03_distribution_review.html"</span><span class="dt">&gt;</span>Open distribution review<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb5-393"><a href="#cb5-393" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a>The workflow has four layers:</span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data collection:** free match history, Elo-style ratings, 2026 venues, weather, player metadata, and news signals.</span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data storage:** local files and DuckDB tables for modeling.</span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Modeling:** interpretable models in R, with Python handling source refreshes and heavier data jobs.</span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Publishing:** Quarto renders a shareable GitHub Pages site from the local analysis.</span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Exploration</span></span>
+<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a>The starting modeling unit is one row per team-match. A single game creates two observations, one for each team.</span>
+<span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-sample}</span></span>
+<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a>goals_sample <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"goals_linear_model_sample_1000.csv"</span>))</span>
+<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a>  goals_sample <span class="sc">|&gt;</span></span>
+<span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a>      date,</span>
+<span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a>      team,</span>
+<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a>      opponent,</span>
+<span id="cb5-279"><a href="#cb5-279" aria-hidden="true" tabindex="-1"></a>      tournament,</span>
+<span id="cb5-280"><a href="#cb5-280" aria-hidden="true" tabindex="-1"></a>      y_goals_for,</span>
+<span id="cb5-281"><a href="#cb5-281" aria-hidden="true" tabindex="-1"></a>      pre_elo,</span>
+<span id="cb5-282"><a href="#cb5-282" aria-hidden="true" tabindex="-1"></a>      opponent_pre_elo,</span>
+<span id="cb5-283"><a href="#cb5-283" aria-hidden="true" tabindex="-1"></a>      pre_match_expected_result</span>
+<span id="cb5-284"><a href="#cb5-284" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb5-285"><a href="#cb5-285" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_match_expected_result =</span> <span class="fu">fmt_percent</span>(pre_match_expected_result, <span class="dv">1</span>),</span>
+<span id="cb5-287"><a href="#cb5-287" aria-hidden="true" tabindex="-1"></a>      <span class="at">pre_elo =</span> <span class="fu">round</span>(pre_elo, <span class="dv">0</span>),</span>
+<span id="cb5-288"><a href="#cb5-288" aria-hidden="true" tabindex="-1"></a>      <span class="at">opponent_pre_elo =</span> <span class="fu">round</span>(opponent_pre_elo, <span class="dv">0</span>)</span>
+<span id="cb5-289"><a href="#cb5-289" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb5-290"><a href="#cb5-290" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Sample of the team-match modeling grain."</span>, <span class="at">max_rows =</span> <span class="dv">8</span>)</span>
+<span id="cb5-291"><a href="#cb5-291" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-292"><a href="#cb5-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Sample rows are available after the goals model refresh."</span>))</span>
+<span id="cb5-293"><a href="#cb5-293" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-294"><a href="#cb5-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-295"><a href="#cb5-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-296"><a href="#cb5-296" aria-hidden="true" tabindex="-1"></a><span class="in">```{r goals-plot, fig.cap="Distribution of goals in the public sample used for the goals model."}</span></span>
+<span id="cb5-297"><a href="#cb5-297" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_sample) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(goals_sample, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> y_goals_for)) <span class="sc">+</span></span>
+<span id="cb5-299"><a href="#cb5-299" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"#157878"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb5-300"><a href="#cb5-300" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb5-301"><a href="#cb5-301" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Goals scored by team-match row"</span>,</span>
+<span id="cb5-302"><a href="#cb5-302" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Goals scored"</span>,</span>
+<span id="cb5-303"><a href="#cb5-303" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Team-match rows"</span></span>
+<span id="cb5-304"><a href="#cb5-304" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb5-305"><a href="#cb5-305" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb5-306"><a href="#cb5-306" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-307"><a href="#cb5-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot.new</span>()</span>
+<span id="cb5-308"><a href="#cb5-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">"Goals sample is available after the model refresh."</span>)</span>
+<span id="cb5-309"><a href="#cb5-309" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-310"><a href="#cb5-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-311"><a href="#cb5-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-312"><a href="#cb5-312" aria-hidden="true" tabindex="-1"></a><span class="fu">## Modeling</span></span>
+<span id="cb5-313"><a href="#cb5-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-314"><a href="#cb5-314" aria-hidden="true" tabindex="-1"></a>The model suite has four core outputs:</span>
+<span id="cb5-315"><a href="#cb5-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-316"><a href="#cb5-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Goals OLS:** predicts goals scored.</span>
+<span id="cb5-317"><a href="#cb5-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Poisson goals:** predicts expected goals as a count.</span>
+<span id="cb5-318"><a href="#cb5-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Ordinal logistic:** predicts <span class="in">`loss &lt; draw &lt; win`</span>.</span>
+<span id="cb5-319"><a href="#cb5-319" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**KNN similarity:** predicts goals and result probabilities from nearby historical matchups.</span>
+<span id="cb5-320"><a href="#cb5-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-321"><a href="#cb5-321" aria-hidden="true" tabindex="-1"></a>The reports show the model target, data grain, math, coefficients, predictions, and diagnostics.</span>
+<span id="cb5-322"><a href="#cb5-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-323"><a href="#cb5-323" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary}</span></span>
+<span id="cb5-324"><a href="#cb5-324" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(goals_metrics) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(ordinal_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-325"><a href="#cb5-325" aria-hidden="true" tabindex="-1"></a>  model_rows <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-326"><a href="#cb5-326" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Goals OLS"</span>, <span class="st">"Ordinal result logistic"</span>),</span>
+<span id="cb5-327"><a href="#cb5-327" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">c</span>(<span class="st">"team goals"</span>, <span class="st">"loss &lt; draw &lt; win"</span>),</span>
+<span id="cb5-328"><a href="#cb5-328" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">fmt_integer</span>(<span class="fu">c</span>(goals_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]], ordinal_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]])),</span>
+<span id="cb5-329"><a href="#cb5-329" aria-hidden="true" tabindex="-1"></a>    <span class="at">primary_metric =</span> <span class="fu">c</span>(<span class="st">"Test RMSE"</span>, <span class="st">"Test accuracy"</span>),</span>
+<span id="cb5-330"><a href="#cb5-330" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb5-331"><a href="#cb5-331" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
+<span id="cb5-332"><a href="#cb5-332" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>test_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
+<span id="cb5-333"><a href="#cb5-333" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb5-334"><a href="#cb5-334" aria-hidden="true" tabindex="-1"></a>    <span class="at">context =</span> <span class="fu">c</span>(</span>
+<span id="cb5-335"><a href="#cb5-335" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Mean test goals:"</span>, <span class="fu">fmt_number</span>(goals_metrics<span class="sc">$</span>mean_y_test[[<span class="dv">1</span>]], <span class="dv">3</span>)),</span>
+<span id="cb5-336"><a href="#cb5-336" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"Reference accuracy:"</span>, <span class="fu">fmt_percent</span>(ordinal_metrics<span class="sc">$</span>baseline_majority_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>))</span>
+<span id="cb5-337"><a href="#cb5-337" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-338"><a href="#cb5-338" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-339"><a href="#cb5-339" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(poisson_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-340"><a href="#cb5-340" aria-hidden="true" tabindex="-1"></a>    poisson_random <span class="ot">&lt;-</span> poisson_metrics[poisson_metrics<span class="sc">$</span>validation_type <span class="sc">==</span> <span class="st">"random_80_20"</span>, ]</span>
+<span id="cb5-341"><a href="#cb5-341" aria-hidden="true" tabindex="-1"></a>    poisson_forward <span class="ot">&lt;-</span> poisson_metrics[poisson_metrics<span class="sc">$</span>validation_type <span class="sc">==</span> <span class="st">"train_through_2018_test_2019_plus"</span>, ]</span>
+<span id="cb5-342"><a href="#cb5-342" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">nrow</span>(poisson_random) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-343"><a href="#cb5-343" aria-hidden="true" tabindex="-1"></a>      model_rows <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb5-344"><a href="#cb5-344" aria-hidden="true" tabindex="-1"></a>        model_rows,</span>
+<span id="cb5-345"><a href="#cb5-345" aria-hidden="true" tabindex="-1"></a>        <span class="fu">data.frame</span>(</span>
+<span id="cb5-346"><a href="#cb5-346" aria-hidden="true" tabindex="-1"></a>          <span class="at">model =</span> <span class="st">"Poisson goals"</span>,</span>
+<span id="cb5-347"><a href="#cb5-347" aria-hidden="true" tabindex="-1"></a>          <span class="at">target =</span> <span class="st">"team goals"</span>,</span>
+<span id="cb5-348"><a href="#cb5-348" aria-hidden="true" tabindex="-1"></a>          <span class="at">rows =</span> <span class="fu">fmt_integer</span>(poisson_random<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
+<span id="cb5-349"><a href="#cb5-349" aria-hidden="true" tabindex="-1"></a>          <span class="at">primary_metric =</span> <span class="st">"RMSE"</span>,</span>
+<span id="cb5-350"><a href="#cb5-350" aria-hidden="true" tabindex="-1"></a>          <span class="at">value =</span> <span class="fu">fmt_number</span>(poisson_random<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>),</span>
+<span id="cb5-351"><a href="#cb5-351" aria-hidden="true" tabindex="-1"></a>          <span class="at">context =</span> <span class="cf">if</span> (<span class="fu">nrow</span>(poisson_forward) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-352"><a href="#cb5-352" aria-hidden="true" tabindex="-1"></a>            <span class="fu">paste</span>(<span class="st">"Forward-time RMSE:"</span>, <span class="fu">fmt_number</span>(poisson_forward<span class="sc">$</span>test_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>))</span>
+<span id="cb5-353"><a href="#cb5-353" aria-hidden="true" tabindex="-1"></a>          } <span class="cf">else</span> {</span>
+<span id="cb5-354"><a href="#cb5-354" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Count-model benchmark"</span></span>
+<span id="cb5-355"><a href="#cb5-355" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb5-356"><a href="#cb5-356" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-357"><a href="#cb5-357" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb5-358"><a href="#cb5-358" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-359"><a href="#cb5-359" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-360"><a href="#cb5-360" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(knn_metrics) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-361"><a href="#cb5-361" aria-hidden="true" tabindex="-1"></a>    model_rows <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb5-362"><a href="#cb5-362" aria-hidden="true" tabindex="-1"></a>      model_rows,</span>
+<span id="cb5-363"><a href="#cb5-363" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(</span>
+<span id="cb5-364"><a href="#cb5-364" aria-hidden="true" tabindex="-1"></a>        <span class="at">model =</span> <span class="st">"KNN similarity"</span>,</span>
+<span id="cb5-365"><a href="#cb5-365" aria-hidden="true" tabindex="-1"></a>        <span class="at">target =</span> <span class="st">"team goals and loss/draw/win"</span>,</span>
+<span id="cb5-366"><a href="#cb5-366" aria-hidden="true" tabindex="-1"></a>        <span class="at">rows =</span> <span class="fu">fmt_integer</span>(knn_metrics<span class="sc">$</span>rows_total[[<span class="dv">1</span>]]),</span>
+<span id="cb5-367"><a href="#cb5-367" aria-hidden="true" tabindex="-1"></a>        <span class="at">primary_metric =</span> <span class="st">"Accuracy / RMSE"</span>,</span>
+<span id="cb5-368"><a href="#cb5-368" aria-hidden="true" tabindex="-1"></a>        <span class="at">value =</span> <span class="fu">paste0</span>(</span>
+<span id="cb5-369"><a href="#cb5-369" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_percent</span>(knn_metrics<span class="sc">$</span>result_accuracy[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
+<span id="cb5-370"><a href="#cb5-370" aria-hidden="true" tabindex="-1"></a>          <span class="st">" / "</span>,</span>
+<span id="cb5-371"><a href="#cb5-371" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_number</span>(knn_metrics<span class="sc">$</span>goals_rmse[[<span class="dv">1</span>]], <span class="dv">3</span>)</span>
+<span id="cb5-372"><a href="#cb5-372" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb5-373"><a href="#cb5-373" aria-hidden="true" tabindex="-1"></a>        <span class="at">context =</span> <span class="fu">paste</span>(<span class="st">"Neighbors:"</span>, knn_metrics<span class="sc">$</span>k_neighbors[[<span class="dv">1</span>]])</span>
+<span id="cb5-374"><a href="#cb5-374" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb5-375"><a href="#cb5-375" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-376"><a href="#cb5-376" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-377"><a href="#cb5-377" aria-hidden="true" tabindex="-1"></a>  model_rows <span class="sc">|&gt;</span></span>
+<span id="cb5-378"><a href="#cb5-378" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Current model performance."</span>)</span>
+<span id="cb5-379"><a href="#cb5-379" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-380"><a href="#cb5-380" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model metrics are available after the model refresh."</span>))</span>
+<span id="cb5-381"><a href="#cb5-381" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-382"><a href="#cb5-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-383"><a href="#cb5-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-384"><a href="#cb5-384" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
+<span id="cb5-385"><a href="#cb5-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-386"><a href="#cb5-386" aria-hidden="true" tabindex="-1"></a>The analysis uses a local modeling database and publishes the resulting metadata, diagnostics, and model outputs here.</span>
+<span id="cb5-387"><a href="#cb5-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-388"><a href="#cb5-388" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-inventory}</span></span>
+<span id="cb5-389"><a href="#cb5-389" aria-hidden="true" tabindex="-1"></a>inventory <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"metadata"</span>, <span class="st">"table_inventory.csv"</span>))</span>
+<span id="cb5-390"><a href="#cb5-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-391"><a href="#cb5-391" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(inventory) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-392"><a href="#cb5-392" aria-hidden="true" tabindex="-1"></a>  inventory <span class="sc">|&gt;</span></span>
+<span id="cb5-393"><a href="#cb5-393" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(table_name) <span class="sc">|&gt;</span></span>
+<span id="cb5-394"><a href="#cb5-394" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">row_count =</span> <span class="fu">fmt_integer</span>(row_count)) <span class="sc">|&gt;</span></span>
+<span id="cb5-395"><a href="#cb5-395" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Modeling tables available for analysis."</span>, <span class="at">max_rows =</span> <span class="dv">16</span>)</span>
+<span id="cb5-396"><a href="#cb5-396" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-397"><a href="#cb5-397" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Table inventory is available after the metadata refresh."</span>))</span>
+<span id="cb5-398"><a href="#cb5-398" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-399"><a href="#cb5-399" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-400"><a href="#cb5-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-401"><a href="#cb5-401" aria-hidden="true" tabindex="-1"></a><span class="fu">## Display Standards</span></span>
+<span id="cb5-402"><a href="#cb5-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-403"><a href="#cb5-403" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principles"</span><span class="dt">&gt;</span></span>
+<span id="cb5-404"><a href="#cb5-404" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>One grain per table<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Rows should mean one thing: team-match, match, player, venue, or API pull.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-405"><a href="#cb5-405" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Readable labels<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Keep machine-safe names in source files; convert them to readable labels only in reports.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-406"><a href="#cb5-406" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Round for display only<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Do not round model inputs or stored outputs. Round the rendered table so readers can scan it.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-407"><a href="#cb5-407" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"principle"</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Publication boundary<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span>Present summaries and rendered results; keep operational files out of the public site.<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-408"><a href="#cb5-408" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-409"><a href="#cb5-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-410"><a href="#cb5-410" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-411"><a href="#cb5-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-412"><a href="#cb5-412" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reports</span></span>
+<span id="cb5-413"><a href="#cb5-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-414"><a href="#cb5-414" aria-hidden="true" tabindex="-1"></a>::: {.columns}</span>
+<span id="cb5-415"><a href="#cb5-415" aria-hidden="true" tabindex="-1"></a>::: {.column width="25%"}</span>
+<span id="cb5-416"><a href="#cb5-416" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb5-417"><a href="#cb5-417" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data Overview</span></span>
+<span id="cb5-418"><a href="#cb5-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-419"><a href="#cb5-419" aria-hidden="true" tabindex="-1"></a>Available datasets, sample modeling rows, metadata, and simple diagnostics.</span>
+<span id="cb5-420"><a href="#cb5-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-421"><a href="#cb5-421" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/00_data_overview.html"</span><span class="dt">&gt;</span>Open data report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-422"><a href="#cb5-422" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-423"><a href="#cb5-423" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-424"><a href="#cb5-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-425"><a href="#cb5-425" aria-hidden="true" tabindex="-1"></a>::: {.column width="25%"}</span>
+<span id="cb5-426"><a href="#cb5-426" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb5-427"><a href="#cb5-427" aria-hidden="true" tabindex="-1"></a><span class="fu">### Goals Model</span></span>
+<span id="cb5-428"><a href="#cb5-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-429"><a href="#cb5-429" aria-hidden="true" tabindex="-1"></a>OLS model for team goals scored from pre-match Elo, opponent Elo, expected result, home listing, and neutral-site status.</span>
+<span id="cb5-430"><a href="#cb5-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-431"><a href="#cb5-431" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/01_goals_linear_regression.html"</span><span class="dt">&gt;</span>Open goals report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-432"><a href="#cb5-432" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-433"><a href="#cb5-433" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-434"><a href="#cb5-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-435"><a href="#cb5-435" aria-hidden="true" tabindex="-1"></a>::: {.column width="25%"}</span>
+<span id="cb5-436"><a href="#cb5-436" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb5-437"><a href="#cb5-437" aria-hidden="true" tabindex="-1"></a><span class="fu">### Poisson Model</span></span>
+<span id="cb5-438"><a href="#cb5-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-439"><a href="#cb5-439" aria-hidden="true" tabindex="-1"></a>Count model for expected team goals, with random and forward-time validation.</span>
+<span id="cb5-440"><a href="#cb5-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-441"><a href="#cb5-441" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/05_poisson_goals_model.html"</span><span class="dt">&gt;</span>Open Poisson report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-442"><a href="#cb5-442" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-443"><a href="#cb5-443" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-444"><a href="#cb5-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-445"><a href="#cb5-445" aria-hidden="true" tabindex="-1"></a>::: {.column width="25%"}</span>
+<span id="cb5-446"><a href="#cb5-446" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb5-447"><a href="#cb5-447" aria-hidden="true" tabindex="-1"></a><span class="fu">### Result Model</span></span>
+<span id="cb5-448"><a href="#cb5-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-449"><a href="#cb5-449" aria-hidden="true" tabindex="-1"></a>Ordinal logistic model for <span class="in">`loss &lt; draw &lt; win`</span>, producing win/draw/loss probability estimates.</span>
+<span id="cb5-450"><a href="#cb5-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-451"><a href="#cb5-451" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/02_ordinal_result_model.html"</span><span class="dt">&gt;</span>Open result report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-452"><a href="#cb5-452" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-453"><a href="#cb5-453" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-454"><a href="#cb5-454" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-455"><a href="#cb5-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-456"><a href="#cb5-456" aria-hidden="true" tabindex="-1"></a>::: {.columns}</span>
+<span id="cb5-457"><a href="#cb5-457" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb5-458"><a href="#cb5-458" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb5-459"><a href="#cb5-459" aria-hidden="true" tabindex="-1"></a><span class="fu">### KNN Model</span></span>
+<span id="cb5-460"><a href="#cb5-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-461"><a href="#cb5-461" aria-hidden="true" tabindex="-1"></a>Similarity model that compares each team-match row with nearby historical cases.</span>
+<span id="cb5-462"><a href="#cb5-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-463"><a href="#cb5-463" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/04_knn_similarity_model.html"</span><span class="dt">&gt;</span>Open KNN report<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-464"><a href="#cb5-464" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-465"><a href="#cb5-465" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-466"><a href="#cb5-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-467"><a href="#cb5-467" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb5-468"><a href="#cb5-468" aria-hidden="true" tabindex="-1"></a>::: {.project-card}</span>
+<span id="cb5-469"><a href="#cb5-469" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribution Review</span></span>
+<span id="cb5-470"><a href="#cb5-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-471"><a href="#cb5-471" aria-hidden="true" tabindex="-1"></a>Distribution notes for deciding whether soccer features are counts, continuous variables, ordered outcomes, probabilities, or mixture processes.</span>
+<span id="cb5-472"><a href="#cb5-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-473"><a href="#cb5-473" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> class</span><span class="op">=</span><span class="st">"project-button"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"reports/03_distribution_review.html"</span><span class="dt">&gt;</span>Open distribution review<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-474"><a href="#cb5-474" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-475"><a href="#cb5-475" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-476"><a href="#cb5-476" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

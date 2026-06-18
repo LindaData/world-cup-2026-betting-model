@@ -1,0 +1,137 @@
+---
+title: "Poisson Goals Model"
+subtitle: "Count regression for expected team goals"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed/modeling")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+```
+
+## Purpose
+
+The Poisson goals model predicts how many goals a team is expected to score.
+
+This is a better statistical shape for goals than simple linear regression because goals are counts: 0, 1, 2, 3, and so on. A Poisson model keeps the expected value positive and models scoring as a count process.
+
+## Model
+
+The model predicts expected goals, usually written as lambda:
+
+$$
+\lambda = E(\text{Goals})
+$$
+
+Instead of fitting goals directly, the model fits the log of expected goals:
+
+$$
+\log(\lambda)
+= \beta_0
++ \beta_1\text{Team Elo}
++ \beta_2\text{Opponent Elo}
++ \beta_3\text{Expected Result}
++ \beta_4\text{Listed Home}
++ \beta_5\text{Neutral Site}
+$$
+
+Plain English: the model estimates a positive expected-goals number from team strength, opponent strength, expected result, and match context.
+
+## Validation
+
+Two checks are shown:
+
+- **Random 80/20:** a general benchmark where rows are randomly split into training and test sets.
+- **Train through 2018, test 2019+:** a harder forward-looking check that better resembles predicting future matches.
+
+```{r metrics}
+metrics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_poisson_model_metrics.csv"))
+
+if (nrow(metrics) > 0) {
+  metrics |>
+    dplyr::mutate(
+      validation_type = dplyr::case_when(
+        validation_type == "random_80_20" ~ "Random 80/20",
+        validation_type == "train_through_2018_test_2019_plus" ~ "Train through 2018; test 2019+",
+        TRUE ~ validation_type
+      ),
+      rows_total = fmt_integer(rows_total),
+      rows_train = fmt_integer(rows_train),
+      rows_test = fmt_integer(rows_test),
+      test_rmse = fmt_number(test_rmse, 3),
+      test_mae = fmt_number(test_mae, 3),
+      mean_y_test = fmt_number(mean_y_test, 3),
+      mean_poisson_deviance = fmt_number(mean_poisson_deviance, 3)
+    ) |>
+    display_table(caption = "Poisson model validation summary.")
+} else {
+  display_table(empty_note("Poisson metrics are available after the goals model refresh."))
+}
+```
+
+## Coefficients
+
+The rate ratio column is the easiest way to read this model. A value above 1 increases expected goals. A value below 1 decreases expected goals.
+
+```{r coefficients}
+coefficients <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_poisson_model_coefficients.csv"))
+
+if (nrow(coefficients) > 0) {
+  coefficients |>
+    dplyr::mutate(
+      estimate = fmt_number(estimate, 4),
+      std_error = fmt_number(std_error, 4),
+      z_value = fmt_number(z_value, 2),
+      p_value = fmt_p_value(p_value),
+      rate_ratio = fmt_number(rate_ratio, 4)
+    ) |>
+    display_table(caption = "Poisson model coefficients.")
+} else {
+  display_table(empty_note("Poisson coefficients are available after the goals model refresh."))
+}
+```
+
+## Sample Predictions
+
+```{r sample-predictions}
+predictions <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_poisson_model_test_predictions.csv"))
+
+if (nrow(predictions) > 0) {
+  predictions |>
+    dplyr::filter(validation_type == "train_through_2018_test_2019_plus") |>
+    dplyr::select(
+      date,
+      team,
+      opponent,
+      tournament,
+      y_goals_for,
+      pred_goals_for_poisson,
+      residual
+    ) |>
+    dplyr::mutate(
+      pred_goals_for_poisson = fmt_number(pred_goals_for_poisson, 2),
+      residual = fmt_number(residual, 2)
+    ) |>
+    display_table(caption = "Sample forward-time Poisson predictions.", max_rows = 12)
+} else {
+  display_table(empty_note("Poisson predictions are available after the goals model refresh."))
+}
+```
+
+## Interpretation
+
+This model is still intentionally simple. It does not yet know the final 2026 rosters, injuries, lineups, odds, or live form signals. Its job is to create a stronger free-data baseline before live enrichment data flows into the pipeline.
+
+## Reproduce Locally
+
+```{r reproduce, eval=FALSE}
+source("R/01_build_duckdb.R")
+source("R/14_fit_poisson_goals_model.R")
+```

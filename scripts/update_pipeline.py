@@ -365,6 +365,7 @@ def build_steps(args: argparse.Namespace, python_exe: str, rscript_exe: str) -> 
 
     if not args.skip_model:
         steps.append(Step("Fit goals model", [rscript_exe, "R/10_fit_linear_goals_model.R"]))
+        steps.append(Step("Fit Poisson goals model", [rscript_exe, "R/14_fit_poisson_goals_model.R"]))
         steps.append(
             Step("Fit ordinal result model", [rscript_exe, "R/11_fit_ordinal_result_model.R"])
         )
