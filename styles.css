@@ -335,6 +335,160 @@ pre code {
   margin-top: 1rem;
 }
 
+.bracket-board {
+  display: grid;
+  gap: 1.25rem;
+  margin: 1rem 0 1.6rem;
+}
+
+.bracket-day {
+  border-top: 3px solid #0f6b68;
+  padding-top: 0.75rem;
+}
+
+.bracket-day h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1.05rem;
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.9rem;
+}
+
+.match-card {
+  border: 1px solid #d8e2ea;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+  outline: none;
+}
+
+.match-card:focus {
+  border-color: #0f6b68;
+  box-shadow: 0 0 0 3px rgba(15, 107, 104, 0.18);
+}
+
+.match-card-top,
+.pick-line,
+.model-picks {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.match-card-top {
+  color: #52616b;
+  font-size: 0.86rem;
+  margin-bottom: 0.6rem;
+}
+
+.match-card-top strong {
+  color: #6b4b00;
+  background: #fff8e1;
+  border: 1px solid #ead894;
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  white-space: nowrap;
+}
+
+.match-teams {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.match-teams span {
+  display: block;
+  color: #17252a;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.match-teams small {
+  color: #52616b;
+}
+
+.versus {
+  color: #52616b;
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.pick-line {
+  border-top: 1px solid #edf1f5;
+  border-bottom: 1px solid #edf1f5;
+  padding: 0.55rem 0;
+}
+
+.pick-line span {
+  color: #52616b;
+  font-size: 0.86rem;
+}
+
+.pick-line strong {
+  color: #0f4f4d;
+  overflow-wrap: anywhere;
+}
+
+.model-picks {
+  flex-wrap: wrap;
+  margin-top: 0.55rem;
+  color: #52616b;
+  font-size: 0.82rem;
+}
+
+.model-picks span {
+  border: 1px solid #e3e8ee;
+  border-radius: 999px;
+  padding: 0.12rem 0.45rem;
+  background: #f8fafc;
+}
+
+.match-detail {
+  display: none;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed #cbd5df;
+}
+
+.match-card.open .match-detail {
+  display: block;
+}
+
+.match-detail dl {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.45fr) minmax(0, 1fr);
+  gap: 0.35rem 0.75rem;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.match-detail dt {
+  color: #52616b;
+  font-weight: 700;
+}
+
+.match-detail dd {
+  margin: 0;
+  color: #24313d;
+  overflow-wrap: anywhere;
+}
+
+.empty-board {
+  border: 1px solid #e3e8ee;
+  border-radius: 8px;
+  padding: 0.9rem;
+  background: #ffffff;
+  color: #52616b;
+}
+
 @media (max-width: 640px) {
   .quarto-title-block.default .quarto-title {
     padding: 2rem 1rem;
@@ -348,5 +502,9 @@ pre code {
   .project-button {
     width: 100%;
     text-align: center;
+  }
+
+  .match-detail dl {
+    grid-template-columns: 1fr;
   }
 }
