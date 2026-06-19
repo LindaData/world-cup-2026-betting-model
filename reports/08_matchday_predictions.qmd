@@ -1,0 +1,351 @@
+---
+title: "Matchday Prediction Board"
+subtitle: "Winner, result probabilities, goals, cards coverage, and lineups"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed/modeling")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+```
+
+## Prediction Board
+
+This is the matchday view: one section for the current predictions and live-feed coverage.
+
+```{r summary-cards, echo=FALSE, results="asis"}
+summary <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_prediction_summary.csv"))
+board <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_prediction_board.csv"))
+
+summary_value <- function(metric_name) {
+  if (nrow(summary) == 0) {
+    return(NA_character_)
+  }
+  value <- summary$value[summary$metric == metric_name]
+  if (length(value) == 0) NA_character_ else as.character(value[[1]])
+}
+
+if (nrow(summary) > 0) {
+  cat(metric_cards(data.frame(
+    label = c("Last Refresh", "Matches", "Today", "Upcoming", "Lineups", "Events"),
+    value = c(
+      summary_value("last_refreshed_local"),
+      summary_value("matches_on_board"),
+      summary_value("matches_today"),
+      summary_value("upcoming_matches"),
+      summary_value("lineup_rows_available"),
+      summary_value("event_rows_available")
+    ),
+    note = c(
+      "local laptop time",
+      "prediction rows",
+      "matchday count",
+      "future matches",
+      "API lineup rows",
+      "API event rows"
+    )
+  )))
+}
+```
+
+## Future Match Bracket
+
+Double-click a matchup to open the model detail.
+
+```{r bracket-interface, echo=FALSE, results="asis"}
+escape_html <- function(x) {
+  x <- ifelse(is.na(x), "", as.character(x))
+  x <- gsub("&", "&amp;", x, fixed = TRUE)
+  x <- gsub("<", "&lt;", x, fixed = TRUE)
+  x <- gsub(">", "&gt;", x, fixed = TRUE)
+  x <- gsub('"', "&quot;", x, fixed = TRUE)
+  x
+}
+
+if (nrow(board) > 0) {
+  board$kickoff_utc <- as.POSIXct(board$kickoff_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+  future_board <- board |>
+    dplyr::filter(
+      match_timing != "Completed",
+      (
+        !is.na(kickoff_utc) & kickoff_utc > Sys.time()
+      ) |
+        (
+          is.na(kickoff_utc) & as.Date(date) >= Sys.Date()
+        )
+    ) |>
+    dplyr::arrange(kickoff_utc, date, source_match_id)
+
+  if (nrow(future_board) > 0) {
+    cat('<div class="bracket-board">')
+    for (day in unique(as.character(future_board$date))) {
+      day_rows <- future_board[as.character(future_board$date) == day, ]
+      cat('<section class="bracket-day">')
+      cat('<h3>', escape_html(format(as.Date(day), "%A, %B %d")), '</h3>', sep = "")
+      cat('<div class="match-grid">')
+
+      for (i in seq_len(nrow(day_rows))) {
+        row <- day_rows[i, ]
+        kickoff <- ifelse(
+          is.na(row$kickoff_local_iso) || !nzchar(row$kickoff_local_iso),
+          "Time pending",
+          paste0(row$local_time, " ", row$utc_offset)
+        )
+        result_probs <- paste0(
+          "H ",
+          fmt_percent(row$ensemble_home_win_prob, 1),
+          " / D ",
+          fmt_percent(row$ensemble_draw_prob, 1),
+          " / A ",
+          fmt_percent(row$ensemble_away_win_prob, 1)
+        )
+        goals <- paste0(
+          fmt_number(row$pred_home_goals_poisson, 2),
+          " - ",
+          fmt_number(row$pred_away_goals_poisson, 2)
+        )
+        cards <- if (
+          is.finite(row$home_projected_yellow_cards) &&
+            is.finite(row$away_projected_yellow_cards)
+        ) {
+          paste0(
+            fmt_number(row$home_projected_yellow_cards, 1),
+            " - ",
+            fmt_number(row$away_projected_yellow_cards, 1)
+          )
+        } else {
+          "Feed pending"
+        }
+        lineups <- paste0(row$home_lineup_status, " / ", row$away_lineup_status)
+        refresh <- ifelse(
+          is.na(row$refresh_utc_iso) || !nzchar(row$refresh_utc_iso),
+          "Refresh time pending",
+          paste("Refresh 30 min before:", row$refresh_utc_iso)
+        )
+
+        cat('<article class="match-card" tabindex="0">')
+        cat('<div class="match-card-top">')
+        cat('<span>', escape_html(kickoff), '</span>', sep = "")
+        cat('<strong>', escape_html(row$confidence_band), '</strong>', sep = "")
+        cat('</div>')
+        cat('<div class="match-teams">')
+        cat('<div><span>', escape_html(row$home_team), '</span><small>Home/listed</small></div>', sep = "")
+        cat('<div class="versus">vs</div>')
+        cat('<div><span>', escape_html(row$away_team), '</span><small>Away/listed</small></div>', sep = "")
+        cat('</div>')
+        cat('<div class="pick-line">')
+        cat('<span>Winner</span><strong>', escape_html(row$predicted_winner), '</strong>', sep = "")
+        cat('</div>')
+        cat('<div class="model-picks">')
+        cat('<span>OLS: ', escape_html(row$ols_predicted_winner), '</span>', sep = "")
+        cat('<span>Poisson: ', escape_html(row$poisson_predicted_winner), '</span>', sep = "")
+        cat('<span>Ordinal: ', escape_html(row$ordinal_predicted_winner), '</span>', sep = "")
+        cat('</div>')
+        cat('<div class="match-detail">')
+        cat('<dl>')
+        cat('<dt>Outcome probabilities</dt><dd>', escape_html(result_probs), '</dd>', sep = "")
+        cat('<dt>Expected goals</dt><dd>', escape_html(goals), '</dd>', sep = "")
+        cat('<dt>Most likely score</dt><dd>', escape_html(row$most_likely_score), '</dd>', sep = "")
+        cat('<dt>Totals</dt><dd>O2.5 ', fmt_percent(row$over_2_5_prob, 1), ' / BTTS ', fmt_percent(row$both_teams_to_score_prob, 1), '</dd>', sep = "")
+        cat('<dt>Yellow cards</dt><dd>', escape_html(cards), '</dd>', sep = "")
+        cat('<dt>Lineups</dt><dd>', escape_html(lineups), '</dd>', sep = "")
+        cat('<dt>Venue</dt><dd>', escape_html(paste(row$city, row$country, sep = ", ")), '</dd>', sep = "")
+        cat('<dt>Refresh</dt><dd>', escape_html(refresh), '</dd>', sep = "")
+        cat('</dl>')
+        cat('</div>')
+        cat('</article>')
+      }
+
+      cat('</div>')
+      cat('</section>')
+    }
+    cat('</div>')
+  } else {
+    cat('<p class="empty-board">No future matches are available in the current local fixture table.</p>')
+  }
+} else {
+  cat('<p class="empty-board">Matchday predictions are available after the matchday board refresh.</p>')
+}
+```
+
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".match-card").forEach(function (card) {
+    card.addEventListener("dblclick", function () {
+      card.classList.toggle("open");
+    });
+    card.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        card.classList.toggle("open");
+      }
+    });
+  });
+});
+</script>
+```
+
+```{r board-table}
+if (nrow(board) > 0) {
+  board$kickoff_utc <- as.POSIXct(board$kickoff_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+  board_for_display <- board |>
+    dplyr::filter(
+      (
+        !is.na(kickoff_utc) & kickoff_utc > Sys.time()
+      ) |
+        (
+          is.na(kickoff_utc) & as.Date(date) >= Sys.Date() & match_timing != "Completed"
+        )
+    )
+
+  display_board <- board_for_display |>
+    dplyr::mutate(
+      result_probability = paste0(
+        "H ",
+        fmt_percent(ensemble_home_win_prob, 1),
+        " / D ",
+        fmt_percent(ensemble_draw_prob, 1),
+        " / A ",
+        fmt_percent(ensemble_away_win_prob, 1)
+      ),
+      expected_goals = paste0(
+        fmt_number(pred_home_goals_poisson, 2),
+        " - ",
+        fmt_number(pred_away_goals_poisson, 2)
+      ),
+      totals = paste0(
+        "O2.5 ",
+        fmt_percent(over_2_5_prob, 1),
+        " / BTTS ",
+        fmt_percent(both_teams_to_score_prob, 1)
+      ),
+      yellow_cards = dplyr::case_when(
+        is.finite(home_projected_yellow_cards) & is.finite(away_projected_yellow_cards) ~
+          paste0(
+            fmt_number(home_projected_yellow_cards, 1),
+            " - ",
+            fmt_number(away_projected_yellow_cards, 1)
+          ),
+        TRUE ~ "Feed pending"
+      ),
+      lineup = paste0(home_lineup_status, " / ", away_lineup_status),
+      confidence = paste0(confidence_band, " (", fmt_percent(prediction_confidence, 1), ")"),
+      venue = paste(city, country, sep = ", ")
+    ) |>
+    dplyr::select(
+      date,
+      match_timing,
+      match_label,
+      predicted_winner,
+      confidence,
+      result_probability,
+      expected_goals,
+      most_likely_score,
+      totals,
+      yellow_cards,
+      lineup,
+      venue
+    )
+
+  if (nrow(display_board) > 0) {
+    display_board |>
+      display_table(caption = "Future matchday predictions.", max_rows = 24)
+  } else {
+    display_table(empty_note("No future matches are available in the current rendered board."))
+  }
+} else {
+  display_table(empty_note("Matchday predictions are available after the matchday board refresh."))
+}
+```
+
+## Lineup Detail
+
+Confirmed lineups appear here when the match feed posts starting XIs.
+
+```{r lineup-detail}
+if (nrow(board) > 0) {
+  lineup_detail <- board |>
+    dplyr::filter(home_lineup_status == "Confirmed" | away_lineup_status == "Confirmed") |>
+    dplyr::select(
+      date,
+      match_label,
+      home_formation,
+      away_formation,
+      home_starting_lineup,
+      away_starting_lineup
+    )
+
+  if (nrow(lineup_detail) > 0) {
+    lineup_detail |>
+      display_table(caption = "Confirmed starting lineups.", max_rows = 8)
+  } else {
+    display_table(empty_note("Starting lineups update when the fixture feed posts them."))
+  }
+} else {
+  display_table(empty_note("Lineup detail is available after the matchday board refresh."))
+}
+```
+
+## Post-Match Accuracy
+
+This section updates after final scores enter the fixture table.
+
+```{r accuracy}
+accuracy <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_model_accuracy.csv"))
+
+if (nrow(accuracy) > 0) {
+  accuracy |>
+    dplyr::mutate(
+      completed_matches = fmt_integer(completed_matches),
+      outcome_accuracy = fmt_percent(outcome_accuracy, 1)
+    ) |>
+    display_table(caption = "Post-match model accuracy on completed fixtures.")
+} else {
+  display_table(empty_note("Post-match accuracy updates after completed scores are available."))
+}
+```
+
+## Models And Data Used
+
+```{r data-sources}
+sources <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_prediction_data_sources.csv"))
+
+if (nrow(sources) > 0) {
+  sources |>
+    display_table(caption = "Prediction outputs, model source, and current role.")
+} else {
+  display_table(empty_note("Model-source notes are available after the matchday board refresh."))
+}
+```
+
+The board uses three active layers:
+
+- **Winner and outcome:** an ensemble of the ordinal logistic result model and probabilities derived from the Poisson score grid.
+- **Goals and likely score:** the Poisson goals model produces expected goals; the score grid turns those expected goals into scoreline probabilities.
+- **Totals:** over 2.5 goals and both-teams-to-score probabilities come from the same Poisson score grid.
+
+Cards and lineups are live-enrichment layers. They update when the football API returns player card history, event rows, or confirmed lineups for a fixture.
+
+## How To Read It
+
+- **Predicted winner:** highest ensemble probability. A draw remains possible for group-stage style matches.
+- **Confidence:** the model's top probability bucket, not a guarantee.
+- **Expected goals:** model average score, not the most likely exact score.
+- **Most likely score:** the single scoreline with the highest probability in the Poisson grid.
+- **O2.5:** probability that total goals are 3 or more.
+- **BTTS:** probability that both teams score at least one goal.
+
+## Reproduce Locally
+
+```{r reproduce, eval=FALSE}
+source("R/16_score_2026_fixtures.R")
+source("R/17_matchday_prediction_board.R")
+```

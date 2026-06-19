@@ -9,6 +9,7 @@ project:
     - reports/02_ordinal_result_model.qmd
     - reports/06_regression_diagnostics.qmd
     - reports/07_fixture_predictions.qmd
+    - reports/08_matchday_predictions.qmd
     - reports/03_distribution_review.qmd
     - reports/04_knn_similarity_model.qmd
 
@@ -36,6 +37,8 @@ website:
         text: Diagnostics
       - href: reports/07_fixture_predictions.qmd
         text: Predictions
+      - href: reports/08_matchday_predictions.qmd
+        text: Matchday
       - href: reports/03_distribution_review.qmd
         text: Distributions
     right:

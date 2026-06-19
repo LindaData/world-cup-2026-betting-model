@@ -3,9 +3,10 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import sys
 from collections import Counter, defaultdict
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Iterable
 
@@ -272,6 +273,113 @@ def build_2026_fixtures(matches: list[dict[str, str]]) -> list[dict[str, object]
                 "neutral": match.get("neutral", ""),
             }
         )
+    return rows
+
+
+def normalize_join_key(value: str) -> str:
+    value = value.replace("&", "and")
+    value = value.replace("USA", "United States")
+    value = re.sub(r"[^A-Za-z0-9]+", "", value).lower()
+    aliases = {
+        "usa": "unitedstates",
+        "unitedstatesofamerica": "unitedstates",
+        "bosniaherzegovina": "bosniaandherzegovina",
+        "bosniaandherzegovina": "bosniaandherzegovina",
+    }
+    return aliases.get(value, value)
+
+
+def parse_utc_offset(value: str) -> timezone:
+    sign = 1
+    raw = value.strip()
+    if raw.startswith("-"):
+        sign = -1
+        raw = raw[1:]
+    elif raw.startswith("+"):
+        raw = raw[1:]
+    hours = int(raw)
+    return timezone(sign * timedelta(hours=hours))
+
+
+def parse_fixture_teams(fixture_text: str) -> tuple[str, str] | None:
+    scheduled_match = re.match(r"(.+?)\s+v\s+(.+)$", fixture_text)
+    if scheduled_match:
+        return scheduled_match.group(1).strip(), scheduled_match.group(2).strip()
+
+    finished_match = re.match(
+        r"(.+?)\s+\d+\s*-\s*\d+(?:\s+\([^)]+\))?\s+(.+)$",
+        fixture_text,
+    )
+    if finished_match:
+        return finished_match.group(1).strip(), finished_match.group(2).strip()
+
+    return None
+
+
+def build_fixture_times(snapshot: Path, fixtures: list[dict[str, object]]) -> list[dict[str, object]]:
+    cup_path = snapshot / "openfootball_cup.txt"
+    if not cup_path.exists():
+        return []
+
+    fixture_lookup = {}
+    for fixture in fixtures:
+        key = (
+            str(fixture.get("date", "")),
+            normalize_join_key(str(fixture.get("home_team", ""))),
+            normalize_join_key(str(fixture.get("away_team", ""))),
+        )
+        fixture_lookup[key] = fixture.get("source_match_id", "")
+
+    month_map = {"june": 6, "jun": 6, "july": 7, "jul": 7}
+    current_date: date | None = None
+    rows: list[dict[str, object]] = []
+    date_re = re.compile(r"^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(June|Jun|July|Jul)\s+(\d{1,2})\s*$", re.I)
+    fixture_re = re.compile(r"^\s*(\d{1,2}:\d{2})\s+UTC([+-]\d{1,2})\s+(.+?)\s+@\s+(.+?)\s*$")
+
+    for line in cup_path.read_text(encoding="utf-8", errors="replace").splitlines():
+        stripped = line.strip()
+        date_match = date_re.match(stripped)
+        if date_match:
+            month = month_map[date_match.group(2).lower()]
+            current_date = date(2026, month, int(date_match.group(3)))
+            continue
+
+        fixture_match = fixture_re.match(line)
+        if not fixture_match or current_date is None:
+            continue
+
+        local_time_text, utc_offset_text, fixture_text, venue_label = fixture_match.groups()
+        teams = parse_fixture_teams(fixture_text.strip())
+        if teams is None:
+            continue
+        home_team, away_team = teams
+        hour, minute = [int(part) for part in local_time_text.split(":", 1)]
+        tz = parse_utc_offset(utc_offset_text)
+        kickoff_local = datetime(2026, current_date.month, current_date.day, hour, minute, tzinfo=tz)
+        kickoff_utc = kickoff_local.astimezone(timezone.utc)
+        key = (
+            current_date.isoformat(),
+            normalize_join_key(home_team),
+            normalize_join_key(away_team),
+        )
+
+        rows.append(
+            {
+                "source_match_id": fixture_lookup.get(key, ""),
+                "date": current_date.isoformat(),
+                "local_time": local_time_text,
+                "utc_offset": f"UTC{utc_offset_text}",
+                "kickoff_local_iso": kickoff_local.isoformat(),
+                "kickoff_utc_iso": kickoff_utc.isoformat().replace("+00:00", "Z"),
+                "refresh_utc_iso": (kickoff_utc - timedelta(minutes=30)).isoformat().replace("+00:00", "Z"),
+                "home_team": home_team,
+                "away_team": away_team,
+                "home_team_key": key[1],
+                "away_team_key": key[2],
+                "venue_label": venue_label.strip(),
+            }
+        )
+
     return rows
 
 
@@ -607,6 +715,114 @@ def flatten_api_football_players(snapshot: Path) -> list[dict[str, object]]:
     return rows
 
 
+def fixture_id_from_detail_path(path: Path) -> str:
+    parts = path.stem.split("_")
+    if "fixture" not in parts:
+        return ""
+    index = parts.index("fixture")
+    if index + 1 >= len(parts):
+        return ""
+    return parts[index + 1]
+
+
+def flatten_api_football_fixture_lineups(snapshot: Path) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for path in sorted(snapshot.glob("api_football_fixture_*_lineups.json")):
+        api_fixture_id = fixture_id_from_detail_path(path)
+        payload = read_json_if_exists(path)
+        for item in response_rows(payload):
+            if not isinstance(item, dict):
+                continue
+            team_id = nested(item, "team", "id")
+            team_name = nested(item, "team", "name")
+            formation = item.get("formation", "")
+            coach_id = nested(item, "coach", "id")
+            coach_name = nested(item, "coach", "name")
+            groups = [
+                ("start", item.get("startXI") if isinstance(item.get("startXI"), list) else []),
+                ("substitute", item.get("substitutes") if isinstance(item.get("substitutes"), list) else []),
+            ]
+            for role, player_rows in groups:
+                for player_row in player_rows:
+                    if not isinstance(player_row, dict):
+                        continue
+                    rows.append(
+                        {
+                            "api_fixture_id": api_fixture_id,
+                            "team_id": team_id,
+                            "team_name": team_name,
+                            "formation": formation,
+                            "coach_id": coach_id,
+                            "coach_name": coach_name,
+                            "lineup_role": role,
+                            "player_id": nested(player_row, "player", "id"),
+                            "player_name": nested(player_row, "player", "name"),
+                            "player_number": nested(player_row, "player", "number"),
+                            "player_position": nested(player_row, "player", "pos"),
+                            "player_grid": nested(player_row, "player", "grid"),
+                        }
+                    )
+    return rows
+
+
+def flatten_api_football_fixture_events(snapshot: Path) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for path in sorted(snapshot.glob("api_football_fixture_*_events.json")):
+        api_fixture_id = fixture_id_from_detail_path(path)
+        payload = read_json_if_exists(path)
+        for item in response_rows(payload):
+            if not isinstance(item, dict):
+                continue
+            rows.append(
+                {
+                    "api_fixture_id": api_fixture_id,
+                    "elapsed": nested(item, "time", "elapsed"),
+                    "extra": nested(item, "time", "extra"),
+                    "team_id": nested(item, "team", "id"),
+                    "team_name": nested(item, "team", "name"),
+                    "player_id": nested(item, "player", "id"),
+                    "player_name": nested(item, "player", "name"),
+                    "assist_id": nested(item, "assist", "id"),
+                    "assist_name": nested(item, "assist", "name"),
+                    "event_type": item.get("type", ""),
+                    "event_detail": item.get("detail", ""),
+                    "comments": item.get("comments", ""),
+                }
+            )
+    return rows
+
+
+def flatten_api_football_fixture_predictions(snapshot: Path) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for path in sorted(snapshot.glob("api_football_fixture_*_predictions.json")):
+        api_fixture_id = fixture_id_from_detail_path(path)
+        payload = read_json_if_exists(path)
+        for item in response_rows(payload):
+            if not isinstance(item, dict):
+                continue
+            rows.append(
+                {
+                    "api_fixture_id": api_fixture_id,
+                    "winner_id": nested(item, "predictions", "winner", "id"),
+                    "winner_name": nested(item, "predictions", "winner", "name"),
+                    "winner_comment": nested(item, "predictions", "winner", "comment"),
+                    "win_or_draw": nested(item, "predictions", "win_or_draw"),
+                    "under_over": nested(item, "predictions", "under_over"),
+                    "goals_home": nested(item, "predictions", "goals", "home"),
+                    "goals_away": nested(item, "predictions", "goals", "away"),
+                    "advice": nested(item, "predictions", "advice"),
+                    "home_percent": nested(item, "predictions", "percent", "home"),
+                    "draw_percent": nested(item, "predictions", "percent", "draw"),
+                    "away_percent": nested(item, "predictions", "percent", "away"),
+                    "home_team_id": nested(item, "teams", "home", "id"),
+                    "home_team": nested(item, "teams", "home", "name"),
+                    "away_team_id": nested(item, "teams", "away", "id"),
+                    "away_team": nested(item, "teams", "away", "name"),
+                }
+            )
+    return rows
+
+
 def tournament_k_factor(tournament: str) -> int:
     lower = tournament.lower()
     if "fifa world cup" == lower:
@@ -749,6 +965,8 @@ def main() -> int:
     team_long = build_team_match_long(matches)
     elo_history, elo_latest = build_elo_tables(matches)
     api_football_fixtures = flatten_api_football_fixtures(snapshot)
+    world_cup_2026_fixtures = build_2026_fixtures(matches)
+    world_cup_2026_fixture_times = build_fixture_times(snapshot, world_cup_2026_fixtures)
 
     summary: dict[str, object] = {
         "built_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -839,7 +1057,7 @@ def main() -> int:
             ],
         ),
         "fact_2026_world_cup_fixtures.csv": (
-            build_2026_fixtures(matches),
+            world_cup_2026_fixtures,
             [
                 "source_match_id",
                 "date",
@@ -851,6 +1069,23 @@ def main() -> int:
                 "city",
                 "country",
                 "neutral",
+            ],
+        ),
+        "fact_2026_world_cup_fixture_times.csv": (
+            world_cup_2026_fixture_times,
+            [
+                "source_match_id",
+                "date",
+                "local_time",
+                "utc_offset",
+                "kickoff_local_iso",
+                "kickoff_utc_iso",
+                "refresh_utc_iso",
+                "home_team",
+                "away_team",
+                "home_team_key",
+                "away_team_key",
+                "venue_label",
             ],
         ),
         "dim_locations_from_results.csv": (
@@ -1087,6 +1322,61 @@ def main() -> int:
                 "penalties_scored",
                 "penalties_missed",
                 "penalties_saved",
+            ],
+        ),
+        "api_football_fixture_lineups.csv": (
+            flatten_api_football_fixture_lineups(snapshot),
+            [
+                "api_fixture_id",
+                "team_id",
+                "team_name",
+                "formation",
+                "coach_id",
+                "coach_name",
+                "lineup_role",
+                "player_id",
+                "player_name",
+                "player_number",
+                "player_position",
+                "player_grid",
+            ],
+        ),
+        "api_football_fixture_events.csv": (
+            flatten_api_football_fixture_events(snapshot),
+            [
+                "api_fixture_id",
+                "elapsed",
+                "extra",
+                "team_id",
+                "team_name",
+                "player_id",
+                "player_name",
+                "assist_id",
+                "assist_name",
+                "event_type",
+                "event_detail",
+                "comments",
+            ],
+        ),
+        "api_football_fixture_predictions.csv": (
+            flatten_api_football_fixture_predictions(snapshot),
+            [
+                "api_fixture_id",
+                "winner_id",
+                "winner_name",
+                "winner_comment",
+                "win_or_draw",
+                "under_over",
+                "goals_home",
+                "goals_away",
+                "advice",
+                "home_percent",
+                "draw_percent",
+                "away_percent",
+                "home_team_id",
+                "home_team",
+                "away_team_id",
+                "away_team",
             ],
         ),
     }

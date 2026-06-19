@@ -1,0 +1,5063 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Matchday Prediction Board – 2026 World Cup Betting Model</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f3818056407a927f82fd164097bc4fcb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">2026 World Cup Betting Model</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/00_data_overview.html"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/01_goals_linear_regression.html"> 
+<span class="menu-text">Goals Model</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/05_poisson_goals_model.html"> 
+<span class="menu-text">Poisson Model</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/02_ordinal_result_model.html"> 
+<span class="menu-text">Result Model</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/04_knn_similarity_model.html"> 
+<span class="menu-text">KNN Model</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/06_regression_diagnostics.html"> 
+<span class="menu-text">Diagnostics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/07_fixture_predictions.html"> 
+<span class="menu-text">Predictions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../reports/08_matchday_predictions.html" aria-current="page"> 
+<span class="menu-text">Matchday</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/03_distribution_review.html"> 
+<span class="menu-text">Distributions</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://lindadata.github.io/"> 
+<span class="menu-text">LindaData</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model"> 
+<span class="menu-text">GitHub</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prediction-board" id="toc-prediction-board" class="nav-link active" data-scroll-target="#prediction-board"><span class="header-section-number">1</span> Prediction Board</a></li>
+  <li><a href="#future-match-bracket" id="toc-future-match-bracket" class="nav-link" data-scroll-target="#future-match-bracket"><span class="header-section-number">2</span> Future Match Bracket</a></li>
+  <li><a href="#lineup-detail" id="toc-lineup-detail" class="nav-link" data-scroll-target="#lineup-detail"><span class="header-section-number">3</span> Lineup Detail</a></li>
+  <li><a href="#post-match-accuracy" id="toc-post-match-accuracy" class="nav-link" data-scroll-target="#post-match-accuracy"><span class="header-section-number">4</span> Post-Match Accuracy</a></li>
+  <li><a href="#models-and-data-used" id="toc-models-and-data-used" class="nav-link" data-scroll-target="#models-and-data-used"><span class="header-section-number">5</span> Models And Data Used</a></li>
+  <li><a href="#how-to-read-it" id="toc-how-to-read-it" class="nav-link" data-scroll-target="#how-to-read-it"><span class="header-section-number">6</span> How To Read It</a></li>
+  <li><a href="#reproduce-locally" id="toc-reproduce-locally" class="nav-link" data-scroll-target="#reproduce-locally"><span class="header-section-number">7</span> Reproduce Locally</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/LindaData/world-cup-2026-betting-model/blob/main/reports/08_matchday_predictions.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Matchday Prediction Board</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<p class="subtitle lead">Winner, result probabilities, goals, cards coverage, and lineups</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="prediction-board" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="prediction-board"><span class="header-section-number">1</span> Prediction Board</h2>
+<p>This is the matchday view: one section for the current predictions and live-feed coverage.</p>
+<div class="metric-strip">
+<div class="metric">
+<strong>Last Refresh</strong><span>2026-06-18 19:57:57 EDT</span><small>local laptop time</small>
+</div>
+<div class="metric">
+<strong>Matches</strong><span>72</span><small>prediction rows</small>
+</div>
+<div class="metric">
+<strong>Today</strong><span>1</span><small>matchday count</small>
+</div>
+<div class="metric">
+<strong>Upcoming</strong><span>44</span><small>future matches</small>
+</div>
+<div class="metric">
+<strong>Lineups</strong><span>0</span><small>API lineup rows</small>
+</div>
+<div class="metric">
+<strong>Events</strong><span>0</span><small>API event rows</small>
+</div>
+</div>
+</section>
+<section id="future-match-bracket" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="future-match-bracket"><span class="header-section-number">2</span> Future Match Bracket</h2>
+<p>Double-click a matchup to open the model detail.</p>
+<div class="bracket-board">
+<section class="bracket-day">
+<h3 class="anchored">
+Friday, June 19
+</h3>
+<div class="match-grid">
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>United States</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Australia</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>United States</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Draw</span><span>Poisson: United States</span><span>Ordinal: United States</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 39.3% / D 28.8% / A 31.9%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.19 - 1.06
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 39.2% / BTTS 45.5%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Seattle, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-19 18:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Scotland</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Morocco</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Morocco</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Morocco</span><span>Poisson: Morocco</span><span>Ordinal: Morocco</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 26.3% / D 27.4% / A 46.3%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.99 - 1.42
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 43.4% / BTTS 47.8%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Foxborough, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-19 21:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Brazil</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Haiti</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Brazil</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Brazil</span><span>Poisson: Brazil</span><span>Ordinal: Brazil</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 81.7% / D 12.3% / A 5.9%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.70 - 0.54
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 63.0% / BTTS 39.1%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Philadelphia, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-20
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Turkey</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Paraguay</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Turkey</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Turkey</span><span>Poisson: Turkey</span><span>Ordinal: Turkey</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 49.6% / D 26.5% / A 23.8%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.51 - 0.96
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 44.9% / BTTS 48.2%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Santa Clara, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-20 02:30:00
+</dd>
+</dl>
+</div>
+</article>
+</div>
+</section>
+<section class="bracket-day">
+<h3 class="anchored">
+Saturday, June 20
+</h3>
+<div class="match-grid">
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Netherlands</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Sweden</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Netherlands</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Netherlands</span><span>Poisson: Netherlands</span><span>Ordinal: Netherlands</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 67.5% / D 20.0% / A 12.5%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.01 - 0.71
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 51.2% / BTTS 44.1%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Houston, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-20 16:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Germany</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Ivory Coast</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Germany</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Germany</span><span>Poisson: Germany</span><span>Ordinal: Germany</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 63.5% / D 21.8% / A 14.6%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.86 - 0.75
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 48.5% / BTTS 44.7%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Toronto, Canada
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-20 19:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Ecuador</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Curaçao</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Ecuador</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Ecuador</span><span>Poisson: Ecuador</span><span>Ordinal: Ecuador</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 83.1% / D 11.4% / A 5.4%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.88 - 0.55
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 66.5% / BTTS 39.9%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Kansas City, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-20 23:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Tunisia</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Japan</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Japan</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Japan</span><span>Poisson: Japan</span><span>Ordinal: Japan</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 12.8% / D 20.1% / A 67.1%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.74 - 2.06
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-2
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 53.0% / BTTS 45.6%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Guadalupe, Mexico
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-21 03:30:00
+</dd>
+</dl>
+</div>
+</article>
+</div>
+</section>
+<section class="bracket-day">
+<h3 class="anchored">
+Sunday, June 21
+</h3>
+<div class="match-grid">
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Spain</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Saudi Arabia</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Spain</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Spain</span><span>Poisson: Spain</span><span>Ordinal: Spain</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 86.8% / D 9.2% / A 3.9%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+3.04 - 0.46
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+3-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 67.7% / BTTS 34.8%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Atlanta, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-21 15:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Belgium</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Iran</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Belgium</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Belgium</span><span>Poisson: Belgium</span><span>Ordinal: Belgium</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 51.3% / D 26.2% / A 22.6%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.53 - 0.93
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 44.7% / BTTS 47.5%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Inglewood, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-21 18:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Uruguay</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Cape Verde</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Uruguay</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Uruguay</span><span>Poisson: Uruguay</span><span>Ordinal: Uruguay</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 76.5% / D 15.3% / A 8.2%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.46 - 0.63
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 59.6% / BTTS 42.8%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Miami Gardens, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-21 21:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>New Zealand</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Egypt</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Egypt</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Draw</span><span>Poisson: Egypt</span><span>Ordinal: Egypt</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 31.2% / D 27.8% / A 41.0%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.16 - 1.38
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 46.5% / BTTS 51.3%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Vancouver, Canada
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-22 00:30:00
+</dd>
+</dl>
+</div>
+</article>
+</div>
+</section>
+<section class="bracket-day">
+<h3 class="anchored">
+Monday, June 22
+</h3>
+<div class="match-grid">
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Argentina</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Austria</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Argentina</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Argentina</span><span>Poisson: Argentina</span><span>Ordinal: Argentina</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 75.2% / D 16.3% / A 8.5%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.21 - 0.57
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 52.7% / BTTS 38.8%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Arlington, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-22 16:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>France</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Iraq</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>France</strong>
+</div>
+<div class="model-picks">
+<span>OLS: France</span><span>Poisson: France</span><span>Ordinal: France</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 85.1% / D 10.3% / A 4.6%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.90 - 0.48
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 65.8% / BTTS 36.3%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Philadelphia, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-22 20:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Norway</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Senegal</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Norway</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Norway</span><span>Poisson: Norway</span><span>Ordinal: Norway</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 55.9% / D 24.8% / A 19.3%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.64 - 0.85
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 45.3% / BTTS 46.2%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+East Rutherford, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-22 23:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Jordan</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Algeria</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Algeria</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Algeria</span><span>Poisson: Algeria</span><span>Ordinal: Algeria</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 26.8% / D 27.1% / A 46.1%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.05 - 1.48
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 46.4% / BTTS 50.3%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Santa Clara, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-23 02:30:00
+</dd>
+</dl>
+</div>
+</article>
+</div>
+</section>
+<section class="bracket-day">
+<h3 class="anchored">
+Tuesday, June 23
+</h3>
+<div class="match-grid">
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Portugal</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Uzbekistan</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Portugal</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Portugal</span><span>Poisson: Portugal</span><span>Ordinal: Portugal</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 70.7% / D 18.5% / A 10.8%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.11 - 0.67
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 52.5% / BTTS 42.7%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Houston, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-23 16:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>England</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Ghana</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>England</strong>
+</div>
+<div class="model-picks">
+<span>OLS: England</span><span>Poisson: England</span><span>Ordinal: England</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 87.5% / D 8.7% / A 3.8%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+3.19 - 0.47
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+3-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 70.8% / BTTS 36.0%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Foxborough, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-23 19:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Panama</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Croatia</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Croatia</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Croatia</span><span>Poisson: Croatia</span><span>Ordinal: Croatia</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 26.9% / D 27.5% / A 45.6%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.02 - 1.42
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 43.9% / BTTS 48.4%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Toronto, Canada
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-23 22:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Colombia</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>DR Congo</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Colombia</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Colombia</span><span>Poisson: Colombia</span><span>Ordinal: Colombia</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 77.1% / D 15.0% / A 7.8%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.41 - 0.59
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 57.8% / BTTS 40.7%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Zapopan, Mexico
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-24 01:30:00
+</dd>
+</dl>
+</div>
+</article>
+</div>
+</section>
+<section class="bracket-day">
+<h3 class="anchored">
+Wednesday, June 24
+</h3>
+<div class="match-grid">
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Bosnia and Herzegovina</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Qatar</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Bosnia and Herzegovina</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Bosnia and Herzegovina</span><span>Poisson: Bosnia and Herzegovina</span><span>Ordinal: Bosnia and Herzegovina</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 52.8% / D 25.0% / A 22.2%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.74 - 1.04
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 52.6% / BTTS 53.3%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Seattle, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-24 18:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Scotland</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Brazil</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Brazil</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Brazil</span><span>Poisson: Brazil</span><span>Ordinal: Brazil</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 20.3% / D 25.4% / A 54.4%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.86 - 1.60
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 44.5% / BTTS 46.0%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Miami Gardens, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-24 21:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Morocco</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Haiti</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Morocco</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Morocco</span><span>Poisson: Morocco</span><span>Ordinal: Morocco</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 77.4% / D 14.8% / A 7.8%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.48 - 0.61
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 59.6% / BTTS 41.8%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Atlanta, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-24 21:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>South Africa</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>South Korea</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>South Korea</strong>
+</div>
+<div class="model-picks">
+<span>OLS: South Korea</span><span>Poisson: South Korea</span><span>Ordinal: South Korea</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 16.6% / D 22.7% / A 60.7%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.85 - 1.88
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 51.3% / BTTS 48.4%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Guadalupe, Mexico
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-25 00:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span>Time pending</span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Mexico</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Czech Republic</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Mexico</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Mexico</span><span>Poisson: Mexico</span><span>Ordinal: Mexico</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 71.5% / D 18.2% / A 10.3%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.08 - 0.63
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 50.9% / BTTS 40.9%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Mexico City, Mexico
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh time pending
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span>Time pending</span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Canada</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Switzerland</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Canada</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Canada</span><span>Poisson: Canada</span><span>Ordinal: Canada</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 43.6% / D 28.3% / A 28.2%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.29 - 0.99
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 39.9% / BTTS 45.6%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Vancouver, Canada
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh time pending
+</dd>
+</dl>
+</div>
+</article>
+</div>
+</section>
+<section class="bracket-day">
+<h3 class="anchored">
+Thursday, June 25
+</h3>
+<div class="match-grid">
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Curaçao</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Ivory Coast</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Ivory Coast</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Ivory Coast</span><span>Poisson: Ivory Coast</span><span>Ordinal: Ivory Coast</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 15.7% / D 22.0% / A 62.3%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.85 - 1.97
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 53.4% / BTTS 49.1%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Philadelphia, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-25 19:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Ecuador</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Germany</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Ecuador</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Ecuador</span><span>Poisson: Ecuador</span><span>Ordinal: Ecuador</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 37.1% / D 28.7% / A 34.1%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.18 - 1.13
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 40.7% / BTTS 46.9%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+East Rutherford, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-25 19:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Japan</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Sweden</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Japan</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Japan</span><span>Poisson: Japan</span><span>Ordinal: Japan</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 66.0% / D 20.7% / A 13.3%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.96 - 0.73
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 50.5% / BTTS 44.7%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Arlington, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-25 22:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Tunisia</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Netherlands</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Netherlands</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Netherlands</span><span>Poisson: Netherlands</span><span>Ordinal: Netherlands</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 12.2% / D 19.5% / A 68.3%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.72 - 2.10
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-2
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 53.5% / BTTS 45.1%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Kansas City, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-25 22:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Paraguay</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Australia</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Australia</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Draw</span><span>Poisson: Australia</span><span>Ordinal: Australia</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 30.9% / D 28.2% / A 40.9%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.09 - 1.31
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 43.1% / BTTS 48.6%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Santa Clara, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-26 01:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span>Time pending</span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>United States</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Turkey</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>United States</strong>
+</div>
+<div class="model-picks">
+<span>OLS: United States</span><span>Poisson: United States</span><span>Ordinal: United States</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 44.4% / D 28.1% / A 27.5%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.31 - 0.98
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 40.1% / BTTS 45.6%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Inglewood, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh time pending
+</dd>
+</dl>
+</div>
+</article>
+</div>
+</section>
+<section class="bracket-day">
+<h3 class="anchored">
+Friday, June 26
+</h3>
+<div class="match-grid">
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Norway</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>France</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>France</strong>
+</div>
+<div class="model-picks">
+<span>OLS: France</span><span>Poisson: France</span><span>Ordinal: France</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 23.8% / D 27.2% / A 49.0%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.89 - 1.41
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 40.4% / BTTS 44.6%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Foxborough, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-26 18:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Senegal</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Iraq</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Senegal</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Senegal</span><span>Poisson: Senegal</span><span>Ordinal: Senegal</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 66.2% / D 20.4% / A 13.4%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.03 - 0.77
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 53.1% / BTTS 46.6%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Toronto, Canada
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-26 18:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Cape Verde</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Saudi Arabia</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Cape Verde</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Draw</span><span>Poisson: Cape Verde</span><span>Ordinal: Cape Verde</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 36.4% / D 27.8% / A 35.9%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.31 - 1.31
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 48.5% / BTTS 53.2%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Houston, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-26 23:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Uruguay</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Spain</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Spain</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Spain</span><span>Poisson: Spain</span><span>Ordinal: Spain</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 17.2% / D 24.1% / A 58.7%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.76 - 1.65
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 43.3% / BTTS 43.1%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Zapopan, Mexico
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-26 23:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Egypt</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Iran</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Iran</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Draw</span><span>Poisson: Iran</span><span>Ordinal: Iran</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 34.6% / D 28.3% / A 37.1%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.19 - 1.26
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 44.4% / BTTS 49.9%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Seattle, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-27 02:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Medium</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>New Zealand</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Belgium</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Belgium</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Belgium</span><span>Poisson: Belgium</span><span>Ordinal: Belgium</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 19.1% / D 24.4% / A 56.5%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.88 - 1.72
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 48.2% / BTTS 48.1%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Vancouver, Canada
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-27 02:30:00
+</dd>
+</dl>
+</div>
+</article>
+</div>
+</section>
+<section class="bracket-day">
+<h3 class="anchored">
+Saturday, June 27
+</h3>
+<div class="match-grid">
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Panama</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>England</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>England</strong>
+</div>
+<div class="model-picks">
+<span>OLS: England</span><span>Poisson: England</span><span>Ordinal: England</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 16.3% / D 23.1% / A 60.5%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.78 - 1.76
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 46.6% / BTTS 44.8%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+East Rutherford, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-27 20:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Croatia</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Ghana</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Croatia</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Croatia</span><span>Poisson: Croatia</span><span>Ordinal: Croatia</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 81.6% / D 12.4% / A 6.1%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+2.77 - 0.57
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+2-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 64.8% / BTTS 40.8%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Philadelphia, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-27 20:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Colombia</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Portugal</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Colombia</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Colombia</span><span>Poisson: Colombia</span><span>Ordinal: Colombia</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 44.2% / D 28.2% / A 27.6%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.30 - 0.98
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-0
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 39.9% / BTTS 45.5%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Miami Gardens, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-27 23:00:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>DR Congo</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Uzbekistan</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Uzbekistan</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Draw</span><span>Poisson: Uzbekistan</span><span>Ordinal: Uzbekistan</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 35.0% / D 28.1% / A 36.9%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.23 - 1.28
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 45.9% / BTTS 51.1%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Atlanta, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-27 23:00:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Lean</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Algeria</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Austria</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Austria</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Draw</span><span>Poisson: Austria</span><span>Ordinal: Algeria</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 35.7% / D 28.4% / A 35.9%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+1.20 - 1.21
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+1-1
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 43.2% / BTTS 49.0%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Kansas City, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-28 01:30:00
+</dd>
+</dl>
+</div>
+</article>
+<article class="match-card" tabindex="0">
+<div class="match-card-top">
+<span> </span><strong>Strong</strong>
+</div>
+<div class="match-teams">
+<div>
+<span>Jordan</span><small>Home/listed</small>
+</div>
+<div class="versus">
+vs
+</div>
+<div>
+<span>Argentina</span><small>Away/listed</small>
+</div>
+</div>
+<div class="pick-line">
+<span>Winner</span><strong>Argentina</strong>
+</div>
+<div class="model-picks">
+<span>OLS: Argentina</span><span>Poisson: Argentina</span><span>Ordinal: Argentina</span>
+</div>
+<div class="match-detail">
+<dl>
+<dt>
+Outcome probabilities
+</dt>
+<dd>
+H 7.7% / D 15.1% / A 77.2%
+</dd>
+<dt>
+Expected goals
+</dt>
+<dd>
+0.57 - 2.38
+</dd>
+<dt>
+Most likely score
+</dt>
+<dd>
+0-2
+</dd>
+<dt>
+Totals
+</dt>
+<dd>
+O2.5 56.7% / BTTS 39.4%
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Feed pending
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Pending / Pending
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Arlington, United States
+</dd>
+<dt>
+Refresh
+</dt>
+<dd>
+Refresh 30 min before: 2026-06-28 01:30:00
+</dd>
+</dl>
+</div>
+</article>
+</div>
+</section>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".match-card").forEach(function (card) {
+    card.addEventListener("dblclick", function () {
+      card.classList.toggle("open");
+    });
+    card.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        card.classList.toggle("open");
+      }
+    });
+  });
+});
+</script>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(board) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  board<span class="sc">$</span>kickoff_utc <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(board<span class="sc">$</span>kickoff_utc_iso, <span class="at">format =</span> <span class="st">"%Y-%m-%dT%H:%M:%SZ"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  board_for_display <span class="ot">&lt;-</span> board <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      (</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="sc">!</span><span class="fu">is.na</span>(kickoff_utc) <span class="sc">&amp;</span> kickoff_utc <span class="sc">&gt;</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>          <span class="fu">is.na</span>(kickoff_utc) <span class="sc">&amp;</span> <span class="fu">as.Date</span>(date) <span class="sc">&gt;=</span> <span class="fu">Sys.Date</span>() <span class="sc">&amp;</span> match_timing <span class="sc">!=</span> <span class="st">"Completed"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  display_board <span class="ot">&lt;-</span> board_for_display <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">result_probability =</span> <span class="fu">paste0</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"H "</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(ensemble_home_win_prob, <span class="dv">1</span>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">" / D "</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(ensemble_draw_prob, <span class="dv">1</span>),</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">" / A "</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(ensemble_away_win_prob, <span class="dv">1</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">expected_goals =</span> <span class="fu">paste0</span>(</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_number</span>(pred_home_goals_poisson, <span class="dv">2</span>),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">" - "</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_number</span>(pred_away_goals_poisson, <span class="dv">2</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">totals =</span> <span class="fu">paste0</span>(</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">"O2.5 "</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(over_2_5_prob, <span class="dv">1</span>),</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">" / BTTS "</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(both_teams_to_score_prob, <span class="dv">1</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">yellow_cards =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="fu">is.finite</span>(home_projected_yellow_cards) <span class="sc">&amp;</span> <span class="fu">is.finite</span>(away_projected_yellow_cards) <span class="sc">~</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>          <span class="fu">paste0</span>(</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="fu">fmt_number</span>(home_projected_yellow_cards, <span class="dv">1</span>),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">" - "</span>,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">fmt_number</span>(away_projected_yellow_cards, <span class="dv">1</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>          ),</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Feed pending"</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>      <span class="at">lineup =</span> <span class="fu">paste0</span>(home_lineup_status, <span class="st">" / "</span>, away_lineup_status),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">confidence =</span> <span class="fu">paste0</span>(confidence_band, <span class="st">" ("</span>, <span class="fu">fmt_percent</span>(prediction_confidence, <span class="dv">1</span>), <span class="st">")"</span>),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">venue =</span> <span class="fu">paste</span>(city, country, <span class="at">sep =</span> <span class="st">", "</span>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>      date,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>      match_timing,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      match_label,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>      predicted_winner,</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>      confidence,</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>      result_probability,</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>      expected_goals,</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>      most_likely_score,</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>      totals,</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>      yellow_cards,</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>      lineup,</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>      venue</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(display_board) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    display_board <span class="sc">|&gt;</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>      <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Future matchday predictions."</span>, <span class="at">max_rows =</span> <span class="dv">24</span>)</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"No future matches are available in the current rendered board."</span>))</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Matchday predictions are available after the matchday board refresh."</span>))</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="clean-table caption-top table table-sm table-striped small">
+<caption>Future matchday predictions.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Date</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Match Timing</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Match Label</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Predicted Winner</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Confidence</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Result Probability</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Expected Goals</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Most Likely Score</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Totals</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Yellow Cards</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Lineup</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Venue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2026-06-19</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Scotland vs Morocco</td>
+<td style="text-align: left;">Morocco</td>
+<td style="text-align: left;">Medium (46.3%)</td>
+<td style="text-align: left;">H 26.3% / D 27.4% / A 46.3%</td>
+<td style="text-align: left;">0.99 - 1.42</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;">O2.5 43.4% / BTTS 47.8%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Foxborough, United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-19</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Brazil vs Haiti</td>
+<td style="text-align: left;">Brazil</td>
+<td style="text-align: left;">Strong (81.7%)</td>
+<td style="text-align: left;">H 81.7% / D 12.3% / A 5.9%</td>
+<td style="text-align: left;">2.70 - 0.54</td>
+<td style="text-align: left;">2-0</td>
+<td style="text-align: left;">O2.5 63.0% / BTTS 39.1%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Philadelphia, United States</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-19</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">United States vs Australia</td>
+<td style="text-align: left;">United States</td>
+<td style="text-align: left;">Lean (39.3%)</td>
+<td style="text-align: left;">H 39.3% / D 28.8% / A 31.9%</td>
+<td style="text-align: left;">1.19 - 1.06</td>
+<td style="text-align: left;">1-1</td>
+<td style="text-align: left;">O2.5 39.2% / BTTS 45.5%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Seattle, United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-19</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Turkey vs Paraguay</td>
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: left;">Medium (49.6%)</td>
+<td style="text-align: left;">H 49.6% / D 26.5% / A 23.8%</td>
+<td style="text-align: left;">1.51 - 0.96</td>
+<td style="text-align: left;">1-0</td>
+<td style="text-align: left;">O2.5 44.9% / BTTS 48.2%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Santa Clara, United States</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-20</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Germany vs Ivory Coast</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">Strong (63.5%)</td>
+<td style="text-align: left;">H 63.5% / D 21.8% / A 14.6%</td>
+<td style="text-align: left;">1.86 - 0.75</td>
+<td style="text-align: left;">1-0</td>
+<td style="text-align: left;">O2.5 48.5% / BTTS 44.7%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Toronto, Canada</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-20</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Ecuador vs Curaçao</td>
+<td style="text-align: left;">Ecuador</td>
+<td style="text-align: left;">Strong (83.1%)</td>
+<td style="text-align: left;">H 83.1% / D 11.4% / A 5.4%</td>
+<td style="text-align: left;">2.88 - 0.55</td>
+<td style="text-align: left;">2-0</td>
+<td style="text-align: left;">O2.5 66.5% / BTTS 39.9%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Kansas City, United States</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-20</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Netherlands vs Sweden</td>
+<td style="text-align: left;">Netherlands</td>
+<td style="text-align: left;">Strong (67.5%)</td>
+<td style="text-align: left;">H 67.5% / D 20.0% / A 12.5%</td>
+<td style="text-align: left;">2.01 - 0.71</td>
+<td style="text-align: left;">2-0</td>
+<td style="text-align: left;">O2.5 51.2% / BTTS 44.1%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Houston, United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-20</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Tunisia vs Japan</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">Strong (67.1%)</td>
+<td style="text-align: left;">H 12.8% / D 20.1% / A 67.1%</td>
+<td style="text-align: left;">0.74 - 2.06</td>
+<td style="text-align: left;">0-2</td>
+<td style="text-align: left;">O2.5 53.0% / BTTS 45.6%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Guadalupe, Mexico</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-21</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Belgium vs Iran</td>
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">Medium (51.3%)</td>
+<td style="text-align: left;">H 51.3% / D 26.2% / A 22.6%</td>
+<td style="text-align: left;">1.53 - 0.93</td>
+<td style="text-align: left;">1-0</td>
+<td style="text-align: left;">O2.5 44.7% / BTTS 47.5%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Inglewood, United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-21</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">New Zealand vs Egypt</td>
+<td style="text-align: left;">Egypt</td>
+<td style="text-align: left;">Lean (41.0%)</td>
+<td style="text-align: left;">H 31.2% / D 27.8% / A 41.0%</td>
+<td style="text-align: left;">1.16 - 1.38</td>
+<td style="text-align: left;">1-1</td>
+<td style="text-align: left;">O2.5 46.5% / BTTS 51.3%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Vancouver, Canada</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-21</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Spain vs Saudi Arabia</td>
+<td style="text-align: left;">Spain</td>
+<td style="text-align: left;">Strong (86.8%)</td>
+<td style="text-align: left;">H 86.8% / D 9.2% / A 3.9%</td>
+<td style="text-align: left;">3.04 - 0.46</td>
+<td style="text-align: left;">3-0</td>
+<td style="text-align: left;">O2.5 67.7% / BTTS 34.8%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Atlanta, United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-21</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Uruguay vs Cape Verde</td>
+<td style="text-align: left;">Uruguay</td>
+<td style="text-align: left;">Strong (76.5%)</td>
+<td style="text-align: left;">H 76.5% / D 15.3% / A 8.2%</td>
+<td style="text-align: left;">2.46 - 0.63</td>
+<td style="text-align: left;">2-0</td>
+<td style="text-align: left;">O2.5 59.6% / BTTS 42.8%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Miami Gardens, United States</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-22</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">France vs Iraq</td>
+<td style="text-align: left;">France</td>
+<td style="text-align: left;">Strong (85.1%)</td>
+<td style="text-align: left;">H 85.1% / D 10.3% / A 4.6%</td>
+<td style="text-align: left;">2.90 - 0.48</td>
+<td style="text-align: left;">2-0</td>
+<td style="text-align: left;">O2.5 65.8% / BTTS 36.3%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Philadelphia, United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-22</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Norway vs Senegal</td>
+<td style="text-align: left;">Norway</td>
+<td style="text-align: left;">Medium (55.9%)</td>
+<td style="text-align: left;">H 55.9% / D 24.8% / A 19.3%</td>
+<td style="text-align: left;">1.64 - 0.85</td>
+<td style="text-align: left;">1-0</td>
+<td style="text-align: left;">O2.5 45.3% / BTTS 46.2%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">East Rutherford, United States</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-22</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Argentina vs Austria</td>
+<td style="text-align: left;">Argentina</td>
+<td style="text-align: left;">Strong (75.2%)</td>
+<td style="text-align: left;">H 75.2% / D 16.3% / A 8.5%</td>
+<td style="text-align: left;">2.21 - 0.57</td>
+<td style="text-align: left;">2-0</td>
+<td style="text-align: left;">O2.5 52.7% / BTTS 38.8%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Arlington, United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-22</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Jordan vs Algeria</td>
+<td style="text-align: left;">Algeria</td>
+<td style="text-align: left;">Medium (46.1%)</td>
+<td style="text-align: left;">H 26.8% / D 27.1% / A 46.1%</td>
+<td style="text-align: left;">1.05 - 1.48</td>
+<td style="text-align: left;">1-1</td>
+<td style="text-align: left;">O2.5 46.4% / BTTS 50.3%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Santa Clara, United States</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-23</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Portugal vs Uzbekistan</td>
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">Strong (70.7%)</td>
+<td style="text-align: left;">H 70.7% / D 18.5% / A 10.8%</td>
+<td style="text-align: left;">2.11 - 0.67</td>
+<td style="text-align: left;">2-0</td>
+<td style="text-align: left;">O2.5 52.5% / BTTS 42.7%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Houston, United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-23</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Colombia vs DR Congo</td>
+<td style="text-align: left;">Colombia</td>
+<td style="text-align: left;">Strong (77.1%)</td>
+<td style="text-align: left;">H 77.1% / D 15.0% / A 7.8%</td>
+<td style="text-align: left;">2.41 - 0.59</td>
+<td style="text-align: left;">2-0</td>
+<td style="text-align: left;">O2.5 57.8% / BTTS 40.7%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Zapopan, Mexico</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-23</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">England vs Ghana</td>
+<td style="text-align: left;">England</td>
+<td style="text-align: left;">Strong (87.5%)</td>
+<td style="text-align: left;">H 87.5% / D 8.7% / A 3.8%</td>
+<td style="text-align: left;">3.19 - 0.47</td>
+<td style="text-align: left;">3-0</td>
+<td style="text-align: left;">O2.5 70.8% / BTTS 36.0%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Foxborough, United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-23</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Panama vs Croatia</td>
+<td style="text-align: left;">Croatia</td>
+<td style="text-align: left;">Medium (45.6%)</td>
+<td style="text-align: left;">H 26.9% / D 27.5% / A 45.6%</td>
+<td style="text-align: left;">1.02 - 1.42</td>
+<td style="text-align: left;">1-1</td>
+<td style="text-align: left;">O2.5 43.9% / BTTS 48.4%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Toronto, Canada</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-24</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Mexico vs Czech Republic</td>
+<td style="text-align: left;">Mexico</td>
+<td style="text-align: left;">Strong (71.5%)</td>
+<td style="text-align: left;">H 71.5% / D 18.2% / A 10.3%</td>
+<td style="text-align: left;">2.08 - 0.63</td>
+<td style="text-align: left;">2-0</td>
+<td style="text-align: left;">O2.5 50.9% / BTTS 40.9%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Mexico City, Mexico</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-24</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">South Africa vs South Korea</td>
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: left;">Strong (60.7%)</td>
+<td style="text-align: left;">H 16.6% / D 22.7% / A 60.7%</td>
+<td style="text-align: left;">0.85 - 1.88</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;">O2.5 51.3% / BTTS 48.4%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Guadalupe, Mexico</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-24</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Canada vs Switzerland</td>
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">Lean (43.6%)</td>
+<td style="text-align: left;">H 43.6% / D 28.3% / A 28.2%</td>
+<td style="text-align: left;">1.29 - 0.99</td>
+<td style="text-align: left;">1-0</td>
+<td style="text-align: left;">O2.5 39.9% / BTTS 45.6%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Vancouver, Canada</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-24</td>
+<td style="text-align: left;">Upcoming</td>
+<td style="text-align: left;">Bosnia and Herzegovina vs Qatar</td>
+<td style="text-align: left;">Bosnia and Herzegovina</td>
+<td style="text-align: left;">Medium (52.8%)</td>
+<td style="text-align: left;">H 52.8% / D 25.0% / A 22.2%</td>
+<td style="text-align: left;">1.74 - 1.04</td>
+<td style="text-align: left;">1-1</td>
+<td style="text-align: left;">O2.5 52.6% / BTTS 53.3%</td>
+<td style="text-align: left;">Feed pending</td>
+<td style="text-align: left;">Pending / Pending</td>
+<td style="text-align: left;">Seattle, United States</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="lineup-detail" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="lineup-detail"><span class="header-section-number">3</span> Lineup Detail</h2>
+<p>Confirmed lineups appear here when the match feed posts starting XIs.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(board) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  lineup_detail <span class="ot">&lt;-</span> board <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(home_lineup_status <span class="sc">==</span> <span class="st">"Confirmed"</span> <span class="sc">|</span> away_lineup_status <span class="sc">==</span> <span class="st">"Confirmed"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      date,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      match_label,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      home_formation,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      away_formation,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      home_starting_lineup,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      away_starting_lineup</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(lineup_detail) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    lineup_detail <span class="sc">|&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Confirmed starting lineups."</span>, <span class="at">max_rows =</span> <span class="dv">8</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Starting lineups update when the fixture feed posts them."</span>))</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Lineup detail is available after the matchday board refresh."</span>))</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="clean-table caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Starting lineups update when the fixture feed posts them.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="post-match-accuracy" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="post-match-accuracy"><span class="header-section-number">4</span> Post-Match Accuracy</h2>
+<p>This section updates after final scores enter the fixture table.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"matchday_model_accuracy.csv"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(accuracy) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  accuracy <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">completed_matches =</span> <span class="fu">fmt_integer</span>(completed_matches),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">outcome_accuracy =</span> <span class="fu">fmt_percent</span>(outcome_accuracy, <span class="dv">1</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Post-match model accuracy on completed fixtures."</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Post-match accuracy updates after completed scores are available."</span>))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="clean-table caption-top table table-sm table-striped small">
+<caption>Post-match model accuracy on completed fixtures.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Model</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Completed Matches</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Outcome Accuracy</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Plain English</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ensemble</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">55.0%</td>
+<td style="text-align: left;">Combined result probability from ordinal and Poisson models.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OLS goals</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">55.0%</td>
+<td style="text-align: left;">Outcome implied by the OLS expected-goals comparison.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poisson score grid</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">55.0%</td>
+<td style="text-align: left;">Outcome implied by the Poisson scoreline probability grid.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ordinal result</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">55.0%</td>
+<td style="text-align: left;">Direct win/draw/loss ordinal logistic model.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="models-and-data-used" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="models-and-data-used"><span class="header-section-number">5</span> Models And Data Used</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sources <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"matchday_prediction_data_sources.csv"</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(sources) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  sources <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Prediction outputs, model source, and current role."</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model-source notes are available after the matchday board refresh."</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="clean-table caption-top table table-sm table-striped small">
+<caption>Prediction outputs, model source, and current role.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Output</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Model or Feed</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Current Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Winner and outcome</td>
+<td style="text-align: left;">Average of ordinal logistic result probabilities and Poisson score-derived probabilities</td>
+<td style="text-align: left;">Active</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Expected goals</td>
+<td style="text-align: left;">Poisson goals model</td>
+<td style="text-align: left;">Active</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Most likely score</td>
+<td style="text-align: left;">Independent Poisson score grid</td>
+<td style="text-align: left;">Active</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Over 2.5 goals</td>
+<td style="text-align: left;">Independent Poisson score grid</td>
+<td style="text-align: left;">Active</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Both teams to score</td>
+<td style="text-align: left;">Independent Poisson score grid</td>
+<td style="text-align: left;">Active</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Yellow cards</td>
+<td style="text-align: left;">API player card rates when available</td>
+<td style="text-align: left;">Awaiting card-history rows</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lineups</td>
+<td style="text-align: left;">API-Football fixture lineups when posted</td>
+<td style="text-align: left;">Awaiting posted lineups</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Provider prediction</td>
+<td style="text-align: left;">API-Football fixture prediction feed when available</td>
+<td style="text-align: left;">Awaiting provider prediction rows</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The board uses three active layers:</p>
+<ul>
+<li><strong>Winner and outcome:</strong> an ensemble of the ordinal logistic result model and probabilities derived from the Poisson score grid.</li>
+<li><strong>Goals and likely score:</strong> the Poisson goals model produces expected goals; the score grid turns those expected goals into scoreline probabilities.</li>
+<li><strong>Totals:</strong> over 2.5 goals and both-teams-to-score probabilities come from the same Poisson score grid.</li>
+</ul>
+<p>Cards and lineups are live-enrichment layers. They update when the football API returns player card history, event rows, or confirmed lineups for a fixture.</p>
+</section>
+<section id="how-to-read-it" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="how-to-read-it"><span class="header-section-number">6</span> How To Read It</h2>
+<ul>
+<li><strong>Predicted winner:</strong> highest ensemble probability. A draw remains possible for group-stage style matches.</li>
+<li><strong>Confidence:</strong> the model’s top probability bucket, not a guarantee.</li>
+<li><strong>Expected goals:</strong> model average score, not the most likely exact score.</li>
+<li><strong>Most likely score:</strong> the single scoreline with the highest probability in the Poisson grid.</li>
+<li><strong>O2.5:</strong> probability that total goals are 3 or more.</li>
+<li><strong>BTTS:</strong> probability that both teams score at least one goal.</li>
+</ul>
+</section>
+<section id="reproduce-locally" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="reproduce-locally"><span class="header-section-number">7</span> Reproduce Locally</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/16_score_2026_fixtures.R"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/17_matchday_prediction_board.R"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/lindadata\.github\.io\/world-cup-2026-betting-model\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Matchday Prediction Board"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Winner, result probabilities, goals, cards coverage, and lineups"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>, <span class="at">warning =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>root <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"data/processed/modeling"</span>)) <span class="st">"."</span> <span class="cf">else</span> <span class="st">".."</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">file.path</span>(root, <span class="st">"R"</span>, <span class="st">"report_helpers.R"</span>))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>read_csv_if_exists <span class="ot">&lt;-</span> <span class="cf">function</span>(path) {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">file.exists</span>(path)) {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">read_csv</span>(path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>()</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prediction Board</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>This is the matchday view: one section for the current predictions and live-feed coverage.</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-cards, echo=FALSE, results="asis"}</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>summary <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"matchday_prediction_summary.csv"</span>))</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>board <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"matchday_prediction_board.csv"</span>))</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>summary_value <span class="ot">&lt;-</span> <span class="cf">function</span>(metric_name) {</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(summary) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NA_character_</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  value <span class="ot">&lt;-</span> summary<span class="sc">$</span>value[summary<span class="sc">$</span>metric <span class="sc">==</span> metric_name]</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(value) <span class="sc">==</span> <span class="dv">0</span>) <span class="cn">NA_character_</span> <span class="cf">else</span> <span class="fu">as.character</span>(value[[<span class="dv">1</span>]])</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(summary) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">metric_cards</span>(<span class="fu">data.frame</span>(</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Last Refresh"</span>, <span class="st">"Matches"</span>, <span class="st">"Today"</span>, <span class="st">"Upcoming"</span>, <span class="st">"Lineups"</span>, <span class="st">"Events"</span>),</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summary_value</span>(<span class="st">"last_refreshed_local"</span>),</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summary_value</span>(<span class="st">"matches_on_board"</span>),</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summary_value</span>(<span class="st">"matches_today"</span>),</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summary_value</span>(<span class="st">"upcoming_matches"</span>),</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summary_value</span>(<span class="st">"lineup_rows_available"</span>),</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summary_value</span>(<span class="st">"event_rows_available"</span>)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">note =</span> <span class="fu">c</span>(</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>      <span class="st">"local laptop time"</span>,</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>      <span class="st">"prediction rows"</span>,</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>      <span class="st">"matchday count"</span>,</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>      <span class="st">"future matches"</span>,</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>      <span class="st">"API lineup rows"</span>,</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>      <span class="st">"API event rows"</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>  )))</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## Future Match Bracket</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>Double-click a matchup to open the model detail.</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{r bracket-interface, echo=FALSE, results="asis"}</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>escape_html <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(x), <span class="st">""</span>, <span class="fu">as.character</span>(x))</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"&amp;"</span>, <span class="st">"&amp;amp;"</span>, x, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"&lt;"</span>, <span class="st">"&amp;lt;"</span>, x, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"&gt;"</span>, <span class="st">"&amp;gt;"</span>, x, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">'"'</span>, <span class="st">"&amp;quot;"</span>, x, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>  x</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(board) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>  board<span class="sc">$</span>kickoff_utc <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(board<span class="sc">$</span>kickoff_utc_iso, <span class="at">format =</span> <span class="st">"%Y-%m-%dT%H:%M:%SZ"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>  future_board <span class="ot">&lt;-</span> board <span class="sc">|&gt;</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>      match_timing <span class="sc">!=</span> <span class="st">"Completed"</span>,</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>      (</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>        <span class="sc">!</span><span class="fu">is.na</span>(kickoff_utc) <span class="sc">&amp;</span> kickoff_utc <span class="sc">&gt;</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>          <span class="fu">is.na</span>(kickoff_utc) <span class="sc">&amp;</span> <span class="fu">as.Date</span>(date) <span class="sc">&gt;=</span> <span class="fu">Sys.Date</span>()</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(kickoff_utc, date, source_match_id)</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(future_board) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">'&lt;div class="bracket-board"&gt;'</span>)</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (day <span class="cf">in</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(future_board<span class="sc">$</span>date))) {</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>      day_rows <span class="ot">&lt;-</span> future_board[<span class="fu">as.character</span>(future_board<span class="sc">$</span>date) <span class="sc">==</span> day, ]</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">'&lt;section class="bracket-day"&gt;'</span>)</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">'&lt;h3&gt;'</span>, <span class="fu">escape_html</span>(<span class="fu">format</span>(<span class="fu">as.Date</span>(day), <span class="st">"%A, %B %d"</span>)), <span class="st">'&lt;/h3&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">'&lt;div class="match-grid"&gt;'</span>)</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(day_rows))) {</span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>        row <span class="ot">&lt;-</span> day_rows[i, ]</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>        kickoff <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>          <span class="fu">is.na</span>(row<span class="sc">$</span>kickoff_local_iso) <span class="sc">||</span> <span class="sc">!</span><span class="fu">nzchar</span>(row<span class="sc">$</span>kickoff_local_iso),</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Time pending"</span>,</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>          <span class="fu">paste0</span>(row<span class="sc">$</span>local_time, <span class="st">" "</span>, row<span class="sc">$</span>utc_offset)</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>        result_probs <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>          <span class="st">"H "</span>,</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_percent</span>(row<span class="sc">$</span>ensemble_home_win_prob, <span class="dv">1</span>),</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>          <span class="st">" / D "</span>,</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_percent</span>(row<span class="sc">$</span>ensemble_draw_prob, <span class="dv">1</span>),</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>          <span class="st">" / A "</span>,</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_percent</span>(row<span class="sc">$</span>ensemble_away_win_prob, <span class="dv">1</span>)</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>        goals <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_number</span>(row<span class="sc">$</span>pred_home_goals_poisson, <span class="dv">2</span>),</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>          <span class="st">" - "</span>,</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>          <span class="fu">fmt_number</span>(row<span class="sc">$</span>pred_away_goals_poisson, <span class="dv">2</span>)</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>        cards <span class="ot">&lt;-</span> <span class="cf">if</span> (</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>          <span class="fu">is.finite</span>(row<span class="sc">$</span>home_projected_yellow_cards) <span class="sc">&amp;&amp;</span></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>            <span class="fu">is.finite</span>(row<span class="sc">$</span>away_projected_yellow_cards)</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>        ) {</span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>          <span class="fu">paste0</span>(</span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>            <span class="fu">fmt_number</span>(row<span class="sc">$</span>home_projected_yellow_cards, <span class="dv">1</span>),</span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>            <span class="st">" - "</span>,</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>            <span class="fu">fmt_number</span>(row<span class="sc">$</span>away_projected_yellow_cards, <span class="dv">1</span>)</span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Feed pending"</span></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>        lineups <span class="ot">&lt;-</span> <span class="fu">paste0</span>(row<span class="sc">$</span>home_lineup_status, <span class="st">" / "</span>, row<span class="sc">$</span>away_lineup_status)</span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>        refresh <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>          <span class="fu">is.na</span>(row<span class="sc">$</span>refresh_utc_iso) <span class="sc">||</span> <span class="sc">!</span><span class="fu">nzchar</span>(row<span class="sc">$</span>refresh_utc_iso),</span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Refresh time pending"</span>,</span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>          <span class="fu">paste</span>(<span class="st">"Refresh 30 min before:"</span>, row<span class="sc">$</span>refresh_utc_iso)</span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;article class="match-card" tabindex="0"&gt;'</span>)</span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;div class="match-card-top"&gt;'</span>)</span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;span&gt;'</span>, <span class="fu">escape_html</span>(kickoff), <span class="st">'&lt;/span&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;strong&gt;'</span>, <span class="fu">escape_html</span>(row<span class="sc">$</span>confidence_band), <span class="st">'&lt;/strong&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;/div&gt;'</span>)</span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;div class="match-teams"&gt;'</span>)</span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;div&gt;&lt;span&gt;'</span>, <span class="fu">escape_html</span>(row<span class="sc">$</span>home_team), <span class="st">'&lt;/span&gt;&lt;small&gt;Home/listed&lt;/small&gt;&lt;/div&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;div class="versus"&gt;vs&lt;/div&gt;'</span>)</span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;div&gt;&lt;span&gt;'</span>, <span class="fu">escape_html</span>(row<span class="sc">$</span>away_team), <span class="st">'&lt;/span&gt;&lt;small&gt;Away/listed&lt;/small&gt;&lt;/div&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;/div&gt;'</span>)</span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;div class="pick-line"&gt;'</span>)</span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;span&gt;Winner&lt;/span&gt;&lt;strong&gt;'</span>, <span class="fu">escape_html</span>(row<span class="sc">$</span>predicted_winner), <span class="st">'&lt;/strong&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;/div&gt;'</span>)</span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;div class="model-picks"&gt;'</span>)</span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;span&gt;OLS: '</span>, <span class="fu">escape_html</span>(row<span class="sc">$</span>ols_predicted_winner), <span class="st">'&lt;/span&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;span&gt;Poisson: '</span>, <span class="fu">escape_html</span>(row<span class="sc">$</span>poisson_predicted_winner), <span class="st">'&lt;/span&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;span&gt;Ordinal: '</span>, <span class="fu">escape_html</span>(row<span class="sc">$</span>ordinal_predicted_winner), <span class="st">'&lt;/span&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;/div&gt;'</span>)</span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;div class="match-detail"&gt;'</span>)</span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;dl&gt;'</span>)</span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;dt&gt;Outcome probabilities&lt;/dt&gt;&lt;dd&gt;'</span>, <span class="fu">escape_html</span>(result_probs), <span class="st">'&lt;/dd&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;dt&gt;Expected goals&lt;/dt&gt;&lt;dd&gt;'</span>, <span class="fu">escape_html</span>(goals), <span class="st">'&lt;/dd&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;dt&gt;Most likely score&lt;/dt&gt;&lt;dd&gt;'</span>, <span class="fu">escape_html</span>(row<span class="sc">$</span>most_likely_score), <span class="st">'&lt;/dd&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;dt&gt;Totals&lt;/dt&gt;&lt;dd&gt;O2.5 '</span>, <span class="fu">fmt_percent</span>(row<span class="sc">$</span>over_2_5_prob, <span class="dv">1</span>), <span class="st">' / BTTS '</span>, <span class="fu">fmt_percent</span>(row<span class="sc">$</span>both_teams_to_score_prob, <span class="dv">1</span>), <span class="st">'&lt;/dd&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;dt&gt;Yellow cards&lt;/dt&gt;&lt;dd&gt;'</span>, <span class="fu">escape_html</span>(cards), <span class="st">'&lt;/dd&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;dt&gt;Lineups&lt;/dt&gt;&lt;dd&gt;'</span>, <span class="fu">escape_html</span>(lineups), <span class="st">'&lt;/dd&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;dt&gt;Venue&lt;/dt&gt;&lt;dd&gt;'</span>, <span class="fu">escape_html</span>(<span class="fu">paste</span>(row<span class="sc">$</span>city, row<span class="sc">$</span>country, <span class="at">sep =</span> <span class="st">", "</span>)), <span class="st">'&lt;/dd&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;dt&gt;Refresh&lt;/dt&gt;&lt;dd&gt;'</span>, <span class="fu">escape_html</span>(refresh), <span class="st">'&lt;/dd&gt;'</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;/dl&gt;'</span>)</span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;/div&gt;'</span>)</span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">'&lt;/article&gt;'</span>)</span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">'&lt;/div&gt;'</span>)</span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">'&lt;/section&gt;'</span>)</span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">'&lt;/div&gt;'</span>)</span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">'&lt;p class="empty-board"&gt;No future matches are available in the current local fixture table.&lt;/p&gt;'</span>)</span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">'&lt;p class="empty-board"&gt;Matchday predictions are available after the matchday board refresh.&lt;/p&gt;'</span>)</span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;script&gt;</span></span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a><span class="in">document.addEventListener("DOMContentLoaded", function () {</span></span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a><span class="in">  document.querySelectorAll(".match-card").forEach(function (card) {</span></span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a><span class="in">    card.addEventListener("dblclick", function () {</span></span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a><span class="in">      card.classList.toggle("open");</span></span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a><span class="in">    });</span></span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a><span class="in">    card.addEventListener("keydown", function (event) {</span></span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a><span class="in">      if (event.key === "Enter" || event.key === " ") {</span></span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a><span class="in">        event.preventDefault();</span></span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a><span class="in">        card.classList.toggle("open");</span></span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a><span class="in">      }</span></span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a><span class="in">    });</span></span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a><span class="in">  });</span></span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a><span class="in">});</span></span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/script&gt;</span></span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r board-table}</span></span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(board) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a>  board<span class="sc">$</span>kickoff_utc <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(board<span class="sc">$</span>kickoff_utc_iso, <span class="at">format =</span> <span class="st">"%Y-%m-%dT%H:%M:%SZ"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a>  board_for_display <span class="ot">&lt;-</span> board <span class="sc">|&gt;</span></span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a>      (</span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>        <span class="sc">!</span><span class="fu">is.na</span>(kickoff_utc) <span class="sc">&amp;</span> kickoff_utc <span class="sc">&gt;</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|</span></span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a>          <span class="fu">is.na</span>(kickoff_utc) <span class="sc">&amp;</span> <span class="fu">as.Date</span>(date) <span class="sc">&gt;=</span> <span class="fu">Sys.Date</span>() <span class="sc">&amp;</span> match_timing <span class="sc">!=</span> <span class="st">"Completed"</span></span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>  display_board <span class="ot">&lt;-</span> board_for_display <span class="sc">|&gt;</span></span>
+<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a>      <span class="at">result_probability =</span> <span class="fu">paste0</span>(</span>
+<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a>        <span class="st">"H "</span>,</span>
+<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(ensemble_home_win_prob, <span class="dv">1</span>),</span>
+<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a>        <span class="st">" / D "</span>,</span>
+<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(ensemble_draw_prob, <span class="dv">1</span>),</span>
+<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a>        <span class="st">" / A "</span>,</span>
+<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(ensemble_away_win_prob, <span class="dv">1</span>)</span>
+<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a>      <span class="at">expected_goals =</span> <span class="fu">paste0</span>(</span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_number</span>(pred_home_goals_poisson, <span class="dv">2</span>),</span>
+<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a>        <span class="st">" - "</span>,</span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_number</span>(pred_away_goals_poisson, <span class="dv">2</span>)</span>
+<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>      <span class="at">totals =</span> <span class="fu">paste0</span>(</span>
+<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a>        <span class="st">"O2.5 "</span>,</span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(over_2_5_prob, <span class="dv">1</span>),</span>
+<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a>        <span class="st">" / BTTS "</span>,</span>
+<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fmt_percent</span>(both_teams_to_score_prob, <span class="dv">1</span>)</span>
+<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a>      <span class="at">yellow_cards =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a>        <span class="fu">is.finite</span>(home_projected_yellow_cards) <span class="sc">&amp;</span> <span class="fu">is.finite</span>(away_projected_yellow_cards) <span class="sc">~</span></span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a>          <span class="fu">paste0</span>(</span>
+<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a>            <span class="fu">fmt_number</span>(home_projected_yellow_cards, <span class="dv">1</span>),</span>
+<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>            <span class="st">" - "</span>,</span>
+<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a>            <span class="fu">fmt_number</span>(away_projected_yellow_cards, <span class="dv">1</span>)</span>
+<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a>          ),</span>
+<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Feed pending"</span></span>
+<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a>      <span class="at">lineup =</span> <span class="fu">paste0</span>(home_lineup_status, <span class="st">" / "</span>, away_lineup_status),</span>
+<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>      <span class="at">confidence =</span> <span class="fu">paste0</span>(confidence_band, <span class="st">" ("</span>, <span class="fu">fmt_percent</span>(prediction_confidence, <span class="dv">1</span>), <span class="st">")"</span>),</span>
+<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a>      <span class="at">venue =</span> <span class="fu">paste</span>(city, country, <span class="at">sep =</span> <span class="st">", "</span>)</span>
+<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>      date,</span>
+<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a>      match_timing,</span>
+<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a>      match_label,</span>
+<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a>      predicted_winner,</span>
+<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a>      confidence,</span>
+<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a>      result_probability,</span>
+<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a>      expected_goals,</span>
+<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a>      most_likely_score,</span>
+<span id="cb6-252"><a href="#cb6-252" aria-hidden="true" tabindex="-1"></a>      totals,</span>
+<span id="cb6-253"><a href="#cb6-253" aria-hidden="true" tabindex="-1"></a>      yellow_cards,</span>
+<span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a>      lineup,</span>
+<span id="cb6-255"><a href="#cb6-255" aria-hidden="true" tabindex="-1"></a>      venue</span>
+<span id="cb6-256"><a href="#cb6-256" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-257"><a href="#cb6-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-258"><a href="#cb6-258" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(display_board) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-259"><a href="#cb6-259" aria-hidden="true" tabindex="-1"></a>    display_board <span class="sc">|&gt;</span></span>
+<span id="cb6-260"><a href="#cb6-260" aria-hidden="true" tabindex="-1"></a>      <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Future matchday predictions."</span>, <span class="at">max_rows =</span> <span class="dv">24</span>)</span>
+<span id="cb6-261"><a href="#cb6-261" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-262"><a href="#cb6-262" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"No future matches are available in the current rendered board."</span>))</span>
+<span id="cb6-263"><a href="#cb6-263" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-264"><a href="#cb6-264" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-265"><a href="#cb6-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Matchday predictions are available after the matchday board refresh."</span>))</span>
+<span id="cb6-266"><a href="#cb6-266" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a><span class="fu">## Lineup Detail</span></span>
+<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>Confirmed lineups appear here when the match feed posts starting XIs.</span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a><span class="in">```{r lineup-detail}</span></span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(board) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>  lineup_detail <span class="ot">&lt;-</span> board <span class="sc">|&gt;</span></span>
+<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(home_lineup_status <span class="sc">==</span> <span class="st">"Confirmed"</span> <span class="sc">|</span> away_lineup_status <span class="sc">==</span> <span class="st">"Confirmed"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>      date,</span>
+<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>      match_label,</span>
+<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a>      home_formation,</span>
+<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>      away_formation,</span>
+<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a>      home_starting_lineup,</span>
+<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a>      away_starting_lineup</span>
+<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(lineup_detail) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>    lineup_detail <span class="sc">|&gt;</span></span>
+<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a>      <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Confirmed starting lineups."</span>, <span class="at">max_rows =</span> <span class="dv">8</span>)</span>
+<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Starting lineups update when the fixture feed posts them."</span>))</span>
+<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Lineup detail is available after the matchday board refresh."</span>))</span>
+<span id="cb6-294"><a href="#cb6-294" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-295"><a href="#cb6-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-296"><a href="#cb6-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-297"><a href="#cb6-297" aria-hidden="true" tabindex="-1"></a><span class="fu">## Post-Match Accuracy</span></span>
+<span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a>This section updates after final scores enter the fixture table.</span>
+<span id="cb6-300"><a href="#cb6-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r accuracy}</span></span>
+<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"matchday_model_accuracy.csv"</span>))</span>
+<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(accuracy) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a>  accuracy <span class="sc">|&gt;</span></span>
+<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>      <span class="at">completed_matches =</span> <span class="fu">fmt_integer</span>(completed_matches),</span>
+<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>      <span class="at">outcome_accuracy =</span> <span class="fu">fmt_percent</span>(outcome_accuracy, <span class="dv">1</span>)</span>
+<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Post-match model accuracy on completed fixtures."</span>)</span>
+<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Post-match accuracy updates after completed scores are available."</span>))</span>
+<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a><span class="fu">## Models And Data Used</span></span>
+<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a><span class="in">```{r data-sources}</span></span>
+<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a>sources <span class="ot">&lt;-</span> <span class="fu">read_csv_if_exists</span>(<span class="fu">file.path</span>(root, <span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"modeling"</span>, <span class="st">"matchday_prediction_data_sources.csv"</span>))</span>
+<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(sources) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a>  sources <span class="sc">|&gt;</span></span>
+<span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display_table</span>(<span class="at">caption =</span> <span class="st">"Prediction outputs, model source, and current role."</span>)</span>
+<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display_table</span>(<span class="fu">empty_note</span>(<span class="st">"Model-source notes are available after the matchday board refresh."</span>))</span>
+<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a>The board uses three active layers:</span>
+<span id="cb6-330"><a href="#cb6-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-331"><a href="#cb6-331" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Winner and outcome:** an ensemble of the ordinal logistic result model and probabilities derived from the Poisson score grid.</span>
+<span id="cb6-332"><a href="#cb6-332" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Goals and likely score:** the Poisson goals model produces expected goals; the score grid turns those expected goals into scoreline probabilities.</span>
+<span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Totals:** over 2.5 goals and both-teams-to-score probabilities come from the same Poisson score grid.</span>
+<span id="cb6-334"><a href="#cb6-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-335"><a href="#cb6-335" aria-hidden="true" tabindex="-1"></a>Cards and lineups are live-enrichment layers. They update when the football API returns player card history, event rows, or confirmed lineups for a fixture.</span>
+<span id="cb6-336"><a href="#cb6-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-337"><a href="#cb6-337" aria-hidden="true" tabindex="-1"></a><span class="fu">## How To Read It</span></span>
+<span id="cb6-338"><a href="#cb6-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-339"><a href="#cb6-339" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Predicted winner:** highest ensemble probability. A draw remains possible for group-stage style matches.</span>
+<span id="cb6-340"><a href="#cb6-340" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Confidence:** the model's top probability bucket, not a guarantee.</span>
+<span id="cb6-341"><a href="#cb6-341" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Expected goals:** model average score, not the most likely exact score.</span>
+<span id="cb6-342"><a href="#cb6-342" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Most likely score:** the single scoreline with the highest probability in the Poisson grid.</span>
+<span id="cb6-343"><a href="#cb6-343" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**O2.5:** probability that total goals are 3 or more.</span>
+<span id="cb6-344"><a href="#cb6-344" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**BTTS:** probability that both teams score at least one goal.</span>
+<span id="cb6-345"><a href="#cb6-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-346"><a href="#cb6-346" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproduce Locally</span></span>
+<span id="cb6-347"><a href="#cb6-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-348"><a href="#cb6-348" aria-hidden="true" tabindex="-1"></a><span class="in">```{r reproduce, eval=FALSE}</span></span>
+<span id="cb6-349"><a href="#cb6-349" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/16_score_2026_fixtures.R"</span>)</span>
+<span id="cb6-350"><a href="#cb6-350" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/17_matchday_prediction_board.R"</span>)</span>
+<span id="cb6-351"><a href="#cb6-351" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>LindaData 2026 World Cup model.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/LindaData/world-cup-2026-betting-model/blob/main/reports/08_matchday_predictions.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Built with R, Python, SQL, DuckDB, and Quarto.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

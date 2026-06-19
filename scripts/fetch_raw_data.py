@@ -81,15 +81,26 @@ def _write_api_response(destination: Path, filename: str, response) -> None:
 
 
 def _fixture_ids_from_payload(payload: object) -> list[str]:
-    fixture_ids: list[str] = []
+    fixtures: list[tuple[str, str, str]] = []
     for row in _response_items(payload):
         if not isinstance(row, dict):
             continue
         fixture = row.get("fixture") if isinstance(row.get("fixture"), dict) else {}
         fixture_id = fixture.get("id")
+        fixture_date = str(fixture.get("date", ""))
+        status = fixture.get("status") if isinstance(fixture.get("status"), dict) else {}
+        status_short = str(status.get("short", ""))
         if fixture_id not in (None, ""):
-            fixture_ids.append(str(fixture_id))
-    return fixture_ids
+            fixtures.append((str(fixture_id), fixture_date, status_short))
+
+    upcoming = [
+        item
+        for item in fixtures
+        if item[2] in {"NS", "TBD"} or item[2] == ""
+    ]
+    selected = upcoming if upcoming else fixtures
+    selected.sort(key=lambda item: item[1])
+    return [item[0] for item in selected]
 
 
 def main() -> int:

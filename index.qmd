@@ -27,6 +27,7 @@ read_csv_if_exists <- function(path) {
   <a class="btn" href="reports/04_knn_similarity_model.html">KNN Model</a>
   <a class="btn" href="reports/06_regression_diagnostics.html">Diagnostics</a>
   <a class="btn" href="reports/07_fixture_predictions.html">Predictions</a>
+  <a class="btn" href="reports/08_matchday_predictions.html">Matchday</a>
   <a class="btn" href="reports/03_distribution_review.html">Distributions</a>
   <a class="btn" href="#dictionary">Dictionary</a>
 </div>
@@ -277,6 +278,16 @@ The fixture table applies the trained local models to 2026 matches and shows exp
 
 <a class="project-button" href="reports/07_fixture_predictions.html">Open predictions report</a>
 :::
+
+::: {.model-card}
+### 7. Matchday Board
+
+**Question:** what should be checked right before kickoff?
+
+The matchday board combines predicted winner, win/draw/loss probabilities, expected goals, most likely score, totals, lineup status, and yellow-card coverage in one table.
+
+<a class="project-button" href="reports/08_matchday_predictions.html">Open matchday board</a>
+:::
 :::
 
 ## Dictionary
@@ -314,6 +325,9 @@ Use this as the quick reference for acronyms and modeling terms that appear acro
 | Overfitting | When a model learns noise in past data instead of repeatable signal. | A model can look good historically and still fail on new World Cup matches. |
 | Data grain | What one row means in a dataset. | The main modeling grain is one team in one match. One match creates two team-match rows. |
 | API | Application Programming Interface. A structured way to pull data from a provider. | API-Football is the live enrichment source once the baseline model is stable. |
+| Ensemble | A prediction that combines more than one model. | The matchday winner uses ordinal result probabilities plus Poisson score-derived probabilities. |
+| O2.5 | Over 2.5 goals. The match has at least 3 total goals. | Common soccer totals view derived from the score grid. |
+| BTTS | Both teams to score. | Another match-level probability derived from expected goals. |
 
 ## Project Map
 
@@ -582,6 +596,18 @@ Expected goals, win/draw/loss probabilities, completed-fixture checks, and weath
 :::
 :::
 
+::: {.column width="50%"}
+::: {.project-card}
+### Matchday Board
+
+One table for pre-match checks: winner, outcome probabilities, goals, totals, lineups, cards coverage, and venue context.
+
+<a class="project-button" href="reports/08_matchday_predictions.html">Open matchday board</a>
+:::
+:::
+:::
+
+::: {.columns}
 ::: {.column width="50%"}
 ::: {.project-card}
 ### Distribution Review

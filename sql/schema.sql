@@ -182,6 +182,21 @@ CREATE TABLE IF NOT EXISTS fact_2026_world_cup_fixtures (
   neutral BOOLEAN
 );
 
+CREATE TABLE IF NOT EXISTS fact_2026_world_cup_fixture_times (
+  source_match_id BIGINT,
+  date DATE,
+  local_time VARCHAR,
+  utc_offset VARCHAR,
+  kickoff_local_iso VARCHAR,
+  kickoff_utc_iso VARCHAR,
+  refresh_utc_iso VARCHAR,
+  home_team VARCHAR,
+  away_team VARCHAR,
+  home_team_key VARCHAR,
+  away_team_key VARCHAR,
+  venue_label VARCHAR
+);
+
 CREATE TABLE IF NOT EXISTS dim_locations_from_results (
   city VARCHAR,
   country VARCHAR,
@@ -418,6 +433,55 @@ CREATE TABLE IF NOT EXISTS api_football_world_cup_players (
   penalties_scored BIGINT,
   penalties_missed BIGINT,
   penalties_saved BIGINT
+);
+
+CREATE TABLE IF NOT EXISTS api_football_fixture_lineups (
+  api_fixture_id BIGINT,
+  team_id BIGINT,
+  team_name VARCHAR,
+  formation VARCHAR,
+  coach_id BIGINT,
+  coach_name VARCHAR,
+  lineup_role VARCHAR,
+  player_id BIGINT,
+  player_name VARCHAR,
+  player_number BIGINT,
+  player_position VARCHAR,
+  player_grid VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS api_football_fixture_events (
+  api_fixture_id BIGINT,
+  elapsed BIGINT,
+  extra BIGINT,
+  team_id BIGINT,
+  team_name VARCHAR,
+  player_id BIGINT,
+  player_name VARCHAR,
+  assist_id BIGINT,
+  assist_name VARCHAR,
+  event_type VARCHAR,
+  event_detail VARCHAR,
+  comments VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS api_football_fixture_predictions (
+  api_fixture_id BIGINT,
+  winner_id BIGINT,
+  winner_name VARCHAR,
+  winner_comment VARCHAR,
+  win_or_draw BOOLEAN,
+  under_over VARCHAR,
+  goals_home VARCHAR,
+  goals_away VARCHAR,
+  advice VARCHAR,
+  home_percent VARCHAR,
+  draw_percent VARCHAR,
+  away_percent VARCHAR,
+  home_team_id BIGINT,
+  home_team VARCHAR,
+  away_team_id BIGINT,
+  away_team VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS fact_news_articles_gdelt (
