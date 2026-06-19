@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-19T18:30:00.662594Z.
+Last refreshed: 2026-06-19T21:30:01.071825Z.
 
 Refresh profile: `free-refresh`.
 
@@ -52,13 +52,13 @@ data/processed/metadata/column_inventory.csv
 | `fact_2026_world_cup_fixtures` | 72 |
 | `fact_fixture_weather_hourly_open_meteo` | 768 |
 | `fact_international_matches_team_long` | 98954 |
-| `fact_news_articles_gdelt` | 447 |
+| `fact_news_articles_gdelt` | 215 |
 | `fact_player_goals` | 47690 |
 | `fact_team_elo_match_history` | 98866 |
 | `football_data_matches` | 0 |
 | `odds_snapshots` | 0 |
-| `raw_manifests` | 4 |
-| `raw_snapshot_files` | 53 |
+| `raw_manifests` | 5 |
+| `raw_snapshot_files` | 74 |
 | `seed_venues` | 16 |
 | `stg_international_goalscorers` | 47690 |
 | `stg_international_results` | 49477 |
@@ -91,21 +91,21 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 5.703 |
-| Build processed public CSVs | ok | 10.135 |
-| Fetch Wikidata player enrichment | ok | 3.441 |
-| Fetch Open-Meteo fixture weather | ok | 48.307 |
-| Fetch GDELT news metadata | failed | 260.491 |
-| Build DuckDB | ok | 5.211 |
-| Export DuckDB metadata | ok | 2.611 |
-| Fit goals model | ok | 3.816 |
-| Fit Poisson goals model | ok | 6.576 |
-| Fit ordinal result model | ok | 7.483 |
-| Fit KNN similarity model | ok | 15.984 |
-| Run regression diagnostics | ok | 4.346 |
-| Score 2026 fixtures | ok | 3.105 |
-| Build matchday prediction board | ok | 2.788 |
-| Render R Markdown reports | ok | 66.118 |
+| Fetch raw source snapshots | ok | 5.461 |
+| Build processed public CSVs | ok | 9.873 |
+| Fetch Wikidata player enrichment | ok | 4.145 |
+| Fetch Open-Meteo fixture weather | ok | 54.512 |
+| Fetch GDELT news metadata | ok | 437.429 |
+| Build DuckDB | ok | 8.04 |
+| Export DuckDB metadata | ok | 2.605 |
+| Fit goals model | ok | 4.145 |
+| Fit Poisson goals model | ok | 6.33 |
+| Fit ordinal result model | ok | 7.645 |
+| Fit KNN similarity model | ok | 16.499 |
+| Run regression diagnostics | ok | 4.336 |
+| Score 2026 fixtures | ok | 3.055 |
+| Build matchday prediction board | ok | 2.777 |
+| Render R Markdown reports | ok | 74.464 |
 
 ## Public Artifacts Updated
 
@@ -125,7 +125,3 @@ data/processed/metadata/column_inventory.csv
 
 The model is designed to add lineups, player availability, player-match statistics,
 event detail, and market-implied probabilities as structured coverage expands.
-
-## Failed Steps
-
-- `Fetch GDELT news metadata` failed. See `data\processed\update_runs\20260619T183000Z\fetch_gdelt_news_metadata.stderr.log` and `data\processed\update_runs\20260619T183000Z\fetch_gdelt_news_metadata.stdout.log`.
