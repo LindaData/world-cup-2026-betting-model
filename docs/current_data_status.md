@@ -81,8 +81,8 @@ data/processed/metadata/column_inventory.csv
 | Source | Status | Detail |
 | --- | --- | --- |
 | api-football | pulled | 200 |
-| football-data | skipped | FOOTBALL_DATA_TOKEN is not set |
-| odds | skipped | THE_ODDS_API_KEY is not set |
+| football-data | skipped | private token not configured |
+| odds | skipped | market odds token not configured |
 | official-fifa | pulled | 200 |
 | public | pulled | 200 |
 | wikimedia | pulled | 200 |
