@@ -14,16 +14,247 @@ read_csv_if_exists <- function(path) {
     data.frame()
   }
 }
+
+summary <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_prediction_summary.csv"))
+board <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_prediction_board.csv"))
+
+escape_html <- function(x) {
+  x <- ifelse(is.na(x), "", as.character(x))
+  x <- gsub("&", "&amp;", x, fixed = TRUE)
+  x <- gsub("<", "&lt;", x, fixed = TRUE)
+  x <- gsub(">", "&gt;", x, fixed = TRUE)
+  x <- gsub('"', "&quot;", x, fixed = TRUE)
+  x
+}
+
+safe_text <- function(x, fallback = "Pending") {
+  if (length(x) == 0 || is.null(x)) {
+    return(fallback)
+  }
+  text <- as.character(x[[1]])
+  if (is.na(text) || !nzchar(text)) {
+    fallback
+  } else {
+    text
+  }
+}
+
+safe_number <- function(x) {
+  if (length(x) == 0 || is.null(x)) {
+    return(NA_real_)
+  }
+  suppressWarnings(as.numeric(x[[1]]))
+}
+
+display_percent <- function(x, digits = 1, fallback = "Pending") {
+  value <- safe_number(x)
+  if (is.na(value) || !is.finite(value)) {
+    fallback
+  } else {
+    fmt_percent(value, digits)
+  }
+}
+
+display_number <- function(x, digits = 2, fallback = "Pending") {
+  value <- safe_number(x)
+  if (is.na(value) || !is.finite(value)) {
+    fallback
+  } else {
+    fmt_number(value, digits)
+  }
+}
+
+probability_width <- function(x) {
+  value <- safe_number(x)
+  if (is.na(value) || !is.finite(value)) {
+    return(0)
+  }
+  max(0, min(100, 100 * value))
+}
+
+parse_utc_time <- function(x) {
+  if (length(x) == 0 || is.null(x)) {
+    return(as.POSIXct(NA_real_, origin = "1970-01-01", tz = "UTC"))
+  }
+  if (inherits(x, "POSIXt")) {
+    return(as.POSIXct(x, tz = "UTC"))
+  }
+  text <- as.character(x)
+  text <- sub("Z$", "", text)
+  text <- gsub("T", " ", text, fixed = TRUE)
+  as.POSIXct(text, format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+}
+
+format_utc_time <- function(x, fallback = "Time pending") {
+  time <- parse_utc_time(x)
+  time <- time[1]
+  if (is.na(time)) {
+    fallback
+  } else {
+    format(time, "%a, %b %d, %I:%M %p %Z", tz = Sys.timezone())
+  }
+}
+
+prepare_future_board <- function(board) {
+  if (nrow(board) == 0) {
+    return(board)
+  }
+  board |>
+    dplyr::mutate(
+      kickoff_utc = parse_utc_time(kickoff_utc_iso)
+    ) |>
+    dplyr::filter(
+      match_timing != "Completed",
+      (
+        !is.na(kickoff_utc) & kickoff_utc > Sys.time()
+      ) |
+        (
+          is.na(kickoff_utc) & as.Date(date) >= Sys.Date()
+        )
+    ) |>
+    dplyr::arrange(kickoff_utc, date, source_match_id)
+}
+
+probability_bar <- function(label, value, class_name) {
+  paste0(
+    '<div class="prob-row">',
+    '<div class="prob-row-label"><span>', escape_html(label), '</span><strong>',
+    display_percent(value, 1),
+    '</strong></div>',
+    '<div class="prob-track"><span class="', class_name, '" style="width:',
+    fmt_number(probability_width(value), 1),
+    '%"></span></div>',
+    '</div>'
+  )
+}
 ```
 
 ## Prediction Board
 
-This is the matchday view: one section for the current predictions and live-feed coverage.
+This is the matchday view for current forecasts, upcoming fixtures, model picks, and post-match accuracy.
+
+<div class="matchday-toolbar">
+  <a href="#next-match-forecast">Next Match</a>
+  <a href="#next-upcoming-matches">Upcoming</a>
+  <a href="#future-match-bracket">Bracket</a>
+  <a href="#post-match-accuracy">Accuracy</a>
+</div>
+
+## Next Match Forecast
+
+```{r next-match-forecast, echo=FALSE, results="asis"}
+future_board <- prepare_future_board(board)
+
+if (nrow(future_board) > 0) {
+  next_match <- future_board[1, ]
+  home_label <- safe_text(next_match$home_team, "Home team")
+  away_label <- safe_text(next_match$away_team, "Away team")
+  winner <- safe_text(next_match$predicted_winner, "No pick")
+  kickoff <- format_utc_time(next_match$kickoff_utc_iso)
+  refresh <- format_utc_time(next_match$refresh_utc_iso, "Refresh time pending")
+  venue <- paste(
+    safe_text(next_match$city, "Venue"),
+    safe_text(next_match$country, "location"),
+    sep = ", "
+  )
+  expected_goals <- paste0(
+    display_number(next_match$pred_home_goals_poisson, 2),
+    " - ",
+    display_number(next_match$pred_away_goals_poisson, 2)
+  )
+  card_projection <- if (
+    is.finite(safe_number(next_match$home_projected_yellow_cards)) &&
+      is.finite(safe_number(next_match$away_projected_yellow_cards))
+  ) {
+    paste0(
+      display_number(next_match$home_projected_yellow_cards, 1),
+      " - ",
+      display_number(next_match$away_projected_yellow_cards, 1)
+    )
+  } else {
+    "Feed pending"
+  }
+  lineup_state <- paste(
+    safe_text(next_match$home_lineup_status, "Pending"),
+    safe_text(next_match$away_lineup_status, "Pending"),
+    sep = " / "
+  )
+
+  cat('<section class="next-match-hero">')
+  cat('<div class="next-match-main">')
+  cat('<div class="section-kicker">Next Match</div>')
+  cat('<h2>', escape_html(home_label), ' <span>vs</span> ', escape_html(away_label), '</h2>', sep = "")
+  cat('<div class="next-match-meta">')
+  cat('<span>', escape_html(kickoff), '</span>', sep = "")
+  cat('<span>', escape_html(venue), '</span>', sep = "")
+  cat('<span>Forecast refresh: ', escape_html(refresh), '</span>', sep = "")
+  cat('</div>')
+  cat('<div class="winner-call">')
+  cat('<span>Model pick</span>')
+  cat('<strong>', escape_html(winner), '</strong>', sep = "")
+  cat('<em>', escape_html(safe_text(next_match$confidence_band, "Confidence")), ' confidence: ', display_percent(next_match$prediction_confidence, 1), '</em>', sep = "")
+  cat('</div>')
+  cat('<div class="probability-panel">')
+  cat(probability_bar(paste(home_label, "win"), next_match$ensemble_home_win_prob, "home-prob"))
+  cat(probability_bar("Draw", next_match$ensemble_draw_prob, "draw-prob"))
+  cat(probability_bar(paste(away_label, "win"), next_match$ensemble_away_win_prob, "away-prob"))
+  cat('</div>')
+  cat('</div>')
+
+  cat('<div class="next-match-side">')
+  cat('<div class="quick-stat"><span>Expected goals</span><strong>', escape_html(expected_goals), '</strong></div>', sep = "")
+  cat('<div class="quick-stat"><span>Most likely score</span><strong>', escape_html(safe_text(next_match$most_likely_score, "Pending")), '</strong></div>', sep = "")
+  cat('<div class="quick-stat"><span>Over 2.5 goals</span><strong>', display_percent(next_match$over_2_5_prob, 1), '</strong></div>', sep = "")
+  cat('<div class="quick-stat"><span>Both teams score</span><strong>', display_percent(next_match$both_teams_to_score_prob, 1), '</strong></div>', sep = "")
+  cat('<div class="quick-stat"><span>Yellow cards</span><strong>', escape_html(card_projection), '</strong></div>', sep = "")
+  cat('<div class="quick-stat"><span>Lineups</span><strong>', escape_html(lineup_state), '</strong></div>', sep = "")
+  cat('</div>')
+  cat('</section>')
+
+  cat('<section class="model-vote-panel">')
+  cat('<div class="model-vote"><span>OLS</span><strong>', escape_html(safe_text(next_match$ols_predicted_winner, "Pending")), '</strong></div>', sep = "")
+  cat('<div class="model-vote"><span>Poisson</span><strong>', escape_html(safe_text(next_match$poisson_predicted_winner, "Pending")), '</strong></div>', sep = "")
+  cat('<div class="model-vote"><span>Ordinal</span><strong>', escape_html(safe_text(next_match$ordinal_predicted_winner, "Pending")), '</strong></div>', sep = "")
+  cat('<div class="model-vote"><span>Ensemble</span><strong>', escape_html(winner), '</strong></div>', sep = "")
+  cat('</section>')
+} else {
+  cat('<p class="empty-board">No future matches are available in the current local fixture table.</p>')
+}
+```
+
+## Next Upcoming Matches
+
+```{r upcoming-matches, echo=FALSE, results="asis"}
+if (nrow(future_board) > 0) {
+  upcoming <- future_board |> dplyr::slice_head(n = 8)
+  cat('<div class="upcoming-match-strip">')
+  for (i in seq_len(nrow(upcoming))) {
+    row <- upcoming[i, ]
+    result_probs <- paste0(
+      "H ",
+      display_percent(row$ensemble_home_win_prob, 0),
+      " / D ",
+      display_percent(row$ensemble_draw_prob, 0),
+      " / A ",
+      display_percent(row$ensemble_away_win_prob, 0)
+    )
+    cat('<article class="upcoming-match-card">')
+    cat('<div class="upcoming-time">', escape_html(format_utc_time(row$kickoff_utc_iso)), '</div>', sep = "")
+    cat('<h3>', escape_html(safe_text(row$home_team, "Home")), ' vs ', escape_html(safe_text(row$away_team, "Away")), '</h3>', sep = "")
+    cat('<div class="upcoming-pick"><span>Pick</span><strong>', escape_html(safe_text(row$predicted_winner, "Pending")), '</strong></div>', sep = "")
+    cat('<div class="upcoming-probs">', escape_html(result_probs), '</div>', sep = "")
+    cat('<div class="upcoming-score">Likely score: ', escape_html(safe_text(row$most_likely_score, "Pending")), '</div>', sep = "")
+    cat('</article>')
+  }
+  cat('</div>')
+} else {
+  cat('<p class="empty-board">No upcoming matches are available in the current local fixture table.</p>')
+}
+```
+
+## Board Status
 
 ```{r summary-cards, echo=FALSE, results="asis"}
-summary <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_prediction_summary.csv"))
-board <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_prediction_board.csv"))
-
 summary_value <- function(metric_name) {
   if (nrow(summary) == 0) {
     return(NA_character_)
@@ -60,28 +291,8 @@ if (nrow(summary) > 0) {
 Double-click a matchup to open the model detail.
 
 ```{r bracket-interface, echo=FALSE, results="asis"}
-escape_html <- function(x) {
-  x <- ifelse(is.na(x), "", as.character(x))
-  x <- gsub("&", "&amp;", x, fixed = TRUE)
-  x <- gsub("<", "&lt;", x, fixed = TRUE)
-  x <- gsub(">", "&gt;", x, fixed = TRUE)
-  x <- gsub('"', "&quot;", x, fixed = TRUE)
-  x
-}
-
 if (nrow(board) > 0) {
-  board$kickoff_utc <- as.POSIXct(board$kickoff_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
-  future_board <- board |>
-    dplyr::filter(
-      match_timing != "Completed",
-      (
-        !is.na(kickoff_utc) & kickoff_utc > Sys.time()
-      ) |
-        (
-          is.na(kickoff_utc) & as.Date(date) >= Sys.Date()
-        )
-    ) |>
-    dplyr::arrange(kickoff_utc, date, source_match_id)
+  future_board <- prepare_future_board(board)
 
   if (nrow(future_board) > 0) {
     cat('<div class="bracket-board">')
@@ -93,42 +304,34 @@ if (nrow(board) > 0) {
 
       for (i in seq_len(nrow(day_rows))) {
         row <- day_rows[i, ]
-        kickoff <- ifelse(
-          is.na(row$kickoff_local_iso) || !nzchar(row$kickoff_local_iso),
-          "Time pending",
-          paste0(row$local_time, " ", row$utc_offset)
-        )
+        kickoff <- format_utc_time(row$kickoff_utc_iso)
         result_probs <- paste0(
           "H ",
-          fmt_percent(row$ensemble_home_win_prob, 1),
+          display_percent(row$ensemble_home_win_prob, 1),
           " / D ",
-          fmt_percent(row$ensemble_draw_prob, 1),
+          display_percent(row$ensemble_draw_prob, 1),
           " / A ",
-          fmt_percent(row$ensemble_away_win_prob, 1)
+          display_percent(row$ensemble_away_win_prob, 1)
         )
         goals <- paste0(
-          fmt_number(row$pred_home_goals_poisson, 2),
+          display_number(row$pred_home_goals_poisson, 2),
           " - ",
-          fmt_number(row$pred_away_goals_poisson, 2)
+          display_number(row$pred_away_goals_poisson, 2)
         )
         cards <- if (
-          is.finite(row$home_projected_yellow_cards) &&
-            is.finite(row$away_projected_yellow_cards)
+          is.finite(safe_number(row$home_projected_yellow_cards)) &&
+            is.finite(safe_number(row$away_projected_yellow_cards))
         ) {
           paste0(
-            fmt_number(row$home_projected_yellow_cards, 1),
+            display_number(row$home_projected_yellow_cards, 1),
             " - ",
-            fmt_number(row$away_projected_yellow_cards, 1)
+            display_number(row$away_projected_yellow_cards, 1)
           )
         } else {
           "Feed pending"
         }
         lineups <- paste0(row$home_lineup_status, " / ", row$away_lineup_status)
-        refresh <- ifelse(
-          is.na(row$refresh_utc_iso) || !nzchar(row$refresh_utc_iso),
-          "Refresh time pending",
-          paste("Refresh 30 min before:", row$refresh_utc_iso)
-        )
+        refresh <- paste("Refresh 30 min before:", format_utc_time(row$refresh_utc_iso, "time pending"))
 
         cat('<article class="match-card" tabindex="0">')
         cat('<div class="match-card-top">')
@@ -153,7 +356,7 @@ if (nrow(board) > 0) {
         cat('<dt>Outcome probabilities</dt><dd>', escape_html(result_probs), '</dd>', sep = "")
         cat('<dt>Expected goals</dt><dd>', escape_html(goals), '</dd>', sep = "")
         cat('<dt>Most likely score</dt><dd>', escape_html(row$most_likely_score), '</dd>', sep = "")
-        cat('<dt>Totals</dt><dd>O2.5 ', fmt_percent(row$over_2_5_prob, 1), ' / BTTS ', fmt_percent(row$both_teams_to_score_prob, 1), '</dd>', sep = "")
+        cat('<dt>Totals</dt><dd>O2.5 ', display_percent(row$over_2_5_prob, 1), ' / BTTS ', display_percent(row$both_teams_to_score_prob, 1), '</dd>', sep = "")
         cat('<dt>Yellow cards</dt><dd>', escape_html(cards), '</dd>', sep = "")
         cat('<dt>Lineups</dt><dd>', escape_html(lineups), '</dd>', sep = "")
         cat('<dt>Venue</dt><dd>', escape_html(paste(row$city, row$country, sep = ", ")), '</dd>', sep = "")
@@ -195,16 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 ```{r board-table}
 if (nrow(board) > 0) {
-  board$kickoff_utc <- as.POSIXct(board$kickoff_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
-  board_for_display <- board |>
-    dplyr::filter(
-      (
-        !is.na(kickoff_utc) & kickoff_utc > Sys.time()
-      ) |
-        (
-          is.na(kickoff_utc) & as.Date(date) >= Sys.Date() & match_timing != "Completed"
-        )
-    )
+  board_for_display <- prepare_future_board(board)
 
   display_board <- board_for_display |>
     dplyr::mutate(

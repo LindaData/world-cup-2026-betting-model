@@ -27,7 +27,7 @@ read_csv_if_exists <- function(path) {
   <a class="btn" href="reports/04_knn_similarity_model.html">KNN Model</a>
   <a class="btn" href="reports/06_regression_diagnostics.html">Diagnostics</a>
   <a class="btn" href="reports/07_fixture_predictions.html">Predictions</a>
-  <a class="btn" href="reports/08_matchday_predictions.html">Matchday</a>
+  <a class="btn" href="reports/08_matchday_predictions.html#next-match-forecast">Next Match</a>
   <a class="btn" href="reports/03_distribution_review.html">Distributions</a>
   <a class="btn" href="#dictionary">Dictionary</a>
 </div>
@@ -598,11 +598,11 @@ Expected goals, win/draw/loss probabilities, completed-fixture checks, and weath
 
 ::: {.column width="50%"}
 ::: {.project-card}
-### Matchday Board
+### Matchday Forecast
 
-One table for pre-match checks: winner, outcome probabilities, goals, totals, lineups, cards coverage, and venue context.
+Next-match forecast, upcoming fixtures, model picks, outcome probabilities, goals, totals, lineups, cards coverage, and venue context.
 
-<a class="project-button" href="reports/08_matchday_predictions.html">Open matchday board</a>
+<a class="project-button" href="reports/08_matchday_predictions.html#next-match-forecast">Open matchday forecast</a>
 :::
 :::
 :::
