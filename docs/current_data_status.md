@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-20T02:30:01.284066Z.
+Last refreshed: 2026-06-20T22:08:31.971496Z.
 
 Refresh profile: `free-refresh`.
 
@@ -30,7 +30,7 @@ data/processed/metadata/column_inventory.csv
 | Table/View | Rows |
 | --- | --- |
 | `agg_news_query_counts_gdelt` | 8 |
-| `agg_player_international_goals` | 15829 |
+| `agg_player_international_goals` | 15831 |
 | `agg_team_elo_latest` | 336 |
 | `agg_team_history` | 336 |
 | `agg_team_recent_form` | 262 |
@@ -53,14 +53,14 @@ data/processed/metadata/column_inventory.csv
 | `fact_fixture_weather_hourly_open_meteo` | 864 |
 | `fact_international_matches_team_long` | 98954 |
 | `fact_news_articles_gdelt` | 227 |
-| `fact_player_goals` | 47690 |
-| `fact_team_elo_match_history` | 98866 |
+| `fact_player_goals` | 47697 |
+| `fact_team_elo_match_history` | 98874 |
 | `football_data_matches` | 0 |
 | `odds_snapshots` | 0 |
-| `raw_manifests` | 7 |
-| `raw_snapshot_files` | 116 |
+| `raw_manifests` | 8 |
+| `raw_snapshot_files` | 137 |
 | `seed_venues` | 16 |
-| `stg_international_goalscorers` | 47690 |
+| `stg_international_goalscorers` | 47697 |
 | `stg_international_results` | 49477 |
 | `stg_international_shootouts` | 678 |
 | `vw_2026_fixture_model_frame` | 72 |
@@ -81,8 +81,8 @@ data/processed/metadata/column_inventory.csv
 | Source | Status | Detail |
 | --- | --- | --- |
 | api-football | pulled | 200 |
-| football-data | skipped | private token not configured |
-| odds | skipped | market odds token not configured |
+| football-data | skipped | FOOTBALL_DATA_TOKEN is not set |
+| odds | skipped | THE_ODDS_API_KEY is not set |
 | official-fifa | pulled | 200 |
 | public | pulled | 200 |
 | wikimedia | pulled | 200 |
@@ -91,21 +91,21 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 6.908 |
-| Build processed public CSVs | ok | 15.494 |
-| Fetch Wikidata player enrichment | ok | 3.428 |
-| Fetch Open-Meteo fixture weather | ok | 56.8 |
-| Fetch GDELT news metadata | failed | 203.352 |
-| Build DuckDB | ok | 5.359 |
-| Export DuckDB metadata | ok | 2.625 |
-| Fit goals model | ok | 3.748 |
-| Fit Poisson goals model | ok | 6.906 |
-| Fit ordinal result model | ok | 7.38 |
-| Fit KNN similarity model | ok | 16.289 |
-| Run regression diagnostics | ok | 4.394 |
-| Score 2026 fixtures | ok | 3.011 |
-| Build matchday prediction board | ok | 2.673 |
-| Render R Markdown reports | ok | 64.607 |
+| Fetch raw source snapshots | ok | 10.367 |
+| Build processed public CSVs | ok | 40.621 |
+| Fetch Wikidata player enrichment | ok | 7.035 |
+| Fetch Open-Meteo fixture weather | ok | 102.658 |
+| Fetch GDELT news metadata | failed | 170.467 |
+| Build DuckDB | ok | 16.706 |
+| Export DuckDB metadata | ok | 6.716 |
+| Fit goals model | ok | 10.018 |
+| Fit Poisson goals model | ok | 17.291 |
+| Fit ordinal result model | ok | 19.485 |
+| Fit KNN similarity model | ok | 41.106 |
+| Run regression diagnostics | ok | 10.573 |
+| Score 2026 fixtures | ok | 7.676 |
+| Build matchday prediction board | ok | 7.03 |
+| Render R Markdown reports | ok | 157.818 |
 
 ## Public Artifacts Updated
 
@@ -128,4 +128,4 @@ event detail, and market-implied probabilities as structured coverage expands.
 
 ## Failed Steps
 
-- `Fetch GDELT news metadata` failed. See `data\processed\update_runs\20260620T023001Z\fetch_gdelt_news_metadata.stderr.log` and `data\processed\update_runs\20260620T023001Z\fetch_gdelt_news_metadata.stdout.log`.
+- `Fetch GDELT news metadata` failed. See `data\processed\update_runs\20260620T220831Z\fetch_gdelt_news_metadata.stderr.log` and `data\processed\update_runs\20260620T220831Z\fetch_gdelt_news_metadata.stdout.log`.
