@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-20T00:00:00.635477Z.
+Last refreshed: 2026-06-20T02:30:01.284066Z.
 
 Refresh profile: `free-refresh`.
 
@@ -57,8 +57,8 @@ data/processed/metadata/column_inventory.csv
 | `fact_team_elo_match_history` | 98866 |
 | `football_data_matches` | 0 |
 | `odds_snapshots` | 0 |
-| `raw_manifests` | 6 |
-| `raw_snapshot_files` | 95 |
+| `raw_manifests` | 7 |
+| `raw_snapshot_files` | 116 |
 | `seed_venues` | 16 |
 | `stg_international_goalscorers` | 47690 |
 | `stg_international_results` | 49477 |
@@ -91,21 +91,21 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 5.832 |
-| Build processed public CSVs | ok | 10.024 |
-| Fetch Wikidata player enrichment | ok | 3.575 |
-| Fetch Open-Meteo fixture weather | ok | 51.375 |
-| Fetch GDELT news metadata | ok | 528.585 |
-| Build DuckDB | ok | 4.83 |
-| Export DuckDB metadata | ok | 2.652 |
-| Fit goals model | ok | 3.763 |
-| Fit Poisson goals model | ok | 6.24 |
-| Fit ordinal result model | ok | 7.376 |
-| Fit KNN similarity model | ok | 15.586 |
-| Run regression diagnostics | ok | 4.675 |
-| Score 2026 fixtures | ok | 3.222 |
-| Build matchday prediction board | ok | 2.647 |
-| Render R Markdown reports | ok | 69.986 |
+| Fetch raw source snapshots | ok | 6.908 |
+| Build processed public CSVs | ok | 15.494 |
+| Fetch Wikidata player enrichment | ok | 3.428 |
+| Fetch Open-Meteo fixture weather | ok | 56.8 |
+| Fetch GDELT news metadata | failed | 203.352 |
+| Build DuckDB | ok | 5.359 |
+| Export DuckDB metadata | ok | 2.625 |
+| Fit goals model | ok | 3.748 |
+| Fit Poisson goals model | ok | 6.906 |
+| Fit ordinal result model | ok | 7.38 |
+| Fit KNN similarity model | ok | 16.289 |
+| Run regression diagnostics | ok | 4.394 |
+| Score 2026 fixtures | ok | 3.011 |
+| Build matchday prediction board | ok | 2.673 |
+| Render R Markdown reports | ok | 64.607 |
 
 ## Public Artifacts Updated
 
@@ -125,3 +125,7 @@ data/processed/metadata/column_inventory.csv
 
 The model is designed to add lineups, player availability, player-match statistics,
 event detail, and market-implied probabilities as structured coverage expands.
+
+## Failed Steps
+
+- `Fetch GDELT news metadata` failed. See `data\processed\update_runs\20260620T023001Z\fetch_gdelt_news_metadata.stderr.log` and `data\processed\update_runs\20260620T023001Z\fetch_gdelt_news_metadata.stdout.log`.
