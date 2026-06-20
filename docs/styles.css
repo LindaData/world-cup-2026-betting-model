@@ -166,6 +166,111 @@ table {
   background: #f3fbfb;
 }
 
+.sport-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  margin: 1rem 0 1.2rem;
+  padding: 0.75rem;
+  border: 1px solid #cddbe5;
+  border-radius: 8px;
+  background: #f7fbfb;
+}
+
+.sport-jump label {
+  color: #405261;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sport-jump select {
+  min-width: min(100%, 280px);
+  border: 1px solid #c8d9dd;
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 0.45rem 0.55rem;
+  color: #17252a;
+  font-weight: 700;
+}
+
+.sport-section-card {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1rem 0 1.2rem;
+  padding: 1rem;
+  border: 1px solid #d8e2ea;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+}
+
+.sport-section-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.42fr);
+  gap: 0.85rem;
+  align-items: start;
+}
+
+.sport-section-header h3 {
+  margin: 0.15rem 0 0.35rem;
+  color: #17252a;
+}
+
+.sport-section-header p {
+  margin: 0;
+  color: #52616b;
+}
+
+.sport-section-meta {
+  display: grid;
+  gap: 0.35rem;
+  border-left: 4px solid #0f6b68;
+  border-radius: 8px;
+  background: #f7fbfb;
+  padding: 0.65rem;
+}
+
+.sport-section-meta span,
+.sport-plan-card span {
+  color: #52616b;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sport-section-meta strong,
+.sport-plan-card strong {
+  color: #0b4f4d;
+  overflow-wrap: anywhere;
+}
+
+.sport-section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.55rem;
+}
+
+.sport-plan-card {
+  display: grid;
+  gap: 0.15rem;
+  border: 1px solid #e3e8ee;
+  border-radius: 8px;
+  background: #fbfdff;
+  padding: 0.65rem;
+}
+
+.sport-sample-block {
+  min-width: 0;
+}
+
+.sport-sample-block h4 {
+  margin: 0.35rem 0 0.25rem;
+  color: #17252a;
+  font-size: 0.98rem;
+}
+
 pre code {
   white-space: pre-wrap;
 }
@@ -1359,6 +1464,13 @@ pre code {
     font-size: 1.28rem;
   }
 
+  .clean-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .hero-actions {
     justify-content: stretch;
   }
@@ -1388,6 +1500,22 @@ pre code {
     flex: 0 0 auto;
     text-align: center;
     white-space: nowrap;
+  }
+
+  .sport-jump {
+    display: grid;
+  }
+
+  .sport-jump select {
+    width: 100%;
+  }
+
+  .sport-section-card {
+    padding: 0.75rem;
+  }
+
+  .sport-section-header {
+    grid-template-columns: 1fr;
   }
 
   .daily-view-header {
