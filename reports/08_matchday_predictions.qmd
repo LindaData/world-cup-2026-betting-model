@@ -127,6 +127,197 @@ probability_bar <- function(label, value, class_name) {
     '</div>'
   )
 }
+
+team_key <- function(x) {
+  x <- iconv(as.character(x), to = "ASCII//TRANSLIT")
+  tolower(gsub("[^a-z0-9]", "", x))
+}
+
+as_plain_record <- function(row) {
+  if (nrow(row) == 0) {
+    return(NULL)
+  }
+  list(
+    name = as.character(row$team[[1]]),
+    group = as.character(row$group[[1]]),
+    seed = paste0(row$group[[1]], row$position[[1]]),
+    position = as.integer(row$position[[1]]),
+    points = round(as.numeric(row$points[[1]]), 2),
+    gd = round(as.numeric(row$gd[[1]]), 2),
+    gf = round(as.numeric(row$gf[[1]]), 2),
+    elo = round(as.numeric(row$elo[[1]]), 0)
+  )
+}
+
+build_projected_bracket <- function() {
+  if (!requireNamespace("jsonlite", quietly = TRUE)) {
+    return(NULL)
+  }
+
+  predictions <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "world_cup_2026_fixture_predictions.csv"))
+  squads <- read_csv_if_exists(file.path(root, "data", "processed", "public_csv", "dim_2026_world_cup_squad_players.csv"))
+
+  if (nrow(predictions) == 0 || nrow(squads) == 0) {
+    return(NULL)
+  }
+
+  team_groups <- squads |>
+    dplyr::select(team, group_name) |>
+    dplyr::distinct() |>
+    dplyr::mutate(
+      group = gsub("^Group\\s+", "", group_name),
+      team_join_key = team_key(team)
+    ) |>
+    dplyr::select(team_join_key, group)
+
+  predictions <- predictions |>
+    dplyr::mutate(
+      home_join_key = team_key(home_team),
+      away_join_key = team_key(away_team)
+    ) |>
+    dplyr::left_join(team_groups, by = c("home_join_key" = "team_join_key")) |>
+    dplyr::rename(home_group = group) |>
+    dplyr::left_join(team_groups, by = c("away_join_key" = "team_join_key")) |>
+    dplyr::rename(away_group = group) |>
+    dplyr::mutate(
+      group = dplyr::coalesce(home_group, away_group),
+      completed = !is.na(home_score) & !is.na(away_score),
+      home_points = dplyr::case_when(
+        completed & home_score > away_score ~ 3,
+        completed & home_score == away_score ~ 1,
+        completed & home_score < away_score ~ 0,
+        TRUE ~ 3 * pred_home_win_prob + pred_draw_prob
+      ),
+      away_points = dplyr::case_when(
+        completed & away_score > home_score ~ 3,
+        completed & away_score == home_score ~ 1,
+        completed & away_score < home_score ~ 0,
+        TRUE ~ 3 * pred_away_win_prob + pred_draw_prob
+      ),
+      home_goals_for = dplyr::if_else(completed, as.numeric(home_score), pred_home_goals_poisson),
+      away_goals_for = dplyr::if_else(completed, as.numeric(away_score), pred_away_goals_poisson),
+      home_goals_against = away_goals_for,
+      away_goals_against = home_goals_for
+    ) |>
+    dplyr::filter(!is.na(group))
+
+  home_rows <- data.frame(
+    group = predictions$group,
+    team = predictions$home_team,
+    points = predictions$home_points,
+    gf = predictions$home_goals_for,
+    ga = predictions$home_goals_against,
+    completed = predictions$completed,
+    elo = predictions$home_latest_elo
+  )
+  away_rows <- data.frame(
+    group = predictions$group,
+    team = predictions$away_team,
+    points = predictions$away_points,
+    gf = predictions$away_goals_for,
+    ga = predictions$away_goals_against,
+    completed = predictions$completed,
+    elo = predictions$away_latest_elo
+  )
+
+  standings <- rbind(home_rows, away_rows) |>
+    dplyr::group_by(group, team) |>
+    dplyr::summarise(
+      matches = dplyr::n(),
+      completed = sum(completed, na.rm = TRUE),
+      points = sum(points, na.rm = TRUE),
+      gf = sum(gf, na.rm = TRUE),
+      ga = sum(ga, na.rm = TRUE),
+      gd = gf - ga,
+      elo = max(elo, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::arrange(group, dplyr::desc(points), dplyr::desc(gd), dplyr::desc(gf), dplyr::desc(elo), team) |>
+    dplyr::group_by(group) |>
+    dplyr::mutate(position = dplyr::row_number()) |>
+    dplyr::ungroup()
+
+  standings$elo[is.infinite(standings$elo)] <- NA_real_
+
+  third_pool <- standings |>
+    dplyr::filter(position == 3) |>
+    dplyr::arrange(dplyr::desc(points), dplyr::desc(gd), dplyr::desc(gf), dplyr::desc(elo), team) |>
+    dplyr::mutate(third_rank = dplyr::row_number(), qualifies = third_rank <= 8)
+
+  slot_pairs <- data.frame(
+    match_id = seq_len(16),
+    slot_a = c("A2", "F1", "E1", "I1", "K2", "H1", "D1", "G1", "C1", "E2", "A1", "L1", "J1", "D2", "B1", "K1"),
+    slot_b = c("B2", "C2", "ABCDF3", "CDFGH3", "L2", "J2", "BEFIJ3", "AEHIJ3", "F2", "I2", "CEFHI3", "EHIJK3", "H2", "G2", "EFGIJ3", "DEIJL3")
+  )
+
+  used_third_teams <- character()
+  resolve_slot <- function(slot) {
+    if (grepl("^[A-L][12]$", slot)) {
+      group <- substr(slot, 1, 1)
+      position <- as.integer(substr(slot, 2, 2))
+      row <- standings[standings$group == group & standings$position == position, ]
+      return(as_plain_record(row))
+    }
+
+    if (grepl("3$", slot)) {
+      candidate_groups <- strsplit(sub("3$", "", slot), "")[[1]]
+      row <- third_pool |>
+        dplyr::filter(group %in% candidate_groups, !(team %in% used_third_teams), qualifies) |>
+        dplyr::arrange(third_rank) |>
+        dplyr::slice_head(n = 1)
+      if (nrow(row) > 0) {
+        used_third_teams <<- c(used_third_teams, row$team[[1]])
+      }
+      return(as_plain_record(row))
+    }
+
+    NULL
+  }
+
+  round32 <- lapply(seq_len(nrow(slot_pairs)), function(i) {
+    row <- slot_pairs[i, ]
+    list(
+      match = as.integer(row$match_id),
+      slotA = as.character(row$slot_a),
+      slotB = as.character(row$slot_b),
+      teamA = resolve_slot(as.character(row$slot_a)),
+      teamB = resolve_slot(as.character(row$slot_b))
+    )
+  })
+
+  group_summary <- standings |>
+    dplyr::filter(position <= 3) |>
+    dplyr::mutate(
+      seed = paste0(group, position),
+      points = round(points, 2),
+      gd = round(gd, 2),
+      gf = round(gf, 2),
+      elo = round(elo, 0)
+    ) |>
+    dplyr::select(group, seed, team, position, points, gd, gf, elo) |>
+    as.data.frame()
+
+  third_summary <- third_pool |>
+    dplyr::mutate(
+      seed = paste0(group, "3"),
+      points = round(points, 2),
+      gd = round(gd, 2),
+      gf = round(gf, 2),
+      elo = round(elo, 0)
+    ) |>
+    dplyr::select(third_rank, qualifies, group, seed, team, points, gd, gf, elo) |>
+    as.data.frame()
+
+  list(
+    round32 = round32,
+    groupSeeds = group_summary,
+    thirdWatch = third_summary,
+    notes = list(
+      seeding = "Projected group tables combine completed results with model expected points for remaining matches.",
+      knockout = "Knockout advancement uses the current Elo-style strength signal until knockout match-specific data exists."
+    )
+  )
+}
 ```
 
 ## Prediction Board
@@ -136,7 +327,7 @@ This is the matchday view for current forecasts, upcoming fixtures, model picks,
 <div class="matchday-toolbar">
   <a href="#next-match-forecast">Next Match</a>
   <a href="#next-upcoming-matches">Upcoming</a>
-  <a href="#future-match-bracket">Bracket</a>
+  <a href="#interactive-bracket-simulator">Simulator</a>
   <a href="#post-match-accuracy">Accuracy</a>
 </div>
 
@@ -252,6 +443,270 @@ if (nrow(future_board) > 0) {
 }
 ```
 
+## Interactive Bracket Simulator
+
+```{r interactive-bracket, echo=FALSE, results="asis"}
+bracket_data <- build_projected_bracket()
+
+if (is.null(bracket_data)) {
+  cat('<p class="empty-board">The interactive bracket is available after fixture predictions and squad group metadata are refreshed.</p>')
+} else {
+  bracket_json <- jsonlite::toJSON(bracket_data, auto_unbox = TRUE, na = "null", dataframe = "rows")
+  bracket_json <- gsub("<", "\\\\u003c", bracket_json, fixed = TRUE)
+  cat('<section class="model-bracket-shell">')
+  cat('<div class="model-bracket-header">')
+  cat('<div>')
+  cat('<div class="section-kicker">Bracket Simulator</div>')
+  cat('<h2>Projected Knockout Path</h2>')
+  cat('<p>Seeded from current group projections. Click a team to override a match winner; reset returns to the model path.</p>')
+  cat('</div>')
+  cat('<div class="model-bracket-controls">')
+  cat('<button type="button" class="bracket-control" data-bracket-action="model">Model path</button>')
+  cat('<button type="button" class="bracket-control" data-bracket-action="reset">Reset picks</button>')
+  cat('<button type="button" class="bracket-control" data-bracket-action="layout">Compact view</button>')
+  cat('</div>')
+  cat('</div>')
+  cat('<div class="bracket-overview-grid">')
+  cat('<div class="seed-watch-panel"><h3>Projected Group Seeds</h3><div id="group-seed-watch"></div></div>')
+  cat('<div class="seed-watch-panel"><h3>Best Third Watch</h3><div id="third-place-watch"></div></div>')
+  cat('</div>')
+  cat('<div id="model-bracket-root" class="interactive-bracket-grid" aria-live="polite"></div>')
+  cat('<div id="model-bracket-champion" class="bracket-champion-card"></div>')
+  cat('<script type="application/json" id="wc-bracket-data">', bracket_json, '</script>', sep = "")
+  cat('</section>')
+}
+```
+
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const dataNode = document.getElementById("wc-bracket-data");
+  const root = document.getElementById("model-bracket-root");
+  const championNode = document.getElementById("model-bracket-champion");
+  const seedWatch = document.getElementById("group-seed-watch");
+  const thirdWatch = document.getElementById("third-place-watch");
+
+  if (!dataNode || !root || !championNode) {
+    return;
+  }
+
+  const data = JSON.parse(dataNode.textContent);
+  const roundNames = ["Round of 32", "Round of 16", "Quarterfinals", "Semifinals", "Final"];
+  const picks = {};
+
+  function cloneTeam(team) {
+    return team ? Object.assign({}, team) : null;
+  }
+
+  function cloneMatch(match) {
+    return {
+      slotA: match.slotA,
+      slotB: match.slotB,
+      teamA: cloneTeam(match.teamA),
+      teamB: cloneTeam(match.teamB)
+    };
+  }
+
+  function teamStrength(team) {
+    const elo = team && Number(team.elo);
+    return Number.isFinite(elo) ? elo : 1500;
+  }
+
+  function advanceProbability(teamA, teamB) {
+    const diff = teamStrength(teamA) - teamStrength(teamB);
+    return 1 / (1 + Math.pow(10, -diff / 400));
+  }
+
+  function formatPct(value) {
+    if (!Number.isFinite(value)) {
+      return "";
+    }
+    return Math.round(value * 100) + "%";
+  }
+
+  function modelWinner(match) {
+    if (!match.teamA && !match.teamB) {
+      return null;
+    }
+    if (match.teamA && !match.teamB) {
+      return match.teamA;
+    }
+    if (!match.teamA && match.teamB) {
+      return match.teamB;
+    }
+    return advanceProbability(match.teamA, match.teamB) >= 0.5 ? match.teamA : match.teamB;
+  }
+
+  function clearLaterPicks(roundIndex) {
+    Object.keys(picks).forEach(function (key) {
+      const keyRound = Number(key.split("-")[0]);
+      if (keyRound > roundIndex) {
+        delete picks[key];
+      }
+    });
+  }
+
+  function buildRounds() {
+    const rounds = [data.round32.map(cloneMatch)];
+
+    for (let roundIndex = 0; roundIndex < 4; roundIndex += 1) {
+      const currentRound = rounds[roundIndex];
+      const nextRound = Array.from({ length: Math.ceil(currentRound.length / 2) }, function (_, index) {
+        return { slotA: "W" + (roundIndex + 1) + "." + (2 * index + 1), slotB: "W" + (roundIndex + 1) + "." + (2 * index + 2), teamA: null, teamB: null };
+      });
+
+      currentRound.forEach(function (match, matchIndex) {
+        const key = roundIndex + "-" + matchIndex;
+        const validNames = [match.teamA && match.teamA.name, match.teamB && match.teamB.name].filter(Boolean);
+        if (picks[key] && !validNames.includes(picks[key])) {
+          delete picks[key];
+        }
+        const pickedName = picks[key];
+        const winner = pickedName
+          ? validNames.includes(pickedName)
+            ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
+            : modelWinner(match)
+          : modelWinner(match);
+        const nextMatch = nextRound[Math.floor(matchIndex / 2)];
+        if (matchIndex % 2 === 0) {
+          nextMatch.teamA = cloneTeam(winner);
+        } else {
+          nextMatch.teamB = cloneTeam(winner);
+        }
+      });
+
+      rounds.push(nextRound);
+    }
+
+    return rounds;
+  }
+
+  function teamButton(team, slot, probability, selected, roundIndex, matchIndex) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "bracket-team";
+    if (selected) {
+      button.classList.add("selected");
+    }
+    if (!team) {
+      button.classList.add("empty");
+      button.disabled = true;
+      button.innerHTML = "<span class='team-name'>" + slot + "</span><small>Pending seed</small>";
+      return button;
+    }
+
+    button.innerHTML =
+      "<span class='team-name'>" + team.name + "</span>" +
+      "<span class='team-meta'>" + team.seed + " · " + formatPct(probability) + "</span>";
+    button.setAttribute("aria-label", "Pick " + team.name + " to advance");
+    button.addEventListener("click", function () {
+      picks[roundIndex + "-" + matchIndex] = team.name;
+      clearLaterPicks(roundIndex);
+      render();
+    });
+    return button;
+  }
+
+  function matchCard(match, roundIndex, matchIndex) {
+    const card = document.createElement("article");
+    card.className = "bracket-match-card";
+    const pA = match.teamA && match.teamB ? advanceProbability(match.teamA, match.teamB) : null;
+    const pB = Number.isFinite(pA) ? 1 - pA : null;
+    const winner = modelWinner(match);
+    const pickedName = picks[roundIndex + "-" + matchIndex];
+    const selectedName = pickedName || (winner && winner.name);
+
+    const label = document.createElement("div");
+    label.className = "bracket-match-label";
+    label.textContent = "Match " + (matchIndex + 1);
+    card.appendChild(label);
+    card.appendChild(teamButton(match.teamA, match.slotA, pA, match.teamA && match.teamA.name === selectedName, roundIndex, matchIndex));
+    card.appendChild(teamButton(match.teamB, match.slotB, pB, match.teamB && match.teamB.name === selectedName, roundIndex, matchIndex));
+
+    if (pickedName) {
+      const badge = document.createElement("span");
+      badge.className = "user-pick-badge";
+      badge.textContent = "Manual pick";
+      card.appendChild(badge);
+    }
+
+    return card;
+  }
+
+  function renderSeeds() {
+    if (seedWatch) {
+      const seedsByGroup = {};
+      data.groupSeeds.forEach(function (row) {
+        seedsByGroup[row.group] = seedsByGroup[row.group] || [];
+        seedsByGroup[row.group].push(row);
+      });
+      seedWatch.innerHTML = Object.keys(seedsByGroup).sort().map(function (group) {
+        const rows = seedsByGroup[group].slice(0, 2).map(function (row) {
+          return "<span><strong>" + row.seed + "</strong>" + row.team + "</span>";
+        }).join("");
+        return "<div class='seed-group'><b>Group " + group + "</b>" + rows + "</div>";
+      }).join("");
+    }
+
+    if (thirdWatch) {
+      thirdWatch.innerHTML = data.thirdWatch.map(function (row) {
+        return "<div class='third-row" + (row.qualifies ? " qualifies" : "") + "'>" +
+          "<span>" + row.third_rank + ". " + row.team + "</span>" +
+          "<strong>" + row.points + " pts</strong>" +
+          "</div>" +
+          (row.third_rank === 8 ? "<div class='third-cut'>Cut line</div>" : "");
+      }).join("");
+    }
+  }
+
+  function render() {
+    const rounds = buildRounds();
+    root.innerHTML = "";
+    rounds.forEach(function (round, roundIndex) {
+      const column = document.createElement("section");
+      column.className = "bracket-round";
+      const heading = document.createElement("h3");
+      heading.textContent = roundNames[roundIndex];
+      column.appendChild(heading);
+      const list = document.createElement("div");
+      list.className = "bracket-round-list";
+      round.forEach(function (match, matchIndex) {
+        list.appendChild(matchCard(match, roundIndex, matchIndex));
+      });
+      column.appendChild(list);
+      root.appendChild(column);
+    });
+
+    const finalMatch = rounds[rounds.length - 1][0];
+    const champion = picks["4-0"]
+      ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
+      : modelWinner(finalMatch);
+    championNode.innerHTML = champion
+      ? "<span>Projected Champion</span><strong>" + champion.name + "</strong><small>" + champion.seed + " · strength " + champion.elo + "</small>"
+      : "";
+  }
+
+  document.querySelectorAll("[data-bracket-action]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      const action = button.getAttribute("data-bracket-action");
+      if (action === "layout") {
+        root.classList.toggle("is-compact");
+        button.textContent = root.classList.contains("is-compact") ? "Horizontal view" : "Compact view";
+        return;
+      }
+      Object.keys(picks).forEach(function (key) {
+        delete picks[key];
+      });
+      render();
+    });
+  });
+
+  renderSeeds();
+  render();
+});
+</script>
+```
+
 ## Board Status
 
 ```{r summary-cards, echo=FALSE, results="asis"}
@@ -286,7 +741,7 @@ if (nrow(summary) > 0) {
 }
 ```
 
-## Future Match Bracket
+## Future Fixture Cards
 
 Double-click a matchup to open the model detail.
 
