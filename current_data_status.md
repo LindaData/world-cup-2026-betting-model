@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-20T22:08:31.971496Z.
+Last refreshed: 2026-06-20T23:31:46.895234Z.
 
 Refresh profile: `free-refresh`.
 
@@ -57,8 +57,8 @@ data/processed/metadata/column_inventory.csv
 | `fact_team_elo_match_history` | 98874 |
 | `football_data_matches` | 0 |
 | `odds_snapshots` | 0 |
-| `raw_manifests` | 8 |
-| `raw_snapshot_files` | 137 |
+| `raw_manifests` | 9 |
+| `raw_snapshot_files` | 158 |
 | `seed_venues` | 16 |
 | `stg_international_goalscorers` | 47697 |
 | `stg_international_results` | 49477 |
@@ -91,21 +91,21 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 10.367 |
-| Build processed public CSVs | ok | 40.621 |
-| Fetch Wikidata player enrichment | ok | 7.035 |
-| Fetch Open-Meteo fixture weather | ok | 102.658 |
-| Fetch GDELT news metadata | failed | 170.467 |
-| Build DuckDB | ok | 16.706 |
-| Export DuckDB metadata | ok | 6.716 |
-| Fit goals model | ok | 10.018 |
-| Fit Poisson goals model | ok | 17.291 |
-| Fit ordinal result model | ok | 19.485 |
-| Fit KNN similarity model | ok | 41.106 |
-| Run regression diagnostics | ok | 10.573 |
-| Score 2026 fixtures | ok | 7.676 |
-| Build matchday prediction board | ok | 7.03 |
-| Render R Markdown reports | ok | 157.818 |
+| Fetch raw source snapshots | ok | 12.734 |
+| Build processed public CSVs | ok | 32.328 |
+| Fetch Wikidata player enrichment | ok | 6.584 |
+| Fetch Open-Meteo fixture weather | ok | 83.076 |
+| Fetch GDELT news metadata | failed | 258.619 |
+| Build DuckDB | ok | 16.88 |
+| Export DuckDB metadata | ok | 9.101 |
+| Fit goals model | ok | 12.347 |
+| Fit Poisson goals model | ok | 26.697 |
+| Fit ordinal result model | ok | 25.918 |
+| Fit KNN similarity model | ok | 69.7 |
+| Run regression diagnostics | ok | 21.599 |
+| Score 2026 fixtures | ok | 11.35 |
+| Build matchday prediction board | ok | 9.821 |
+| Render R Markdown reports | ok | 285.649 |
 
 ## Public Artifacts Updated
 
@@ -128,4 +128,4 @@ event detail, and market-implied probabilities as structured coverage expands.
 
 ## Failed Steps
 
-- `Fetch GDELT news metadata` failed. See `data\processed\update_runs\20260620T220831Z\fetch_gdelt_news_metadata.stderr.log` and `data\processed\update_runs\20260620T220831Z\fetch_gdelt_news_metadata.stdout.log`.
+- `Fetch GDELT news metadata` failed. See `data\processed\update_runs\20260620T233146Z\fetch_gdelt_news_metadata.stderr.log` and `data\processed\update_runs\20260620T233146Z\fetch_gdelt_news_metadata.stdout.log`.
