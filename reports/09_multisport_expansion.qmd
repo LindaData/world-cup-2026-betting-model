@@ -1,0 +1,302 @@
+---
+title: "Multi-Sport Model Expansion"
+subtitle: "API-Sports inventory, sport sections, and reusable modeling plan"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
+
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+
+slug <- function(x) {
+  x <- iconv(as.character(x), to = "ASCII//TRANSLIT")
+  tolower(gsub("[^a-z0-9]+", "-", x))
+}
+
+escape_html <- function(x) {
+  x <- ifelse(is.na(x), "", as.character(x))
+  x <- gsub("&", "&amp;", x, fixed = TRUE)
+  x <- gsub("<", "&lt;", x, fixed = TRUE)
+  x <- gsub(">", "&gt;", x, fixed = TRUE)
+  x <- gsub('"', "&quot;", x, fixed = TRUE)
+  x
+}
+
+inventory_path <- file.path(root, "data", "processed", "multisport", "apisports_sport_inventory.csv")
+endpoint_path <- file.path(root, "data", "processed", "multisport", "apisports_endpoint_inventory.csv")
+dictionary_path <- file.path(root, "data", "processed", "multisport", "apisports_field_dictionary.csv")
+training_summary_path <- file.path(root, "data", "processed", "multisport", "apisports_training_pull_summary.csv")
+training_log_path <- file.path(root, "data", "processed", "multisport", "apisports_training_request_log.csv")
+training_sample_path <- file.path(root, "data", "processed", "multisport", "apisports_training_sample_records.csv")
+config_path <- file.path(root, "config", "sports.json")
+
+sport_inventory <- read_csv_if_exists(inventory_path)
+endpoint_inventory <- read_csv_if_exists(endpoint_path)
+field_dictionary <- read_csv_if_exists(dictionary_path)
+training_summary <- read_csv_if_exists(training_summary_path)
+training_log <- read_csv_if_exists(training_log_path)
+training_samples <- read_csv_if_exists(training_sample_path)
+
+if (nrow(sport_inventory) == 0 && file.exists(config_path)) {
+  config <- jsonlite::fromJSON(config_path)
+  sport_inventory <- config$sports |>
+    dplyr::transmute(
+      sport_key,
+      sport_label = label,
+      host,
+      api_version,
+      historical_depth_note,
+      reference_priority,
+      model_family,
+      endpoints_configured = vapply(inventory_endpoints, nrow, numeric(1)),
+      endpoints_ok = NA_real_,
+      plan = "Pending pull",
+      subscription_active = NA,
+      subscription_end = NA,
+      requests_current = NA,
+      requests_limit_day = config$request_budget_policy$default_plan_limit_per_day
+    )
+}
+
+sport_inventory <- sport_inventory |>
+  dplyr::arrange(as.numeric(reference_priority), sport_label)
+
+pulled_at <- if ("pulled_at_utc" %in% names(sport_inventory) && nrow(sport_inventory) > 0) {
+  sport_inventory$pulled_at_utc[[1]]
+} else {
+  "Inventory pending"
+}
+```
+
+## Sport Inventory
+
+This page organizes every sport covered by the current API-Sports setup. It uses a common metadata layer first, then adds sport-specific modeling only after the raw, cleaned, and model-ready datasets are reliable.
+
+```{r inventory-summary, echo=FALSE, results="asis"}
+if (nrow(sport_inventory) > 0) {
+  endpoints_ok <- suppressWarnings(sum(as.numeric(sport_inventory$endpoints_ok), na.rm = TRUE))
+  endpoints_configured <- suppressWarnings(sum(as.numeric(sport_inventory$endpoints_configured), na.rm = TRUE))
+  limit_day <- suppressWarnings(max(as.numeric(sport_inventory$requests_limit_day), na.rm = TRUE))
+  if (!is.finite(limit_day)) {
+    limit_day <- NA_real_
+  }
+  cat(metric_cards(data.frame(
+    label = c("Sports", "Endpoint Checks", "Plan Limit", "Last Inventory"),
+    value = c(
+      fmt_integer(nrow(sport_inventory)),
+      paste0(fmt_integer(endpoints_ok), " / ", fmt_integer(endpoints_configured)),
+      ifelse(is.na(limit_day), "Pending", paste0(fmt_integer(limit_day), " per day")),
+      pulled_at
+    ),
+    note = c(
+      "configured sports",
+      "successful metadata calls",
+      "reported daily request limit",
+      "UTC timestamp"
+    )
+  )))
+}
+```
+
+```{r sport-selector, echo=FALSE, results="asis"}
+if (nrow(sport_inventory) > 0) {
+  cat('<div class="sport-jump">')
+  cat('<label for="sport-select">Jump to sport</label>')
+  cat('<select id="sport-select">')
+  cat('<option value="">Choose a sport</option>')
+  for (i in seq_len(nrow(sport_inventory))) {
+    row <- sport_inventory[i, ]
+    target <- paste0("#sport-", slug(row$sport_key))
+    cat('<option value="', escape_html(target), '">', escape_html(row$sport_label), '</option>', sep = "")
+  }
+  cat('</select>')
+  cat('</div>')
+  cat('<script>')
+  cat('document.addEventListener("DOMContentLoaded",function(){var s=document.getElementById("sport-select");if(!s)return;s.addEventListener("change",function(){if(s.value){document.querySelector(s.value)?.scrollIntoView({behavior:"smooth",block:"start"});}});});')
+  cat('</script>')
+}
+```
+
+```{r sport-table, echo=FALSE}
+if (nrow(sport_inventory) > 0) {
+  sport_inventory |>
+    dplyr::select(
+      sport_label,
+      host,
+      historical_depth_note,
+      model_family,
+      endpoints_configured,
+      endpoints_ok,
+      plan,
+      requests_limit_day
+    ) |>
+    display_table(caption = "Configured API-Sports coverage by sport.", max_rows = 20)
+} else {
+  display_table(empty_note("Run the API-Sports inventory pull to populate this table."))
+}
+```
+
+## Training Data Pull
+
+The first multi-sport pull stores full raw API responses locally, then publishes only compact summaries and small samples here. These files are the starting point for cleaned tables and model-ready datasets.
+
+```{r training-summary, echo=FALSE, results="asis"}
+if (nrow(training_summary) > 0) {
+  total_requests <- sum(as.numeric(training_summary$requests_attempted), na.rm = TRUE)
+  total_ok <- sum(as.numeric(training_summary$requests_ok), na.rm = TRUE)
+  total_results <- sum(as.numeric(training_summary$total_results_reported), na.rm = TRUE)
+  total_errors <- sum(as.numeric(training_summary$requests_with_errors), na.rm = TRUE)
+  cat(metric_cards(data.frame(
+    label = c("API Requests", "Successful Calls", "Reported Rows", "Calls With Notes"),
+    value = c(
+      fmt_integer(total_requests),
+      fmt_integer(total_ok),
+      fmt_integer(total_results),
+      fmt_integer(total_errors)
+    ),
+    note = c(
+      "historical pull",
+      "HTTP 200 responses",
+      "provider reported results",
+      "plan, empty, or endpoint notes"
+    )
+  )))
+}
+```
+
+```{r training-summary-table, echo=FALSE}
+if (nrow(training_summary) > 0) {
+  training_summary |>
+    dplyr::select(
+      sport_label,
+      requests_attempted,
+      requests_ok,
+      requests_with_errors,
+      total_results_reported,
+      request_cap
+    ) |>
+    display_table(caption = "Historical API-Sports data pull by sport.", max_rows = 20)
+} else {
+  display_table(empty_note("Training data pulls have not run yet."))
+}
+```
+
+```{r training-sample-table, echo=FALSE}
+if (nrow(training_samples) > 0) {
+  training_samples |>
+    dplyr::select(
+      sport_label,
+      endpoint_name,
+      path,
+      results,
+      sample_top_level_fields
+    ) |>
+    display_table(caption = "Representative sample fields from downloaded training data.", max_rows = 30)
+} else {
+  display_table(empty_note("Sample records appear after the training data pull runs."))
+}
+```
+
+```{r training-errors, echo=FALSE}
+if (nrow(training_log) > 0) {
+  notable <- training_log |>
+    dplyr::filter(status_code != "200" | (!is.na(errors) & nzchar(errors))) |>
+    dplyr::select(sport_label, endpoint_name, status_code, results, errors) |>
+    dplyr::slice_head(n = 12)
+  if (nrow(notable) > 0) {
+    display_table(notable, caption = "First endpoint notes to review before the next pull.", max_rows = 12)
+  } else {
+    display_table(empty_note("No endpoint notes were recorded in the latest training pull."))
+  }
+} else {
+  display_table(empty_note("Endpoint notes appear after the training data pull runs."))
+}
+```
+
+## Sport Sections
+
+```{r sport-sections, echo=FALSE, results="asis"}
+if (nrow(sport_inventory) == 0) {
+  cat('<p class="empty-board">No sport inventory is available yet.</p>')
+} else {
+  for (i in seq_len(nrow(sport_inventory))) {
+    sport <- sport_inventory[i, ]
+    sport_key <- as.character(sport$sport_key)
+    sport_id <- paste0("sport-", slug(sport_key))
+    sport_endpoints <- endpoint_inventory |>
+      dplyr::filter(.data$sport_key == sport_key) |>
+      dplyr::select(endpoint_name, path, status_code, results, errors, sample_fields) |>
+      dplyr::slice_head(n = 8)
+    sport_fields <- field_dictionary |>
+      dplyr::filter(.data$sport_key == sport_key) |>
+      dplyr::select(field_name, definition, source, sample_value) |>
+      dplyr::slice_head(n = 6)
+
+    cat('<section class="sport-section-card" id="', escape_html(sport_id), '">', sep = "")
+    cat('<div class="sport-section-header">')
+    cat('<div>')
+    cat('<div class="section-kicker">Sport</div>')
+    cat('<h3>', escape_html(sport$sport_label), '</h3>', sep = "")
+    cat('<p>', escape_html(sport$historical_depth_note), '</p>', sep = "")
+    cat('</div>')
+    cat('<div class="sport-section-meta">')
+    cat('<span>Host</span><strong>', escape_html(sport$host), '</strong>', sep = "")
+    cat('<span>Model family</span><strong>', escape_html(sport$model_family), '</strong>', sep = "")
+    cat('</div>')
+    cat('</div>')
+
+    cat('<div class="sport-section-grid">')
+    cat('<div class="sport-plan-card"><span>Endpoint checks</span><strong>', escape_html(sport$endpoints_ok), ' / ', escape_html(sport$endpoints_configured), '</strong></div>', sep = "")
+    cat('<div class="sport-plan-card"><span>Plan</span><strong>', escape_html(sport$plan), '</strong></div>', sep = "")
+    cat('<div class="sport-plan-card"><span>Daily limit</span><strong>', escape_html(sport$requests_limit_day), '</strong></div>', sep = "")
+    cat('</div>')
+
+    cat('<div class="sport-sample-block">')
+    cat('<h4>Endpoint Sample</h4>')
+    if (nrow(sport_endpoints) > 0) {
+      print(display_table(sport_endpoints, max_rows = 8))
+    } else {
+      print(display_table(empty_note("Endpoint sample appears after the inventory pull.")))
+    }
+    cat('</div>')
+
+    cat('<div class="sport-sample-block">')
+    cat('<h4>Metadata Sample</h4>')
+    if (nrow(sport_fields) > 0) {
+      print(display_table(sport_fields, max_rows = 6))
+    } else {
+      print(display_table(empty_note("Field dictionary sample appears after the inventory pull.")))
+    }
+    cat('</div>')
+    cat('</section>')
+  }
+}
+```
+
+## Reference Implementation
+
+Basketball is the recommended first non-soccer reference implementation. It has a clean team-versus-team event structure, no draw outcome in most competitions, and enough overlap with the World Cup workflow to prove the reusable ingestion, validation, modeling, and reporting layers.
+
+The first production pass for each sport will use the same sequence:
+
+1. Ingest raw API snapshots with timestamped manifests.
+2. Build cleaned game, team, player, standings, odds, and statistics tables where available.
+3. Create model-ready rows with one row per team-game or event participant.
+4. Run validation tests before modeling.
+5. Fit baseline models first, then Bayesian models where the sport has enough historical depth.
+6. Backtest by time, compare calibration, and publish small result samples.
+
+## Current Lineage Rules
+
+- Raw JSON stays local in `data/raw/apisports_inventory/`.
+- Sanitized summaries are written to `data/processed/multisport/`.
+- Published pages show samples, endpoint status, timestamps, and field definitions.
+- The public site shows compact summaries only; full raw feeds remain in local project storage.

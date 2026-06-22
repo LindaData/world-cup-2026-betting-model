@@ -166,6 +166,111 @@ table {
   background: #f3fbfb;
 }
 
+.sport-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  margin: 1rem 0 1.2rem;
+  padding: 0.75rem;
+  border: 1px solid #cddbe5;
+  border-radius: 8px;
+  background: #f7fbfb;
+}
+
+.sport-jump label {
+  color: #405261;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sport-jump select {
+  min-width: min(100%, 280px);
+  border: 1px solid #c8d9dd;
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 0.45rem 0.55rem;
+  color: #17252a;
+  font-weight: 700;
+}
+
+.sport-section-card {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1rem 0 1.2rem;
+  padding: 1rem;
+  border: 1px solid #d8e2ea;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+}
+
+.sport-section-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.42fr);
+  gap: 0.85rem;
+  align-items: start;
+}
+
+.sport-section-header h3 {
+  margin: 0.15rem 0 0.35rem;
+  color: #17252a;
+}
+
+.sport-section-header p {
+  margin: 0;
+  color: #52616b;
+}
+
+.sport-section-meta {
+  display: grid;
+  gap: 0.35rem;
+  border-left: 4px solid #0f6b68;
+  border-radius: 8px;
+  background: #f7fbfb;
+  padding: 0.65rem;
+}
+
+.sport-section-meta span,
+.sport-plan-card span {
+  color: #52616b;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sport-section-meta strong,
+.sport-plan-card strong {
+  color: #0b4f4d;
+  overflow-wrap: anywhere;
+}
+
+.sport-section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.55rem;
+}
+
+.sport-plan-card {
+  display: grid;
+  gap: 0.15rem;
+  border: 1px solid #e3e8ee;
+  border-radius: 8px;
+  background: #fbfdff;
+  padding: 0.65rem;
+}
+
+.sport-sample-block {
+  min-width: 0;
+}
+
+.sport-sample-block h4 {
+  margin: 0.35rem 0 0.25rem;
+  color: #17252a;
+  font-size: 0.98rem;
+}
+
 pre code {
   white-space: pre-wrap;
 }
@@ -375,6 +480,260 @@ pre code {
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.daily-view-shell {
+  display: grid;
+  gap: 1rem;
+  margin: 1rem 0 1.3rem;
+}
+
+.daily-view-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.38fr) minmax(120px, 0.2fr);
+  gap: 0.8rem;
+  align-items: stretch;
+}
+
+.daily-view-header h2 {
+  margin: 0.2rem 0 0.35rem;
+  color: #17252a;
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+  line-height: 1.15;
+}
+
+.daily-view-header p {
+  margin: 0;
+  color: #52616b;
+  max-width: 56rem;
+}
+
+.daily-refresh-card,
+.daily-count-card {
+  border: 1px solid #cddbe5;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0.8rem;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+}
+
+.daily-refresh-card span,
+.daily-count-card span {
+  display: block;
+  color: #52616b;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.daily-refresh-card strong,
+.daily-count-card strong {
+  display: block;
+  color: #0f4f4d;
+  line-height: 1.15;
+}
+
+.daily-refresh-card strong {
+  margin: 0.2rem 0;
+  font-size: 0.96rem;
+}
+
+.daily-refresh-card small {
+  display: block;
+  color: #607080;
+  line-height: 1.35;
+}
+
+.daily-count-card {
+  display: grid;
+  align-content: center;
+  text-align: center;
+}
+
+.daily-count-card strong {
+  font-size: 2.3rem;
+}
+
+.today-match-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.9rem;
+}
+
+.today-match-card {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  border: 1px solid #cddbe5;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(15, 107, 104, 0.06), rgba(255, 255, 255, 0) 42%),
+    #ffffff;
+  padding: 0.9rem;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+}
+
+.today-card-top,
+.today-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: space-between;
+  color: #52616b;
+  font-size: 0.84rem;
+}
+
+.today-card-top strong {
+  border: 1px solid #ead894;
+  border-radius: 999px;
+  background: #fff8e1;
+  color: #6b4b00;
+  padding: 0.1rem 0.45rem;
+  white-space: nowrap;
+}
+
+.today-match-card h3 {
+  margin: 0;
+  color: #17252a;
+  font-size: 1.22rem;
+  line-height: 1.16;
+  overflow-wrap: anywhere;
+}
+
+.today-match-card h3 span {
+  color: #52616b;
+  font-size: 0.78em;
+}
+
+.today-pick-row {
+  display: grid;
+  grid-template-columns: minmax(84px, auto) minmax(0, 1fr);
+  gap: 0.12rem 0.65rem;
+  align-items: baseline;
+  border-left: 4px solid #0f6b68;
+  border-radius: 8px;
+  background: #f7fbfb;
+  padding: 0.65rem;
+}
+
+.today-pick-row span {
+  color: #52616b;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.today-pick-row strong {
+  color: #0b4f4d;
+  font-size: 1.12rem;
+  overflow-wrap: anywhere;
+}
+
+.today-pick-row em {
+  grid-column: 2;
+  color: #52616b;
+  font-size: 0.86rem;
+  font-style: normal;
+}
+
+.today-prob-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.today-prob-chip {
+  min-width: 0;
+  border: 1px solid #e3e8ee;
+  border-radius: 8px;
+  background: #fbfdff;
+  padding: 0.55rem;
+}
+
+.today-prob-chip span {
+  display: block;
+  min-height: 2.2em;
+  color: #52616b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.today-prob-chip strong {
+  display: block;
+  margin: 0.18rem 0;
+  color: #17252a;
+}
+
+.today-prob-track {
+  height: 0.42rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e8eef4;
+}
+
+.today-prob-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.today-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.today-detail-grid div {
+  min-width: 0;
+  border: 1px solid #edf1f5;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0.48rem;
+}
+
+.today-detail-grid span {
+  display: block;
+  color: #52616b;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.today-detail-grid strong {
+  display: block;
+  color: #24313d;
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
+}
+
+.today-card-footer {
+  justify-content: flex-start;
+  padding-top: 0.15rem;
+  border-top: 1px dashed #cbd5df;
+}
+
+.today-card-footer span {
+  border: 1px solid #e3e8ee;
+  border-radius: 999px;
+  background: #ffffff;
+  padding: 0.16rem 0.5rem;
+}
+
+.daily-empty-card {
+  display: grid;
+  gap: 0.35rem;
+  border: 1px solid #e3e8ee;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0.9rem;
+  color: #52616b;
+}
+
+.daily-empty-card strong {
+  color: #17252a;
 }
 
 .next-match-hero {
@@ -1062,9 +1421,180 @@ pre code {
   color: #52616b;
 }
 
+.accuracy-table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0 1.4rem;
+  border: 1px solid #d9e2ea;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+  -webkit-overflow-scrolling: touch;
+}
+
+.accuracy-table {
+  width: 100%;
+  min-width: 880px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.accuracy-table caption {
+  caption-side: top;
+  padding: 0.75rem 0.85rem;
+  color: #52616b;
+  font-weight: 700;
+  text-align: left;
+}
+
+.accuracy-table thead th {
+  background: #edf4f6;
+  color: #142635;
+  border-bottom: 1px solid #c9d7df;
+  padding: 0.62rem 0.7rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.accuracy-table td {
+  vertical-align: top;
+  border-bottom: 1px solid #e8edf2;
+  padding: 0.65rem 0.7rem;
+}
+
+.accuracy-table tbody tr:nth-child(even) {
+  background: #fbfdff;
+}
+
+.accuracy-table tbody tr:hover {
+  background: #f5fbfb;
+}
+
+.accuracy-match-cell,
+.accuracy-actual-cell,
+.accuracy-model-cell {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.accuracy-match-cell strong,
+.accuracy-actual-cell strong,
+.accuracy-model-cell strong {
+  color: #17252a;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.accuracy-match-cell small,
+.accuracy-actual-cell small,
+.accuracy-model-cell small {
+  color: #607080;
+  font-size: 0.78rem;
+}
+
+.accuracy-actual-cell span {
+  color: #0b4f4d;
+  font-weight: 800;
+}
+
+.accuracy-badge,
+.error-chip {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.15rem 0.48rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.accuracy-correct {
+  border: 1px solid #a7d8bf;
+  background: #eaf7ef;
+  color: #0f6b3f;
+}
+
+.accuracy-wrong {
+  border: 1px solid #f1b6ad;
+  background: #fff0ee;
+  color: #b42318;
+}
+
+.accuracy-pending,
+.error-neutral {
+  border: 1px solid #d3dbe4;
+  background: #f4f7fa;
+  color: #52616b;
+}
+
+.error-good {
+  border: 1px solid #a7d8bf;
+  background: #edf8f1;
+  color: #0f6b3f;
+}
+
+.error-warn {
+  border: 1px solid #efd58f;
+  background: #fff8e1;
+  color: #795400;
+}
+
+.error-bad {
+  border: 1px solid #f1b6ad;
+  background: #fff0ee;
+  color: #b42318;
+}
+
+@media (max-width: 900px) {
+  .daily-view-header {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .daily-view-header > div:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .today-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 640px) {
+  body {
+    background: #ffffff;
+  }
+
+  .content {
+    border: 0;
+    border-radius: 0;
+    padding: 0.9rem;
+    box-shadow: none;
+  }
+
   .quarto-title-block.default .quarto-title {
-    padding: 2rem 1rem;
+    padding: 1.5rem 0.9rem;
+  }
+
+  .quarto-title-block .title {
+    font-size: 1.55rem;
+    line-height: 1.14;
+  }
+
+  .quarto-title-block .subtitle {
+    font-size: 0.96rem;
+  }
+
+  h2 {
+    font-size: 1.28rem;
+  }
+
+  .clean-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
 
   .hero-actions {
@@ -1078,13 +1608,91 @@ pre code {
   }
 
   .matchday-toolbar {
-    position: static;
-    justify-content: stretch;
+    position: sticky;
+    top: 0;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-left: -0.9rem;
+    margin-right: -0.9rem;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+    -webkit-overflow-scrolling: touch;
   }
 
   .matchday-toolbar a {
-    flex: 1 1 calc(50% - 0.5rem);
+    flex: 0 0 auto;
     text-align: center;
+    white-space: nowrap;
+  }
+
+  .sport-jump {
+    display: grid;
+  }
+
+  .sport-jump select {
+    width: 100%;
+  }
+
+  .sport-section-card {
+    padding: 0.75rem;
+  }
+
+  .sport-section-header {
+    grid-template-columns: 1fr;
+  }
+
+  .daily-view-header {
+    grid-template-columns: 1fr;
+  }
+
+  .daily-refresh-card,
+  .daily-count-card {
+    padding: 0.7rem;
+  }
+
+  .daily-count-card {
+    text-align: left;
+  }
+
+  .daily-count-card strong {
+    font-size: 1.8rem;
+  }
+
+  .today-match-list,
+  .upcoming-match-strip,
+  .match-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .today-match-card {
+    padding: 0.75rem;
+  }
+
+  .today-pick-row {
+    grid-template-columns: 1fr;
+  }
+
+  .today-pick-row em {
+    grid-column: auto;
+  }
+
+  .today-prob-grid {
+    gap: 0.35rem;
+  }
+
+  .today-prob-chip {
+    padding: 0.45rem;
+  }
+
+  .today-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .today-card-footer span {
+    border-radius: 6px;
   }
 
   .next-match-hero {

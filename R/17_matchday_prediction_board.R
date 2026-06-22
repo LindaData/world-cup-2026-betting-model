@@ -482,7 +482,54 @@ completed_accuracy <- board[
     nzchar(board$actual_result),
 ]
 accuracy <- data.frame()
+accuracy_detail <- data.frame()
 if (nrow(completed_accuracy) > 0) {
+  completed_accuracy$actual_winner <- ifelse(
+    completed_accuracy$actual_result == "home win",
+    completed_accuracy$home_team,
+    ifelse(completed_accuracy$actual_result == "away win", completed_accuracy$away_team, "Draw")
+  )
+  completed_accuracy$actual_total_goals <- completed_accuracy$home_score + completed_accuracy$away_score
+  completed_accuracy$ols_total_goals <- completed_accuracy$pred_home_goals_ols + completed_accuracy$pred_away_goals_ols
+  completed_accuracy$poisson_total_goals <- completed_accuracy$pred_home_goals_poisson + completed_accuracy$pred_away_goals_poisson
+  completed_accuracy$ols_total_goal_error <- abs(completed_accuracy$ols_total_goals - completed_accuracy$actual_total_goals)
+  completed_accuracy$poisson_total_goal_error <- abs(completed_accuracy$poisson_total_goals - completed_accuracy$actual_total_goals)
+  completed_accuracy$ols_team_goal_mae <- (
+    abs(completed_accuracy$pred_home_goals_ols - completed_accuracy$home_score) +
+      abs(completed_accuracy$pred_away_goals_ols - completed_accuracy$away_score)
+  ) / 2
+  completed_accuracy$poisson_team_goal_mae <- (
+    abs(completed_accuracy$pred_home_goals_poisson - completed_accuracy$home_score) +
+      abs(completed_accuracy$pred_away_goals_poisson - completed_accuracy$away_score)
+  ) / 2
+  completed_accuracy$ensemble_probability_actual <- ifelse(
+    completed_accuracy$actual_result == "home win",
+    completed_accuracy$ensemble_home_win_prob,
+    ifelse(
+      completed_accuracy$actual_result == "away win",
+      completed_accuracy$ensemble_away_win_prob,
+      completed_accuracy$ensemble_draw_prob
+    )
+  )
+  completed_accuracy$poisson_probability_actual <- ifelse(
+    completed_accuracy$actual_result == "home win",
+    completed_accuracy$poisson_home_win_prob,
+    ifelse(
+      completed_accuracy$actual_result == "away win",
+      completed_accuracy$poisson_away_win_prob,
+      completed_accuracy$poisson_draw_prob
+    )
+  )
+  completed_accuracy$ordinal_probability_actual <- ifelse(
+    completed_accuracy$actual_result == "home win",
+    completed_accuracy$pred_home_win_prob,
+    ifelse(
+      completed_accuracy$actual_result == "away win",
+      completed_accuracy$pred_away_win_prob,
+      completed_accuracy$pred_draw_prob
+    )
+  )
+
   accuracy <- data.frame(
     model = c("Ensemble", "OLS goals", "Poisson score grid", "Ordinal result"),
     completed_matches = nrow(completed_accuracy),
@@ -492,6 +539,18 @@ if (nrow(completed_accuracy) > 0) {
       mean(completed_accuracy$poisson_predicted_outcome == completed_accuracy$actual_result, na.rm = TRUE),
       mean(completed_accuracy$ordinal_predicted_outcome == completed_accuracy$actual_result, na.rm = TRUE)
     ),
+    avg_total_goal_error = c(
+      mean(completed_accuracy$poisson_total_goal_error, na.rm = TRUE),
+      mean(completed_accuracy$ols_total_goal_error, na.rm = TRUE),
+      mean(completed_accuracy$poisson_total_goal_error, na.rm = TRUE),
+      NA_real_
+    ),
+    avg_team_goal_mae = c(
+      mean(completed_accuracy$poisson_team_goal_mae, na.rm = TRUE),
+      mean(completed_accuracy$ols_team_goal_mae, na.rm = TRUE),
+      mean(completed_accuracy$poisson_team_goal_mae, na.rm = TRUE),
+      NA_real_
+    ),
     stringsAsFactors = FALSE
   )
   accuracy$plain_english <- c(
@@ -500,8 +559,39 @@ if (nrow(completed_accuracy) > 0) {
     "Outcome implied by the Poisson scoreline probability grid.",
     "Direct win/draw/loss ordinal logistic model."
   )
+
+  accuracy_detail <- data.frame(
+    source_match_id = completed_accuracy$source_match_id,
+    date = completed_accuracy$date,
+    match_label = completed_accuracy$match_label,
+    actual_score = paste0(completed_accuracy$home_score, "-", completed_accuracy$away_score),
+    actual_result = completed_accuracy$actual_result,
+    actual_winner = completed_accuracy$actual_winner,
+    ensemble_pick = completed_accuracy$predicted_winner,
+    ensemble_result = completed_accuracy$predicted_outcome,
+    ensemble_correct = completed_accuracy$predicted_outcome == completed_accuracy$actual_result,
+    ensemble_probability_actual = completed_accuracy$ensemble_probability_actual,
+    ols_pick = completed_accuracy$ols_predicted_winner,
+    ols_result = completed_accuracy$ols_predicted_outcome,
+    ols_correct = completed_accuracy$ols_predicted_outcome == completed_accuracy$actual_result,
+    ols_total_goal_error = completed_accuracy$ols_total_goal_error,
+    ols_team_goal_mae = completed_accuracy$ols_team_goal_mae,
+    poisson_pick = completed_accuracy$poisson_predicted_winner,
+    poisson_result = completed_accuracy$poisson_predicted_outcome,
+    poisson_correct = completed_accuracy$poisson_predicted_outcome == completed_accuracy$actual_result,
+    poisson_probability_actual = completed_accuracy$poisson_probability_actual,
+    poisson_total_goal_error = completed_accuracy$poisson_total_goal_error,
+    poisson_team_goal_mae = completed_accuracy$poisson_team_goal_mae,
+    ordinal_pick = completed_accuracy$ordinal_predicted_winner,
+    ordinal_result = completed_accuracy$ordinal_predicted_outcome,
+    ordinal_correct = completed_accuracy$ordinal_predicted_outcome == completed_accuracy$actual_result,
+    ordinal_probability_actual = completed_accuracy$ordinal_probability_actual,
+    stringsAsFactors = FALSE
+  )
+  accuracy_detail <- accuracy_detail[order(accuracy_detail$date, accuracy_detail$source_match_id), ]
 }
 readr::write_csv(accuracy, file.path(model_dir, "matchday_model_accuracy.csv"))
+readr::write_csv(accuracy_detail, file.path(model_dir, "matchday_model_accuracy_detail.csv"))
 
 refresh_utc <- as.POSIXct(board$refresh_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
 display_tz <- "America/New_York"

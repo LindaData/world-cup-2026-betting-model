@@ -41,6 +41,7 @@ class Settings:
     odds_regions: str
     odds_markets: str
     odds_format: str
+    api_sports_key: str
     api_football_key: str
     api_football_host: str
     api_football_world_cup_league_id: str
@@ -77,6 +78,11 @@ def load_settings(env_path: Path | None = None) -> Settings:
         odds_regions=_get("ODDS_REGIONS", env_file_values, "us"),
         odds_markets=_get("ODDS_MARKETS", env_file_values, "h2h,spreads,totals"),
         odds_format=_get("ODDS_ODDS_FORMAT", env_file_values, "decimal"),
+        api_sports_key=_get(
+            "API_SPORTS_KEY",
+            env_file_values,
+            _get("API_FOOTBALL_KEY", env_file_values),
+        ),
         api_football_key=_get("API_FOOTBALL_KEY", env_file_values),
         api_football_host=_get("API_FOOTBALL_HOST", env_file_values, "v3.football.api-sports.io"),
         api_football_world_cup_league_id=_get(

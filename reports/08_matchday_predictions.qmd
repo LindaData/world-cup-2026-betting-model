@@ -115,6 +115,43 @@ prepare_future_board <- function(board) {
     dplyr::arrange(kickoff_utc, date, source_match_id)
 }
 
+local_match_date <- function(kickoff_iso, fallback_date) {
+  kickoff <- parse_utc_time(kickoff_iso)
+  fallback <- suppressWarnings(as.Date(fallback_date))
+  fallback <- rep(fallback, length.out = length(kickoff))
+  dates <- rep(as.Date(NA), length(kickoff))
+  has_kickoff <- !is.na(kickoff)
+  dates[has_kickoff] <- as.Date(format(kickoff[has_kickoff], "%Y-%m-%d", tz = Sys.timezone()))
+  needs_fallback <- is.na(dates)
+  dates[needs_fallback] <- fallback[needs_fallback]
+  dates
+}
+
+prepare_daily_board <- function(board, target_date = Sys.Date()) {
+  if (nrow(board) == 0) {
+    return(board)
+  }
+  board |>
+    dplyr::mutate(
+      kickoff_utc = parse_utc_time(kickoff_utc_iso),
+      match_day_local = local_match_date(kickoff_utc_iso, date)
+    ) |>
+    dplyr::filter(match_day_local == target_date) |>
+    dplyr::arrange(kickoff_utc, date, source_match_id)
+}
+
+summary_value <- function(metric, fallback = "Pending") {
+  if (nrow(summary) == 0 || !"metric" %in% names(summary) || !"value" %in% names(summary)) {
+    return(fallback)
+  }
+  value <- summary$value[summary$metric == metric]
+  if (length(value) == 0 || is.na(value[[1]]) || !nzchar(as.character(value[[1]]))) {
+    fallback
+  } else {
+    as.character(value[[1]])
+  }
+}
+
 probability_bar <- function(label, value, class_name) {
   paste0(
     '<div class="prob-row">',
@@ -124,6 +161,18 @@ probability_bar <- function(label, value, class_name) {
     '<div class="prob-track"><span class="', class_name, '" style="width:',
     fmt_number(probability_width(value), 1),
     '%"></span></div>',
+    '</div>'
+  )
+}
+
+today_probability_chip <- function(label, value, class_name) {
+  paste0(
+    '<div class="today-prob-chip">',
+    '<span>', escape_html(label), '</span>',
+    '<strong>', display_percent(value, 1), '</strong>',
+    '<div class="today-prob-track"><i class="', class_name, '" style="width:',
+    fmt_number(probability_width(value), 1),
+    '%"></i></div>',
     '</div>'
   )
 }
@@ -322,14 +371,135 @@ build_projected_bracket <- function() {
 
 ## Prediction Board
 
-This is the matchday view for current forecasts, upcoming fixtures, model picks, and post-match accuracy.
+Daily match forecasts, upcoming fixtures, model picks, and post-match accuracy for the 2026 World Cup.
 
 <div class="matchday-toolbar">
-  <a href="#next-match-forecast">Next Match</a>
+  <a href="#daily-match-view">Today</a>
+  <a href="#next-match-forecast">Next</a>
   <a href="#next-upcoming-matches">Upcoming</a>
   <a href="#interactive-bracket-simulator">Simulator</a>
   <a href="#post-match-accuracy">Accuracy</a>
 </div>
+
+## Daily Match View
+
+```{r daily-match-view, echo=FALSE, results="asis"}
+today_date <- Sys.Date()
+today_board <- prepare_daily_board(board, today_date)
+future_board_for_day <- prepare_future_board(board)
+last_refresh <- summary_value("last_refreshed_local")
+today_label <- format(today_date, "%A, %B %d, %Y")
+match_word <- if (nrow(today_board) == 1) "match" else "matches"
+
+cat('<section class="daily-view-shell">')
+cat('<div class="daily-view-header">')
+cat('<div>')
+cat('<div class="section-kicker">Today</div>')
+cat('<h2>', escape_html(today_label), '</h2>', sep = "")
+cat('<p>Open this section first for the day&apos;s slate, model pick, likely score, goals, cards coverage, and lineup status.</p>')
+cat('</div>')
+cat('<div class="daily-refresh-card">')
+cat('<span>Last refresh</span>')
+cat('<strong>', escape_html(last_refresh), '</strong>', sep = "")
+cat('<small>Daily refresh is scheduled each morning; match forecasts refresh again before kickoff.</small>')
+cat('</div>')
+cat('<div class="daily-count-card">')
+cat('<strong>', nrow(today_board), '</strong>', sep = "")
+cat('<span>', escape_html(match_word), ' today</span>', sep = "")
+cat('</div>')
+cat('</div>')
+
+if (nrow(today_board) > 0) {
+  cat('<div class="today-match-list">')
+  for (i in seq_len(nrow(today_board))) {
+    row <- today_board[i, ]
+    home_label <- safe_text(row$home_team, "Home")
+    away_label <- safe_text(row$away_team, "Away")
+    winner <- safe_text(row$predicted_winner, "No pick")
+    status <- safe_text(row$match_timing, "Scheduled")
+    kickoff <- format_utc_time(row$kickoff_utc_iso)
+    refresh <- format_utc_time(row$refresh_utc_iso, "Refresh pending")
+    actual_result <- safe_text(row$actual_result, "")
+    result_line <- if (nzchar(actual_result)) paste("Result:", actual_result) else paste("Status:", status)
+    venue <- paste(
+      safe_text(row$city, "Venue"),
+      safe_text(row$country, "location"),
+      sep = ", "
+    )
+    expected_goals <- paste0(
+      display_number(row$pred_home_goals_poisson, 2),
+      " - ",
+      display_number(row$pred_away_goals_poisson, 2)
+    )
+    card_projection <- if (
+      is.finite(safe_number(row$home_projected_yellow_cards)) &&
+        is.finite(safe_number(row$away_projected_yellow_cards))
+    ) {
+      paste0(
+        display_number(row$home_projected_yellow_cards, 1),
+        " - ",
+        display_number(row$away_projected_yellow_cards, 1)
+      )
+    } else {
+      safe_text(row$yellow_card_model_status, "Pending")
+    }
+    lineup_state <- paste(
+      safe_text(row$home_lineup_status, "Pending"),
+      safe_text(row$away_lineup_status, "Pending"),
+      sep = " / "
+    )
+
+    cat('<article class="today-match-card">')
+    cat('<div class="today-card-top">')
+    cat('<span>', escape_html(kickoff), '</span>', sep = "")
+    cat('<strong>', escape_html(status), '</strong>', sep = "")
+    cat('</div>')
+    cat('<h3>', escape_html(home_label), ' <span>vs</span> ', escape_html(away_label), '</h3>', sep = "")
+    cat('<div class="today-pick-row">')
+    cat('<span>Model pick</span>')
+    cat('<strong>', escape_html(winner), '</strong>', sep = "")
+    cat('<em>', escape_html(safe_text(row$confidence_band, "Confidence")), ': ', display_percent(row$prediction_confidence, 1), '</em>', sep = "")
+    cat('</div>')
+    cat('<div class="today-prob-grid">')
+    cat(today_probability_chip(paste(home_label, "win"), row$ensemble_home_win_prob, "home-prob"))
+    cat(today_probability_chip("Draw", row$ensemble_draw_prob, "draw-prob"))
+    cat(today_probability_chip(paste(away_label, "win"), row$ensemble_away_win_prob, "away-prob"))
+    cat('</div>')
+    cat('<div class="today-detail-grid">')
+    cat('<div><span>Likely score</span><strong>', escape_html(safe_text(row$most_likely_score, "Pending")), '</strong></div>', sep = "")
+    cat('<div><span>Expected goals</span><strong>', escape_html(expected_goals), '</strong></div>', sep = "")
+    cat('<div><span>Over 2.5 goals</span><strong>', display_percent(row$over_2_5_prob, 1), '</strong></div>', sep = "")
+    cat('<div><span>Both score</span><strong>', display_percent(row$both_teams_to_score_prob, 1), '</strong></div>', sep = "")
+    cat('<div><span>Yellow cards</span><strong>', escape_html(card_projection), '</strong></div>', sep = "")
+    cat('<div><span>Lineups</span><strong>', escape_html(lineup_state), '</strong></div>', sep = "")
+    cat('</div>')
+    cat('<div class="today-card-footer">')
+    cat('<span>', escape_html(result_line), '</span>', sep = "")
+    cat('<span>', escape_html(venue), '</span>', sep = "")
+    cat('<span>Forecast refresh: ', escape_html(refresh), '</span>', sep = "")
+    cat('</div>')
+    cat('</article>')
+  }
+  cat('</div>')
+} else {
+  future_with_days <- future_board_for_day |>
+    dplyr::mutate(match_day_local = local_match_date(kickoff_utc_iso, date))
+  future_with_days <- future_with_days |> dplyr::filter(!is.na(match_day_local))
+  cat('<div class="daily-empty-card">')
+  cat('<strong>No matches are scheduled for today in the current board.</strong>')
+  if (nrow(future_with_days) > 0) {
+    next_match <- future_with_days[1, ]
+    next_day <- min(future_with_days$match_day_local, na.rm = TRUE)
+    next_day_count <- sum(future_with_days$match_day_local == next_day, na.rm = TRUE)
+    next_word <- if (next_day_count == 1) "match" else "matches"
+    cat('<span>Next match: ', escape_html(safe_text(next_match$home_team, "Home")), ' vs ', escape_html(safe_text(next_match$away_team, "Away")), ' on ', escape_html(format_utc_time(next_match$kickoff_utc_iso)), '.</span>', sep = "")
+    cat('<span>Next matchday: ', escape_html(format(next_day, "%A, %B %d")), ' with ', next_day_count, ' ', escape_html(next_word), '.</span>', sep = "")
+  }
+  cat('</div>')
+}
+
+cat('</section>')
+```
 
 ## Next Match Forecast
 
@@ -945,18 +1115,146 @@ if (nrow(board) > 0) {
 
 ## Post-Match Accuracy
 
-This section updates after final scores enter the fixture table.
+Each completed match is graded against the final score. "Right" means the model's top result matched the actual result. Goal miss is the absolute difference between predicted total goals and actual total goals.
 
-```{r accuracy}
+```{r accuracy, results='asis'}
 accuracy <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_model_accuracy.csv"))
+accuracy_detail <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_model_accuracy_detail.csv"))
 
-if (nrow(accuracy) > 0) {
-  accuracy |>
-    dplyr::mutate(
-      completed_matches = fmt_integer(completed_matches),
-      outcome_accuracy = fmt_percent(outcome_accuracy, 1)
-    ) |>
-    display_table(caption = "Post-match model accuracy on completed fixtures.")
+accuracy_badge <- function(correct) {
+  value <- as.logical(correct)[[1]]
+  if (is.na(value)) {
+    return('<span class="accuracy-badge accuracy-pending">Pending</span>')
+  }
+  if (value) {
+    '<span class="accuracy-badge accuracy-correct">Right</span>'
+  } else {
+    '<span class="accuracy-badge accuracy-wrong">Wrong</span>'
+  }
+}
+
+goal_error_chip <- function(value) {
+  numeric_value <- safe_number(value)
+  if (is.na(numeric_value) || !is.finite(numeric_value)) {
+    return('<span class="error-chip error-neutral">No goal model</span>')
+  }
+  class_name <- if (numeric_value <= 0.5) {
+    "error-good"
+  } else if (numeric_value <= 1.25) {
+    "error-warn"
+  } else {
+    "error-bad"
+  }
+  paste0(
+    '<span class="error-chip ', class_name, '">',
+    display_number(numeric_value, 2),
+    ' goal miss</span>'
+  )
+}
+
+probability_line <- function(value) {
+  numeric_value <- safe_number(value)
+  if (is.na(numeric_value) || !is.finite(numeric_value)) {
+    return("")
+  }
+  paste0('<small>Actual result prob: ', display_percent(numeric_value, 1), '</small>')
+}
+
+model_cell <- function(row, pick_col, correct_col, prob_col = NULL, error_col = NULL) {
+  pick <- safe_text(row[[pick_col]], "No pick")
+  pieces <- c(
+    paste0('<strong>', escape_html(pick), '</strong>'),
+    accuracy_badge(row[[correct_col]])
+  )
+  if (!is.null(prob_col)) {
+    pieces <- c(pieces, probability_line(row[[prob_col]]))
+  }
+  if (!is.null(error_col)) {
+    pieces <- c(pieces, goal_error_chip(row[[error_col]]))
+  }
+  paste0('<div class="accuracy-model-cell">', paste(pieces[nzchar(pieces)], collapse = ""), '</div>')
+}
+
+if (nrow(accuracy_detail) > 0) {
+  accuracy_detail <- accuracy_detail |>
+    dplyr::arrange(dplyr::desc(as.Date(date)), dplyr::desc(source_match_id))
+
+  cards <- data.frame(
+    label = c(
+      "Completed Matches",
+      "Ensemble Right",
+      "Poisson Goal Miss",
+      "Average Actual-Result Probability"
+    ),
+    value = c(
+      fmt_integer(nrow(accuracy_detail)),
+      fmt_percent(mean(accuracy_detail$ensemble_correct, na.rm = TRUE), 1),
+      paste0(fmt_number(mean(accuracy_detail$poisson_total_goal_error, na.rm = TRUE), 2), " goals"),
+      fmt_percent(mean(accuracy_detail$ensemble_probability_actual, na.rm = TRUE), 1)
+    ),
+    note = c(
+      "Matches with final scores available.",
+      "Share of completed matches the combined model called correctly.",
+      "Average absolute miss on total goals.",
+      "Average confidence assigned to what actually happened."
+    ),
+    stringsAsFactors = FALSE
+  )
+  cat(metric_cards(cards))
+
+  display_rows <- head(accuracy_detail, 40)
+  table_rows <- vapply(seq_len(nrow(display_rows)), function(i) {
+    row <- display_rows[i, , drop = FALSE]
+    paste0(
+      '<tr>',
+      '<td class="accuracy-match-cell"><strong>', escape_html(row$match_label), '</strong><small>',
+      escape_html(row$date), '</small></td>',
+      '<td class="accuracy-actual-cell"><strong>', escape_html(row$actual_score), '</strong><span>',
+      escape_html(row$actual_winner), '</span><small>', escape_html(row$actual_result), '</small></td>',
+      '<td>', model_cell(row, "ensemble_pick", "ensemble_correct", "ensemble_probability_actual"), '</td>',
+      '<td>', model_cell(row, "ols_pick", "ols_correct", NULL, "ols_total_goal_error"), '</td>',
+      '<td>', model_cell(row, "poisson_pick", "poisson_correct", "poisson_probability_actual", "poisson_total_goal_error"), '</td>',
+      '<td>', model_cell(row, "ordinal_pick", "ordinal_correct", "ordinal_probability_actual"), '</td>',
+      '</tr>'
+    )
+  }, character(1))
+
+  cat(
+    '<div class="accuracy-table-wrap">',
+    '<table class="accuracy-table">',
+    '<caption>Completed-match model review. The table shows up to the 40 most recent completed matches.</caption>',
+    '<thead><tr>',
+    '<th>Match</th>',
+    '<th>Actual</th>',
+    '<th>Ensemble</th>',
+    '<th>OLS Goals</th>',
+    '<th>Poisson</th>',
+    '<th>Ordinal</th>',
+    '</tr></thead>',
+    '<tbody>',
+    paste(table_rows, collapse = ""),
+    '</tbody></table></div>',
+    sep = ""
+  )
+
+  if (nrow(accuracy) > 0) {
+    summary_rows <- accuracy |>
+      dplyr::mutate(
+        completed_matches = fmt_integer(completed_matches),
+        outcome_accuracy = fmt_percent(outcome_accuracy, 1),
+        avg_total_goal_error = dplyr::if_else(
+          is.na(avg_total_goal_error),
+          "Not a goal model",
+          paste0(fmt_number(avg_total_goal_error, 2), " goals")
+        ),
+        avg_team_goal_mae = dplyr::if_else(
+          is.na(avg_team_goal_mae),
+          "Not a goal model",
+          paste0(fmt_number(avg_team_goal_mae, 2), " goals")
+        )
+      )
+    print(display_table(summary_rows, caption = "Model-level accuracy summary."))
+  }
 } else {
   display_table(empty_note("Post-match accuracy updates after completed scores are available."))
 }

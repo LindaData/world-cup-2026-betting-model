@@ -1,0 +1,188 @@
+{
+  "provider": "api-sports",
+  "request_budget_policy": {
+    "default_plan_limit_per_day": 100,
+    "inventory_only_max_requests_per_sport": 5,
+    "full_backfill_requires_explicit_sport_and_season": true
+  },
+  "sports": [
+    {
+      "sport_key": "football",
+      "label": "Football",
+      "host": "v3.football.api-sports.io",
+      "api_version": "v3",
+      "historical_depth_note": "1,200+ leagues and cups; access by season depends on plan.",
+      "reference_priority": 1,
+      "model_family": "team_event_with_draws",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "countries", "path": "/countries", "params": {}},
+        {"name": "leagues", "path": "/leagues", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "basketball",
+      "label": "Basketball",
+      "host": "v1.basketball.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "420+ leagues and cups; team-game structure is a good reference implementation.",
+      "reference_priority": 2,
+      "model_family": "team_event_no_draws",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "countries", "path": "/countries", "params": {}},
+        {"name": "leagues", "path": "/leagues", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "baseball",
+      "label": "Baseball",
+      "host": "v1.baseball.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "70+ leagues and cups; strong fit for run and win probability models.",
+      "reference_priority": 3,
+      "model_family": "team_event_no_draws",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "countries", "path": "/countries", "params": {}},
+        {"name": "leagues", "path": "/leagues", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "hockey",
+      "label": "Hockey",
+      "host": "v1.hockey.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "260+ leagues and cups; overtime and shootout handling need explicit rules.",
+      "reference_priority": 4,
+      "model_family": "team_event_overtime",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "countries", "path": "/countries", "params": {}},
+        {"name": "leagues", "path": "/leagues", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "nba",
+      "label": "NBA",
+      "host": "v2.nba.api-sports.io",
+      "api_version": "v2",
+      "historical_depth_note": "NBA-specific API with multi-season games, teams, players, standings, and statistics.",
+      "reference_priority": 5,
+      "model_family": "team_event_no_draws",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "leagues", "path": "/leagues", "params": {}},
+        {"name": "teams", "path": "/teams", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "nfl",
+      "label": "American Football",
+      "host": "v1.american-football.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "NFL/NCAA football API; season and team coverage varies by competition.",
+      "reference_priority": 6,
+      "model_family": "team_event_no_draws",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "leagues", "path": "/leagues", "params": {}},
+        {"name": "teams", "path": "/teams", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "rugby",
+      "label": "Rugby",
+      "host": "v1.rugby.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "140+ leagues and cups; scoring models must account for tries, conversions, and penalties where available.",
+      "reference_priority": 7,
+      "model_family": "team_event_possible_draws",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "countries", "path": "/countries", "params": {}},
+        {"name": "leagues", "path": "/leagues", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "volleyball",
+      "label": "Volleyball",
+      "host": "v1.volleyball.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "245+ leagues and cups; set-level outcomes should be preserved when available.",
+      "reference_priority": 8,
+      "model_family": "team_event_sets",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "countries", "path": "/countries", "params": {}},
+        {"name": "leagues", "path": "/leagues", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "handball",
+      "label": "Handball",
+      "host": "v1.handball.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "210+ leagues and cups; high-scoring team sport suitable for count models.",
+      "reference_priority": 9,
+      "model_family": "team_event_possible_draws",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "countries", "path": "/countries", "params": {}},
+        {"name": "leagues", "path": "/leagues", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "afl",
+      "label": "AFL",
+      "host": "v1.afl.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "10+ years; Australian football has sport-specific scoring and ladder features.",
+      "reference_priority": 10,
+      "model_family": "team_event_no_draws",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "teams", "path": "/teams", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "formula_1",
+      "label": "Formula 1",
+      "host": "v1.formula-1.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "12+ years; race, driver, constructor, circuit, and ranking models differ from team-game sports.",
+      "reference_priority": 11,
+      "model_family": "race_ranking",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "competitions", "path": "/competitions", "params": {}},
+        {"name": "circuits", "path": "/circuits", "params": {}}
+      ]
+    },
+    {
+      "sport_key": "mma",
+      "label": "MMA",
+      "host": "v1.mma.api-sports.io",
+      "api_version": "v1",
+      "historical_depth_note": "3+ years; individual fighter matchup modeling rather than team event modeling.",
+      "reference_priority": 12,
+      "model_family": "individual_matchup",
+      "inventory_endpoints": [
+        {"name": "status", "path": "/status", "params": {}},
+        {"name": "seasons", "path": "/seasons", "params": {}},
+        {"name": "competitions", "path": "/competitions", "params": {}}
+      ]
+    }
+  ]
+}
