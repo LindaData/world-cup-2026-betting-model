@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-20T23:31:46.895234Z.
+Last refreshed: 2026-06-22T14:15:23.090811Z.
 
 Refresh profile: `free-refresh`.
 
@@ -91,21 +91,11 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 12.734 |
-| Build processed public CSVs | ok | 32.328 |
-| Fetch Wikidata player enrichment | ok | 6.584 |
-| Fetch Open-Meteo fixture weather | ok | 83.076 |
-| Fetch GDELT news metadata | failed | 258.619 |
-| Build DuckDB | ok | 16.88 |
-| Export DuckDB metadata | ok | 9.101 |
-| Fit goals model | ok | 12.347 |
-| Fit Poisson goals model | ok | 26.697 |
-| Fit ordinal result model | ok | 25.918 |
-| Fit KNN similarity model | ok | 69.7 |
-| Run regression diagnostics | ok | 21.599 |
-| Score 2026 fixtures | ok | 11.35 |
-| Build matchday prediction board | ok | 9.821 |
-| Render R Markdown reports | ok | 285.649 |
+| Fetch raw source snapshots | ok | 7.64 |
+| Build processed public CSVs | ok | 69.931 |
+| Fetch Wikidata player enrichment | ok | 8.099 |
+| Fetch Open-Meteo fixture weather | ok | 102.453 |
+| Fetch GDELT news metadata | failed | 276.853 |
 
 ## Public Artifacts Updated
 
@@ -128,4 +118,4 @@ event detail, and market-implied probabilities as structured coverage expands.
 
 ## Failed Steps
 
-- `Fetch GDELT news metadata` failed. See `data\processed\update_runs\20260620T233146Z\fetch_gdelt_news_metadata.stderr.log` and `data\processed\update_runs\20260620T233146Z\fetch_gdelt_news_metadata.stdout.log`.
+- `Fetch GDELT news metadata` failed. See `data\processed\update_runs\20260622T141523Z\fetch_gdelt_news_metadata.stderr.log` and `data\processed\update_runs\20260622T141523Z\fetch_gdelt_news_metadata.stdout.log`.
