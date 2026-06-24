@@ -1,38 +1,114 @@
-# Current Data Status
+# Current Model Data Status
 
-Last site render completed locally on 2026-06-23.
+Last refreshed: 2026-06-24T13:24:19.804053Z.
 
-## Modeling Coverage
+Refresh profile: `free-refresh`.
 
-| Area | Current count |
-| --- | ---: |
-| 2026 fixtures scored | 72 |
-| Fixtures with final scores | 40 |
-| Fixtures with weather context | 44 |
-| Team-fixture rows scored | 144 |
+## Short Answer
 
-## Post-Match Automation
+The local refresh pipeline rebuilds the modeling database, metadata, diagnostics,
+model outputs, and shareable Quarto reports. The public site presents summarized
+results only; raw datasets and access files are kept out of the published site.
 
-| Item | Current status |
+## Stored In DuckDB
+
+Database:
+
+```text
+data/processed/world_cup.duckdb
+```
+
+Metadata exports:
+
+```text
+data/processed/metadata/table_inventory.csv
+data/processed/metadata/column_inventory.csv
+```
+
+## Table Counts
+
+| Table/View | Rows |
 | --- | --- |
-| Future post-match refresh windows | 25 |
-| Windows scheduled task runs | 16 |
-| Display timezone | Eastern Time |
-| June 2026 offset | EDT, UTC-4 |
-| Refresh buffer | Estimated final whistle plus 15 minutes |
+| `agg_news_query_counts_gdelt` | 11 |
+| `agg_player_international_goals` | 15840 |
+| `agg_team_elo_latest` | 336 |
+| `agg_team_history` | 336 |
+| `agg_team_recent_form` | 262 |
+| `api_football_fixture_events` | 0 |
+| `api_football_fixture_lineups` | 0 |
+| `api_football_fixture_predictions` | 0 |
+| `api_football_world_cup_fixtures` | 0 |
+| `api_football_world_cup_injuries` | 0 |
+| `api_football_world_cup_leagues` | 63 |
+| `api_football_world_cup_odds` | 0 |
+| `api_football_world_cup_players` | 0 |
+| `api_football_world_cup_standings` | 0 |
+| `api_football_world_cup_team_match_frame` | 0 |
+| `api_football_world_cup_teams` | 0 |
+| `dim_2026_world_cup_squad_players` | 1248 |
+| `dim_locations_from_results` | 2214 |
+| `dim_player_wikidata` | 1248 |
+| `fact_2026_world_cup_fixture_times` | 72 |
+| `fact_2026_world_cup_fixtures` | 72 |
+| `fact_fixture_weather_hourly_open_meteo` | 1152 |
+| `fact_international_matches_team_long` | 98954 |
+| `fact_news_articles_gdelt` | 158 |
+| `fact_player_goals` | 47727 |
+| `fact_team_elo_match_history` | 98890 |
+| `football_data_matches` | 0 |
+| `odds_snapshots` | 0 |
+| `raw_manifests` | 13 |
+| `raw_snapshot_files` | 239 |
+| `seed_venues` | 16 |
+| `stg_international_goalscorers` | 47727 |
+| `stg_international_results` | 49477 |
+| `stg_international_shootouts` | 678 |
+| `vw_2026_fixture_model_frame` | 72 |
+| `vw_2026_squad_player_enriched` | 1248 |
+| `vw_2026_squad_player_features` | 1248 |
+| `vw_2026_team_model_features` | 48 |
+| `vw_api_football_team_match_model_frame` | 0 |
+| `vw_fixture_weather_signals` | 48 |
+| `vw_goals_linear_model_frame` | 98810 |
+| `vw_news_query_signals` | 11 |
+| `vw_recent_team_form` | 262 |
+| `vw_result_ordinal_model_frame` | 98810 |
+| `vw_team_match_results` | 98954 |
+| `weather_hourly` | 0 |
 
-## Latest Accuracy Snapshot
+## Latest Raw Snapshot Sources
 
-| Model | Completed matches | Result accuracy | Average total-goal miss |
-| --- | ---: | ---: | ---: |
-| Ensemble | 40 | 60.0% | 1.52 goals |
-| OLS goals | 40 | 60.0% | 1.60 goals |
-| Poisson score grid | 40 | 60.0% | 1.52 goals |
-| Ordinal result | 40 | 60.0% | Not a goal model |
+| Source | Status | Detail |
+| --- | --- | --- |
+| api-football | pulled | 200 |
+| football-data | skipped | FOOTBALL_DATA_TOKEN is not set |
+| odds | skipped | THE_ODDS_API_KEY is not set |
+| official-fifa | pulled | 200 |
+| public | pulled | 200 |
+| wikimedia | pulled | 200 |
 
-## Published Site Output
+## Refresh Steps
 
-The rendered website is in `docs/`. It includes the matchday prediction board,
-the completed-match accuracy table, automatic refresh notes, model-selection
-framework, diagnostics, and source coverage notes. Private local files and raw
-source snapshots are intentionally kept outside the published output.
+| Step | Status | Seconds |
+| --- | --- | --- |
+| Fetch raw source snapshots | ok | 20.83 |
+| Build processed public CSVs | ok | 164.335 |
+
+## Public Artifacts Updated
+
+- `docs\.nojekyll`
+
+## Data Coverage Summary
+
+| Area | Current role |
+| --- | --- |
+| Historical match results | Regression training data |
+| Team strength history | Pre-match strength and opponent-strength features |
+| 2026 fixtures and venues | Fixture scoring frame |
+| Weather and news metadata | Context features and diagnostics |
+| Football API enrichment | Coverage metadata now; richer match/player fields when populated |
+
+## Planned Enrichment
+
+The model is designed to add lineups, player availability, player-match statistics,
+event detail, and market-implied probabilities as structured coverage expands.
