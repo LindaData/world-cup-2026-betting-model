@@ -1,0 +1,99 @@
+name: Nightly Data And Model Refresh
+
+on:
+  schedule:
+    # Run at both possible UTC offsets, then keep only the 2 AM Eastern run.
+    - cron: "30 6,7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly-model-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Eastern refresh window
+        id: schedule
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          elif [[ "$(TZ=America/New_York date +%H)" == "02" ]]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.schedule.outputs.run == 'true'
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        if: steps.schedule.outputs.run == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Setup R
+        if: steps.schedule.outputs.run == 'true'
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+          use-public-rspm: true
+
+      - name: Setup Quarto
+        if: steps.schedule.outputs.run == 'true'
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Cache project R library
+        if: steps.schedule.outputs.run == 'true'
+        uses: actions/cache@v4
+        with:
+          path: .r-lib
+          key: ${{ runner.os }}-r-${{ hashFiles('R/00_setup.R') }}
+          restore-keys: |
+            ${{ runner.os }}-r-
+
+      - name: Install R packages
+        if: steps.schedule.outputs.run == 'true'
+        run: Rscript R/00_setup.R
+
+      - name: Refresh data, models, and site
+        if: steps.schedule.outputs.run == 'true'
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          API_FOOTBALL_HOST: v3.football.api-sports.io
+          API_FOOTBALL_WORLD_CUP_LEAGUE_ID: "1"
+          API_FOOTBALL_SEASON: "2026"
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+        run: |
+          python scripts/update_pipeline.py \
+            --profile free-refresh \
+            --include-keyed-apis \
+            --api-football-advanced \
+            --api-football-max-fixtures 4 \
+            --api-football-max-player-pages 1 \
+            --max-weather-fixtures 72 \
+            --max-news-records 75 \
+            --news-timespan 24h \
+            --continue-on-error
+
+      - name: Commit refreshed public site
+        if: steps.schedule.outputs.run == 'true'
+        shell: bash
+        run: |
+          git add docs
+          if git diff --cached --quiet; then
+            echo "No public site changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Nightly data refresh $(TZ=America/New_York date +'%Y-%m-%d')"
+          git push origin main
