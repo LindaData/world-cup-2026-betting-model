@@ -625,8 +625,81 @@ schedule <- future_refresh[, c(
 schedule <- schedule[order(schedule$refresh_utc_iso, schedule$source_match_id), ]
 readr::write_csv(schedule, file.path(model_dir, "matchday_refresh_schedule.csv"))
 
+postmatch_buffer_minutes <- 135
+postmatch_kickoff_utc <- as.POSIXct(board$kickoff_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+postmatch_eligible <- board$match_timing %in% c("Today", "Upcoming", "Pending score") &
+  !is.na(postmatch_kickoff_utc)
+postmatch_candidates <- board[
+  postmatch_eligible,
+]
+postmatch_utc <- postmatch_kickoff_utc[postmatch_eligible] + postmatch_buffer_minutes * 60
+postmatch_candidates$postmatch_refresh_utc <- postmatch_utc
+postmatch_candidates <- postmatch_candidates[
+  !is.na(postmatch_candidates$postmatch_refresh_utc) &
+    postmatch_candidates$postmatch_refresh_utc > now_utc,
+]
+
+if (nrow(postmatch_candidates) > 0) {
+  postmatch_candidates$postmatch_refresh_utc_iso <- format(
+    postmatch_candidates$postmatch_refresh_utc,
+    "%Y-%m-%dT%H:%M:%SZ",
+    tz = "UTC"
+  )
+  postmatch_candidates$postmatch_refresh_at_eastern <- format(
+    postmatch_candidates$postmatch_refresh_utc,
+    "%Y-%m-%d %H:%M:%S",
+    tz = display_tz
+  )
+  postmatch_candidates$kickoff_at_eastern <- format(
+    as.POSIXct(postmatch_candidates$kickoff_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
+    "%Y-%m-%d %H:%M:%S",
+    tz = display_tz
+  )
+  postmatch_candidates$estimated_final_at_eastern <- format(
+    as.POSIXct(postmatch_candidates$kickoff_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC") + 120 * 60,
+    "%Y-%m-%d %H:%M:%S",
+    tz = display_tz
+  )
+  postmatch_candidates$postmatch_buffer_minutes <- postmatch_buffer_minutes
+  postmatch_candidates$time_zone <- "Eastern Time"
+  postmatch_candidates$time_zone_detail <- "America/New_York; June 2026 observes EDT (UTC-4)"
+
+  postmatch_schedule <- postmatch_candidates[, c(
+    "source_match_id",
+    "date",
+    "match_label",
+    "kickoff_utc_iso",
+    "kickoff_at_eastern",
+    "estimated_final_at_eastern",
+    "postmatch_refresh_utc_iso",
+    "postmatch_refresh_at_eastern",
+    "postmatch_buffer_minutes",
+    "time_zone",
+    "time_zone_detail"
+  )]
+  postmatch_schedule <- postmatch_schedule[
+    order(postmatch_schedule$postmatch_refresh_utc_iso, postmatch_schedule$source_match_id),
+  ]
+} else {
+  postmatch_schedule <- data.frame(
+    source_match_id = integer(),
+    date = as.Date(character()),
+    match_label = character(),
+    kickoff_utc_iso = character(),
+    kickoff_at_eastern = character(),
+    estimated_final_at_eastern = character(),
+    postmatch_refresh_utc_iso = character(),
+    postmatch_refresh_at_eastern = character(),
+    postmatch_buffer_minutes = integer(),
+    time_zone = character(),
+    time_zone_detail = character()
+  )
+}
+readr::write_csv(postmatch_schedule, file.path(model_dir, "matchday_postmatch_refresh_schedule.csv"))
+
 cat("\nMatchday prediction board complete.\n")
 cat("Board: ", file.path(model_dir, "matchday_prediction_board.csv"), "\n", sep = "")
 cat("Summary: ", file.path(model_dir, "matchday_prediction_summary.csv"), "\n", sep = "")
 cat("Refresh schedule: ", file.path(model_dir, "matchday_refresh_schedule.csv"), "\n", sep = "")
+cat("Post-match refresh schedule: ", file.path(model_dir, "matchday_postmatch_refresh_schedule.csv"), "\n", sep = "")
 print(head(board_public, 12))

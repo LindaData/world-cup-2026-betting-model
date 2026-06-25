@@ -45,7 +45,6 @@ foreach ($Group in $Grouped) {
   $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument ($ScriptArgs -join " ")
   $Trigger = New-ScheduledTaskTrigger -Once -At $RefreshAt
   $Settings = New-ScheduledTaskSettingsSet `
-    -StartWhenAvailable `
     -AllowStartIfOnBatteries `
     -DontStopIfGoingOnBatteries `
     -ExecutionTimeLimit (New-TimeSpan -Hours 2)

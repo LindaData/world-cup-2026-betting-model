@@ -1,5 +1,5 @@
 param(
-  [string]$At = "08:00",
+  [string]$At = "02:30",
   [switch]$Publish,
   [switch]$Force
 )
@@ -61,6 +61,6 @@ if ($ExistingTask) {
     -Action $Action `
     -Trigger $Trigger `
     -Settings $Settings `
-    -Description "Refresh and optionally publish the World Cup 2026 prediction site each day." | Out-Null
+    -Description "Refresh current World Cup data, refit models, render the site, and optionally publish each night." | Out-Null
   Write-Host "Created daily refresh task '$TaskName' for $($RunAt.ToString('HH:mm')) local time."
 }

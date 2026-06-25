@@ -80,7 +80,7 @@ def _write_api_response(destination: Path, filename: str, response) -> None:
         _write_json(destination / filename, response.json())
 
 
-def _fixture_ids_from_payload(payload: object) -> list[str]:
+def _fixture_ids_from_payload(payload: object, max_fixtures: int) -> list[str]:
     fixtures: list[tuple[str, str, str]] = []
     for row in _response_items(payload):
         if not isinstance(row, dict):
@@ -93,14 +93,53 @@ def _fixture_ids_from_payload(payload: object) -> list[str]:
         if fixture_id not in (None, ""):
             fixtures.append((str(fixture_id), fixture_date, status_short))
 
-    upcoming = [
-        item
-        for item in fixtures
-        if item[2] in {"NS", "TBD"} or item[2] == ""
-    ]
-    selected = upcoming if upcoming else fixtures
-    selected.sort(key=lambda item: item[1])
-    return [item[0] for item in selected]
+    if max_fixtures <= 0:
+        return []
+
+    live_statuses = {"1H", "HT", "2H", "ET", "BT", "P", "SUSP", "INT", "LIVE"}
+    completed_statuses = {"FT", "AET", "PEN"}
+    upcoming_statuses = {"NS", "TBD", "PST", ""}
+
+    live = sorted(
+        (item for item in fixtures if item[2] in live_statuses),
+        key=lambda item: item[1],
+    )
+    completed = sorted(
+        (item for item in fixtures if item[2] in completed_statuses),
+        key=lambda item: item[1],
+        reverse=True,
+    )
+    upcoming = sorted(
+        (item for item in fixtures if item[2] in upcoming_statuses),
+        key=lambda item: item[1],
+    )
+
+    selected: list[tuple[str, str, str]] = live[:max_fixtures]
+    remaining = max_fixtures - len(selected)
+
+    if remaining == 1 and upcoming:
+        selected.extend(upcoming[:1])
+        remaining = max_fixtures - len(selected)
+
+    if remaining > 0 and completed and upcoming:
+        completed_slots = max(1, remaining // 2)
+        selected.extend(completed[:completed_slots])
+        remaining = max_fixtures - len(selected)
+
+    if remaining > 0:
+        selected.extend(upcoming[:remaining])
+        remaining = max_fixtures - len(selected)
+
+    if remaining > 0:
+        selected_ids = {item[0] for item in selected}
+        fallback = [
+            item
+            for item in completed + upcoming + fixtures
+            if item[0] not in selected_ids
+        ]
+        selected.extend(fallback[:remaining])
+
+    return [item[0] for item in selected[:max_fixtures]]
 
 
 def main() -> int:
@@ -300,10 +339,14 @@ def main() -> int:
                             break
                     manifest["sources"]["api-football"]["players"] = player_pages
 
-                    fixture_ids = _fixture_ids_from_payload(fixtures_payload)
                     expanded: dict[str, object] = {}
                     max_fixtures = max(0, args.api_football_max_fixtures)
-                    for fixture_id in fixture_ids[:max_fixtures]:
+                    fixture_ids = _fixture_ids_from_payload(fixtures_payload, max_fixtures)
+                    manifest["sources"]["api-football"]["fixture_detail_selection"] = {
+                        "policy": "Live first, then a balance of recently completed and next upcoming fixtures.",
+                        "fixture_ids": fixture_ids,
+                    }
+                    for fixture_id in fixture_ids:
                         expanded[fixture_id] = {}
                         detail_calls = {
                             "lineups": client.fixture_lineups(fixture_id),

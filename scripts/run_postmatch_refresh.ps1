@@ -1,6 +1,4 @@
 param(
-  [int]$FixtureDetails = 1,
-  [int]$PlayerPages = 0,
   [switch]$SkipRender,
   [switch]$Publish
 )
@@ -19,12 +17,11 @@ $Args = @(
   "scripts\update_pipeline.py",
   "--profile", "free-refresh",
   "--include-keyed-apis",
-  "--api-football-advanced",
-  "--api-football-max-fixtures", "$FixtureDetails",
-  "--api-football-max-player-pages", "$PlayerPages",
-  "--max-weather-fixtures", "72",
-  "--max-news-records", "75",
-  "--news-timespan", "24h"
+  "--api-football-max-fixtures", "0",
+  "--api-football-max-player-pages", "0",
+  "--skip-wikidata",
+  "--skip-weather",
+  "--skip-news"
 )
 
 if ($SkipRender) {
@@ -46,6 +43,6 @@ if ($Publish) {
   }
 
   $Stamp = Get-Date -Format "yyyy-MM-dd HH:mm"
-  git commit -m "Refresh matchday predictions $Stamp"
+  git commit -m "Post-match data refresh $Stamp"
   git push origin main
 }

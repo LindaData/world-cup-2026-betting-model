@@ -73,17 +73,40 @@ def main() -> int:
 
     seen_urls: set[str] = set()
     for index, query in enumerate(queries, start=1):
-        response = client.article_list(query, max_records=max_records, timespan=timespan)
         query_key = f"query_{index:03d}"
+        try:
+            response = client.article_list(query, max_records=max_records, timespan=timespan)
+        except (ConnectionError, TimeoutError) as exc:
+            manifest["queries"][query_key] = {
+                "query": query,
+                "status": "request_failed",
+                "error": str(exc),
+            }
+            write_json(raw_dir / f"{query_key}.json", {"error": str(exc)})
+            continue
+
         manifest["queries"][query_key] = {
             "query": query,
             "status_code": response.status_code,
             "url": response.url,
         }
-        write_json(raw_dir / f"{query_key}.json", response.json() if response.ok else {"error": response.text})
+
+        try:
+            payload = response.json()
+        except json.JSONDecodeError:
+            payload = {
+                "error": "GDELT returned a non-JSON response.",
+                "response_preview": response.text[:500],
+            }
+            manifest["queries"][query_key]["status"] = "invalid_json"
+
+        write_json(raw_dir / f"{query_key}.json", payload)
         if not response.ok:
             continue
-        for article in response.json().get("articles", []):
+        if not isinstance(payload, dict) or not isinstance(payload.get("articles"), list):
+            continue
+
+        for article in payload["articles"]:
             normalized = normalize_article(query, article)
             url = str(normalized["url"])
             if not url or url in seen_urls:
@@ -122,4 +145,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
