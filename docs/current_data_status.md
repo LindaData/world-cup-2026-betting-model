@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-24T13:29:16.938175Z.
+Last refreshed: 2026-06-25T16:22:55.425145Z.
 
 Refresh profile: `free-refresh`.
 
@@ -91,21 +91,6 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 7.821 |
-| Build processed public CSVs | ok | 46.113 |
-| Fetch Wikidata player enrichment | ok | 9.597 |
-| Fetch Open-Meteo fixture weather | ok | 119.599 |
-| Fetch GDELT news metadata | failed | 624.37 |
-| Build DuckDB | ok | 17.131 |
-| Export DuckDB metadata | ok | 9.704 |
-| Fit goals model | ok | 18.308 |
-| Fit Poisson goals model | ok | 19.696 |
-| Fit ordinal result model | ok | 25.188 |
-| Fit KNN similarity model | ok | 43.086 |
-| Run regression diagnostics | ok | 9.099 |
-| Score 2026 fixtures | ok | 6.219 |
-| Build matchday prediction board | ok | 5.956 |
-| Render R Markdown reports | ok | 164.731 |
 
 ## Public Artifacts Updated
 
@@ -125,7 +110,3 @@ data/processed/metadata/column_inventory.csv
 
 The model is designed to add lineups, player availability, player-match statistics,
 event detail, and market-implied probabilities as structured coverage expands.
-
-## Failed Steps
-
-- `Fetch GDELT news metadata` failed. See `data\processed\update_runs\20260624T132916Z\fetch_gdelt_news_metadata.stderr.log` and `data\processed\update_runs\20260624T132916Z\fetch_gdelt_news_metadata.stdout.log`.
