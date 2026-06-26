@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-25T16:22:55.425145Z.
+Last refreshed: 2026-06-25T16:22:53.138925Z.
 
 Refresh profile: `free-refresh`.
 
@@ -30,7 +30,7 @@ data/processed/metadata/column_inventory.csv
 | Table/View | Rows |
 | --- | --- |
 | `agg_news_query_counts_gdelt` | 11 |
-| `agg_player_international_goals` | 15843 |
+| `agg_player_international_goals` | 15849 |
 | `agg_team_elo_latest` | 336 |
 | `agg_team_history` | 336 |
 | `agg_team_recent_form` | 262 |
@@ -50,17 +50,17 @@ data/processed/metadata/column_inventory.csv
 | `dim_player_wikidata` | 1248 |
 | `fact_2026_world_cup_fixture_times` | 72 |
 | `fact_2026_world_cup_fixtures` | 72 |
-| `fact_fixture_weather_hourly_open_meteo` | 1296 |
+| `fact_fixture_weather_hourly_open_meteo` | 1440 |
 | `fact_international_matches_team_long` | 98954 |
 | `fact_news_articles_gdelt` | 158 |
-| `fact_player_goals` | 47747 |
-| `fact_team_elo_match_history` | 98906 |
+| `fact_player_goals` | 47767 |
+| `fact_team_elo_match_history` | 98918 |
 | `football_data_matches` | 0 |
 | `odds_snapshots` | 0 |
-| `raw_manifests` | 15 |
-| `raw_snapshot_files` | 278 |
+| `raw_manifests` | 16 |
+| `raw_snapshot_files` | 298 |
 | `seed_venues` | 16 |
-| `stg_international_goalscorers` | 47747 |
+| `stg_international_goalscorers` | 47767 |
 | `stg_international_results` | 49477 |
 | `stg_international_shootouts` | 678 |
 | `vw_2026_fixture_model_frame` | 72 |
@@ -68,7 +68,7 @@ data/processed/metadata/column_inventory.csv
 | `vw_2026_squad_player_features` | 1248 |
 | `vw_2026_team_model_features` | 48 |
 | `vw_api_football_team_match_model_frame` | 0 |
-| `vw_fixture_weather_signals` | 54 |
+| `vw_fixture_weather_signals` | 60 |
 | `vw_goals_linear_model_frame` | 98810 |
 | `vw_news_query_signals` | 11 |
 | `vw_recent_team_form` | 262 |
@@ -91,6 +91,11 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
+| Fetch raw source snapshots | ok | 8.511 |
+| Build processed public CSVs | ok | 39.793 |
+| Fetch Wikidata player enrichment | ok | 6.502 |
+| Fetch Open-Meteo fixture weather | ok | 89.933 |
+| Fetch GDELT news metadata | ok | 37965.122 |
 
 ## Public Artifacts Updated
 
