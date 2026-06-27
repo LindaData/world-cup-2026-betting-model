@@ -29,6 +29,21 @@ if ($SkipRender) {
 }
 
 & $Python @Args
+$PipelineExitCode = $LASTEXITCODE
+if ($PipelineExitCode -ne 0) {
+  throw "Refresh pipeline failed with exit code $PipelineExitCode. Nothing will be published."
+}
+
+if (-not $SkipRender) {
+  $LatestRunPath = Join-Path $ProjectRoot "data\processed\update_runs\latest.json"
+  if (Test-Path $LatestRunPath) {
+    $LatestRun = Get-Content $LatestRunPath -Raw | ConvertFrom-Json
+    $RenderStep = $LatestRun.steps | Where-Object { $_.name -eq "Render R Markdown reports" } | Select-Object -First 1
+    if ($RenderStep -and $RenderStep.status -ne "ok") {
+      throw "Quarto render failed. Nothing will be published."
+    }
+  }
+}
 
 if ($Publish) {
   if ($SkipRender) {
@@ -36,13 +51,27 @@ if ($Publish) {
   }
 
   git add docs
+  if ($LASTEXITCODE -ne 0) {
+    throw "Could not stage the rendered site."
+  }
+
   git diff --cached --quiet
   if ($LASTEXITCODE -eq 0) {
     Write-Host "No rendered site changes to publish."
     exit 0
   }
+  if ($LASTEXITCODE -ne 1) {
+    throw "Could not inspect the staged site changes."
+  }
 
   $Stamp = Get-Date -Format "yyyy-MM-dd HH:mm"
   git commit -m "Post-match data refresh $Stamp"
+  if ($LASTEXITCODE -ne 0) {
+    throw "Could not commit the rendered site."
+  }
+
   git push origin main
+  if ($LASTEXITCODE -ne 0) {
+    throw "Could not push the rendered site."
+  }
 }

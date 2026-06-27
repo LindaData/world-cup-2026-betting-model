@@ -30,6 +30,8 @@ data/seed/*.csv
 data/samples/*.csv
 docs/samples/*.csv
 reports/*.html
+reports/*_files/
+site_libs/
 
 /.quarto/
 .quarto-deno/

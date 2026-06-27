@@ -5,6 +5,17 @@
 
 source("R/00_setup.R")
 
+quarto_cache <- file.path(here::here(), ".quarto-deno")
+quarto_appdata <- file.path(here::here(), ".localappdata")
+dir.create(quarto_cache, recursive = TRUE, showWarnings = FALSE)
+dir.create(quarto_appdata, recursive = TRUE, showWarnings = FALSE)
+Sys.setenv(
+  DENO_DIR = normalizePath(quarto_cache, winslash = "/", mustWork = TRUE),
+  QUARTO_DENO_DIR = normalizePath(quarto_cache, winslash = "/", mustWork = TRUE),
+  LOCALAPPDATA = normalizePath(quarto_appdata, winslash = "/", mustWork = TRUE),
+  APPDATA = normalizePath(quarto_appdata, winslash = "/", mustWork = TRUE)
+)
+
 find_quarto <- function() {
   quarto_on_path <- Sys.which("quarto")
   if (nzchar(quarto_on_path)) {

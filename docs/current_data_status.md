@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-27T02:15:02.677014Z.
+Last refreshed: 2026-06-27T02:13:42.980447Z.
 
 Refresh profile: `free-refresh`.
 
@@ -29,7 +29,7 @@ data/processed/metadata/column_inventory.csv
 
 | Table/View | Rows |
 | --- | --- |
-| `agg_news_query_counts_gdelt` | 13 |
+| `agg_news_query_counts_gdelt` | 17 |
 | `agg_player_international_goals` | 15854 |
 | `agg_team_elo_latest` | 336 |
 | `agg_team_history` | 336 |
@@ -52,7 +52,7 @@ data/processed/metadata/column_inventory.csv
 | `fact_2026_world_cup_fixtures` | 72 |
 | `fact_fixture_weather_hourly_open_meteo` | 1728 |
 | `fact_international_matches_team_long` | 98954 |
-| `fact_news_articles_gdelt` | 429 |
+| `fact_news_articles_gdelt` | 352 |
 | `fact_player_goals` | 47783 |
 | `fact_team_elo_match_history` | 98930 |
 | `football_data_matches` | 0 |
@@ -70,7 +70,7 @@ data/processed/metadata/column_inventory.csv
 | `vw_api_football_team_match_model_frame` | 0 |
 | `vw_fixture_weather_signals` | 72 |
 | `vw_goals_linear_model_frame` | 98810 |
-| `vw_news_query_signals` | 13 |
+| `vw_news_query_signals` | 17 |
 | `vw_recent_team_form` | 262 |
 | `vw_result_ordinal_model_frame` | 98810 |
 | `vw_team_match_results` | 98954 |
@@ -91,18 +91,21 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 9.36 |
-| Build processed public CSVs | ok | 63.328 |
-| Build DuckDB | ok | 30.014 |
-| Export DuckDB metadata | ok | 8.754 |
-| Fit goals model | ok | 12.877 |
-| Fit Poisson goals model | ok | 15.743 |
-| Fit ordinal result model | ok | 17.681 |
-| Fit KNN similarity model | ok | 43.666 |
-| Run regression diagnostics | ok | 8.032 |
-| Score 2026 fixtures | ok | 6.166 |
-| Build matchday prediction board | ok | 5.627 |
-| Render R Markdown reports | ok | 162.053 |
+| Fetch raw source snapshots | ok | 6.049 |
+| Build processed public CSVs | ok | 37.687 |
+| Fetch Wikidata player enrichment | ok | 8.191 |
+| Fetch Open-Meteo fixture weather | ok | 87.349 |
+| Fetch GDELT news metadata | ok | 481.014 |
+| Build DuckDB | ok | 5.264 |
+| Export DuckDB metadata | ok | 2.768 |
+| Fit goals model | ok | 3.818 |
+| Fit Poisson goals model | ok | 6.729 |
+| Fit ordinal result model | ok | 8.434 |
+| Fit KNN similarity model | ok | 20.513 |
+| Run regression diagnostics | ok | 6.266 |
+| Score 2026 fixtures | ok | 4.6 |
+| Build matchday prediction board | ok | 4.729 |
+| Render R Markdown reports | ok | 80.551 |
 
 ## Public Artifacts Updated
 
