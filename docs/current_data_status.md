@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-27T02:13:42.980447Z.
+Last refreshed: 2026-06-27T05:15:00.650601Z.
 
 Refresh profile: `free-refresh`.
 
@@ -57,8 +57,8 @@ data/processed/metadata/column_inventory.csv
 | `fact_team_elo_match_history` | 98930 |
 | `football_data_matches` | 0 |
 | `odds_snapshots` | 0 |
-| `raw_manifests` | 18 |
-| `raw_snapshot_files` | 336 |
+| `raw_manifests` | 19 |
+| `raw_snapshot_files` | 354 |
 | `seed_venues` | 16 |
 | `stg_international_goalscorers` | 47783 |
 | `stg_international_results` | 49477 |
@@ -91,21 +91,18 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 6.049 |
-| Build processed public CSVs | ok | 37.687 |
-| Fetch Wikidata player enrichment | ok | 8.191 |
-| Fetch Open-Meteo fixture weather | ok | 87.349 |
-| Fetch GDELT news metadata | ok | 481.014 |
-| Build DuckDB | ok | 5.264 |
-| Export DuckDB metadata | ok | 2.768 |
-| Fit goals model | ok | 3.818 |
-| Fit Poisson goals model | ok | 6.729 |
-| Fit ordinal result model | ok | 8.434 |
-| Fit KNN similarity model | ok | 20.513 |
-| Run regression diagnostics | ok | 6.266 |
-| Score 2026 fixtures | ok | 4.6 |
-| Build matchday prediction board | ok | 4.729 |
-| Render R Markdown reports | ok | 80.551 |
+| Fetch raw source snapshots | ok | 6.575 |
+| Build processed public CSVs | ok | 9.183 |
+| Build DuckDB | ok | 5.076 |
+| Export DuckDB metadata | ok | 2.47 |
+| Fit goals model | ok | 3.627 |
+| Fit Poisson goals model | ok | 5.869 |
+| Fit ordinal result model | ok | 6.974 |
+| Fit KNN similarity model | ok | 14.829 |
+| Run regression diagnostics | ok | 3.971 |
+| Score 2026 fixtures | ok | 2.774 |
+| Build matchday prediction board | ok | 2.516 |
+| Render R Markdown reports | ok | 68.629 |
 
 ## Public Artifacts Updated
 
