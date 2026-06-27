@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-25T16:22:53.138925Z.
+Last refreshed: 2026-06-27T02:15:02.677014Z.
 
 Refresh profile: `free-refresh`.
 
@@ -29,8 +29,8 @@ data/processed/metadata/column_inventory.csv
 
 | Table/View | Rows |
 | --- | --- |
-| `agg_news_query_counts_gdelt` | 11 |
-| `agg_player_international_goals` | 15849 |
+| `agg_news_query_counts_gdelt` | 13 |
+| `agg_player_international_goals` | 15854 |
 | `agg_team_elo_latest` | 336 |
 | `agg_team_history` | 336 |
 | `agg_team_recent_form` | 262 |
@@ -50,17 +50,17 @@ data/processed/metadata/column_inventory.csv
 | `dim_player_wikidata` | 1248 |
 | `fact_2026_world_cup_fixture_times` | 72 |
 | `fact_2026_world_cup_fixtures` | 72 |
-| `fact_fixture_weather_hourly_open_meteo` | 1440 |
+| `fact_fixture_weather_hourly_open_meteo` | 1728 |
 | `fact_international_matches_team_long` | 98954 |
-| `fact_news_articles_gdelt` | 158 |
-| `fact_player_goals` | 47767 |
-| `fact_team_elo_match_history` | 98918 |
+| `fact_news_articles_gdelt` | 429 |
+| `fact_player_goals` | 47783 |
+| `fact_team_elo_match_history` | 98930 |
 | `football_data_matches` | 0 |
 | `odds_snapshots` | 0 |
-| `raw_manifests` | 16 |
-| `raw_snapshot_files` | 298 |
+| `raw_manifests` | 18 |
+| `raw_snapshot_files` | 336 |
 | `seed_venues` | 16 |
-| `stg_international_goalscorers` | 47767 |
+| `stg_international_goalscorers` | 47783 |
 | `stg_international_results` | 49477 |
 | `stg_international_shootouts` | 678 |
 | `vw_2026_fixture_model_frame` | 72 |
@@ -68,9 +68,9 @@ data/processed/metadata/column_inventory.csv
 | `vw_2026_squad_player_features` | 1248 |
 | `vw_2026_team_model_features` | 48 |
 | `vw_api_football_team_match_model_frame` | 0 |
-| `vw_fixture_weather_signals` | 60 |
+| `vw_fixture_weather_signals` | 72 |
 | `vw_goals_linear_model_frame` | 98810 |
-| `vw_news_query_signals` | 11 |
+| `vw_news_query_signals` | 13 |
 | `vw_recent_team_form` | 262 |
 | `vw_result_ordinal_model_frame` | 98810 |
 | `vw_team_match_results` | 98954 |
@@ -91,11 +91,18 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 8.511 |
-| Build processed public CSVs | ok | 39.793 |
-| Fetch Wikidata player enrichment | ok | 6.502 |
-| Fetch Open-Meteo fixture weather | ok | 89.933 |
-| Fetch GDELT news metadata | ok | 37965.122 |
+| Fetch raw source snapshots | ok | 9.36 |
+| Build processed public CSVs | ok | 63.328 |
+| Build DuckDB | ok | 30.014 |
+| Export DuckDB metadata | ok | 8.754 |
+| Fit goals model | ok | 12.877 |
+| Fit Poisson goals model | ok | 15.743 |
+| Fit ordinal result model | ok | 17.681 |
+| Fit KNN similarity model | ok | 43.666 |
+| Run regression diagnostics | ok | 8.032 |
+| Score 2026 fixtures | ok | 6.166 |
+| Build matchday prediction board | ok | 5.627 |
+| Render R Markdown reports | ok | 162.053 |
 
 ## Public Artifacts Updated
 
