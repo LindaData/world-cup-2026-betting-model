@@ -18,7 +18,7 @@ on:
         description: Endpoint without the leading slash, such as games, teams, leagues, or status
         required: true
         type: string
-        default: games
+        default: status
       params:
         description: JSON object of query parameters, such as {"league":12,"season":"2025-2026"}
         required: true
@@ -27,8 +27,8 @@ on:
       max_pages:
         description: Maximum number of paginated responses to download
         required: true
-        type: number
-        default: 25
+        type: string
+        default: "1"
 
 permissions:
   contents: read
