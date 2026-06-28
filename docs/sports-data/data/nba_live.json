@@ -1,0 +1,12 @@
+{
+  "sport": "nba",
+  "refreshed_at_utc": "2026-06-28T04:24:13.735158Z",
+  "dates_requested": [
+    "20260627",
+    "20260628",
+    "20260629"
+  ],
+  "event_count": 0,
+  "events": [],
+  "errors": []
+}
