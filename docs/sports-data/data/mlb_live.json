@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-06-28T16:58:49.694287Z",
+  "refreshed_at_utc": "2026-06-28T18:05:42.055715Z",
   "dates_requested": [
     "20260627",
     "20260628",
@@ -391,14 +391,14 @@
       "date_utc": "2026-06-28T17:35Z",
       "name": "Cincinnati Reds at Pittsburgh Pirates",
       "short_name": "CIN @ PIT",
-      "status": "Scheduled",
-      "status_short": "6/28 - 1:35 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Pittsburgh Pirates",
       "away_team": "Cincinnati Reds",
-      "home_score": "0",
+      "home_score": "4",
       "away_score": "0",
       "home_record": "41-42",
       "away_record": "39-42",
@@ -407,7 +407,7 @@
         "MLB.TV",
         "Reds.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815937/reds-pirates"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815937"
     },
     {
       "sport": "mlb",
@@ -415,14 +415,14 @@
       "date_utc": "2026-06-28T17:35Z",
       "name": "Washington Nationals at Baltimore Orioles",
       "short_name": "WSH @ BAL",
-      "status": "Scheduled",
-      "status_short": "6/28 - 1:35 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Baltimore Orioles",
       "away_team": "Washington Nationals",
-      "home_score": "0",
+      "home_score": "2",
       "away_score": "0",
       "home_record": "39-45",
       "away_record": "42-42",
@@ -432,7 +432,7 @@
         "MASN",
         "Nationals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815943/nationals-orioles"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815943"
     },
     {
       "sport": "mlb",
@@ -440,15 +440,15 @@
       "date_utc": "2026-06-28T17:37Z",
       "name": "Texas Rangers at Toronto Blue Jays",
       "short_name": "TEX @ TOR",
-      "status": "Scheduled",
-      "status_short": "6/28 - 1:37 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "End 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Toronto Blue Jays",
       "away_team": "Texas Rangers",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "1",
       "home_record": "39-44",
       "away_record": "41-42",
       "venue": "Rogers Centre",
@@ -458,7 +458,7 @@
         "Sportsnet",
         "TVA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815942/rangers-blue-jays"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815942"
     },
     {
       "sport": "mlb",
@@ -466,14 +466,14 @@
       "date_utc": "2026-06-28T17:40Z",
       "name": "Arizona Diamondbacks at Tampa Bay Rays",
       "short_name": "ARI @ TB",
-      "status": "Scheduled",
-      "status_short": "6/28 - 1:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Tampa Bay Rays",
       "away_team": "Arizona Diamondbacks",
-      "home_score": "0",
+      "home_score": "1",
       "away_score": "0",
       "home_record": "47-33",
       "away_record": "41-41",
@@ -483,7 +483,7 @@
         "DBACKS.TV",
         "Rays.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815936/diamondbacks-rays"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815936"
     },
     {
       "sport": "mlb",
@@ -491,10 +491,10 @@
       "date_utc": "2026-06-28T17:40Z",
       "name": "Houston Astros at Detroit Tigers",
       "short_name": "HOU @ DET",
-      "status": "Scheduled",
-      "status_short": "6/28 - 1:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Mid 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Detroit Tigers",
       "away_team": "Houston Astros",
@@ -508,7 +508,7 @@
         "Tigers.TV",
         "Space City Home Network"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815938/astros-tigers"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815938"
     },
     {
       "sport": "mlb",
@@ -516,10 +516,10 @@
       "date_utc": "2026-06-28T17:40Z",
       "name": "Philadelphia Phillies at New York Mets",
       "short_name": "PHI @ NYM",
-      "status": "Scheduled",
-      "status_short": "6/28 - 1:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Mid 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "New York Mets",
       "away_team": "Philadelphia Phillies",
@@ -534,7 +534,7 @@
         "NBC Sports Phil",
         "SNY"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815940/phillies-mets"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815940"
     },
     {
       "sport": "mlb",
@@ -542,15 +542,15 @@
       "date_utc": "2026-06-28T17:40Z",
       "name": "Seattle Mariners at Cleveland Guardians",
       "short_name": "SEA @ CLE",
-      "status": "Scheduled",
-      "status_short": "6/28 - 1:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Mid 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
       "away_team": "Seattle Mariners",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "1",
       "home_record": "43-40",
       "away_record": "42-42",
       "venue": "Progressive Field",
@@ -559,7 +559,7 @@
         "CLEGuardians.TV",
         "Mariners.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815941/mariners-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815941"
     },
     {
       "sport": "mlb",
