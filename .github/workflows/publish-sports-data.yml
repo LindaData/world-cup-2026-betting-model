@@ -11,6 +11,7 @@ on:
       - main
     paths:
       - "scripts/publish_sports_data.py"
+      - "scripts/publish_sports_data_free.py"
       - ".github/workflows/publish-sports-data.yml"
 
 permissions:
