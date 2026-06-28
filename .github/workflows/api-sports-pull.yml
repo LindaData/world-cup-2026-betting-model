@@ -1,6 +1,6 @@
 name: API-Sports cloud pull
 
-run-name: API-Sports ${{ inputs.sport }} /${{ inputs.endpoint }}
+run-name: API-Sports ${{ github.event_name == 'workflow_dispatch' && inputs.sport || 'basketball' }} /${{ github.event_name == 'workflow_dispatch' && inputs.endpoint || 'status' }}
 
 on:
   workflow_dispatch:
@@ -29,6 +29,11 @@ on:
         required: true
         type: string
         default: "1"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/api-sports-pull.yml"
 
 permissions:
   contents: read
@@ -64,10 +69,10 @@ jobs:
       - name: Pull API-Sports data
         env:
           API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
-          API_SPORTS_PARAMS: ${{ inputs.params }}
-          API_SPORTS_PRODUCT: ${{ inputs.sport }}
-          API_SPORTS_ENDPOINT: ${{ inputs.endpoint }}
-          API_SPORTS_MAX_PAGES: ${{ inputs.max_pages }}
+          API_SPORTS_PARAMS: ${{ github.event_name == 'workflow_dispatch' && inputs.params || '{}' }}
+          API_SPORTS_PRODUCT: ${{ github.event_name == 'workflow_dispatch' && inputs.sport || 'basketball' }}
+          API_SPORTS_ENDPOINT: ${{ github.event_name == 'workflow_dispatch' && inputs.endpoint || 'status' }}
+          API_SPORTS_MAX_PAGES: ${{ github.event_name == 'workflow_dispatch' && inputs.max_pages || '1' }}
         shell: bash
         run: |
           python scripts/api_sports_bulk.py \
@@ -81,7 +86,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: api-sports-${{ inputs.sport }}-${{ github.run_id }}
+          name: api-sports-${{ github.event_name == 'workflow_dispatch' && inputs.sport || 'basketball' }}-${{ github.run_id }}
           path: data/raw/api_sports/
           if-no-files-found: warn
           retention-days: 7
