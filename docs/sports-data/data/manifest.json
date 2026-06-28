@@ -1,15 +1,17 @@
 {
-  "refreshed_at_utc": "2026-06-28T03:44:26.019933Z",
+  "refreshed_at_utc": "2026-06-28T03:59:58.062658Z",
   "sports": {
     "basketball": {
       "league_id": 12,
       "season": "2024-2025",
+      "available_games": 1387,
       "published_games": 25,
       "standings_rows": 60
     },
     "baseball": {
       "league_id": 1,
       "season": "2024",
+      "available_games": 2946,
       "published_games": 25,
       "standings_rows": 90
     }
@@ -19,14 +21,14 @@
       "x-ratelimit-limit": "10",
       "x-ratelimit-remaining": "7",
       "x-ratelimit-requests-limit": "100",
-      "x-ratelimit-requests-remaining": "95"
+      "x-ratelimit-requests-remaining": "92"
     },
     "baseball": {
       "x-ratelimit-limit": "10",
       "x-ratelimit-remaining": "7",
       "x-ratelimit-requests-limit": "100",
-      "x-ratelimit-requests-remaining": "97"
+      "x-ratelimit-requests-remaining": "94"
     }
   },
-  "raw_artifact_directory": "data/raw/api_sports_publish/20260628T034426Z"
+  "raw_artifact_directory": "data/raw/api_sports_publish/20260628T035958Z"
 }

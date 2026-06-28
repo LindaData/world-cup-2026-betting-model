@@ -1,6 +1,6 @@
 {
   "sport": "basketball",
-  "refreshed_at_utc": "2026-06-28T03:44:26.019933Z",
+  "refreshed_at_utc": "2026-06-28T03:59:58.062658Z",
   "league_id": 12,
   "league_name": "NBA",
   "season": "2024-2025",
@@ -14,6 +14,7 @@
       "status": "selected"
     }
   ],
+  "available_games": 1387,
   "games": [
     {
       "sport": "basketball",
