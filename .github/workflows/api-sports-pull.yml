@@ -65,13 +65,17 @@ jobs:
         env:
           API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
           API_SPORTS_PARAMS: ${{ inputs.params }}
-        run: >-
-          python scripts/api_sports_bulk.py
-          --sport "${{ inputs.sport }}"
-          --endpoint "${{ inputs.endpoint }}"
-          --params-env API_SPORTS_PARAMS
-          --max-pages "${{ inputs.max_pages }}"
-          --output-dir data/raw/api_sports
+          API_SPORTS_PRODUCT: ${{ inputs.sport }}
+          API_SPORTS_ENDPOINT: ${{ inputs.endpoint }}
+          API_SPORTS_MAX_PAGES: ${{ inputs.max_pages }}
+        shell: bash
+        run: |
+          python scripts/api_sports_bulk.py \
+            --sport "$API_SPORTS_PRODUCT" \
+            --endpoint "$API_SPORTS_ENDPOINT" \
+            --params-env API_SPORTS_PARAMS \
+            --max-pages "$API_SPORTS_MAX_PAGES" \
+            --output-dir data/raw/api_sports
 
       - name: Upload raw snapshot
         if: always()
