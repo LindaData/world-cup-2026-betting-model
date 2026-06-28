@@ -99,6 +99,7 @@ def main() -> int:
             "percentage", "form",
         ]
         base.write_csv(base.DATA_DIR / f"{sport}_games.csv", games, game_fields)
+        base.write_csv(base.DATA_DIR / f"{sport}_games_full.csv", all_games, game_fields)
         base.write_csv(base.DATA_DIR / f"{sport}_standings.csv", standings, standing_fields)
 
         snapshot = {
@@ -108,6 +109,7 @@ def main() -> int:
             "league_name": league.get("name", cfg["league_name"]),
             "season": selected_season,
             "season_selection_attempts": attempts,
+            "available_games": len(all_games),
             "games": games,
             "standings": standings,
         }
@@ -123,6 +125,7 @@ def main() -> int:
             key: {
                 "league_id": value["league_id"],
                 "season": value["season"],
+                "available_games": value["available_games"],
                 "published_games": len(value["games"]),
                 "standings_rows": len(value["standings"]),
             }
