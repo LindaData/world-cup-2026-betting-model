@@ -1,0 +1,5 @@
+status=failure
+run_id=28310358229
+commit=2913e803343d827c15f0f9524581a92ed5b169b1
+updated_at_utc=2026-06-28T03:42:45Z
+exit_code=1
