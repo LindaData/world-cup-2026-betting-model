@@ -1,0 +1,91 @@
+sport,position,group,team_id,team,played,wins,losses,percentage,form
+baseball,1,American League,25,New York Yankees,162,94,68,0.580,LWLLL
+baseball,2,American League,9,Cleveland Indians,161,92,69,0.571,LLWLL
+baseball,3,American League,4,Baltimore Orioles,162,91,71,0.562,LLWWW
+baseball,4,American League,15,Houston Astros,161,88,73,0.547,LLWWL
+baseball,5,American League,16,Kansas City Royals,162,86,76,0.531,LLWLW
+baseball,6,American League,12,Detroit Tigers,162,86,76,0.531,LLWWL
+baseball,7,American League,32,Seattle Mariners,162,85,77,0.525,WWWWL
+baseball,8,American League,22,Minnesota Twins,162,82,80,0.506,LLLLW
+baseball,9,American League,5,Boston Red Sox,162,81,81,0.500,WLLLW
+baseball,10,American League,34,Tampa Bay Rays,162,80,82,0.494,LWWLL
+baseball,11,American League,35,Texas Rangers,162,78,84,0.481,WWWLW
+baseball,12,American League,36,Toronto Blue Jays,162,74,88,0.457,LLLWL
+baseball,13,American League,26,Oakland Athletics,162,69,93,0.426,LLLWL
+baseball,14,American League,17,Los Angeles Angels,162,63,99,0.389,LLLLL
+baseball,15,American League,7,Chicago White Sox,162,41,121,0.253,WWLWW
+baseball,1,American League Central,9,Cleveland Indians,161,92,69,0.571,LLWLL
+baseball,2,American League Central,16,Kansas City Royals,162,86,76,0.531,LLWLW
+baseball,3,American League Central,12,Detroit Tigers,162,86,76,0.531,LLWWL
+baseball,4,American League Central,22,Minnesota Twins,162,82,80,0.506,LLLLW
+baseball,5,American League Central,7,Chicago White Sox,162,41,121,0.253,WWLWW
+baseball,1,American League East,25,New York Yankees,162,94,68,0.580,LWLLL
+baseball,2,American League East,4,Baltimore Orioles,162,91,71,0.562,LLWWW
+baseball,3,American League East,5,Boston Red Sox,162,81,81,0.500,WLLLW
+baseball,4,American League East,34,Tampa Bay Rays,162,80,82,0.494,LWWLL
+baseball,5,American League East,36,Toronto Blue Jays,162,74,88,0.457,LLLWL
+baseball,1,American League West,15,Houston Astros,161,88,73,0.547,LLWWL
+baseball,2,American League West,32,Seattle Mariners,162,85,77,0.525,WWWWL
+baseball,3,American League West,35,Texas Rangers,162,78,84,0.481,WWWLW
+baseball,4,American League West,26,Oakland Athletics,162,69,93,0.426,LLLWL
+baseball,5,American League West,17,Los Angeles Angels,162,63,99,0.389,LLLLL
+baseball,1,MLB,18,Los Angeles Dodgers,162,98,64,0.605,WLWWW
+baseball,2,MLB,27,Philadelphia Phillies,162,95,67,0.586,LLWLW
+baseball,3,MLB,25,New York Yankees,162,94,68,0.580,LWLLL
+baseball,4,MLB,20,Milwaukee Brewers,162,93,69,0.574,LWLLW
+baseball,5,MLB,30,San Diego Padres,162,93,69,0.574,LLWWL
+baseball,6,MLB,9,Cleveland Indians,161,92,69,0.571,LLWLL
+baseball,7,MLB,4,Baltimore Orioles,162,91,71,0.562,LLWWW
+baseball,8,MLB,2,Arizona Diamondbacks,162,89,73,0.549,WLLWL
+baseball,9,MLB,3,Atlanta Braves,162,89,73,0.549,LLWLL
+baseball,10,MLB,24,New York Mets,162,89,73,0.549,LWLLW
+baseball,11,MLB,15,Houston Astros,161,88,73,0.547,LLWWL
+baseball,12,MLB,12,Detroit Tigers,162,86,76,0.531,LLWWL
+baseball,13,MLB,16,Kansas City Royals,162,86,76,0.531,LLWLW
+baseball,14,MLB,32,Seattle Mariners,162,85,77,0.525,WWWWL
+baseball,15,MLB,6,Chicago Cubs,162,83,79,0.512,LWWLW
+baseball,16,MLB,33,St.Louis Cardinals,162,83,79,0.512,WLWLW
+baseball,17,MLB,22,Minnesota Twins,162,82,80,0.506,LLLLW
+baseball,18,MLB,5,Boston Red Sox,162,81,81,0.500,WLLLW
+baseball,19,MLB,31,San Francisco Giants,162,80,82,0.494,LWLLW
+baseball,20,MLB,34,Tampa Bay Rays,162,80,82,0.494,LWWLL
+baseball,21,MLB,35,Texas Rangers,162,78,84,0.481,WWWLW
+baseball,22,MLB,8,Cincinnati Reds,162,77,85,0.475,WLLLL
+baseball,23,MLB,28,Pittsburgh Pirates,162,76,86,0.469,LWWLW
+baseball,24,MLB,36,Toronto Blue Jays,162,74,88,0.457,LLLWL
+baseball,25,MLB,37,Washington Nationals,162,71,91,0.438,LWWLL
+baseball,26,MLB,26,Oakland Athletics,162,69,93,0.426,LLLWL
+baseball,27,MLB,17,Los Angeles Angels,162,63,99,0.389,LLLLL
+baseball,28,MLB,19,Miami Marlins,162,62,100,0.383,WWWWL
+baseball,29,MLB,10,Colorado Rockies,162,61,101,0.377,LLLWL
+baseball,30,MLB,7,Chicago White Sox,162,41,121,0.253,WWLWW
+baseball,1,National League,18,Los Angeles Dodgers,162,98,64,0.605,WLWWW
+baseball,2,National League,27,Philadelphia Phillies,162,95,67,0.586,LLWLW
+baseball,3,National League,20,Milwaukee Brewers,162,93,69,0.574,LWLLW
+baseball,4,National League,30,San Diego Padres,162,93,69,0.574,LLWWL
+baseball,5,National League,3,Atlanta Braves,162,89,73,0.549,LLWLL
+baseball,6,National League,24,New York Mets,162,89,73,0.549,LWLLW
+baseball,7,National League,2,Arizona Diamondbacks,162,89,73,0.549,WLLWL
+baseball,8,National League,6,Chicago Cubs,162,83,79,0.512,LWWLW
+baseball,9,National League,33,St.Louis Cardinals,162,83,79,0.512,WLWLW
+baseball,10,National League,31,San Francisco Giants,162,80,82,0.494,LWLLW
+baseball,11,National League,8,Cincinnati Reds,162,77,85,0.475,WLLLL
+baseball,12,National League,28,Pittsburgh Pirates,162,76,86,0.469,LWWLW
+baseball,13,National League,37,Washington Nationals,162,71,91,0.438,LWWLL
+baseball,14,National League,19,Miami Marlins,162,62,100,0.383,WWWWL
+baseball,15,National League,10,Colorado Rockies,162,61,101,0.377,LLLWL
+baseball,1,National League Central,20,Milwaukee Brewers,162,93,69,0.574,LWLLW
+baseball,2,National League Central,6,Chicago Cubs,162,83,79,0.512,LWWLW
+baseball,3,National League Central,33,St.Louis Cardinals,162,83,79,0.512,WLWLW
+baseball,4,National League Central,8,Cincinnati Reds,162,77,85,0.475,WLLLL
+baseball,5,National League Central,28,Pittsburgh Pirates,162,76,86,0.469,LWWLW
+baseball,1,National League East,27,Philadelphia Phillies,162,95,67,0.586,LLWLW
+baseball,2,National League East,3,Atlanta Braves,162,89,73,0.549,LLWLL
+baseball,3,National League East,24,New York Mets,162,89,73,0.549,LWLLW
+baseball,4,National League East,37,Washington Nationals,162,71,91,0.438,LWWLL
+baseball,5,National League East,19,Miami Marlins,162,62,100,0.383,WWWWL
+baseball,1,National League West,18,Los Angeles Dodgers,162,98,64,0.605,WLWWW
+baseball,2,National League West,30,San Diego Padres,162,93,69,0.574,LLWWL
+baseball,3,National League West,2,Arizona Diamondbacks,162,89,73,0.549,WLLWL
+baseball,4,National League West,31,San Francisco Giants,162,80,82,0.494,LWLLW
+baseball,5,National League West,10,Colorado Rockies,162,61,101,0.377,LLLWL

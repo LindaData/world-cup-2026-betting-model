@@ -1,0 +1,26 @@
+sport,game_id,date_utc,status,league_id,league,season,home_team_id,home_team,away_team_id,away_team,home_score,away_score
+basketball,449084,2025-05-13T23:00:00Z,FT,12,NBA,2024-2025,137,Cleveland Cavaliers,143,Indiana Pacers,105,114
+basketball,448938,2025-05-14T01:30:00Z,FT,12,NBA,2024-2025,152,Oklahoma City Thunder,139,Denver Nuggets,112,105
+basketball,449085,2025-05-14T23:00:00Z,FT,12,NBA,2024-2025,133,Boston Celtics,151,New York Knicks,127,102
+basketball,449035,2025-05-15T01:30:00Z,FT,12,NBA,2024-2025,149,Minnesota Timberwolves,141,Golden State Warriors,121,110
+basketball,449110,2025-05-16T00:30:00Z,FT,12,NBA,2024-2025,139,Denver Nuggets,152,Oklahoma City Thunder,119,107
+basketball,449250,2025-05-17T00:00:00Z,FT,12,NBA,2024-2025,151,New York Knicks,133,Boston Celtics,119,81
+basketball,449301,2025-05-18T19:30:00Z,FT,12,NBA,2024-2025,152,Oklahoma City Thunder,139,Denver Nuggets,125,93
+basketball,449407,2025-05-21T00:30:00Z,FT,12,NBA,2024-2025,152,Oklahoma City Thunder,149,Minnesota Timberwolves,114,88
+basketball,449335,2025-05-22T00:00:00Z,AOT,12,NBA,2024-2025,151,New York Knicks,143,Indiana Pacers,135,138
+basketball,449408,2025-05-23T00:30:00Z,FT,12,NBA,2024-2025,152,Oklahoma City Thunder,149,Minnesota Timberwolves,118,103
+basketball,449336,2025-05-24T00:00:00Z,FT,12,NBA,2024-2025,151,New York Knicks,143,Indiana Pacers,109,114
+basketball,449409,2025-05-25T00:30:00Z,FT,12,NBA,2024-2025,149,Minnesota Timberwolves,152,Oklahoma City Thunder,143,101
+basketball,449337,2025-05-26T00:00:00Z,FT,12,NBA,2024-2025,143,Indiana Pacers,151,New York Knicks,100,106
+basketball,449410,2025-05-27T00:30:00Z,FT,12,NBA,2024-2025,149,Minnesota Timberwolves,152,Oklahoma City Thunder,126,128
+basketball,449338,2025-05-28T00:00:00Z,FT,12,NBA,2024-2025,143,Indiana Pacers,151,New York Knicks,130,121
+basketball,449577,2025-05-29T00:30:00Z,FT,12,NBA,2024-2025,152,Oklahoma City Thunder,149,Minnesota Timberwolves,124,94
+basketball,449589,2025-05-30T00:00:00Z,FT,12,NBA,2024-2025,151,New York Knicks,143,Indiana Pacers,111,94
+basketball,449706,2025-06-01T00:00:00Z,FT,12,NBA,2024-2025,143,Indiana Pacers,151,New York Knicks,125,108
+basketball,449753,2025-06-06T00:30:00Z,FT,12,NBA,2024-2025,152,Oklahoma City Thunder,143,Indiana Pacers,110,111
+basketball,449754,2025-06-09T00:00:00Z,FT,12,NBA,2024-2025,152,Oklahoma City Thunder,143,Indiana Pacers,123,107
+basketball,449755,2025-06-12T00:30:00Z,FT,12,NBA,2024-2025,143,Indiana Pacers,152,Oklahoma City Thunder,116,107
+basketball,449756,2025-06-14T00:30:00Z,FT,12,NBA,2024-2025,143,Indiana Pacers,152,Oklahoma City Thunder,104,111
+basketball,450524,2025-06-17T00:30:00Z,FT,12,NBA,2024-2025,152,Oklahoma City Thunder,143,Indiana Pacers,120,109
+basketball,450638,2025-06-20T00:30:00Z,FT,12,NBA,2024-2025,143,Indiana Pacers,152,Oklahoma City Thunder,108,91
+basketball,451176,2025-06-23T00:00:00Z,FT,12,NBA,2024-2025,152,Oklahoma City Thunder,143,Indiana Pacers,103,91
