@@ -42,6 +42,8 @@ website:
         text: Matchday
       - href: reports/09_multisport_expansion.qmd
         text: Sports
+      - href: sports-data/index.html
+        text: Sports Data
       - href: reports/03_distribution_review.qmd
         text: Distributions
     right:
