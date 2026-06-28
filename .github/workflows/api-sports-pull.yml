@@ -1,0 +1,84 @@
+name: API-Sports cloud pull
+
+run-name: API-Sports ${{ inputs.sport }} /${{ inputs.endpoint }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      sport:
+        description: API-Sports product
+        required: true
+        type: choice
+        default: basketball
+        options:
+          - basketball
+          - baseball
+          - football
+      endpoint:
+        description: Endpoint without the leading slash, such as games, teams, leagues, or status
+        required: true
+        type: string
+        default: games
+      params:
+        description: JSON object of query parameters, such as {"league":12,"season":"2025-2026"}
+        required: true
+        type: string
+        default: "{}"
+      max_pages:
+        description: Maximum number of paginated responses to download
+        required: true
+        type: number
+        default: 25
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-sports-cloud-pull
+  cancel-in-progress: false
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate API secret
+        env:
+          API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
+        shell: bash
+        run: |
+          if [ -z "$API_SPORTS_KEY" ]; then
+            echo "Missing repository secret API_SPORTS_KEY." >&2
+            exit 1
+          fi
+
+      - name: Pull API-Sports data
+        env:
+          API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
+          API_SPORTS_PARAMS: ${{ inputs.params }}
+        run: >-
+          python scripts/api_sports_bulk.py
+          --sport "${{ inputs.sport }}"
+          --endpoint "${{ inputs.endpoint }}"
+          --params-env API_SPORTS_PARAMS
+          --max-pages "${{ inputs.max_pages }}"
+          --output-dir data/raw/api_sports
+
+      - name: Upload raw snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-sports-${{ inputs.sport }}-${{ github.run_id }}
+          path: data/raw/api_sports/
+          if-no-files-found: warn
+          retention-days: 7
+          compression-level: 9
