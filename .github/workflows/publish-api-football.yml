@@ -1,6 +1,11 @@
 name: Publish API-Football for Sports Hub
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/publish_api_football.py
+      - .github/workflows/publish-api-football.yml
   workflow_dispatch:
     inputs:
       league_id:
