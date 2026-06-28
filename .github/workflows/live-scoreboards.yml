@@ -1,0 +1,51 @@
+name: Publish live scoreboards
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/fetch_live_scoreboards.py"
+      - ".github/workflows/live-scoreboards.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-live-scoreboards
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch live NBA and MLB scoreboards
+        run: python scripts/fetch_live_scoreboards.py
+
+      - name: Commit live snapshots
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f docs/sports-data/data/nba_live.json
+          git add -f docs/sports-data/data/mlb_live.json
+          git add -f docs/sports-data/data/live_manifest.json
+          if git diff --cached --quiet; then
+            echo "No scoreboard changes."
+          else
+            git commit -m "Update live NBA and MLB scoreboards"
+            git push
+          fi
