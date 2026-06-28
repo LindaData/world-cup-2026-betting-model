@@ -43,7 +43,7 @@ jobs:
         run: |
           mkdir -p docs/sports-data
           set +e
-          python scripts/publish_sports_data.py > /tmp/sports-publish.log 2>&1
+          python scripts/publish_sports_data_free.py > /tmp/sports-publish.log 2>&1
           code=$?
           cat /tmp/sports-publish.log
           if [ "$code" -eq 0 ]; then
