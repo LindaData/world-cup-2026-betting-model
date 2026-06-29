@@ -32,6 +32,7 @@ summary <- bundle$summary
   <a href="#next-match">Next match</a>
   <a href="#upcoming">Upcoming</a>
   <a href="#bracket">Bracket</a>
+  <a href="#champion-outlook">Champion outlook</a>
   <a href="#model-performance">Accuracy</a>
   <a href="#methodology-details">Methodology</a>
 </nav>
@@ -65,6 +66,10 @@ cat(render_upcoming_section(board, limit = 12))
 
 ```{r bracket, results="asis"}
 cat(render_bracket(root))
+```
+
+```{r champion-outlook, results="asis"}
+cat(render_champion_section(bundle, compact = FALSE))
 ```
 
 ```{r accuracy, results="asis"}

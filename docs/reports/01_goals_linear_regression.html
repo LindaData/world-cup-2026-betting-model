@@ -20,7 +20,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
@@ -171,62 +171,62 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../reports/08_matchday_predictions.html">
+    <a class="nav-link" href="../reports/08_matchday_predictions.html"> 
 <span class="menu-text">Predictions</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket">
+    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket"> 
 <span class="menu-text">Bracket</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../reports/00_data_overview.html">
+    <a class="nav-link" href="../reports/00_data_overview.html"> 
 <span class="menu-text">Data</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Methodology</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">    
         <li>
     <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-performance">
  <span class="dropdown-text">Model Performance</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/07_fixture_predictions.html">
  <span class="dropdown-text">Model Overview</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/05_poisson_goals_model.html">
  <span class="dropdown-text">Goals Forecast</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/02_ordinal_result_model.html">
  <span class="dropdown-text">Win / Draw / Loss Model</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/04_knn_similarity_model.html">
  <span class="dropdown-text">Similar Match Model</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/06_regression_diagnostics.html">
  <span class="dropdown-text">Diagnostics</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/09_multisport_expansion.html">
  <span class="dropdown-text">Multi-Sport Roadmap</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model">
+    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model"> 
 <span class="menu-text">GitHub</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -241,7 +241,7 @@ window.Quarto = {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
-
+   
   <ul>
   <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#unit-of-observation" id="toc-unit-of-observation" class="nav-link" data-scroll-target="#unit-of-observation"><span class="header-section-number">2</span> Unit Of Observation</a></li>
@@ -267,11 +267,11 @@ window.Quarto = {
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -743,13 +743,12 @@ p =
     var championNode = document.getElementById("model-bracket-champion");
 
     var seedWatch = document.getElementById("group-seed-watch");
-
     var thirdWatch = document.getElementById("third-place-watch");
-
     var statusNode = document.getElementById("model-bracket-status");
-
     var tabsNode = document.querySelector(".bracket-tabs");
-
+    var modelPathPanel = document.getElementById("model-path-panel");
+    var modelPathSummary = modelPathPanel ? modelPathPanel.querySelector(".model-path-summary") : null;
+    var modelPathRounds = modelPathPanel ? modelPathPanel.querySelector(".model-path-rounds") : null;
 
 
     if (!dataNode || !root || !championNode) {
@@ -767,11 +766,18 @@ p =
     var shortRoundNames = ["R32", "R16", "QF", "SF", "Final"];
 
     var picks = {};
-
     var activeRound = 0;
-
     var fullView = !window.matchMedia("(max-width: 700px)").matches;
+    var modelPathOpen = false;
 
+    function escapeHtml(value) {
+      return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
 
 
     function announce(text) {
@@ -847,11 +853,8 @@ p =
 
 
     function modelWinner(match) {
-
       if (!match.teamA && !match.teamB) {
-
         return null;
-
       }
 
       if (match.teamA && !match.teamB) {
@@ -865,11 +868,31 @@ p =
         return match.teamB;
 
       }
-
       return advanceProbability(match.teamA, match.teamB) >= 0.5 ? match.teamA : match.teamB;
-
     }
 
+    function winnerProbability(match, winner) {
+      if (!winner) {
+        return null;
+      }
+      if (match.teamA && !match.teamB && winner.name === match.teamA.name) {
+        return 1;
+      }
+      if (!match.teamA && match.teamB && winner.name === match.teamB.name) {
+        return 1;
+      }
+      if (!match.teamA || !match.teamB) {
+        return null;
+      }
+      var pA = advanceProbability(match.teamA, match.teamB);
+      return winner.name === match.teamA.name ? pA : 1 - pA;
+    }
+
+    function matchupText(match) {
+      var teamA = match.teamA ? match.teamA.name : match.slotA;
+      var teamB = match.teamB ? match.teamB.name : match.slotB;
+      return teamA + " vs " + teamB;
+    }
 
 
     function clearLaterPicks(roundIndex) {
@@ -890,10 +913,9 @@ p =
 
 
 
-    function buildRounds() {
-
+    function buildRounds(sourcePicks) {
+      var activePicks = sourcePicks || picks;
       var rounds = [data.round32.map(cloneMatch)];
-
 
 
       for (var roundIndex = 0; roundIndex < 4; roundIndex += 1) {
@@ -921,23 +943,14 @@ p =
         currentRound.forEach(function (match, matchIndex) {
 
           var key = roundIndex + "-" + matchIndex;
-
           var validNames = [match.teamA && match.teamA.name, match.teamB && match.teamB.name].filter(Boolean);
-
-          if (picks[key] && validNames.indexOf(picks[key]) === -1) {
-
+          if (activePicks === picks && picks[key] && validNames.indexOf(picks[key]) === -1) {
             delete picks[key];
-
           }
-
-          var pickedName = picks[key];
-
+          var pickedName = activePicks[key];
           var winner = pickedName
-
             ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
-
             : modelWinner(match);
-
           var nextMatch = nextRound[Math.floor(matchIndex / 2)];
 
           if (matchIndex % 2 === 0) {
@@ -959,11 +972,47 @@ p =
       }
 
 
-
       return rounds;
-
     }
 
+    function renderModelPathPanel() {
+      if (!modelPathPanel || !modelPathSummary || !modelPathRounds) {
+        return;
+      }
+
+      modelPathPanel.hidden = !modelPathOpen;
+      modelPathPanel.classList.toggle("is-visible", modelPathOpen);
+      document.querySelectorAll("[data-bracket-action='model']").forEach(function (button) {
+        button.textContent = modelPathOpen ? "Hide model path" : "Show model path";
+        button.setAttribute("aria-expanded", String(modelPathOpen));
+      });
+
+      if (!modelPathOpen) {
+        return;
+      }
+
+      var modelRounds = buildRounds({});
+      var finalMatch = modelRounds[modelRounds.length - 1][0];
+      var champion = modelWinner(finalMatch);
+      var championProb = winnerProbability(finalMatch, champion);
+      modelPathSummary.innerHTML = champion
+        ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>The path below follows the model pick in every unresolved matchup. Group seeds reflect completed results plus remaining-match forecasts; knockout picks update after each refresh.</p></div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
+        : "<div><span class='section-kicker'>Model path</span><h3>Model path is pending</h3><p>The bracket needs at least one projected finalist before a full path can be shown.</p></div>";
+
+      modelPathRounds.innerHTML = modelRounds.map(function (round, roundIndex) {
+        var rows = round.map(function (match) {
+          var winner = modelWinner(match);
+          var probability = winnerProbability(match, winner);
+          var stateLabel = roundIndex === 0 ? "Current forecast" : "Projected";
+          return "<li>" +
+            "<span class='model-path-match'>" + escapeHtml(matchupText(match)) + "</span>" +
+            "<strong>" + escapeHtml(winner ? winner.name : "Pending seed") + "</strong>" +
+            "<small>" + stateLabel + " | advance probability " + (formatPct(probability) || "pending") + "</small>" +
+            "</li>";
+        }).join("");
+        return "<section class='model-path-round'><h4>" + escapeHtml(roundNames[roundIndex]) + "</h4><ol>" + rows + "</ol></section>";
+      }).join("");
+    }
 
 
     function teamButton(team, slot, probability, selected, modelSelected, userSelected, roundIndex, matchIndex) {
@@ -995,29 +1044,18 @@ p =
       }
 
       if (!team) {
-
         button.classList.add("empty");
-
         button.disabled = true;
-
-        button.innerHTML = "<span class='team-name'>" + slot + "</span><small>Seed unresolved</small>";
-
+        button.innerHTML = "<span class='team-name'>" + escapeHtml(slot) + "</span><small>Seed unresolved</small>";
         return button;
-
       }
 
 
-
       var label = userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender");
-
       button.innerHTML =
-
-        "<span class='team-name'>" + team.name + "</span>" +
-
-        "<span class='team-meta'>" + team.seed + " | " + formatPct(probability) + "</span>" +
-
-        "<small class='pick-label'>" + label + "</small>";
-
+        "<span class='team-name'>" + escapeHtml(team.name) + "</span>" +
+        "<span class='team-meta'>" + escapeHtml(team.seed || "Seed") + " | " + formatPct(probability) + "</span>" +
+        "<small class='pick-label'>" + escapeHtml(label) + "</small>";
       button.setAttribute("aria-label", "Advance " + team.name + " from " + roundNames[roundIndex]);
 
       button.addEventListener("click", function () {
@@ -1129,35 +1167,20 @@ p =
         seedWatch.innerHTML = Object.keys(seedsByGroup).sort().map(function (group) {
 
           var rows = seedsByGroup[group].slice(0, 2).map(function (row) {
-
-            return "<span><strong>" + row.seed + "</strong>" + row.team + "</span>";
-
+            return "<span><strong>" + escapeHtml(row.seed) + "</strong>" + escapeHtml(row.team) + "</span>";
           }).join("");
-
-          return "<div class='seed-group'><b>Group " + group + "</b>" + rows + "</div>";
-
+          return "<div class='seed-group'><b>Group " + escapeHtml(group) + "</b>" + rows + "</div>";
         }).join("");
-
       }
 
-
-
       if (thirdWatch && data.thirdWatch) {
-
         thirdWatch.innerHTML = data.thirdWatch.map(function (row) {
-
           return "<div class='third-row" + (row.qualifies ? " qualifies" : "") + "'>" +
-
-            "<span>" + row.third_rank + ". " + row.team + "</span>" +
-
-            "<strong>" + row.points + " pts</strong>" +
-
+            "<span>" + escapeHtml(row.third_rank) + ". " + escapeHtml(row.team) + "</span>" +
+            "<strong>" + escapeHtml(row.points) + " pts</strong>" +
             "</div>" +
-
             (row.third_rank === 8 ? "<div class='third-cut'>Cut line</div>" : "");
-
         }).join("");
-
       }
 
     }
@@ -1261,19 +1284,13 @@ p =
         : modelWinner(finalMatch);
 
       championNode.innerHTML = champion
-
-        ? "<span>Projected Champion</span><strong>" + champion.name + "</strong><small>" + champion.seed + " | strength " + champion.elo + "</small>"
-
+        ? "<span>Projected Champion</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
         : "";
-
       renderTabs();
-
+      renderModelPathPanel();
       document.querySelectorAll("[data-bracket-action='toggle-view']").forEach(function (button) {
-
         button.textContent = fullView ? "Round view" : "Full bracket";
-
         button.setAttribute("aria-pressed", String(fullView));
-
       });
 
     }
@@ -1287,29 +1304,35 @@ p =
         var action = button.getAttribute("data-bracket-action");
 
         if (action === "toggle-view") {
-
           fullView = !fullView;
-
           render();
-
           return;
-
         }
-
+        if (action === "model") {
+          modelPathOpen = !modelPathOpen;
+          if (modelPathOpen) {
+            Object.keys(picks).forEach(function (key) {
+              delete picks[key];
+            });
+            announce("Showing the model path through the bracket.");
+          } else {
+            announce("Model path hidden.");
+          }
+          render();
+          if (modelPathOpen && modelPathPanel) {
+            modelPathPanel.focus({ preventScroll: true });
+            modelPathPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+          return;
+        }
         Object.keys(picks).forEach(function (key) {
-
           delete picks[key];
-
         });
-
-        announce(action === "model" ? "Bracket reset to model picks." : "Bracket picks cleared.");
-
+        modelPathOpen = false;
+        announce("Bracket picks cleared.");
         render();
-
       });
-
     });
-
 
 
     renderSeeds();
@@ -1343,7 +1366,7 @@ p =
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -1363,11 +1386,11 @@ p =
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -1441,7 +1464,7 @@ p =
           if (codeDiv.classList.contains(fromCls)) {
             codeDiv.classList.remove(fromCls);
             codeDiv.classList.add(toCls);
-          }
+          } 
         }
         return false;
       }
@@ -1500,7 +1523,7 @@ p =
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -1575,7 +1598,7 @@ p =
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -1603,7 +1626,7 @@ p =
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -1627,7 +1650,7 @@ p =
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -1667,7 +1690,7 @@ p =
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -1972,7 +1995,7 @@ p =
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>LindaData World Cup 2026 forecasting model.</p>
-</div>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>

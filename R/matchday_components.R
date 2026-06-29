@@ -188,7 +188,9 @@ load_matchday_bundle <- function(root) {
     data_sources = read_csv_if_exists(file.path(model_dir, "matchday_prediction_data_sources.csv")),
     challenger_metrics = read_csv_if_exists(file.path(model_dir, "model_challenger_metrics.csv")),
     challenger_importance = read_csv_if_exists(file.path(model_dir, "model_challenger_feature_importance.csv")),
-    challenger_status = read_csv_if_exists(file.path(model_dir, "model_challenger_status.csv"))
+    challenger_status = read_csv_if_exists(file.path(model_dir, "model_challenger_status.csv")),
+    champion_summary = read_csv_if_exists(file.path(model_dir, "world_cup_2026_champion_simulation_summary.csv")),
+    champion_metadata = read_csv_if_exists(file.path(model_dir, "world_cup_2026_champion_simulation_metadata.csv"))
   )
 }
 
@@ -527,6 +529,116 @@ render_upcoming_section <- function(board, limit = 8) {
     '<p>Each card shows the public pick, readable probabilities, expected score, and refresh timing. Knockout cards show advance probabilities and keep the regulation-level probability separate.</p>',
     '</div>',
     render_forecast_list(upcoming, "No upcoming matches are available in the current fixture table.", limit = limit, card_variant = "upcoming"),
+    '</section>'
+  )
+}
+
+metadata_value <- function(metadata, metric, fallback = "Not available yet") {
+  if (nrow(metadata) == 0 || !"metric" %in% names(metadata) || !"value" %in% names(metadata)) {
+    return(fallback)
+  }
+  value <- metadata$value[metadata$metric == metric]
+  if (length(value) == 0 || is.na(value[[1]]) || !nzchar(as.character(value[[1]]))) {
+    fallback
+  } else {
+    as.character(value[[1]])
+  }
+}
+
+render_champion_section <- function(bundle, compact = TRUE) {
+  champion <- bundle$champion_summary
+  metadata <- bundle$champion_metadata
+
+  if (nrow(champion) == 0) {
+    return(paste0(
+      '<section id="champion-outlook" class="page-section champion-section">',
+      '<div class="section-heading">',
+      '<span class="section-kicker">Tournament outlook</span>',
+      '<h2>Champion Outlook</h2>',
+      '<p>Champion probabilities will appear after the tournament simulation is refreshed.</p>',
+      '</div>',
+      '<div class="empty-state"><strong>No champion simulation output is available yet.</strong></div>',
+      '</section>'
+    ))
+  }
+
+  top_n <- if (compact) 6 else 12
+  top <- champion |>
+    dplyr::arrange(dplyr::desc(champion_probability), dplyr::desc(final_probability), team) |>
+    dplyr::slice_head(n = top_n) |>
+    dplyr::mutate(rank = dplyr::row_number())
+
+  max_prob <- max(top$champion_probability, na.rm = TRUE)
+  if (!is.finite(max_prob) || max_prob <= 0) {
+    max_prob <- 1
+  }
+
+  cards <- vapply(seq_len(nrow(top)), function(i) {
+    row <- top[i, ]
+    width <- 100 * safe_number(row$champion_probability) / max_prob
+    paste0(
+      '<article class="champion-card', ifelse(i == 1, ' is-leader', ''), '">',
+      '<div class="champion-rank">#', escape_html(row$rank[[1]]), '</div>',
+      '<div class="champion-card-main">',
+      '<h3>', escape_html(row$team[[1]]), '</h3>',
+      '<span>Group ', escape_html(row$group[[1]]), '</span>',
+      '</div>',
+      '<div class="champion-probability">',
+      '<strong>', display_percent(row$champion_probability, 1), '</strong>',
+      '<span>Champion probability</span>',
+      '</div>',
+      '<div class="champion-bar" aria-hidden="true"><span style="width:', fmt_number(width, 1), '%"></span></div>',
+      '<dl>',
+      '<div><dt>Reach final</dt><dd>', display_percent(row$final_probability, 1), '</dd></div>',
+      '<div><dt>Reach semifinal</dt><dd>', display_percent(row$semifinal_probability, 1), '</dd></div>',
+      '<div><dt>Reach quarterfinal</dt><dd>', display_percent(row$quarterfinal_probability, 1), '</dd></div>',
+      '</dl>',
+      '</article>'
+    )
+  }, character(1))
+
+  simulated_at <- metadata_value(metadata, "simulated_at_utc")
+  simulations <- metadata_value(metadata, "simulations")
+  fallback <- metadata_value(metadata, "later_round_fallback")
+
+  table_html <- ""
+  if (!compact) {
+    table_data <- top |>
+      dplyr::mutate(
+        champion_probability = fmt_percent(champion_probability, 1),
+        final_probability = fmt_percent(final_probability, 1),
+        semifinal_probability = fmt_percent(semifinal_probability, 1),
+        quarterfinal_probability = fmt_percent(quarterfinal_probability, 1)
+      ) |>
+      dplyr::select(rank, team, group, champion_probability, final_probability, semifinal_probability, quarterfinal_probability)
+    names(table_data) <- c("Rank", "Team", "Group", "Champion", "Final", "Semifinal", "Quarterfinal")
+    table_html <- paste0(
+      '<div class="technical-table-wrap">',
+      knitr::kable(
+        table_data,
+        format = "html",
+        escape = TRUE,
+        table.attr = 'class="clean-table champion-table"',
+        caption = "Top tournament-path probabilities from the current simulation."
+      ),
+      '</div>'
+    )
+  }
+
+  paste0(
+    '<section id="champion-outlook" class="page-section champion-section">',
+    '<div class="section-heading">',
+    '<span class="section-kicker">Tournament outlook</span>',
+    '<h2>Champion Outlook</h2>',
+    '<p>These probabilities simulate the remaining tournament from the current match forecasts. Completed group results are locked in; knockout matches use available fixture-pair forecasts, then a strength-based fallback for later-round pairings.</p>',
+    '</div>',
+    '<div class="champion-meta-row">',
+    '<span class="status-chip">', escape_html(simulations), ' simulations</span>',
+    '<span class="status-chip muted">Simulated ', time_tag(simulated_at, "js-local-time", "Simulation time unavailable"), '</span>',
+    '</div>',
+    '<div class="champion-grid">', paste(cards, collapse = ""), '</div>',
+    table_html,
+    '<p class="section-note">Later-round fallback: ', escape_html(fallback), '.</p>',
     '</section>'
   )
 }

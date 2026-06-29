@@ -55,6 +55,10 @@ cat('<p><a class="button-secondary" href="reports/08_matchday_predictions.html#b
 cat('</section>')
 ```
 
+```{r champion-outlook, results="asis"}
+cat(render_champion_section(bundle, compact = TRUE))
+```
+
 ```{r methodology, results="asis"}
 cat(render_methodology_short())
 ```

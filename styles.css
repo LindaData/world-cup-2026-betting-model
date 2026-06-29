@@ -1881,6 +1881,114 @@ pre code {
   text-transform: uppercase;
 }
 
+.champion-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.champion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+  gap: var(--space-4);
+}
+
+.champion-card {
+  display: grid;
+  gap: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  padding: var(--space-4);
+  box-shadow: none;
+}
+
+.champion-card.is-leader {
+  border-color: rgba(217, 164, 65, 0.7);
+  background:
+    linear-gradient(180deg, rgba(217, 164, 65, 0.1), rgba(255, 255, 255, 0) 46%),
+    var(--surface);
+}
+
+.champion-rank {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-navy);
+  color: #ffffff;
+  font-weight: 900;
+}
+
+.champion-card-main h3 {
+  margin: 0;
+  color: var(--color-navy);
+  font-size: 1.35rem;
+  line-height: 1.12;
+}
+
+.champion-card-main span,
+.champion-probability span {
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.champion-probability {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.champion-probability strong {
+  color: var(--color-teal-dark);
+  font-size: clamp(1.65rem, 4vw, 2.2rem);
+  line-height: 1;
+}
+
+.champion-bar {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e8eef2;
+}
+
+.champion-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-teal), var(--color-gold));
+}
+
+.champion-card dl {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.champion-card dl div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-top: 1px solid #edf1f5;
+  padding-top: var(--space-2);
+}
+
+.champion-card dt {
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.champion-card dd {
+  margin: 0;
+  color: var(--color-text);
+  font-weight: 900;
+}
+
 .forecast-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

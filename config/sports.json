@@ -92,8 +92,7 @@
       "inventory_endpoints": [
         {"name": "status", "path": "/status", "params": {}},
         {"name": "seasons", "path": "/seasons", "params": {}},
-        {"name": "leagues", "path": "/leagues", "params": {}},
-        {"name": "teams", "path": "/teams", "params": {}}
+        {"name": "leagues", "path": "/leagues", "params": {}}
       ]
     },
     {
@@ -180,8 +179,7 @@
       "model_family": "individual_matchup",
       "inventory_endpoints": [
         {"name": "status", "path": "/status", "params": {}},
-        {"name": "seasons", "path": "/seasons", "params": {}},
-        {"name": "competitions", "path": "/competitions", "params": {}}
+        {"name": "seasons", "path": "/seasons", "params": {}}
       ]
     }
   ]

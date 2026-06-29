@@ -1,6 +1,6 @@
 # World Cup 2026 Forecasting Model
 
-A reproducible forecasting system that produces match probabilities, projected scores, tournament paths, and post-match model evaluation.
+A reproducible forecasting system that produces match probabilities, projected scores, champion probabilities, tournament paths, and post-match model evaluation.
 
 [View live forecasts](https://lindadata.github.io/world-cup-2026-betting-model/)
 
@@ -16,6 +16,7 @@ The public site is a static Quarto website built from local model outputs. The p
 - Next-match forecast with projected score and expected goals.
 - Upcoming match cards with accessible one-tap details.
 - Interactive tournament bracket seeded from current projections.
+- Champion outlook from tournament-path simulations.
 - Post-match model accuracy table.
 - Technical model reports for methodology review.
 
@@ -35,6 +36,7 @@ The public forecast currently combines:
 - **Goals forecast:** a Poisson goals model used to estimate expected goals and scoreline probabilities.
 - **OLS benchmark:** a simple linear goals model kept as an interpretable baseline.
 - **Similar match model:** a KNN-style challenger that compares fixtures with similar historical team-match rows.
+- **Champion simulation:** a tournament-path layer that reuses current fixture probabilities and strength signals to estimate title odds.
 
 The site presents consumer-facing predictions first. Technical diagnostics remain available under Methodology.
 
@@ -88,6 +90,7 @@ The rendered static site is written to `docs/`.
 - Browser-local kickoff times with UTC fallback.
 - Accessible match details using native disclosure controls.
 - Interactive bracket with mobile round tabs.
+- Champion probability section.
 - Post-match model review.
 - GitHub Pages publication from `docs/`.
 

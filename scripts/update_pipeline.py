@@ -360,6 +360,9 @@ def build_steps(args: argparse.Namespace, python_exe: str, rscript_exe: str) -> 
         steps.append(Step("Run regression diagnostics", [rscript_exe, "R/15_regression_diagnostics.R"]))
         steps.append(Step("Score 2026 fixtures", [rscript_exe, "R/16_score_2026_fixtures.R"]))
         steps.append(Step("Build matchday prediction board", [rscript_exe, "R/17_matchday_prediction_board.R"]))
+        steps.append(
+            Step("Simulate World Cup champion probabilities", [rscript_exe, "R/19_simulate_world_cup_champion.R"])
+        )
     if not args.skip_render:
         steps.append(Step("Render R Markdown reports", [rscript_exe, "R/12_render_reports.R"], required=False))
 
