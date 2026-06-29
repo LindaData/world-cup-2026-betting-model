@@ -1,5 +1,5 @@
 ---
-title: "KNN Similarity Model"
+title: "Similar Match Model"
 subtitle: "Nearest-neighbor comparison model for goals and match results"
 ---
 

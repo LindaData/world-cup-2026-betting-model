@@ -1,6 +1,6 @@
 ---
-title: "Result Probability Model"
-subtitle: "Loss, draw, and win probabilities"
+title: "Win / Draw / Loss Model"
+subtitle: "Three-outcome match probabilities"
 ---
 
 ```{r setup, include=FALSE}

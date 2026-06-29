@@ -1,168 +1,113 @@
-# 2026 World Cup Betting Model
+# World Cup 2026 Forecasting Model
 
-This project is a reproducible data and modeling scaffold for the 2026 FIFA World Cup. It is designed to be worked on from RStudio while using Python for data acquisition and SQL/DuckDB for storage.
+A reproducible forecasting system that produces match probabilities, projected scores, tournament paths, and post-match model evaluation.
 
-The current model estimates team goals and win/draw/loss probabilities using historical international match data, with market comparison, roster strength, player availability, and news signals organized in the project workflow.
+[View live forecasts](https://lindadata.github.io/world-cup-2026-betting-model/)
 
-The intended workflow is three-language:
+![World Cup 2026 Forecasting Model preview](assets/social-preview.svg)
 
-- **Python**: API clients, raw data pulls, repeatable snapshots.
-- **SQL**: storage tables, joins, views, auditable transformations.
-- **R/RStudio**: exploration, statistical modeling, plots, reports.
+## Current Status
 
-DuckDB is the default SQL engine because it is free, embedded, works from R and Python, and does not require running a database server.
+The public site is a static Quarto website built from local model outputs. The prediction board refreshes from the existing data pipeline and publishes summarized results to GitHub Pages. Raw data, API keys, credentials, and private files are intentionally excluded from the public site.
 
-## Presentable Outputs
+## Key Outputs
 
-- Quarto website source: `_quarto.yml`, `index.qmd`, and `reports/*.qmd`
-- Rendered GitHub Pages site: `docs/`
-- Goals model walkthrough: `reports/01_goals_linear_regression.qmd`
-- Ordinal result model report: `reports/02_ordinal_result_model.qmd`
-- Local Shiny prototype: `apps/shiny_world_cup/app.R`
+- Today's match forecasts with win, draw, and loss probabilities.
+- Next-match forecast with projected score and expected goals.
+- Upcoming match cards with accessible one-tap details.
+- Interactive tournament bracket seeded from current projections.
+- Post-match model accuracy table.
+- Technical model reports for methodology review.
 
-Render the Quarto site from RStudio:
+## Technology Stack
 
-```r
-source("R/12_render_reports.R")
-```
+- **R / RStudio:** modeling, reporting, Quarto rendering, Shiny prototype work.
+- **Python:** API clients, source refreshes, data snapshots, orchestration.
+- **SQL / DuckDB:** local analytical storage, joins, model-ready tables.
+- **Quarto:** static website generation for GitHub Pages.
+- **GitHub Actions:** scheduled refresh and site publication.
 
-## Step 1: Data Sources
+## Model Overview
 
-For a serious soccer betting model, start with these data families:
+The public forecast currently combines:
 
-1. Fixtures, venues, kickoff times, results, and tournament stage.
-2. Historical international results for team-strength estimation.
-3. Team ratings and rankings, such as FIFA ranking points or our own Elo.
-4. Betting odds snapshots from multiple books, ideally with open and close prices.
-5. Context features: rest, travel distance, home/host effects, weather, injuries, roster strength, suspensions, and referee tendencies.
+- **Win / draw / loss model:** an ordinal logistic model for three-outcome match probabilities.
+- **Goals forecast:** a Poisson goals model used to estimate expected goals and scoreline probabilities.
+- **OLS benchmark:** a simple linear goals model kept as an interpretable baseline.
+- **Similar match model:** a KNN-style challenger that compares fixtures with similar historical team-match rows.
 
-The first API/source connections are scaffolded in `src/wc_model/providers/`:
+The site presents consumer-facing predictions first. Technical diagnostics remain available under Methodology.
 
-- `openfootball`: public 2026 World Cup schedule and stadium files.
-- `international_results`: public historical men's international results, goalscorers, and shootouts.
-- `football_data`: fixtures, teams, standings, and results from football-data.org.
-- `the_odds_api`: bookmaker odds and market discovery from The Odds API.
-- `api_football`: optional API-Football fallback/enrichment provider.
-- `open_meteo`: weather context by venue/date.
+## Data Sources
 
-## Setup
+The workflow uses model-ready summaries from:
 
-Copy `.env.example` to `.env` and add API keys as you sign up for providers.
+- Historical international match results and goalscorer records.
+- Derived team-strength and recent-form features.
+- 2026 fixture, venue, and kickoff-time references.
+- Weather context from open weather sources.
+- News metadata where available.
+- API-Football enrichment layers when the account and endpoint coverage permit.
 
-```powershell
-Copy-Item .env.example .env
-```
+The public site does not publish raw datasets, `.env`, `.Renviron`, API keys, credentials, or private files.
 
-Connection scripts use only the Python standard library. Later analysis notebooks can add pandas, statsmodels, PyMC, scikit-learn, or Stan.
+## Reproduction
 
-```powershell
-python scripts/check_connections.py
-python scripts/fetch_raw_data.py --sources public
-```
+Open `world-cup-betting-model.Rproj` in RStudio.
 
-On this machine, the project uses the local `.venv` for Python and the Quarto copy bundled with RStudio.
-
-## RStudio Workflow
-
-Open `world-cup-betting-model.Rproj` in RStudio, then run:
+Install or refresh the local project dependencies:
 
 ```r
 source("R/00_setup.R")
-source("R/01_build_duckdb.R")
-source("R/02_check_python_bridge.R")
 ```
 
-After Python is installed and `.env` is configured, Python pulls raw data:
-
-```powershell
-python scripts\fetch_raw_data.py --sources public
-```
-
-Then R builds/updates the DuckDB database:
-
-```r
-source("R/01_build_duckdb.R")
-```
-
-The database is written to `data/processed/world_cup.duckdb`.
-
-For app readiness checks:
-
-```r
-source("R/05_check_app_readiness.R")
-```
-
-The first interactive app is Shiny because this machine already has the R app stack installed and the existing coursework examples use Shiny patterns.
-
-Run the local app from RStudio:
-
-```r
-shiny::runApp("apps/shiny_world_cup")
-```
-
-Streamlit can use the same DuckDB/model outputs if a Python-first app becomes useful.
-
-## Current Data Build
-
-The easiest local update path is now the refresh orchestrator:
+Rebuild the local database and reports from existing processed files:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\update_pipeline.py --profile local-rebuild
 ```
 
-From RStudio:
+Refresh public/free data sources, rebuild models, and render the site:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\update_pipeline.py --profile free-refresh --continue-on-error
+```
+
+Render only the Quarto website:
 
 ```r
-source("R/20_refresh_all.R")
-refresh_world_cup_data(profile = "local-rebuild")
+source("R/12_render_reports.R")
 ```
 
-To pull the free/no-key sources again:
+The rendered static site is written to `docs/`.
 
-```powershell
-.\.venv\Scripts\python.exe scripts\update_pipeline.py --profile free-refresh
-```
+## Production Features
 
-After API keys are added to `.env`, keyed providers can be included with:
+- Prediction-first homepage.
+- Mobile-friendly Predictions page.
+- Browser-local kickoff times with UTC fallback.
+- Accessible match details using native disclosure controls.
+- Interactive bracket with mobile round tabs.
+- Post-match model review.
+- GitHub Pages publication from `docs/`.
 
-```powershell
-.\.venv\Scripts\python.exe scripts\update_pipeline.py --profile free-refresh --include-keyed-apis
-```
+## Prototype Features
 
-Odds pulls that consume quota require the extra `--include-odds-quota` flag.
+- Live lineup and card projections depend on provider coverage.
+- API odds and market-comparison scaffolding exist, but market edge is not presented as operational unless complete odds inputs are available.
+- Multi-sport expansion is documented as a roadmap, not part of the primary World Cup navigation.
 
-To refresh the free public data:
+## Planned Features
 
-```powershell
-.\.venv\Scripts\python.exe scripts\fetch_raw_data.py --sources public wikimedia official-fifa
-.\.venv\Scripts\python.exe scripts\build_public_processed_csv.py
-```
+- Stronger calibration reporting as the tournament sample grows.
+- Automated stale-data warning thresholds.
+- More complete lineups, injuries, cards, and odds ingestion where paid API coverage justifies the cost.
+- Optional Shiny or Streamlit app for interactive private analysis.
 
-Then load it into DuckDB from R/RStudio:
+## Limitations
 
-```r
-source("R/01_build_duckdb.R")
-source("R/06_data_inventory.R")
-```
+Forecasts are probabilistic. Completed 2026 match samples are small early in the tournament, so current-tournament accuracy should be treated as monitoring evidence, not proof. Some enrichment layers are unavailable until API providers publish the records or the account tier supports the endpoint.
 
-Use the rendered Quarto site for the current public data inventory and model summaries.
+## Responsible Use
 
-To pull free GDELT news metadata:
-
-```powershell
-.\.venv\Scripts\python.exe scripts\fetch_news_gdelt.py --include-team-queries
-```
-
-Then reload DuckDB:
-
-```r
-source("R/01_build_duckdb.R")
-```
-
-## Data Storage
-
-Raw pulls go under `data/raw/<timestamp>/`. Do not edit raw files. Feature tables and modeling datasets should go under `data/processed/` once we build them.
-
-## Betting Note
-
-This project is for statistical modeling and research. It will not guarantee profit. Use legal books only, track bankroll separately, and evaluate bets by expected value and calibration rather than vibes.
+This project is for statistical modeling, education, and research. It does not guarantee match outcomes or betting profit. Do not treat the site as financial advice, and always verify official match information before acting on a forecast.

@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - assets/favicon.svg
+    - assets/social-preview.svg
   render:
     - index.qmd
     - reports/00_data_overview.qmd
@@ -15,48 +18,60 @@ project:
     - reports/04_knn_similarity_model.qmd
 
 website:
-  title: "2026 World Cup Betting Model"
+  title: "World Cup 2026 Forecasting Model"
   site-url: "https://lindadata.github.io/world-cup-2026-betting-model/"
   repo-url: "https://github.com/LindaData/world-cup-2026-betting-model"
-  repo-actions: [source]
+  description: "Match probabilities, projected scores, and tournament simulations powered by historical results and team-strength models."
+  favicon: assets/favicon.svg
   navbar:
     background: "#102a43"
     left:
       - href: index.qmd
-        text: About
-      - href: reports/00_data_overview.qmd
-        text: Data
-      - href: reports/01_goals_linear_regression.qmd
-        text: Goals Model
-      - href: reports/05_poisson_goals_model.qmd
-        text: Poisson Model
-      - href: reports/02_ordinal_result_model.qmd
-        text: Result Model
-      - href: reports/04_knn_similarity_model.qmd
-        text: KNN Model
-      - href: reports/06_regression_diagnostics.qmd
-        text: Diagnostics
-      - href: reports/07_fixture_predictions.qmd
-        text: Predictions
+        text: Home
       - href: reports/08_matchday_predictions.qmd
-        text: Matchday
-      - href: reports/09_multisport_expansion.qmd
-        text: Sports
-      - href: reports/03_distribution_review.qmd
-        text: Distributions
+        text: Predictions
+      - href: reports/08_matchday_predictions.qmd#bracket
+        text: Bracket
+      - text: Models
+        menu:
+          - href: reports/07_fixture_predictions.qmd
+            text: Model Overview
+          - href: reports/05_poisson_goals_model.qmd
+            text: Goals Forecast
+          - href: reports/02_ordinal_result_model.qmd
+            text: Win / Draw / Loss Model
+          - href: reports/04_knn_similarity_model.qmd
+            text: Similar Match Model
+          - href: reports/01_goals_linear_regression.qmd
+            text: OLS Benchmark
+      - text: Methodology
+        menu:
+          - href: reports/00_data_overview.qmd
+            text: Data & Coverage
+          - href: reports/08_matchday_predictions.qmd#model-performance
+            text: Model Performance
+          - href: reports/06_regression_diagnostics.qmd
+            text: Diagnostics
+          - href: reports/03_distribution_review.qmd
+            text: Statistical Details
+          - href: reports/09_multisport_expansion.qmd
+            text: Multi-Sport Roadmap
+          - href: https://github.com/LindaData/world-cup-2026-betting-model
+            text: GitHub Repository
     right:
       - text: LindaData
         href: https://lindadata.github.io/
       - text: GitHub
         href: https://github.com/LindaData/world-cup-2026-betting-model
   page-footer:
-    left: "LindaData 2026 World Cup model."
+    left: "LindaData World Cup 2026 forecasting model."
     right: "Built with R, Python, SQL, DuckDB, and Quarto."
 
 format:
   html:
     theme: cosmo
     css: styles.css
+    include-after-body: assets/site-after-body.html
     toc: true
     toc-depth: 3
     number-sections: true
@@ -66,6 +81,8 @@ format:
     smooth-scroll: true
     link-external-newwindow: true
     fig-align: center
+    open-graph: true
+    twitter-card: true
 
 execute:
   echo: true

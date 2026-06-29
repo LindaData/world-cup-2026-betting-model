@@ -1,5 +1,5 @@
 ---
-title: "Goals Model"
+title: "OLS Benchmark"
 subtitle: "Team goals scored from strength, opponent strength, and match context"
 ---
 

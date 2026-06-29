@@ -33,6 +33,13 @@ find_quarto <- function() {
 quarto <- find_quarto()
 message("Using Quarto: ", quarto)
 
+status_doc <- file.path("docs", "current_data_status.md")
+status_doc_backup <- tempfile(fileext = ".md")
+has_status_doc <- file.exists(status_doc)
+if (has_status_doc) {
+  file.copy(status_doc, status_doc_backup, overwrite = TRUE)
+}
+
 result <- system2(quarto, args = c("render"), stdout = TRUE, stderr = TRUE)
 cat(paste(result, collapse = "\n"), "\n")
 
@@ -43,5 +50,14 @@ if (!is.null(status) && status != 0) {
 
 dir.create("docs", showWarnings = FALSE)
 file.create(file.path("docs", ".nojekyll"))
+if (has_status_doc && file.exists(status_doc_backup)) {
+  file.copy(status_doc_backup, status_doc, overwrite = TRUE)
+}
+static_docs <- c(
+  file.path("docs_static", "GITHUB_ACCOUNT_UX_REVIEW.md")
+)
+for (static_doc in static_docs[file.exists(static_docs)]) {
+  file.copy(static_doc, file.path("docs", basename(static_doc)), overwrite = TRUE)
+}
 
 message("Rendered Quarto site to docs/")

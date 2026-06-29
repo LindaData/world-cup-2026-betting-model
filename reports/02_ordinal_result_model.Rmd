@@ -1,6 +1,6 @@
 ---
 title: "2026 World Cup Modeling Baseline: Ordinal Result Model"
-author: "World Cup Betting Model Project"
+author: "World Cup Forecasting Model Project"
 date: "`r Sys.Date()`"
 output:
   html_document:

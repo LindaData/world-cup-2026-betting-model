@@ -1,5 +1,5 @@
 ---
-title: "Fixture Predictions"
+title: "Model Overview"
 subtitle: "2026 match scores and win/draw/loss probabilities from local models"
 ---
 

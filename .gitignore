@@ -38,4 +38,5 @@ site_libs/
 .quarto-deno-cache/
 .localappdata/
 index_files/
+index.html
 **/*.quarto_ipynb

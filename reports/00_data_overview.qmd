@@ -1,5 +1,5 @@
 ---
-title: "Data Overview"
+title: "Data & Coverage"
 subtitle: "Available data, sample modeling rows, metadata, and simple diagnostics"
 ---
 

@@ -1,6 +1,6 @@
 ---
-title: "2026 World Cup Betting Model: Project Overview"
-author: "World Cup Betting Model Project"
+title: "2026 World Cup Forecasting Model: Project Overview"
+author: "World Cup Forecasting Model Project"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -37,7 +37,7 @@ There are two baseline models right now.
 | Goals OLS | Team goals scored in a match | `reports/01_goals_linear_regression.html` |
 | Ordinal logistic | `loss < draw < win` | `reports/02_ordinal_result_model.html` |
 
-These are baselines, not final betting models. They give us a working pipeline, interpretable coefficients, sample data, and repeatable metrics.
+These are baselines, not final forecasting models. They give us a working pipeline, interpretable coefficients, sample data, and repeatable metrics.
 
 # Latest Metrics
 

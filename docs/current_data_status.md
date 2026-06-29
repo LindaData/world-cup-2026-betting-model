@@ -1,8 +1,8 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-27T05:15:00.650601Z.
+Last refreshed: 2026-06-29T02:06:03.325747Z.
 
-Refresh profile: `free-refresh`.
+Refresh profile: `local-rebuild`.
 
 ## Short Answer
 
@@ -29,8 +29,8 @@ data/processed/metadata/column_inventory.csv
 
 | Table/View | Rows |
 | --- | --- |
-| `agg_news_query_counts_gdelt` | 17 |
-| `agg_player_international_goals` | 15854 |
+| `agg_news_query_counts_gdelt` | 6 |
+| `agg_player_international_goals` | 15859 |
 | `agg_team_elo_latest` | 336 |
 | `agg_team_history` | 336 |
 | `agg_team_recent_form` | 262 |
@@ -49,31 +49,31 @@ data/processed/metadata/column_inventory.csv
 | `dim_locations_from_results` | 2214 |
 | `dim_player_wikidata` | 1248 |
 | `fact_2026_world_cup_fixture_times` | 72 |
-| `fact_2026_world_cup_fixtures` | 72 |
+| `fact_2026_world_cup_fixtures` | 88 |
 | `fact_fixture_weather_hourly_open_meteo` | 1728 |
-| `fact_international_matches_team_long` | 98954 |
-| `fact_news_articles_gdelt` | 352 |
-| `fact_player_goals` | 47783 |
-| `fact_team_elo_match_history` | 98930 |
+| `fact_international_matches_team_long` | 98986 |
+| `fact_news_articles_gdelt` | 80 |
+| `fact_player_goals` | 47821 |
+| `fact_team_elo_match_history` | 98954 |
 | `football_data_matches` | 0 |
 | `odds_snapshots` | 0 |
-| `raw_manifests` | 19 |
-| `raw_snapshot_files` | 354 |
+| `raw_manifests` | 20 |
+| `raw_snapshot_files` | 366 |
 | `seed_venues` | 16 |
-| `stg_international_goalscorers` | 47783 |
-| `stg_international_results` | 49477 |
+| `stg_international_goalscorers` | 47821 |
+| `stg_international_results` | 49493 |
 | `stg_international_shootouts` | 678 |
-| `vw_2026_fixture_model_frame` | 72 |
+| `vw_2026_fixture_model_frame` | 88 |
 | `vw_2026_squad_player_enriched` | 1248 |
 | `vw_2026_squad_player_features` | 1248 |
 | `vw_2026_team_model_features` | 48 |
 | `vw_api_football_team_match_model_frame` | 0 |
 | `vw_fixture_weather_signals` | 72 |
 | `vw_goals_linear_model_frame` | 98810 |
-| `vw_news_query_signals` | 17 |
+| `vw_news_query_signals` | 6 |
 | `vw_recent_team_form` | 262 |
 | `vw_result_ordinal_model_frame` | 98810 |
-| `vw_team_match_results` | 98954 |
+| `vw_team_match_results` | 98986 |
 | `weather_hourly` | 0 |
 
 ## Latest Raw Snapshot Sources
@@ -85,24 +85,16 @@ data/processed/metadata/column_inventory.csv
 | odds | skipped | THE_ODDS_API_KEY is not set |
 | official-fifa | pulled | 200 |
 | public | pulled | 200 |
-| wikimedia | pulled | 200 |
+| wikimedia | pulled | 429 |
 
 ## Refresh Steps
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Fetch raw source snapshots | ok | 6.575 |
-| Build processed public CSVs | ok | 9.183 |
-| Build DuckDB | ok | 5.076 |
-| Export DuckDB metadata | ok | 2.47 |
-| Fit goals model | ok | 3.627 |
-| Fit Poisson goals model | ok | 5.869 |
-| Fit ordinal result model | ok | 6.974 |
-| Fit KNN similarity model | ok | 14.829 |
-| Run regression diagnostics | ok | 3.971 |
-| Score 2026 fixtures | ok | 2.774 |
-| Build matchday prediction board | ok | 2.516 |
-| Render R Markdown reports | ok | 68.629 |
+| Build processed public CSVs | ok | 12.379 |
+| Build DuckDB | ok | 8.384 |
+| Export DuckDB metadata | ok | 4.749 |
+| Render R Markdown reports | ok | 86.071 |
 
 ## Public Artifacts Updated
 

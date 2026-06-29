@@ -1,6 +1,6 @@
 ---
 title: "2026 World Cup Modeling Baseline: Goals Linear Regression"
-author: "World Cup Betting Model Project"
+author: "World Cup Forecasting Model Project"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -248,4 +248,3 @@ source("R/06_data_inventory.R")
 source("R/10_fit_linear_goals_model.R")
 rmarkdown::render("reports/01_goals_linear_regression.Rmd")
 ```
-

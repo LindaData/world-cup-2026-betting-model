@@ -600,29 +600,43 @@ future_refresh <- board[
     refresh_utc > now_utc &
     board$match_timing %in% c("Today", "Upcoming"),
 ]
-future_refresh$refresh_at_local <- format(
-  as.POSIXct(future_refresh$refresh_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
-  tz = display_tz,
-  "%Y-%m-%d %H:%M:%S"
-)
-future_refresh$kickoff_at_local <- format(
-  as.POSIXct(future_refresh$kickoff_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
-  tz = display_tz,
-  "%Y-%m-%d %H:%M:%S"
-)
-future_refresh$time_zone <- display_tz
-schedule <- future_refresh[, c(
-  "source_match_id",
-  "date",
-  "match_label",
-  "kickoff_local_iso",
-  "kickoff_utc_iso",
-  "refresh_utc_iso",
-  "refresh_at_local",
-  "kickoff_at_local",
-  "time_zone"
-)]
-schedule <- schedule[order(schedule$refresh_utc_iso, schedule$source_match_id), ]
+if (nrow(future_refresh) > 0) {
+  future_refresh$refresh_at_local <- format(
+    as.POSIXct(future_refresh$refresh_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
+    tz = display_tz,
+    "%Y-%m-%d %H:%M:%S"
+  )
+  future_refresh$kickoff_at_local <- format(
+    as.POSIXct(future_refresh$kickoff_utc_iso, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
+    tz = display_tz,
+    "%Y-%m-%d %H:%M:%S"
+  )
+  future_refresh$time_zone <- display_tz
+  schedule <- future_refresh[, c(
+    "source_match_id",
+    "date",
+    "match_label",
+    "kickoff_local_iso",
+    "kickoff_utc_iso",
+    "refresh_utc_iso",
+    "refresh_at_local",
+    "kickoff_at_local",
+    "time_zone"
+  )]
+  schedule <- schedule[order(schedule$refresh_utc_iso, schedule$source_match_id), ]
+} else {
+  schedule <- data.frame(
+    source_match_id = integer(),
+    date = as.Date(character()),
+    match_label = character(),
+    kickoff_local_iso = character(),
+    kickoff_utc_iso = character(),
+    refresh_utc_iso = character(),
+    refresh_at_local = character(),
+    kickoff_at_local = character(),
+    time_zone = character()
+  )
+}
 readr::write_csv(schedule, file.path(model_dir, "matchday_refresh_schedule.csv"))
 
 postmatch_buffer_minutes <- 135

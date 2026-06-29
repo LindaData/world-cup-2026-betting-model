@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Fixture Predictions – 2026 World Cup Betting Model</title>
+<title>Model Overview â€“ World Cup 2026 Forecasting Model</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -20,7 +20,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
@@ -68,6 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -109,6 +110,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Model Overview â€“ World Cup 2026 Forecasting Model">
+<meta property="og:description" content="2026 match scores and win/draw/loss probabilities from local models">
+<meta property="og:image" content="https://lindadata.github.io/world-cup-2026-betting-model/reports/07_fixture_predictions_files/figure-html/probability-plot-1.png">
+<meta property="og:site_name" content="World Cup 2026 Forecasting Model">
+<meta property="og:image:height" content="960">
+<meta property="og:image:width" content="1344">
+<meta name="twitter:title" content="Model Overview â€“ World Cup 2026 Forecasting Model">
+<meta name="twitter:description" content="2026 match scores and win/draw/loss probabilities from local models">
+<meta name="twitter:image" content="https://lindadata.github.io/world-cup-2026-betting-model/reports/07_fixture_predictions_files/figure-html/probability-plot-1.png">
+<meta name="twitter:image-height" content="960">
+<meta name="twitter:image-width" content="1344">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -119,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">2026 World Cup Betting Model</span>
+    <span class="navbar-title">World Cup 2026 Forecasting Model</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -129,59 +142,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
+    <a class="nav-link" href="../index.html">
+<span class="menu-text">Home</span></a>
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../reports/00_data_overview.html"> 
-<span class="menu-text">Data</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../reports/01_goals_linear_regression.html"> 
-<span class="menu-text">Goals Model</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../reports/05_poisson_goals_model.html"> 
-<span class="menu-text">Poisson Model</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../reports/02_ordinal_result_model.html"> 
-<span class="menu-text">Result Model</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../reports/04_knn_similarity_model.html"> 
-<span class="menu-text">KNN Model</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../reports/06_regression_diagnostics.html"> 
-<span class="menu-text">Diagnostics</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="../reports/07_fixture_predictions.html" aria-current="page"> 
+    <a class="nav-link" href="../reports/08_matchday_predictions.html">
 <span class="menu-text">Predictions</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../reports/08_matchday_predictions.html"> 
-<span class="menu-text">Matchday</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../reports/09_multisport_expansion.html"> 
-<span class="menu-text">Sports</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../reports/03_distribution_review.html"> 
-<span class="menu-text">Distributions</span></a>
-  </li>  
+    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket">
+<span class="menu-text">Bracket</span></a>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-models" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Models</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-models">
+        <li>
+    <a class="dropdown-item" href="../reports/07_fixture_predictions.html">
+ <span class="dropdown-text">Model Overview</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/05_poisson_goals_model.html">
+ <span class="dropdown-text">Goals Forecast</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/02_ordinal_result_model.html">
+ <span class="dropdown-text">Win / Draw / Loss Model</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/04_knn_similarity_model.html">
+ <span class="dropdown-text">Similar Match Model</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/01_goals_linear_regression.html">
+ <span class="dropdown-text">OLS Benchmark</span></a>
+  </li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Methodology</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">
+        <li>
+    <a class="dropdown-item" href="../reports/00_data_overview.html">
+ <span class="dropdown-text">Data &amp; Coverage</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-performance">
+ <span class="dropdown-text">Model Performance</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/06_regression_diagnostics.html">
+ <span class="dropdown-text">Diagnostics</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/03_distribution_review.html">
+ <span class="dropdown-text">Statistical Details</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/09_multisport_expansion.html">
+ <span class="dropdown-text">Multi-Sport Roadmap</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="https://github.com/LindaData/world-cup-2026-betting-model">
+ <span class="dropdown-text">GitHub Repository</span></a>
+  </li>
+    </ul>
+  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://lindadata.github.io/"> 
+    <a class="nav-link" href="https://lindadata.github.io/">
 <span class="menu-text">LindaData</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model"> 
+    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model">
 <span class="menu-text">GitHub</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -196,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
-   
+
   <ul>
   <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#scoring-summary" id="toc-scoring-summary" class="nav-link" data-scroll-target="#scoring-summary"><span class="header-section-number">2</span> Scoring Summary</a></li>
@@ -206,14 +245,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">6</span> Interpretation</a></li>
   <li><a href="#reproduce-locally" id="toc-reproduce-locally" class="nav-link" data-scroll-target="#reproduce-locally"><span class="header-section-number">7</span> Reproduce Locally</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/LindaData/world-cup-2026-betting-model/blob/main/reports/07_fixture_predictions.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Fixture Predictions</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Model Overview</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 <p class="subtitle lead">2026 match scores and win/draw/loss probabilities from local models</p>
 </div>
 
@@ -221,11 +260,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
@@ -238,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>OLS expected goals for the home and away team.</li>
 <li>Poisson expected goals for the home and away team.</li>
-<li>Ordinal win, draw, and loss probabilities from the home team’s perspective.</li>
+<li>Ordinal win, draw, and loss probabilities from the home teamâ€™s perspective.</li>
 <li>Weather context when venue-level weather summaries are available.</li>
 </ul>
 </section>
@@ -276,12 +315,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Fixtures scored</td>
-<td style="text-align: left;">72.000</td>
+<td style="text-align: left;">88.000</td>
 <td style="text-align: left;">2026 matches with model predictions.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Fixtures with final scores</td>
-<td style="text-align: left;">60.000</td>
+<td style="text-align: left;">72.000</td>
 <td style="text-align: left;">Matches available for early score checking.</td>
 </tr>
 <tr class="odd">
@@ -291,32 +330,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td style="text-align: left;">Team-fixture rows scored</td>
-<td style="text-align: left;">144.000</td>
+<td style="text-align: left;">176.000</td>
 <td style="text-align: left;">Team-perspective rows that had enough features to score.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">OLS RMSE on completed fixtures</td>
-<td style="text-align: left;">1.194</td>
+<td style="text-align: left;">1.208</td>
 <td style="text-align: left;">Typical OLS goal miss on completed 2026 team rows.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">OLS MAE on completed fixtures</td>
-<td style="text-align: left;">0.876</td>
+<td style="text-align: left;">0.893</td>
 <td style="text-align: left;">Average OLS absolute goal miss on completed 2026 team rows.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Poisson RMSE on completed fixtures</td>
-<td style="text-align: left;">1.185</td>
+<td style="text-align: left;">1.199</td>
 <td style="text-align: left;">Typical Poisson goal miss on completed 2026 team rows.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Poisson MAE on completed fixtures</td>
-<td style="text-align: left;">0.878</td>
+<td style="text-align: left;">0.893</td>
 <td style="text-align: left;">Average Poisson absolute goal miss on completed 2026 team rows.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ordinal accuracy on completed fixtures</td>
-<td style="text-align: left;">65.0%</td>
+<td style="text-align: left;">65.3%</td>
 <td style="text-align: left;">Share of completed matches where the top predicted outcome matched the result.</td>
 </tr>
 </tbody>
@@ -512,7 +551,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">2026-06-14</td>
 <td style="text-align: left;">Germany</td>
-<td style="text-align: left;">Curaçao</td>
+<td style="text-align: left;">CuraÃ§ao</td>
 <td style="text-align: left;">7-1</td>
 <td style="text-align: left;">2.92 - 0.54</td>
 <td style="text-align: left;">2.64 - 0.09</td>
@@ -570,11 +609,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Belgium</td>
 <td style="text-align: left;">Egypt</td>
 <td style="text-align: left;">1-1</td>
-<td style="text-align: left;">1.61 - 0.90</td>
-<td style="text-align: left;">1.75 - 0.85</td>
-<td style="text-align: left;">53.9%</td>
-<td style="text-align: left;">25.7%</td>
-<td style="text-align: left;">20.4%</td>
+<td style="text-align: left;">1.68 - 0.85</td>
+<td style="text-align: left;">1.80 - 0.78</td>
+<td style="text-align: left;">56.5%</td>
+<td style="text-align: left;">24.7%</td>
+<td style="text-align: left;">18.7%</td>
 <td style="text-align: left;">home win</td>
 <td style="text-align: left;">Seattle</td>
 <td style="text-align: left;">23.3 C, wind 6.8</td>
@@ -584,11 +623,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Iran</td>
 <td style="text-align: left;">New Zealand</td>
 <td style="text-align: left;">2-2</td>
-<td style="text-align: left;">2.08 - 0.76</td>
-<td style="text-align: left;">2.12 - 0.62</td>
-<td style="text-align: left;">66.6%</td>
-<td style="text-align: left;">20.4%</td>
-<td style="text-align: left;">13.1%</td>
+<td style="text-align: left;">2.17 - 0.73</td>
+<td style="text-align: left;">2.18 - 0.58</td>
+<td style="text-align: left;">68.7%</td>
+<td style="text-align: left;">19.3%</td>
+<td style="text-align: left;">12.0%</td>
 <td style="text-align: left;">home win</td>
 <td style="text-align: left;">Inglewood</td>
 <td style="text-align: left;">21.0 C, wind 6.8</td>
@@ -598,11 +637,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Spain</td>
 <td style="text-align: left;">Cape Verde</td>
 <td style="text-align: left;">0-0</td>
-<td style="text-align: left;">3.18 - 0.44</td>
-<td style="text-align: left;">2.80 - 0.00</td>
-<td style="text-align: left;">87.0%</td>
-<td style="text-align: left;">8.7%</td>
-<td style="text-align: left;">4.3%</td>
+<td style="text-align: left;">3.20 - 0.43</td>
+<td style="text-align: left;">2.81 - 0.00</td>
+<td style="text-align: left;">87.3%</td>
+<td style="text-align: left;">8.5%</td>
+<td style="text-align: left;">4.2%</td>
 <td style="text-align: left;">home win</td>
 <td style="text-align: left;">Atlanta</td>
 <td style="text-align: left;">24.2 C, wind 10.7</td>
@@ -612,11 +651,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Saudi Arabia</td>
 <td style="text-align: left;">Uruguay</td>
 <td style="text-align: left;">1-1</td>
-<td style="text-align: left;">0.87 - 1.77</td>
-<td style="text-align: left;">0.90 - 1.80</td>
-<td style="text-align: left;">18.5%</td>
-<td style="text-align: left;">24.6%</td>
-<td style="text-align: left;">57.0%</td>
+<td style="text-align: left;">0.89 - 1.75</td>
+<td style="text-align: left;">0.93 - 1.78</td>
+<td style="text-align: left;">19.1%</td>
+<td style="text-align: left;">25.0%</td>
+<td style="text-align: left;">55.9%</td>
 <td style="text-align: left;">away win</td>
 <td style="text-align: left;">Miami Gardens</td>
 <td style="text-align: left;">28.2 C, wind 5.3</td>
@@ -626,9 +665,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">France</td>
 <td style="text-align: left;">Senegal</td>
 <td style="text-align: left;">3-1</td>
-<td style="text-align: left;">2.26 - 0.58</td>
-<td style="text-align: left;">2.23 - 0.22</td>
-<td style="text-align: left;">75.5%</td>
+<td style="text-align: left;">2.23 - 0.58</td>
+<td style="text-align: left;">2.20 - 0.20</td>
+<td style="text-align: left;">75.3%</td>
 <td style="text-align: left;">15.7%</td>
 <td style="text-align: left;">8.9%</td>
 <td style="text-align: left;">home win</td>
@@ -640,11 +679,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Iraq</td>
 <td style="text-align: left;">Norway</td>
 <td style="text-align: left;">1-4</td>
-<td style="text-align: left;">0.74 - 2.01</td>
-<td style="text-align: left;">0.66 - 1.99</td>
+<td style="text-align: left;">0.75 - 2.04</td>
+<td style="text-align: left;">0.68 - 2.02</td>
 <td style="text-align: left;">13.6%</td>
-<td style="text-align: left;">20.9%</td>
-<td style="text-align: left;">65.5%</td>
+<td style="text-align: left;">20.8%</td>
+<td style="text-align: left;">65.6%</td>
 <td style="text-align: left;">away win</td>
 <td style="text-align: left;">Foxborough</td>
 <td style="text-align: left;">19.1 C, wind 10.7</td>
@@ -654,11 +693,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Argentina</td>
 <td style="text-align: left;">Algeria</td>
 <td style="text-align: left;">3-0</td>
-<td style="text-align: left;">2.39 - 0.53</td>
-<td style="text-align: left;">2.31 - 0.08</td>
-<td style="text-align: left;">78.6%</td>
-<td style="text-align: left;">13.9%</td>
-<td style="text-align: left;">7.6%</td>
+<td style="text-align: left;">2.40 - 0.53</td>
+<td style="text-align: left;">2.32 - 0.07</td>
+<td style="text-align: left;">78.8%</td>
+<td style="text-align: left;">13.7%</td>
+<td style="text-align: left;">7.5%</td>
 <td style="text-align: left;">home win</td>
 <td style="text-align: left;">Kansas City</td>
 <td style="text-align: left;">22.2 C, wind 9.7</td>
@@ -668,11 +707,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Austria</td>
 <td style="text-align: left;">Jordan</td>
 <td style="text-align: left;">3-1</td>
-<td style="text-align: left;">2.04 - 0.76</td>
-<td style="text-align: left;">2.09 - 0.62</td>
-<td style="text-align: left;">66.1%</td>
-<td style="text-align: left;">20.6%</td>
-<td style="text-align: left;">13.3%</td>
+<td style="text-align: left;">2.06 - 0.75</td>
+<td style="text-align: left;">2.10 - 0.61</td>
+<td style="text-align: left;">66.5%</td>
+<td style="text-align: left;">20.4%</td>
+<td style="text-align: left;">13.1%</td>
 <td style="text-align: left;">home win</td>
 <td style="text-align: left;">Santa Clara</td>
 <td style="text-align: left;">18.7 C, wind 8.7</td>
@@ -682,11 +721,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Portugal</td>
 <td style="text-align: left;">DR Congo</td>
 <td style="text-align: left;">1-1</td>
-<td style="text-align: left;">2.33 - 0.61</td>
-<td style="text-align: left;">2.28 - 0.30</td>
-<td style="text-align: left;">74.9%</td>
-<td style="text-align: left;">16.0%</td>
-<td style="text-align: left;">9.1%</td>
+<td style="text-align: left;">2.15 - 0.65</td>
+<td style="text-align: left;">2.15 - 0.40</td>
+<td style="text-align: left;">71.3%</td>
+<td style="text-align: left;">17.9%</td>
+<td style="text-align: left;">10.8%</td>
 <td style="text-align: left;">home win</td>
 <td style="text-align: left;">Houston</td>
 <td style="text-align: left;">26.5 C, wind 12.9</td>
@@ -696,11 +735,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Uzbekistan</td>
 <td style="text-align: left;">Colombia</td>
 <td style="text-align: left;">1-3</td>
-<td style="text-align: left;">0.71 - 1.97</td>
-<td style="text-align: left;">0.59 - 1.96</td>
-<td style="text-align: left;">13.3%</td>
-<td style="text-align: left;">20.6%</td>
-<td style="text-align: left;">66.1%</td>
+<td style="text-align: left;">0.68 - 2.13</td>
+<td style="text-align: left;">0.51 - 2.08</td>
+<td style="text-align: left;">11.6%</td>
+<td style="text-align: left;">18.8%</td>
+<td style="text-align: left;">69.6%</td>
 <td style="text-align: left;">away win</td>
 <td style="text-align: left;">Mexico City</td>
 <td style="text-align: left;">17.9 C, wind 3.6</td>
@@ -711,10 +750,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Croatia</td>
 <td style="text-align: left;">4-2</td>
 <td style="text-align: left;">1.73 - 0.75</td>
-<td style="text-align: left;">1.83 - 0.60</td>
-<td style="text-align: left;">61.2%</td>
-<td style="text-align: left;">22.8%</td>
-<td style="text-align: left;">16.0%</td>
+<td style="text-align: left;">1.83 - 0.58</td>
+<td style="text-align: left;">61.4%</td>
+<td style="text-align: left;">22.7%</td>
+<td style="text-align: left;">15.8%</td>
 <td style="text-align: left;">home win</td>
 <td style="text-align: left;">Arlington</td>
 <td style="text-align: left;">28.2 C, wind 15.7</td>
@@ -724,11 +763,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Ghana</td>
 <td style="text-align: left;">Panama</td>
 <td style="text-align: left;">1-0</td>
-<td style="text-align: left;">1.18 - 1.41</td>
-<td style="text-align: left;">1.34 - 1.49</td>
-<td style="text-align: left;">30.7%</td>
-<td style="text-align: left;">28.9%</td>
-<td style="text-align: left;">40.4%</td>
+<td style="text-align: left;">1.19 - 1.41</td>
+<td style="text-align: left;">1.35 - 1.49</td>
+<td style="text-align: left;">30.9%</td>
+<td style="text-align: left;">29.0%</td>
+<td style="text-align: left;">40.1%</td>
 <td style="text-align: left;">away win</td>
 <td style="text-align: left;">Toronto</td>
 <td style="text-align: left;">17.2 C, wind 10.8</td>
@@ -883,7 +922,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">2026-06-14</td>
 <td style="text-align: left;">Germany</td>
-<td style="text-align: left;">Curaçao</td>
+<td style="text-align: left;">CuraÃ§ao</td>
 <td style="text-align: left;">7-1</td>
 <td style="text-align: left;">home win</td>
 <td style="text-align: left;">home win</td>
@@ -927,8 +966,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">1-1</td>
 <td style="text-align: left;">draw</td>
 <td style="text-align: left;">home win</td>
-<td style="text-align: left;">1.61 - 0.90</td>
-<td style="text-align: left;">H 53.9% / D 25.7% / A 20.4%</td>
+<td style="text-align: left;">1.68 - 0.85</td>
+<td style="text-align: left;">H 56.5% / D 24.7% / A 18.7%</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2026-06-15</td>
@@ -937,8 +976,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">2-2</td>
 <td style="text-align: left;">draw</td>
 <td style="text-align: left;">home win</td>
-<td style="text-align: left;">2.08 - 0.76</td>
-<td style="text-align: left;">H 66.6% / D 20.4% / A 13.1%</td>
+<td style="text-align: left;">2.17 - 0.73</td>
+<td style="text-align: left;">H 68.7% / D 19.3% / A 12.0%</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2026-06-15</td>
@@ -947,8 +986,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">0-0</td>
 <td style="text-align: left;">draw</td>
 <td style="text-align: left;">home win</td>
-<td style="text-align: left;">3.18 - 0.44</td>
-<td style="text-align: left;">H 87.0% / D 8.7% / A 4.3%</td>
+<td style="text-align: left;">3.20 - 0.43</td>
+<td style="text-align: left;">H 87.3% / D 8.5% / A 4.2%</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2026-06-15</td>
@@ -957,8 +996,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">1-1</td>
 <td style="text-align: left;">draw</td>
 <td style="text-align: left;">away win</td>
-<td style="text-align: left;">0.87 - 1.77</td>
-<td style="text-align: left;">H 18.5% / D 24.6% / A 57.0%</td>
+<td style="text-align: left;">0.89 - 1.75</td>
+<td style="text-align: left;">H 19.1% / D 25.0% / A 55.9%</td>
 </tr>
 </tbody>
 </table>
@@ -1012,7 +1051,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="interpretation" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">6</span> Interpretation</h2>
-<p>The fixture table is the model’s operational output:</p>
+<p>The fixture table is the modelâ€™s operational output:</p>
 <ul>
 <li>The Poisson goal estimates are the main expected-goals baseline.</li>
 <li>The ordinal model supplies win/draw/loss probabilities.</li>
@@ -1035,9 +1074,344 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
+<script>
+(function () {
+  "use strict";
+
+  function ready(fn) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", fn);
+    } else {
+      fn();
+    }
+  }
+
+  function formatLocalTimes() {
+    var formatter = new Intl.DateTimeFormat(undefined, {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short"
+    });
+
+    document.querySelectorAll("time.js-local-time[datetime]").forEach(function (node) {
+      var value = node.getAttribute("datetime");
+      if (!value) {
+        return;
+      }
+      var date = new Date(value);
+      if (Number.isNaN(date.getTime())) {
+        return;
+      }
+      node.textContent = formatter.format(date);
+      node.setAttribute("data-localized", "true");
+    });
+  }
+
+  function initBracket() {
+    var dataNode = document.getElementById("wc-bracket-data");
+    var root = document.getElementById("model-bracket-root");
+    var championNode = document.getElementById("model-bracket-champion");
+    var seedWatch = document.getElementById("group-seed-watch");
+    var thirdWatch = document.getElementById("third-place-watch");
+    var statusNode = document.getElementById("model-bracket-status");
+    var tabsNode = document.querySelector(".bracket-tabs");
+
+    if (!dataNode || !root || !championNode) {
+      return;
+    }
+
+    var data = JSON.parse(dataNode.textContent);
+    var roundNames = ["Round of 32", "Round of 16", "Quarterfinals", "Semifinals", "Final"];
+    var shortRoundNames = ["R32", "R16", "QF", "SF", "Final"];
+    var picks = {};
+    var activeRound = 0;
+    var fullView = !window.matchMedia("(max-width: 700px)").matches;
+
+    function announce(text) {
+      if (statusNode) {
+        statusNode.textContent = text;
+      }
+    }
+
+    function cloneTeam(team) {
+      return team ? Object.assign({}, team) : null;
+    }
+
+    function cloneMatch(match) {
+      return {
+        slotA: match.slotA,
+        slotB: match.slotB,
+        teamA: cloneTeam(match.teamA),
+        teamB: cloneTeam(match.teamB)
+      };
+    }
+
+    function teamStrength(team) {
+      var elo = team && Number(team.elo);
+      return Number.isFinite(elo) ? elo : 1500;
+    }
+
+    function advanceProbability(teamA, teamB) {
+      var diff = teamStrength(teamA) - teamStrength(teamB);
+      return 1 / (1 + Math.pow(10, -diff / 400));
+    }
+
+    function formatPct(value) {
+      if (!Number.isFinite(value)) {
+        return "";
+      }
+      return Math.round(value * 100) + "%";
+    }
+
+    function modelWinner(match) {
+      if (!match.teamA && !match.teamB) {
+        return null;
+      }
+      if (match.teamA && !match.teamB) {
+        return match.teamA;
+      }
+      if (!match.teamA && match.teamB) {
+        return match.teamB;
+      }
+      return advanceProbability(match.teamA, match.teamB) >= 0.5 ? match.teamA : match.teamB;
+    }
+
+    function clearLaterPicks(roundIndex) {
+      Object.keys(picks).forEach(function (key) {
+        var keyRound = Number(key.split("-")[0]);
+        if (keyRound > roundIndex) {
+          delete picks[key];
+        }
+      });
+    }
+
+    function buildRounds() {
+      var rounds = [data.round32.map(cloneMatch)];
+
+      for (var roundIndex = 0; roundIndex < 4; roundIndex += 1) {
+        var currentRound = rounds[roundIndex];
+        var nextRound = Array.from({ length: Math.ceil(currentRound.length / 2) }, function (_, index) {
+          return {
+            slotA: "W" + (roundIndex + 1) + "." + (2 * index + 1),
+            slotB: "W" + (roundIndex + 1) + "." + (2 * index + 2),
+            teamA: null,
+            teamB: null
+          };
+        });
+
+        currentRound.forEach(function (match, matchIndex) {
+          var key = roundIndex + "-" + matchIndex;
+          var validNames = [match.teamA && match.teamA.name, match.teamB && match.teamB.name].filter(Boolean);
+          if (picks[key] && validNames.indexOf(picks[key]) === -1) {
+            delete picks[key];
+          }
+          var pickedName = picks[key];
+          var winner = pickedName
+            ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
+            : modelWinner(match);
+          var nextMatch = nextRound[Math.floor(matchIndex / 2)];
+          if (matchIndex % 2 === 0) {
+            nextMatch.teamA = cloneTeam(winner);
+          } else {
+            nextMatch.teamB = cloneTeam(winner);
+          }
+        });
+
+        rounds.push(nextRound);
+      }
+
+      return rounds;
+    }
+
+    function teamButton(team, slot, probability, selected, modelSelected, userSelected, roundIndex, matchIndex) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "bracket-team";
+
+      if (selected) {
+        button.classList.add("selected");
+      }
+      if (modelSelected) {
+        button.classList.add("model-selected");
+      }
+      if (userSelected) {
+        button.classList.add("user-selected");
+      }
+      if (!team) {
+        button.classList.add("empty");
+        button.disabled = true;
+        button.innerHTML = "<span class='team-name'>" + slot + "</span><small>Seed unresolved</small>";
+        return button;
+      }
+
+      var label = userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender");
+      button.innerHTML =
+        "<span class='team-name'>" + team.name + "</span>" +
+        "<span class='team-meta'>" + team.seed + " | " + formatPct(probability) + "</span>" +
+        "<small class='pick-label'>" + label + "</small>";
+      button.setAttribute("aria-label", "Advance " + team.name + " from " + roundNames[roundIndex]);
+      button.addEventListener("click", function () {
+        picks[roundIndex + "-" + matchIndex] = team.name;
+        clearLaterPicks(roundIndex);
+        announce(team.name + " advanced from " + roundNames[roundIndex] + ".");
+        render();
+      });
+      return button;
+    }
+
+    function matchCard(match, roundIndex, matchIndex) {
+      var card = document.createElement("article");
+      card.className = "bracket-match-card";
+      var pA = match.teamA && match.teamB ? advanceProbability(match.teamA, match.teamB) : null;
+      var pB = Number.isFinite(pA) ? 1 - pA : null;
+      var winner = modelWinner(match);
+      var pickedName = picks[roundIndex + "-" + matchIndex];
+      var selectedName = pickedName || (winner && winner.name);
+
+      var label = document.createElement("div");
+      label.className = "bracket-match-label";
+      label.textContent = "Match " + (matchIndex + 1);
+      card.appendChild(label);
+      card.appendChild(teamButton(
+        match.teamA,
+        match.slotA,
+        pA,
+        match.teamA && match.teamA.name === selectedName,
+        !pickedName && winner && match.teamA && match.teamA.name === winner.name,
+        pickedName && match.teamA && match.teamA.name === pickedName,
+        roundIndex,
+        matchIndex
+      ));
+      card.appendChild(teamButton(
+        match.teamB,
+        match.slotB,
+        pB,
+        match.teamB && match.teamB.name === selectedName,
+        !pickedName && winner && match.teamB && match.teamB.name === winner.name,
+        pickedName && match.teamB && match.teamB.name === pickedName,
+        roundIndex,
+        matchIndex
+      ));
+
+      return card;
+    }
+
+    function renderSeeds() {
+      if (seedWatch && data.groupSeeds) {
+        var seedsByGroup = {};
+        data.groupSeeds.forEach(function (row) {
+          seedsByGroup[row.group] = seedsByGroup[row.group] || [];
+          seedsByGroup[row.group].push(row);
+        });
+        seedWatch.innerHTML = Object.keys(seedsByGroup).sort().map(function (group) {
+          var rows = seedsByGroup[group].slice(0, 2).map(function (row) {
+            return "<span><strong>" + row.seed + "</strong>" + row.team + "</span>";
+          }).join("");
+          return "<div class='seed-group'><b>Group " + group + "</b>" + rows + "</div>";
+        }).join("");
+      }
+
+      if (thirdWatch && data.thirdWatch) {
+        thirdWatch.innerHTML = data.thirdWatch.map(function (row) {
+          return "<div class='third-row" + (row.qualifies ? " qualifies" : "") + "'>" +
+            "<span>" + row.third_rank + ". " + row.team + "</span>" +
+            "<strong>" + row.points + " pts</strong>" +
+            "</div>" +
+            (row.third_rank === 8 ? "<div class='third-cut'>Cut line</div>" : "");
+        }).join("");
+      }
+    }
+
+    function renderTabs() {
+      if (!tabsNode) {
+        return;
+      }
+      tabsNode.innerHTML = "";
+      roundNames.forEach(function (name, index) {
+        var tab = document.createElement("button");
+        tab.type = "button";
+        tab.className = "bracket-tab";
+        tab.setAttribute("role", "tab");
+        tab.setAttribute("aria-selected", String(index === activeRound));
+        tab.textContent = shortRoundNames[index];
+        tab.addEventListener("click", function () {
+          activeRound = index;
+          fullView = false;
+          render();
+        });
+        tabsNode.appendChild(tab);
+      });
+    }
+
+    function render() {
+      var rounds = buildRounds();
+      root.innerHTML = "";
+      root.setAttribute("data-view", fullView ? "full" : "round");
+
+      rounds.forEach(function (round, roundIndex) {
+        var column = document.createElement("section");
+        column.className = "bracket-round";
+        if (!fullView && roundIndex === activeRound) {
+          column.classList.add("is-active");
+        }
+        var heading = document.createElement("h3");
+        heading.textContent = roundNames[roundIndex];
+        column.appendChild(heading);
+        var list = document.createElement("div");
+        list.className = "bracket-round-list";
+        round.forEach(function (match, matchIndex) {
+          list.appendChild(matchCard(match, roundIndex, matchIndex));
+        });
+        column.appendChild(list);
+        root.appendChild(column);
+      });
+
+      var finalMatch = rounds[rounds.length - 1][0];
+      var champion = picks["4-0"]
+        ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
+        : modelWinner(finalMatch);
+      championNode.innerHTML = champion
+        ? "<span>Projected Champion</span><strong>" + champion.name + "</strong><small>" + champion.seed + " | strength " + champion.elo + "</small>"
+        : "";
+      renderTabs();
+      document.querySelectorAll("[data-bracket-action='toggle-view']").forEach(function (button) {
+        button.textContent = fullView ? "Round view" : "Full bracket";
+        button.setAttribute("aria-pressed", String(fullView));
+      });
+    }
+
+    document.querySelectorAll("[data-bracket-action]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var action = button.getAttribute("data-bracket-action");
+        if (action === "toggle-view") {
+          fullView = !fullView;
+          render();
+          return;
+        }
+        Object.keys(picks).forEach(function (key) {
+          delete picks[key];
+        });
+        announce(action === "model" ? "Bracket reset to model picks." : "Bracket picks cleared.");
+        render();
+      });
+    });
+
+    renderSeeds();
+    render();
+  }
+
+  ready(function () {
+    formatLocalTimes();
+    initBracket();
+  });
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
+    const icon = "î§‹";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
       placement: 'right',
@@ -1046,7 +1420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -1066,11 +1440,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -1144,7 +1518,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           if (codeDiv.classList.contains(fromCls)) {
             codeDiv.classList.remove(fromCls);
             codeDiv.classList.add(toCls);
-          } 
+          }
         }
         return false;
       }
@@ -1203,7 +1577,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -1278,7 +1652,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -1306,7 +1680,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -1330,7 +1704,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -1370,7 +1744,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -1492,7 +1866,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Fixture Predictions"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Model Overview"</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "2026 match scores and win/draw/loss probabilities from local models"</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -1692,11 +2066,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>LindaData 2026 World Cup model.</p>
-</div>   
+<p>LindaData World Cup 2026 forecasting model.</p>
+</div>
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/LindaData/world-cup-2026-betting-model/blob/main/reports/07_fixture_predictions.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div>
+    </div>
     <div class="nav-footer-right">
 <p>Built with R, Python, SQL, DuckDB, and Quarto.</p>
 </div>

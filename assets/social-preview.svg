@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="World Cup 2026 Forecasting Model preview">
+  <rect width="1200" height="630" fill="#102a43"/>
+  <rect x="64" y="64" width="1072" height="502" rx="28" fill="#ffffff"/>
+  <rect x="64" y="64" width="1072" height="126" rx="28" fill="#0f6b68"/>
+  <text x="108" y="143" fill="#ffffff" font-family="Arial, sans-serif" font-size="46" font-weight="700">World Cup 2026 Forecasting Model</text>
+  <text x="108" y="258" fill="#102a43" font-family="Arial, sans-serif" font-size="64" font-weight="700">Match probabilities.</text>
+  <text x="108" y="334" fill="#102a43" font-family="Arial, sans-serif" font-size="64" font-weight="700">Projected scores.</text>
+  <text x="108" y="410" fill="#102a43" font-family="Arial, sans-serif" font-size="64" font-weight="700">Tournament paths.</text>
+  <rect x="780" y="248" width="284" height="58" rx="14" fill="#edf8f7" stroke="#0f6b68" stroke-width="3"/>
+  <rect x="780" y="332" width="220" height="58" rx="14" fill="#fff8e1" stroke="#d9a441" stroke-width="3"/>
+  <rect x="780" y="416" width="252" height="58" rx="14" fill="#f7f9fb" stroke="#cbd5df" stroke-width="3"/>
+  <text x="808" y="287" fill="#0b4f4d" font-family="Arial, sans-serif" font-size="25" font-weight="700">Model pick 46%</text>
+  <text x="808" y="371" fill="#6b4b00" font-family="Arial, sans-serif" font-size="25" font-weight="700">Draw 27%</text>
+  <text x="808" y="455" fill="#24313d" font-family="Arial, sans-serif" font-size="25" font-weight="700">Updated daily</text>
+  <text x="108" y="514" fill="#52616b" font-family="Arial, sans-serif" font-size="30">Built with R, Python, SQL, DuckDB, and Quarto.</text>
+</svg>
