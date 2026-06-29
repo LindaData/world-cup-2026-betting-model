@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="World Cup 2026 match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket.">
+<meta name="description" content="World Cup 2026 static match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket.">
 
 <title>Predictions – World Cup 2026 Forecasting Model</title>
 <style>
@@ -77,10 +77,10 @@ ul.task-list li input[type="checkbox"] {
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Predictions – World Cup 2026 Forecasting Model">
-<meta property="og:description" content="World Cup 2026 match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket.">
+<meta property="og:description" content="World Cup 2026 static match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket.">
 <meta property="og:site_name" content="World Cup 2026 Forecasting Model">
 <meta name="twitter:title" content="Predictions – World Cup 2026 Forecasting Model">
-<meta name="twitter:description" content="World Cup 2026 match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket.">
+<meta name="twitter:description" content="World Cup 2026 static match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -113,11 +113,19 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket">
 <span class="menu-text">Bracket</span></a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/00_data_overview.html">
+<span class="menu-text">Data</span></a>
+  </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-models" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Models</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Methodology</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-models">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">
+        <li>
+    <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-performance">
+ <span class="dropdown-text">Model Performance</span></a>
+  </li>
         <li>
     <a class="dropdown-item" href="../reports/07_fixture_predictions.html">
  <span class="dropdown-text">Model Overview</span></a>
@@ -135,56 +143,17 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Similar Match Model</span></a>
   </li>
         <li>
-    <a class="dropdown-item" href="../reports/01_goals_linear_regression.html">
- <span class="dropdown-text">OLS Benchmark</span></a>
-  </li>
-        <li>
-    <a class="dropdown-item" href="../reports/10_model_challengers.html">
- <span class="dropdown-text">Model Challengers</span></a>
-  </li>
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Methodology</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">
-        <li>
-    <a class="dropdown-item" href="../reports/00_data_overview.html">
- <span class="dropdown-text">Data &amp; Coverage</span></a>
-  </li>
-        <li>
-    <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-performance">
- <span class="dropdown-text">Model Performance</span></a>
-  </li>
-        <li>
     <a class="dropdown-item" href="../reports/06_regression_diagnostics.html">
  <span class="dropdown-text">Diagnostics</span></a>
-  </li>
-        <li>
-    <a class="dropdown-item" href="../reports/03_distribution_review.html">
- <span class="dropdown-text">Statistical Details</span></a>
   </li>
         <li>
     <a class="dropdown-item" href="../reports/09_multisport_expansion.html">
  <span class="dropdown-text">Multi-Sport Roadmap</span></a>
   </li>
-        <li>
-    <a class="dropdown-item" href="../sports-data/index.html">
- <span class="dropdown-text">Sports Data</span></a>
-  </li>
-        <li>
-    <a class="dropdown-item" href="https://github.com/LindaData/world-cup-2026-betting-model">
- <span class="dropdown-text">GitHub Repository</span></a>
-  </li>
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="https://lindadata.github.io/">
-<span class="menu-text">LindaData</span></a>
-  </li>
   <li class="nav-item">
     <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model">
 <span class="menu-text">GitHub</span></a>
@@ -212,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    World Cup 2026 match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket.
+    World Cup 2026 static match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket.
   </div>
 </div>
 
@@ -233,7 +202,12 @@ ul.task-list li input[type="checkbox"] {
 <a href="#today">Today</a> <a href="#next-match">Next match</a> <a href="#upcoming">Upcoming</a> <a href="#bracket">Bracket</a> <a href="#model-performance">Accuracy</a> <a href="#methodology-details">Methodology</a>
 </nav>
 <section class="prediction-status-bar" aria-label="Prediction status">
-<span class="status-chip">Beta</span><span class="status-chip">Knockout stage</span><span class="status-chip muted">Last updated 2026-06-29 00:08:02 EDT</span><span class="status-chip muted">Times shown in your local timezone</span>
+<span class="status-chip">Beta</span><span class="status-chip">Knockout stage</span><span class="status-chip muted">Last updated 2026-06-29 00:08:02 EDT</span><span class="status-chip muted">Static GitHub Pages output</span>
+</section>
+<section class="page-section static-note-section">
+<div class="performance-note">
+<strong>Static-site setup:</strong> This is a static page. APIs are pulled offline, converted into model-ready files, and rendered into this public report. <span class="section-note">Last generated: 2026-06-29 00:08:02 EDT.</span>
+</div>
 </section>
 <section id="today" class="page-section forecast-section">
 <div class="section-heading">
@@ -248,7 +222,7 @@ Start here for the current slate: model pick, probabilities, expected score, and
 <div class="forecast-grid">
 <article class="forecast-card forecast-card-today" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--oday">Today</span><span class="time-unavailable">Mon, Jun 29 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-today">Today</span><span class="time-unavailable">Mon, Jun 29 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -259,7 +233,7 @@ Houston, United States
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Brazil</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>Brazil</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -301,7 +275,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>44.0 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -362,7 +336,7 @@ Houston, United States
 </article>
 <article class="forecast-card forecast-card-today" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--oday">Today</span><span class="time-unavailable">Mon, Jun 29 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-today">Today</span><span class="time-unavailable">Mon, Jun 29 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -373,7 +347,7 @@ Foxborough, United States
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Germany</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>Germany</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -415,7 +389,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>42.5 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -476,7 +450,7 @@ Foxborough, United States
 </article>
 <article class="forecast-card forecast-card-today" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--oday">Today</span><span class="time-unavailable">Mon, Jun 29 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-today">Today</span><span class="time-unavailable">Mon, Jun 29 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -487,7 +461,7 @@ Guadalupe, Mexico
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Netherlands</strong><small>Prediction strength: Moderate. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>Netherlands</strong><small>Strength: Moderate. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -529,7 +503,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>18.9 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -597,13 +571,13 @@ Guadalupe, Mexico
 Next Match Forecast
 </h2>
 <p>
-The most immediate forecast is expanded by default so the pick and details are visible without hunting.
+The next match after today’s slate is expanded by default so the pick and details are visible without hunting.
 </p>
 </div>
 <div class="forecast-grid">
 <article class="forecast-card forecast-card-next" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--ending-score">Pending score</span><span class="time-unavailable">Sun, Jun 28 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-pending-score">Pending score</span><span class="time-unavailable">Sun, Jun 28 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -614,7 +588,7 @@ Inglewood, United States
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Canada</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>Canada</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -656,7 +630,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>33.1 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details" open="">
@@ -724,469 +698,13 @@ Inglewood, United States
 Upcoming Matches
 </h2>
 <p>
-Each card shows the public pick, readable probabilities, expected score, and refresh timing. Knockout cards show advance probabilities and keep the regulation-level probability separate.
+Additional static forecast cards after today and the featured next match.
 </p>
 </div>
 <div class="forecast-grid">
 <article class="forecast-card forecast-card-upcoming" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--ending-score">Pending score</span><span class="time-unavailable">Sun, Jun 28 <small>Kickoff time not posted</small></span>
-</div>
-<div class="forecast-teams">
-<h3 class="anchored">
-South Africa <span>vs</span> Canada
-</h3>
-<p>
-Inglewood, United States
-</p>
-</div>
-<div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Canada</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
-</div>
-<p class="forecast-context-note">
-Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
-</p>
-<div class="forecast-probabilities" aria-label="Advance and regulation-level probabilities">
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>South Africa advance</span><strong>33.5%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="home-prob" style="width:33.5%"></span>
-</div>
-</div>
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Level after regulation</span><strong>26.6%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="draw-prob" style="width:26.6%"></span>
-</div>
-</div>
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Canada advance</span><strong>66.5%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="away-prob" style="width:66.5%"></span>
-</div>
-</div>
-</div>
-<div class="forecast-stat-grid">
-<div>
-<span>Most likely score</span><strong>1-1</strong>
-</div>
-<div>
-<span>Expected goals</span><strong>1.03 - 1.54</strong>
-</div>
-<div>
-<span>Probability advantage</span><strong>33.1 percentage points</strong>
-</div>
-<div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
-</div>
-</div>
-<details class="forecast-details">
-<summary>
-View details
-</summary>
-<dl>
-<dt>
-90-minute result
-</dt>
-<dd>
-South Africa win 25.3%; level 26.6%; Canada win 48.1%<small>The level probability is reallocated to advancement because knockout matches need a winner.</small>
-</dd>
-<dt>
-Extra time / penalties
-</dt>
-<dd>
-Knockout: projected winner means advances after regulation, extra time, or penalties
-</dd>
-<dt>
-Over 2.5 goals
-</dt>
-<dd>
-47.4%<small>Chance the match has at least 3 total goals.</small>
-</dd>
-<dt>
-Both teams to score
-</dt>
-<dd>
-50.5%<small>Chance both teams score at least once.</small>
-</dd>
-<dt>
-Yellow cards
-</dt>
-<dd>
-Card model pending API card history
-</dd>
-<dt>
-Lineups
-</dt>
-<dd>
-Lineups are not available yet.
-</dd>
-<dt>
-Model votes
-</dt>
-<dd>
-OLS: Canada; Poisson: Canada; Result model: Canada
-</dd>
-<dt>
-Venue
-</dt>
-<dd>
-Inglewood, United States
-</dd>
-</dl>
-</details>
-</article>
-<article class="forecast-card forecast-card-upcoming" data-forecast-card="">
-<div class="forecast-card-meta">
-<span class="status-pill status--oday">Today</span><span class="time-unavailable">Mon, Jun 29 <small>Kickoff time not posted</small></span>
-</div>
-<div class="forecast-teams">
-<h3 class="anchored">
-Brazil <span>vs</span> Japan
-</h3>
-<p>
-Houston, United States
-</p>
-</div>
-<div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Brazil</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
-</div>
-<p class="forecast-context-note">
-Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
-</p>
-<div class="forecast-probabilities" aria-label="Advance and regulation-level probabilities">
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Brazil advance</span><strong>72.0%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="home-prob" style="width:72.0%"></span>
-</div>
-</div>
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Level after regulation</span><strong>25.0%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="draw-prob" style="width:25.0%"></span>
-</div>
-</div>
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Japan advance</span><strong>28.0%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="away-prob" style="width:28.0%"></span>
-</div>
-</div>
-</div>
-<div class="forecast-stat-grid">
-<div>
-<span>Most likely score</span><strong>1-0</strong>
-</div>
-<div>
-<span>Expected goals</span><strong>1.58 - 0.81</strong>
-</div>
-<div>
-<span>Probability advantage</span><strong>44.0 percentage points</strong>
-</div>
-<div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
-</div>
-</div>
-<details class="forecast-details">
-<summary>
-View details
-</summary>
-<dl>
-<dt>
-90-minute result
-</dt>
-<dd>
-Brazil win 55.9%; level 25.0%; Japan win 19.0%<small>The level probability is reallocated to advancement because knockout matches need a winner.</small>
-</dd>
-<dt>
-Extra time / penalties
-</dt>
-<dd>
-Knockout: projected winner means advances after regulation, extra time, or penalties
-</dd>
-<dt>
-Over 2.5 goals
-</dt>
-<dd>
-42.9%<small>Chance the match has at least 3 total goals.</small>
-</dd>
-<dt>
-Both teams to score
-</dt>
-<dd>
-44.2%<small>Chance both teams score at least once.</small>
-</dd>
-<dt>
-Yellow cards
-</dt>
-<dd>
-Card model pending API card history
-</dd>
-<dt>
-Lineups
-</dt>
-<dd>
-Lineups are not available yet.
-</dd>
-<dt>
-Model votes
-</dt>
-<dd>
-OLS: Brazil; Poisson: Brazil; Result model: Brazil
-</dd>
-<dt>
-Venue
-</dt>
-<dd>
-Houston, United States
-</dd>
-</dl>
-</details>
-</article>
-<article class="forecast-card forecast-card-upcoming" data-forecast-card="">
-<div class="forecast-card-meta">
-<span class="status-pill status--oday">Today</span><span class="time-unavailable">Mon, Jun 29 <small>Kickoff time not posted</small></span>
-</div>
-<div class="forecast-teams">
-<h3 class="anchored">
-Germany <span>vs</span> Paraguay
-</h3>
-<p>
-Foxborough, United States
-</p>
-</div>
-<div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Germany</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
-</div>
-<p class="forecast-context-note">
-Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
-</p>
-<div class="forecast-probabilities" aria-label="Advance and regulation-level probabilities">
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Germany advance</span><strong>71.3%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="home-prob" style="width:71.3%"></span>
-</div>
-</div>
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Level after regulation</span><strong>25.0%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="draw-prob" style="width:25.0%"></span>
-</div>
-</div>
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Paraguay advance</span><strong>28.7%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="away-prob" style="width:28.7%"></span>
-</div>
-</div>
-</div>
-<div class="forecast-stat-grid">
-<div>
-<span>Most likely score</span><strong>1-0</strong>
-</div>
-<div>
-<span>Expected goals</span><strong>1.62 - 0.86</strong>
-</div>
-<div>
-<span>Probability advantage</span><strong>42.5 percentage points</strong>
-</div>
-<div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
-</div>
-</div>
-<details class="forecast-details">
-<summary>
-View details
-</summary>
-<dl>
-<dt>
-90-minute result
-</dt>
-<dd>
-Germany win 55.4%; level 25.0%; Paraguay win 19.6%<small>The level probability is reallocated to advancement because knockout matches need a winner.</small>
-</dd>
-<dt>
-Extra time / penalties
-</dt>
-<dd>
-Knockout: projected winner means advances after regulation, extra time, or penalties
-</dd>
-<dt>
-Over 2.5 goals
-</dt>
-<dd>
-45.1%<small>Chance the match has at least 3 total goals.</small>
-</dd>
-<dt>
-Both teams to score
-</dt>
-<dd>
-46.2%<small>Chance both teams score at least once.</small>
-</dd>
-<dt>
-Yellow cards
-</dt>
-<dd>
-Card model pending API card history
-</dd>
-<dt>
-Lineups
-</dt>
-<dd>
-Lineups are not available yet.
-</dd>
-<dt>
-Model votes
-</dt>
-<dd>
-OLS: Germany; Poisson: Germany; Result model: Germany
-</dd>
-<dt>
-Venue
-</dt>
-<dd>
-Foxborough, United States
-</dd>
-</dl>
-</details>
-</article>
-<article class="forecast-card forecast-card-upcoming" data-forecast-card="">
-<div class="forecast-card-meta">
-<span class="status-pill status--oday">Today</span><span class="time-unavailable">Mon, Jun 29 <small>Kickoff time not posted</small></span>
-</div>
-<div class="forecast-teams">
-<h3 class="anchored">
-Netherlands <span>vs</span> Morocco
-</h3>
-<p>
-Guadalupe, Mexico
-</p>
-</div>
-<div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Netherlands</strong><small>Prediction strength: Moderate. 3 of 3 models agree.</small>
-</div>
-<p class="forecast-context-note">
-Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
-</p>
-<div class="forecast-probabilities" aria-label="Advance and regulation-level probabilities">
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Netherlands advance</span><strong>59.5%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="home-prob" style="width:59.5%"></span>
-</div>
-</div>
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Level after regulation</span><strong>28.0%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="draw-prob" style="width:28.0%"></span>
-</div>
-</div>
-<div class="forecast-prob-row">
-<div class="forecast-prob-label">
-<span>Morocco advance</span><strong>40.5%</strong>
-</div>
-<div class="forecast-prob-track" aria-hidden="true">
-<span class="away-prob" style="width:40.5%"></span>
-</div>
-</div>
-</div>
-<div class="forecast-stat-grid">
-<div>
-<span>Most likely score</span><strong>1-0</strong>
-</div>
-<div>
-<span>Expected goals</span><strong>1.32 - 0.98</strong>
-</div>
-<div>
-<span>Probability advantage</span><strong>18.9 percentage points</strong>
-</div>
-<div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
-</div>
-</div>
-<details class="forecast-details">
-<summary>
-View details
-</summary>
-<dl>
-<dt>
-90-minute result
-</dt>
-<dd>
-Netherlands win 44.7%; level 28.0%; Morocco win 27.3%<small>The level probability is reallocated to advancement because knockout matches need a winner.</small>
-</dd>
-<dt>
-Extra time / penalties
-</dt>
-<dd>
-Knockout: projected winner means advances after regulation, extra time, or penalties
-</dd>
-<dt>
-Over 2.5 goals
-</dt>
-<dd>
-40.4%<small>Chance the match has at least 3 total goals.</small>
-</dd>
-<dt>
-Both teams to score
-</dt>
-<dd>
-45.8%<small>Chance both teams score at least once.</small>
-</dd>
-<dt>
-Yellow cards
-</dt>
-<dd>
-Card model pending API card history
-</dd>
-<dt>
-Lineups
-</dt>
-<dd>
-Lineups are not available yet.
-</dd>
-<dt>
-Model votes
-</dt>
-<dd>
-OLS: Netherlands; Poisson: Netherlands; Result model: Netherlands
-</dd>
-<dt>
-Venue
-</dt>
-<dd>
-Guadalupe, Mexico
-</dd>
-</dl>
-</details>
-</article>
-<article class="forecast-card forecast-card-upcoming" data-forecast-card="">
-<div class="forecast-card-meta">
-<span class="status-pill status--pcoming">Upcoming</span><span class="time-unavailable">Tue, Jun 30 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Tue, Jun 30 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -1197,7 +715,7 @@ Arlington, United States
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Norway</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>Norway</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -1239,7 +757,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>27.4 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -1300,7 +818,7 @@ Arlington, United States
 </article>
 <article class="forecast-card forecast-card-upcoming" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--pcoming">Upcoming</span><span class="time-unavailable">Tue, Jun 30 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Tue, Jun 30 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -1311,7 +829,7 @@ East Rutherford, United States
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>France</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>France</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -1353,7 +871,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>86.5 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -1414,7 +932,7 @@ East Rutherford, United States
 </article>
 <article class="forecast-card forecast-card-upcoming" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--pcoming">Upcoming</span><span class="time-unavailable">Tue, Jun 30 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Tue, Jun 30 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -1425,7 +943,7 @@ Mexico City, Mexico
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Mexico</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>Mexico</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -1467,7 +985,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>28.8 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -1528,7 +1046,7 @@ Mexico City, Mexico
 </article>
 <article class="forecast-card forecast-card-upcoming" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--pcoming">Upcoming</span><span class="time-unavailable">Wed, Jul 01 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Wed, Jul 01 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -1539,7 +1057,7 @@ Atlanta, United States
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>England</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>England</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -1581,7 +1099,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>78.4 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -1642,7 +1160,7 @@ Atlanta, United States
 </article>
 <article class="forecast-card forecast-card-upcoming" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--pcoming">Upcoming</span><span class="time-unavailable">Wed, Jul 01 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Wed, Jul 01 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -1653,7 +1171,7 @@ Seattle, United States
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Belgium</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>Belgium</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -1695,7 +1213,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>31.7 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -1756,7 +1274,7 @@ Seattle, United States
 </article>
 <article class="forecast-card forecast-card-upcoming" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--pcoming">Upcoming</span><span class="time-unavailable">Wed, Jul 01 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Wed, Jul 01 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -1767,7 +1285,7 @@ Santa Clara, United States
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>United States</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>United States</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -1809,7 +1327,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>71.9 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -1870,7 +1388,7 @@ Santa Clara, United States
 </article>
 <article class="forecast-card forecast-card-upcoming" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--pcoming">Upcoming</span><span class="time-unavailable">Thu, Jul 02 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Thu, Jul 02 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -1881,7 +1399,7 @@ Inglewood, United States
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Spain</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>Spain</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -1923,7 +1441,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>79.8 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -1984,7 +1502,7 @@ Inglewood, United States
 </article>
 <article class="forecast-card forecast-card-upcoming" data-forecast-card="">
 <div class="forecast-card-meta">
-<span class="status-pill status--pcoming">Upcoming</span><span class="time-unavailable">Thu, Jul 02 <small>Kickoff time not posted</small></span>
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Thu, Jul 02 <small>Kickoff time not posted</small></span>
 </div>
 <div class="forecast-teams">
 <h3 class="anchored">
@@ -1995,7 +1513,7 @@ Toronto, Canada
 </p>
 </div>
 <div class="forecast-pick-panel">
-<span>Projected to advance</span><strong>Portugal</strong><small>Prediction strength: Strong. 3 of 3 models agree.</small>
+<span>Projected to advance</span><strong>Portugal</strong><small>Strength: Strong. 3 of 3 models agree.</small>
 </div>
 <p class="forecast-context-note">
 Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
@@ -2037,7 +1555,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 <span>Probability advantage</span><strong>40.8 percentage points</strong>
 </div>
 <div>
-<span>Last forecast refresh</span><strong><span class="time-unavailable">Refresh will update when kickoff time is posted.</span></strong>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
 </div>
 </div>
 <details class="forecast-details">
@@ -2092,6 +1610,462 @@ Venue
 </dt>
 <dd>
 Toronto, Canada
+</dd>
+</dl>
+</details>
+</article>
+<article class="forecast-card forecast-card-upcoming" data-forecast-card="">
+<div class="forecast-card-meta">
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Thu, Jul 02 <small>Kickoff time not posted</small></span>
+</div>
+<div class="forecast-teams">
+<h3 class="anchored">
+Switzerland <span>vs</span> Algeria
+</h3>
+<p>
+Vancouver, Canada
+</p>
+</div>
+<div class="forecast-pick-panel">
+<span>Projected to advance</span><strong>Switzerland</strong><small>Strength: Strong. 3 of 3 models agree.</small>
+</div>
+<p class="forecast-context-note">
+Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
+</p>
+<div class="forecast-probabilities" aria-label="Advance and regulation-level probabilities">
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Switzerland advance</span><strong>69.7%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="home-prob" style="width:69.7%"></span>
+</div>
+</div>
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Level after regulation</span><strong>25.4%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="draw-prob" style="width:25.4%"></span>
+</div>
+</div>
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Algeria advance</span><strong>30.3%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="away-prob" style="width:30.3%"></span>
+</div>
+</div>
+</div>
+<div class="forecast-stat-grid">
+<div>
+<span>Most likely score</span><strong>1-0</strong>
+</div>
+<div>
+<span>Expected goals</span><strong>1.59 - 0.88</strong>
+</div>
+<div>
+<span>Probability advantage</span><strong>39.3 percentage points</strong>
+</div>
+<div>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
+</div>
+</div>
+<details class="forecast-details">
+<summary>
+View details
+</summary>
+<dl>
+<dt>
+90-minute result
+</dt>
+<dd>
+Switzerland win 53.9%; level 25.4%; Algeria win 20.6%<small>The level probability is reallocated to advancement because knockout matches need a winner.</small>
+</dd>
+<dt>
+Extra time / penalties
+</dt>
+<dd>
+Knockout: projected winner means advances after regulation, extra time, or penalties
+</dd>
+<dt>
+Over 2.5 goals
+</dt>
+<dd>
+44.9%<small>Chance the match has at least 3 total goals.</small>
+</dd>
+<dt>
+Both teams to score
+</dt>
+<dd>
+46.7%<small>Chance both teams score at least once.</small>
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Card model pending API card history
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Lineups are not available yet.
+</dd>
+<dt>
+Model votes
+</dt>
+<dd>
+OLS: Switzerland; Poisson: Switzerland; Result model: Switzerland
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Vancouver, Canada
+</dd>
+</dl>
+</details>
+</article>
+<article class="forecast-card forecast-card-upcoming" data-forecast-card="">
+<div class="forecast-card-meta">
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Fri, Jul 03 <small>Kickoff time not posted</small></span>
+</div>
+<div class="forecast-teams">
+<h3 class="anchored">
+Australia <span>vs</span> Egypt
+</h3>
+<p>
+Arlington, United States
+</p>
+</div>
+<div class="forecast-pick-panel">
+<span>Projected to advance</span><strong>Australia</strong><small>Strength: Strong. 3 of 3 models agree.</small>
+</div>
+<p class="forecast-context-note">
+Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
+</p>
+<div class="forecast-probabilities" aria-label="Advance and regulation-level probabilities">
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Australia advance</span><strong>64.7%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="home-prob" style="width:64.7%"></span>
+</div>
+</div>
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Level after regulation</span><strong>26.6%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="draw-prob" style="width:26.6%"></span>
+</div>
+</div>
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Egypt advance</span><strong>35.3%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="away-prob" style="width:35.3%"></span>
+</div>
+</div>
+</div>
+<div class="forecast-stat-grid">
+<div>
+<span>Most likely score</span><strong>1-0</strong>
+</div>
+<div>
+<span>Expected goals</span><strong>1.51 - 0.97</strong>
+</div>
+<div>
+<span>Probability advantage</span><strong>29.4 percentage points</strong>
+</div>
+<div>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
+</div>
+</div>
+<details class="forecast-details">
+<summary>
+View details
+</summary>
+<dl>
+<dt>
+90-minute result
+</dt>
+<dd>
+Australia win 49.5%; level 26.6%; Egypt win 23.9%<small>The level probability is reallocated to advancement because knockout matches need a winner.</small>
+</dd>
+<dt>
+Extra time / penalties
+</dt>
+<dd>
+Knockout: projected winner means advances after regulation, extra time, or penalties
+</dd>
+<dt>
+Over 2.5 goals
+</dt>
+<dd>
+45.0%<small>Chance the match has at least 3 total goals.</small>
+</dd>
+<dt>
+Both teams to score
+</dt>
+<dd>
+48.3%<small>Chance both teams score at least once.</small>
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Card model pending API card history
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Lineups are not available yet.
+</dd>
+<dt>
+Model votes
+</dt>
+<dd>
+OLS: Australia; Poisson: Australia; Result model: Australia
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Arlington, United States
+</dd>
+</dl>
+</details>
+</article>
+<article class="forecast-card forecast-card-upcoming" data-forecast-card="">
+<div class="forecast-card-meta">
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Fri, Jul 03 <small>Kickoff time not posted</small></span>
+</div>
+<div class="forecast-teams">
+<h3 class="anchored">
+Argentina <span>vs</span> Cape Verde
+</h3>
+<p>
+Miami Gardens, United States
+</p>
+</div>
+<div class="forecast-pick-panel">
+<span>Projected to advance</span><strong>Argentina</strong><small>Strength: Strong. 3 of 3 models agree.</small>
+</div>
+<p class="forecast-context-note">
+Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
+</p>
+<div class="forecast-probabilities" aria-label="Advance and regulation-level probabilities">
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Argentina advance</span><strong>96.5%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="home-prob" style="width:96.5%"></span>
+</div>
+</div>
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Level after regulation</span><strong>7.8%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="draw-prob" style="width:7.8%"></span>
+</div>
+</div>
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Cape Verde advance</span><strong>3.5%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="away-prob" style="width:3.5%"></span>
+</div>
+</div>
+</div>
+<div class="forecast-stat-grid">
+<div>
+<span>Most likely score</span><strong>3-0</strong>
+</div>
+<div>
+<span>Expected goals</span><strong>3.25 - 0.42</strong>
+</div>
+<div>
+<span>Probability advantage</span><strong>92.9 percentage points</strong>
+</div>
+<div>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
+</div>
+</div>
+<details class="forecast-details">
+<summary>
+View details
+</summary>
+<dl>
+<dt>
+90-minute result
+</dt>
+<dd>
+Argentina win 89.0%; level 7.8%; Cape Verde win 3.2%<small>The level probability is reallocated to advancement because knockout matches need a winner.</small>
+</dd>
+<dt>
+Extra time / penalties
+</dt>
+<dd>
+Knockout: projected winner means advances after regulation, extra time, or penalties
+</dd>
+<dt>
+Over 2.5 goals
+</dt>
+<dd>
+71.0%<small>Chance the match has at least 3 total goals.</small>
+</dd>
+<dt>
+Both teams to score
+</dt>
+<dd>
+33.2%<small>Chance both teams score at least once.</small>
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Card model pending API card history
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Lineups are not available yet.
+</dd>
+<dt>
+Model votes
+</dt>
+<dd>
+OLS: Argentina; Poisson: Argentina; Result model: Argentina
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Miami Gardens, United States
+</dd>
+</dl>
+</details>
+</article>
+<article class="forecast-card forecast-card-upcoming" data-forecast-card="">
+<div class="forecast-card-meta">
+<span class="status-pill status-upcoming">Upcoming</span><span class="time-unavailable">Fri, Jul 03 <small>Kickoff time not posted</small></span>
+</div>
+<div class="forecast-teams">
+<h3 class="anchored">
+Colombia <span>vs</span> Ghana
+</h3>
+<p>
+Kansas City, United States
+</p>
+</div>
+<div class="forecast-pick-panel">
+<span>Projected to advance</span><strong>Colombia</strong><small>Strength: Strong. 3 of 3 models agree.</small>
+</div>
+<p class="forecast-context-note">
+Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.
+</p>
+<div class="forecast-probabilities" aria-label="Advance and regulation-level probabilities">
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Colombia advance</span><strong>94.2%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="home-prob" style="width:94.2%"></span>
+</div>
+</div>
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Level after regulation</span><strong>10.7%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="draw-prob" style="width:10.7%"></span>
+</div>
+</div>
+<div class="forecast-prob-row">
+<div class="forecast-prob-label">
+<span>Ghana advance</span><strong>5.8%</strong>
+</div>
+<div class="forecast-prob-track" aria-hidden="true">
+<span class="away-prob" style="width:5.8%"></span>
+</div>
+</div>
+</div>
+<div class="forecast-stat-grid">
+<div>
+<span>Most likely score</span><strong>2-0</strong>
+</div>
+<div>
+<span>Expected goals</span><strong>2.89 - 0.51</strong>
+</div>
+<div>
+<span>Probability advantage</span><strong>88.4 percentage points</strong>
+</div>
+<div>
+<span>Forecast generated</span><strong><span class="time-unavailable">Site refresh timestamp shown above.</span></strong>
+</div>
+</div>
+<details class="forecast-details">
+<summary>
+View details
+</summary>
+<dl>
+<dt>
+90-minute result
+</dt>
+<dd>
+Colombia win 84.4%; level 10.7%; Ghana win 4.9%<small>The level probability is reallocated to advancement because knockout matches need a winner.</small>
+</dd>
+<dt>
+Extra time / penalties
+</dt>
+<dd>
+Knockout: projected winner means advances after regulation, extra time, or penalties
+</dd>
+<dt>
+Over 2.5 goals
+</dt>
+<dd>
+66.0%<small>Chance the match has at least 3 total goals.</small>
+</dd>
+<dt>
+Both teams to score
+</dt>
+<dd>
+37.6%<small>Chance both teams score at least once.</small>
+</dd>
+<dt>
+Yellow cards
+</dt>
+<dd>
+Card model pending API card history
+</dd>
+<dt>
+Lineups
+</dt>
+<dd>
+Lineups are not available yet.
+</dd>
+<dt>
+Model votes
+</dt>
+<dd>
+OLS: Colombia; Poisson: Colombia; Result model: Colombia
+</dd>
+<dt>
+Venue
+</dt>
+<dd>
+Kansas City, United States
 </dd>
 </dl>
 </details>
@@ -4657,7 +4631,7 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Built with R, Python, SQL, DuckDB, and Quarto.</p>
+<p>Static forecasts built with R, Python, SQL, DuckDB, and Quarto.</p>
 </div>
   </div>
 </footer>

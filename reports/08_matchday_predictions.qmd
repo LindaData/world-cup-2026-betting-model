@@ -1,7 +1,7 @@
 ---
 title: "Predictions"
 subtitle: "Today, upcoming matches, bracket projections, and post-match model review."
-description: "World Cup 2026 match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket."
+description: "World Cup 2026 static match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket."
 toc: false
 number-sections: false
 code-tools: false
@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 root <- if (file.exists("data/processed/modeling")) "." else ".."
 source(file.path(root, "R", "report_helpers.R"))
 source(file.path(root, "R", "matchday_components.R"))
+source(file.path(root, "R", "static_readability_overrides.R"))
 bundle <- load_matchday_bundle(root)
 board <- bundle$board
 summary <- bundle$summary
@@ -34,8 +35,12 @@ cat('<section class="prediction-status-bar" aria-label="Prediction status">')
 cat('<span class="status-chip">Beta</span>')
 cat('<span class="status-chip">', escape_html(tournament_phase(summary)), '</span>', sep = "")
 cat('<span class="status-chip muted">Last updated ', escape_html(summary_value(summary, "last_refreshed_local")), '</span>', sep = "")
-cat('<span class="status-chip muted">Times shown in your local timezone</span>')
+cat('<span class="status-chip muted">Static GitHub Pages output</span>')
 cat('</section>')
+```
+
+```{r static-note, results="asis"}
+cat(render_static_api_note(summary, compact = TRUE))
 ```
 
 ```{r today, results="asis"}

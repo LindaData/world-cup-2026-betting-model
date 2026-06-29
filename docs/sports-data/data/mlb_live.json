@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-06-29T00:01:21.132722Z",
+  "refreshed_at_utc": "2026-06-29T05:08:20.776426Z",
   "dates_requested": [
     "20260628",
     "20260629",
@@ -363,23 +363,23 @@
       "date_utc": "2026-06-28T23:20Z",
       "name": "New York Yankees at Boston Red Sox",
       "short_name": "NYY @ BOS",
-      "status": "In Progress",
-      "status_short": "Top 3rd",
-      "state": "in",
-      "period": 3,
+      "status": "Final",
+      "status_short": "Final/10",
+      "state": "post",
+      "period": 10,
       "clock": "0:00",
       "home_team": "Boston Red Sox",
       "away_team": "New York Yankees",
-      "home_score": "0",
-      "away_score": "0",
-      "home_record": "35-46",
-      "away_record": "48-34",
+      "home_score": "5",
+      "away_score": "4",
+      "home_record": "36-46",
+      "away_record": "48-35",
       "venue": "Fenway Park",
       "broadcasts": [
         "NBC",
         "Peacock"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815939"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815939/yankees-red-sox"
     },
     {
       "sport": "mlb",
@@ -469,7 +469,7 @@
       "away_team": "Detroit Tigers",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-34",
+      "home_record": "48-35",
       "away_record": "35-49",
       "venue": "Yankee Stadium",
       "broadcasts": [
@@ -520,7 +520,7 @@
       "away_team": "Washington Nationals",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "35-46",
+      "home_record": "36-46",
       "away_record": "43-42",
       "venue": "Fenway Park",
       "broadcasts": [
@@ -795,7 +795,7 @@
       "away_team": "Detroit Tigers",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-34",
+      "home_record": "48-35",
       "away_record": "35-49",
       "venue": "Yankee Stadium",
       "broadcasts": [
@@ -846,7 +846,7 @@
       "away_team": "Washington Nationals",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "35-46",
+      "home_record": "36-46",
       "away_record": "43-42",
       "venue": "Fenway Park",
       "broadcasts": [

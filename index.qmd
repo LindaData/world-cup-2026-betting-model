@@ -1,7 +1,7 @@
 ---
 title: "World Cup 2026 Forecasting Model"
-subtitle: "Match probabilities, projected scores, and tournament paths."
-description: "A prediction-first World Cup 2026 forecasting site with match probabilities, expected scores, tournament bracket projections, and model performance monitoring."
+subtitle: "Static match probabilities, projected scores, and tournament paths."
+description: "A readable static World Cup 2026 forecasting site with match probabilities, expected scores, bracket projections, data freshness notes, and model performance monitoring."
 image: assets/social-preview.svg
 toc: false
 number-sections: false
@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 root <- if (file.exists("data/processed/modeling")) "." else ".."
 source(file.path(root, "R", "report_helpers.R"))
 source(file.path(root, "R", "matchday_components.R"))
+source(file.path(root, "R", "static_readability_overrides.R"))
 bundle <- load_matchday_bundle(root)
 board <- bundle$board
 summary <- bundle$summary
@@ -24,6 +25,10 @@ summary <- bundle$summary
 ```{r hero, results="asis"}
 cat(render_home_hero(summary, board))
 cat(render_quick_status(summary))
+```
+
+```{r static-note, results="asis"}
+cat(render_static_api_note(summary))
 ```
 
 ```{r today, results="asis"}
@@ -35,15 +40,7 @@ cat(render_next_match_section(board))
 ```
 
 ```{r upcoming, results="asis"}
-cat(render_upcoming_section(board, limit = 6))
-```
-
-```{r model-performance, results="asis"}
-cat(render_performance_section(bundle, compact = TRUE))
-```
-
-```{r model-comparison, results="asis"}
-cat(render_challenger_section(bundle, compact = TRUE))
+cat(render_upcoming_section(board, limit = 3))
 ```
 
 ```{r bracket-preview, results="asis"}
@@ -51,7 +48,7 @@ cat('<section id="bracket-preview" class="page-section">')
 cat('<div class="section-heading">')
 cat('<span class="section-kicker">Tournament outlook</span>')
 cat('<h2>Bracket Preview</h2>')
-cat('<p>The bracket starts from projected group seeds and can be explored in more detail on the Predictions page.</p>')
+cat('<p>The bracket starts from projected group seeds. Open the full Predictions page for the larger bracket and performance notes.</p>')
 cat('</div>')
 cat(render_bracket(root, preview = TRUE))
 cat('<p><a class="button-secondary" href="reports/08_matchday_predictions.html#bracket">Open full bracket</a></p>')
