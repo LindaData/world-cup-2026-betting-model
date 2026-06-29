@@ -25,6 +25,7 @@ website:
   description: "Static World Cup 2026 match probabilities, projected scores, bracket projections, and model performance notes."
   favicon: assets/favicon.svg
   navbar:
+    title: "WC 2026 Forecasts"
     background: "#102a43"
     left:
       - href: index.qmd

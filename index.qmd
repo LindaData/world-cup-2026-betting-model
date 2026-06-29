@@ -25,6 +25,7 @@ summary <- bundle$summary
 ```{r hero, results="asis"}
 cat(render_home_hero(summary, board))
 cat(render_quick_status(summary))
+cat(render_forecast_command_center(bundle, board, compact = TRUE, base_path = "reports/08_matchday_predictions.html"))
 ```
 
 ```{r static-note, results="asis"}
