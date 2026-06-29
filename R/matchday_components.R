@@ -587,6 +587,9 @@ render_champion_section <- function(bundle, compact = TRUE) {
       '<strong>', display_percent(row$champion_probability, 1), '</strong>',
       '<span>Champion probability</span>',
       '</div>',
+      '<p class="champion-uncertainty">Simulation noise about +/- ',
+      display_percent(row$champion_probability_95pct_moe, 1),
+      '</p>',
       '<div class="champion-bar" aria-hidden="true"><span style="width:', fmt_number(width, 1), '%"></span></div>',
       '<dl>',
       '<div><dt>Reach final</dt><dd>', display_percent(row$final_probability, 1), '</dd></div>',
@@ -599,6 +602,12 @@ render_champion_section <- function(bundle, compact = TRUE) {
 
   simulated_at <- metadata_value(metadata, "simulated_at_utc")
   simulations <- metadata_value(metadata, "simulations")
+  simulations_label <- fmt_integer(safe_number(simulations))
+  if (is.na(simulations_label)) {
+    simulations_label <- simulations
+  }
+  top_moe <- metadata_value(metadata, "top_champion_95pct_moe")
+  simulation_method <- metadata_value(metadata, "simulation_method")
   fallback <- metadata_value(metadata, "later_round_fallback")
 
   table_html <- ""
@@ -606,12 +615,13 @@ render_champion_section <- function(bundle, compact = TRUE) {
     table_data <- top |>
       dplyr::mutate(
         champion_probability = fmt_percent(champion_probability, 1),
+        champion_probability_95pct_moe = fmt_percent(champion_probability_95pct_moe, 1),
         final_probability = fmt_percent(final_probability, 1),
         semifinal_probability = fmt_percent(semifinal_probability, 1),
         quarterfinal_probability = fmt_percent(quarterfinal_probability, 1)
       ) |>
-      dplyr::select(rank, team, group, champion_probability, final_probability, semifinal_probability, quarterfinal_probability)
-    names(table_data) <- c("Rank", "Team", "Group", "Champion", "Final", "Semifinal", "Quarterfinal")
+      dplyr::select(rank, team, group, champion_probability, champion_probability_95pct_moe, final_probability, semifinal_probability, quarterfinal_probability)
+    names(table_data) <- c("Rank", "Team", "Group", "Champion", "Simulation Noise", "Final", "Semifinal", "Quarterfinal")
     table_html <- paste0(
       '<div class="technical-table-wrap">',
       knitr::kable(
@@ -630,14 +640,16 @@ render_champion_section <- function(bundle, compact = TRUE) {
     '<div class="section-heading">',
     '<span class="section-kicker">Tournament outlook</span>',
     '<h2>Champion Outlook</h2>',
-    '<p>These probabilities simulate the remaining tournament from the current match forecasts. Completed group results are locked in; knockout matches use available fixture-pair forecasts, then a strength-based fallback for later-round pairings.</p>',
+    '<p>These probabilities simulate the remaining tournament from the current match forecasts. Completed group results are locked in; knockout matches use available fixture-pair forecasts, then a strength-based fallback for later-round pairings. More simulations reduce random simulation noise; historical train/test validation is what measures model accuracy.</p>',
     '</div>',
     '<div class="champion-meta-row">',
-    '<span class="status-chip">', escape_html(simulations), ' simulations</span>',
+    '<span class="status-chip">', escape_html(simulations_label), ' simulations</span>',
+    '<span class="status-chip muted">Top estimate +/- ', display_percent(top_moe, 1), '</span>',
     '<span class="status-chip muted">Simulated ', time_tag(simulated_at, "js-local-time", "Simulation time unavailable"), '</span>',
     '</div>',
     '<div class="champion-grid">', paste(cards, collapse = ""), '</div>',
     table_html,
+    '<p class="section-note">Simulation method: ', escape_html(gsub("_", " ", simulation_method)), '.</p>',
     '<p class="section-note">Later-round fallback: ', escape_html(fallback), '.</p>',
     '</section>'
   )

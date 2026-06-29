@@ -1948,6 +1948,13 @@ pre code {
   line-height: 1;
 }
 
+.champion-uncertainty {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
 .champion-bar {
   height: 10px;
   overflow: hidden;

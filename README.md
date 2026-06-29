@@ -36,9 +36,9 @@ The public forecast currently combines:
 - **Goals forecast:** a Poisson goals model used to estimate expected goals and scoreline probabilities.
 - **OLS benchmark:** a simple linear goals model kept as an interpretable baseline.
 - **Similar match model:** a KNN-style challenger that compares fixtures with similar historical team-match rows.
-- **Champion simulation:** a tournament-path layer that reuses current fixture probabilities and strength signals to estimate title odds.
+- **Champion simulation:** a tournament-path layer that reuses current fixture probabilities and strength signals to estimate title odds. It defaults to 50,000 simulations and reports Monte Carlo uncertainty.
 
-The site presents consumer-facing predictions first. Technical diagnostics remain available under Methodology.
+The match models are trained on historical data and evaluated on held-out test splits. The champion simulation is downstream of those match forecasts: more simulations reduce simulation noise, while train/test validation measures predictive quality. The site presents consumer-facing predictions first. Technical diagnostics remain available under Methodology.
 
 ## Data Sources
 

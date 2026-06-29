@@ -297,35 +297,146 @@ increment_counts <- function(counts, round_name, teams_in_round) {
   counts
 }
 
-n_simulations <- suppressWarnings(as.integer(Sys.getenv("WC_CHAMPION_SIMS", "5000")))
-if (!is.finite(n_simulations) || n_simulations < 100) {
-  n_simulations <- 5000L
+records_to_pairs <- function(round32) {
+  team_index <- seq_len(nrow(teams))
+  names(team_index) <- team_key(teams$team)
+  do.call(
+    rbind,
+    lapply(round32, function(match) {
+      c(
+        if (is.null(match$team_a)) NA_integer_ else unname(team_index[[match$team_a$team_key]]),
+        if (is.null(match$team_b)) NA_integer_ else unname(team_index[[match$team_b$team_key]])
+      )
+    })
+  )
+}
+
+probability_matrix <- function() {
+  n_teams <- nrow(teams)
+  p <- matrix(0.5, nrow = n_teams, ncol = n_teams)
+  team_records <- lapply(seq_len(n_teams), function(i) {
+    list(
+      team = teams$team[[i]],
+      team_key = teams$team_key[[i]],
+      group = teams$group[[i]],
+      seed = NA_character_,
+      elo = teams$elo[[i]]
+    )
+  })
+  for (i in seq_len(n_teams)) {
+    for (j in seq_len(n_teams)) {
+      if (i != j) {
+        p[i, j] <- pair_probability(team_records[[i]], team_records[[j]])
+      }
+    }
+  }
+  p
+}
+
+advance_vector <- function(team_a, team_b, p, n_simulations) {
+  winner <- rep(NA_integer_, n_simulations)
+  a_missing <- is.na(team_a)
+  b_missing <- is.na(team_b)
+  winner[a_missing & !b_missing] <- team_b[a_missing & !b_missing]
+  winner[b_missing & !a_missing] <- team_a[b_missing & !a_missing]
+
+  both_present <- !a_missing & !b_missing
+  if (any(both_present)) {
+    probs <- p[cbind(team_a[both_present], team_b[both_present])]
+    winner[both_present] <- ifelse(
+      stats::runif(sum(both_present)) <= probs,
+      team_a[both_present],
+      team_b[both_present]
+    )
+  }
+  winner
+}
+
+advance_round_matrix <- function(round_matrix, p, n_simulations) {
+  next_round <- matrix(
+    NA_integer_,
+    nrow = n_simulations,
+    ncol = ncol(round_matrix) / 2
+  )
+  for (match_id in seq_len(ncol(next_round))) {
+    next_round[, match_id] <- advance_vector(
+      round_matrix[, (2 * match_id) - 1],
+      round_matrix[, 2 * match_id],
+      p,
+      n_simulations
+    )
+  }
+  next_round
+}
+
+simulate_static_knockout_counts <- function(round32, n_simulations) {
+  n_teams <- nrow(teams)
+  round32_pairs <- records_to_pairs(round32)
+  p <- probability_matrix()
+
+  round_of_16_matrix <- matrix(
+    NA_integer_,
+    nrow = n_simulations,
+    ncol = nrow(round32_pairs)
+  )
+  for (match_id in seq_len(nrow(round32_pairs))) {
+    round_of_16_matrix[, match_id] <- advance_vector(
+      rep(round32_pairs[match_id, 1], n_simulations),
+      rep(round32_pairs[match_id, 2], n_simulations),
+      p,
+      n_simulations
+    )
+  }
+
+  quarterfinal_matrix <- advance_round_matrix(round_of_16_matrix, p, n_simulations)
+  semifinal_matrix <- advance_round_matrix(quarterfinal_matrix, p, n_simulations)
+  final_matrix <- advance_round_matrix(semifinal_matrix, p, n_simulations)
+  champion_matrix <- advance_round_matrix(final_matrix, p, n_simulations)
+
+  data.frame(
+    team = teams$team,
+    group = teams$group,
+    simulations = n_simulations,
+    round_of_32 = as.integer(tabulate(stats::na.omit(as.vector(round32_pairs)), nbins = n_teams) * n_simulations),
+    round_of_16 = as.integer(tabulate(stats::na.omit(as.vector(round_of_16_matrix)), nbins = n_teams)),
+    quarterfinal = as.integer(tabulate(stats::na.omit(as.vector(quarterfinal_matrix)), nbins = n_teams)),
+    semifinal = as.integer(tabulate(stats::na.omit(as.vector(semifinal_matrix)), nbins = n_teams)),
+    final = as.integer(tabulate(stats::na.omit(as.vector(final_matrix)), nbins = n_teams)),
+    champion = as.integer(tabulate(stats::na.omit(as.vector(champion_matrix)), nbins = n_teams)),
+    stringsAsFactors = FALSE
+  )
+}
+
+n_simulations <- suppressWarnings(as.integer(Sys.getenv("WC_CHAMPION_SIMS", "50000")))
+if (!is.finite(n_simulations) || n_simulations < 1000) {
+  n_simulations <- 50000L
 }
 
 set.seed(20260629)
 counts <- empty_counts()
 all_group_matches_complete <- all(!is.na(group_matches$home_score) & !is.na(group_matches$away_score))
 static_round32 <- NULL
+simulation_method <- "group_and_knockout_loop"
 if (all_group_matches_complete) {
   static_round32 <- resolve_slots(simulate_group_table())
+  counts <- simulate_static_knockout_counts(static_round32, n_simulations)
+  simulation_method <- "vectorized_static_group_knockout"
 }
 
-for (simulation_id in seq_len(n_simulations)) {
-  if (all_group_matches_complete) {
-    round32 <- static_round32
-  } else {
+if (!all_group_matches_complete) {
+  for (simulation_id in seq_len(n_simulations)) {
     standings <- simulate_group_table()
     round32 <- resolve_slots(standings)
-  }
-  knockout <- simulate_knockout(round32)
+    knockout <- simulate_knockout(round32)
 
-  counts$simulations <- counts$simulations + 1L
-  counts <- increment_counts(counts, "round_of_32", unlist(round32, recursive = FALSE))
-  counts <- increment_counts(counts, "round_of_16", knockout$round_of_16)
-  counts <- increment_counts(counts, "quarterfinal", knockout$quarterfinal)
-  counts <- increment_counts(counts, "semifinal", knockout$semifinal)
-  counts <- increment_counts(counts, "final", knockout$final)
-  counts <- increment_counts(counts, "champion", knockout$champion)
+    counts$simulations <- counts$simulations + 1L
+    counts <- increment_counts(counts, "round_of_32", unlist(round32, recursive = FALSE))
+    counts <- increment_counts(counts, "round_of_16", knockout$round_of_16)
+    counts <- increment_counts(counts, "quarterfinal", knockout$quarterfinal)
+    counts <- increment_counts(counts, "semifinal", knockout$semifinal)
+    counts <- increment_counts(counts, "final", knockout$final)
+    counts <- increment_counts(counts, "champion", knockout$champion)
+  }
 }
 
 summary <- counts |>
@@ -335,29 +446,37 @@ summary <- counts |>
     quarterfinal_probability = quarterfinal / simulations,
     semifinal_probability = semifinal / simulations,
     final_probability = final / simulations,
-    champion_probability = champion / simulations
+    champion_probability = champion / simulations,
+    champion_probability_se = sqrt(champion_probability * (1 - champion_probability) / simulations),
+    champion_probability_95pct_moe = 1.96 * champion_probability_se
   ) |>
   dplyr::arrange(dplyr::desc(champion_probability), dplyr::desc(final_probability), team)
+
+top_champion_moe <- if (nrow(summary) > 0) summary$champion_probability_95pct_moe[[1]] else NA_real_
 
 metadata <- data.frame(
   metric = c(
     "simulated_at_utc",
     "simulations",
+    "simulation_method",
     "teams",
     "group_matches",
     "completed_group_matches",
     "group_seeds_cached",
     "knockout_match_predictions_available",
+    "top_champion_95pct_moe",
     "later_round_fallback"
   ),
   value = c(
     format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
     n_simulations,
+    simulation_method,
     nrow(teams),
     nrow(group_matches),
     sum(!is.na(group_matches$home_score) & !is.na(group_matches$away_score)),
     all_group_matches_complete,
     nrow(knockout_lookup),
+    top_champion_moe,
     "Elo-style strength probability when exact fixture-pair forecasts are not available"
   ),
   stringsAsFactors = FALSE

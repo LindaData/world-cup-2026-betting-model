@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-29T03:05:19.938322Z.
+Last refreshed: 2026-06-29T17:39:56.429939Z.
 
 Refresh profile: `local-rebuild`.
 
@@ -91,18 +91,19 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Build processed public CSVs | ok | 5.847 |
-| Build DuckDB | ok | 4.904 |
-| Export DuckDB metadata | ok | 2.72 |
-| Fit goals model | ok | 3.987 |
-| Fit Poisson goals model | ok | 6.544 |
-| Fit ordinal result model | ok | 7.63 |
-| Fit KNN similarity model | ok | 16.061 |
-| Fit stepwise and tree challengers | ok | 21.212 |
-| Run regression diagnostics | ok | 4.232 |
-| Score 2026 fixtures | ok | 2.996 |
-| Build matchday prediction board | ok | 2.73 |
-| Render R Markdown reports | ok | 71.746 |
+| Build processed public CSVs | ok | 23.723 |
+| Build DuckDB | ok | 15.275 |
+| Export DuckDB metadata | ok | 10.959 |
+| Fit goals model | ok | 15.179 |
+| Fit Poisson goals model | ok | 21.376 |
+| Fit ordinal result model | ok | 22.348 |
+| Fit KNN similarity model | ok | 47.64 |
+| Fit stepwise and tree challengers | ok | 71.275 |
+| Run regression diagnostics | ok | 26.174 |
+| Score 2026 fixtures | ok | 13.945 |
+| Build matchday prediction board | ok | 10.212 |
+| Simulate World Cup champion probabilities | ok | 11.752 |
+| Render R Markdown reports | ok | 256.503 |
 
 ## Public Artifacts Updated
 
