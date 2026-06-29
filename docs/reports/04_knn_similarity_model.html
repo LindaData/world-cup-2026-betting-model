@@ -126,7 +126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">World Cup 2026 Forecasting Model</span>
+    <span class="navbar-title">WC 2026 Forecasts</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -712,12 +712,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     var championNode = document.getElementById("model-bracket-champion");
 
     var seedWatch = document.getElementById("group-seed-watch");
+
     var thirdWatch = document.getElementById("third-place-watch");
+
     var statusNode = document.getElementById("model-bracket-status");
+
     var tabsNode = document.querySelector(".bracket-tabs");
+
     var modelPathPanel = document.getElementById("model-path-panel");
+
     var modelPathSummary = modelPathPanel ? modelPathPanel.querySelector(".model-path-summary") : null;
+
     var modelPathRounds = modelPathPanel ? modelPathPanel.querySelector(".model-path-rounds") : null;
+
 
 
     if (!dataNode || !root || !championNode) {
@@ -735,18 +742,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     var shortRoundNames = ["R32", "R16", "QF", "SF", "Final"];
 
     var picks = {};
+
     var activeRound = 0;
+
     var fullView = !window.matchMedia("(max-width: 700px)").matches;
+
     var modelPathOpen = false;
 
+
+
     function escapeHtml(value) {
+
       return String(value == null ? "" : value)
+
         .replace(/&/g, "&amp;")
+
         .replace(/</g, "&lt;")
+
         .replace(/>/g, "&gt;")
+
         .replace(/"/g, "&quot;")
+
         .replace(/'/g, "&#39;");
+
     }
+
 
 
     function announce(text) {
@@ -822,8 +842,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
     function modelWinner(match) {
+
       if (!match.teamA && !match.teamB) {
+
         return null;
+
       }
 
       if (match.teamA && !match.teamB) {
@@ -837,31 +860,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         return match.teamB;
 
       }
+
       return advanceProbability(match.teamA, match.teamB) >= 0.5 ? match.teamA : match.teamB;
+
     }
+
+
 
     function winnerProbability(match, winner) {
+
       if (!winner) {
+
         return null;
+
       }
+
       if (match.teamA && !match.teamB && winner.name === match.teamA.name) {
+
         return 1;
+
       }
+
       if (!match.teamA && match.teamB && winner.name === match.teamB.name) {
+
         return 1;
+
       }
+
       if (!match.teamA || !match.teamB) {
+
         return null;
+
       }
+
       var pA = advanceProbability(match.teamA, match.teamB);
+
       return winner.name === match.teamA.name ? pA : 1 - pA;
+
     }
 
+
+
     function matchupText(match) {
+
       var teamA = match.teamA ? match.teamA.name : match.slotA;
+
       var teamB = match.teamB ? match.teamB.name : match.slotB;
+
       return teamA + " vs " + teamB;
+
     }
+
 
 
     function clearLaterPicks(roundIndex) {
@@ -883,8 +932,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
     function buildRounds(sourcePicks) {
+
       var activePicks = sourcePicks || picks;
+
       var rounds = [data.round32.map(cloneMatch)];
+
 
 
       for (var roundIndex = 0; roundIndex < 4; roundIndex += 1) {
@@ -912,14 +964,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         currentRound.forEach(function (match, matchIndex) {
 
           var key = roundIndex + "-" + matchIndex;
+
           var validNames = [match.teamA && match.teamA.name, match.teamB && match.teamB.name].filter(Boolean);
+
           if (activePicks === picks && picks[key] && validNames.indexOf(picks[key]) === -1) {
+
             delete picks[key];
+
           }
+
           var pickedName = activePicks[key];
+
           var winner = pickedName
+
             ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
+
             : modelWinner(match);
+
           var nextMatch = nextRound[Math.floor(matchIndex / 2)];
 
           if (matchIndex % 2 === 0) {
@@ -941,47 +1002,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
 
 
+
       return rounds;
+
     }
+
+
 
     function renderModelPathPanel() {
+
       if (!modelPathPanel || !modelPathSummary || !modelPathRounds) {
+
         return;
+
       }
+
+
 
       modelPathPanel.hidden = !modelPathOpen;
+
       modelPathPanel.classList.toggle("is-visible", modelPathOpen);
+
       document.querySelectorAll("[data-bracket-action='model']").forEach(function (button) {
+
         button.textContent = modelPathOpen ? "Hide model path" : "Show model path";
+
         button.setAttribute("aria-expanded", String(modelPathOpen));
+
       });
 
+
+
       if (!modelPathOpen) {
+
         return;
+
       }
 
+
+
       var modelRounds = buildRounds({});
+
       var finalMatch = modelRounds[modelRounds.length - 1][0];
+
       var champion = modelWinner(finalMatch);
+
       var championProb = winnerProbability(finalMatch, champion);
+
       modelPathSummary.innerHTML = champion
+
         ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>The path below follows the model pick in every unresolved matchup. Group seeds reflect completed results plus remaining-match forecasts; knockout picks update after each refresh.</p></div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
+
         : "<div><span class='section-kicker'>Model path</span><h3>Model path is pending</h3><p>The bracket needs at least one projected finalist before a full path can be shown.</p></div>";
 
+
+
       modelPathRounds.innerHTML = modelRounds.map(function (round, roundIndex) {
+
         var rows = round.map(function (match) {
+
           var winner = modelWinner(match);
+
           var probability = winnerProbability(match, winner);
+
           var stateLabel = roundIndex === 0 ? "Current forecast" : "Projected";
+
           return "<li>" +
+
             "<span class='model-path-match'>" + escapeHtml(matchupText(match)) + "</span>" +
+
             "<strong>" + escapeHtml(winner ? winner.name : "Pending seed") + "</strong>" +
+
             "<small>" + stateLabel + " | advance probability " + (formatPct(probability) || "pending") + "</small>" +
+
             "</li>";
+
         }).join("");
+
         return "<section class='model-path-round'><h4>" + escapeHtml(roundNames[roundIndex]) + "</h4><ol>" + rows + "</ol></section>";
+
       }).join("");
+
     }
+
 
 
     function teamButton(team, slot, probability, selected, modelSelected, userSelected, roundIndex, matchIndex) {
@@ -1013,18 +1116,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
 
       if (!team) {
+
         button.classList.add("empty");
+
         button.disabled = true;
+
         button.innerHTML = "<span class='team-name'>" + escapeHtml(slot) + "</span><small>Seed unresolved</small>";
+
         return button;
+
       }
 
 
+
       var label = userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender");
+
       button.innerHTML =
+
         "<span class='team-name'>" + escapeHtml(team.name) + "</span>" +
+
         "<span class='team-meta'>" + escapeHtml(team.seed || "Seed") + " | " + formatPct(probability) + "</span>" +
+
         "<small class='pick-label'>" + escapeHtml(label) + "</small>";
+
       button.setAttribute("aria-label", "Advance " + team.name + " from " + roundNames[roundIndex]);
 
       button.addEventListener("click", function () {
@@ -1136,20 +1250,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         seedWatch.innerHTML = Object.keys(seedsByGroup).sort().map(function (group) {
 
           var rows = seedsByGroup[group].slice(0, 2).map(function (row) {
+
             return "<span><strong>" + escapeHtml(row.seed) + "</strong>" + escapeHtml(row.team) + "</span>";
+
           }).join("");
+
           return "<div class='seed-group'><b>Group " + escapeHtml(group) + "</b>" + rows + "</div>";
+
         }).join("");
+
       }
 
+
+
       if (thirdWatch && data.thirdWatch) {
+
         thirdWatch.innerHTML = data.thirdWatch.map(function (row) {
+
           return "<div class='third-row" + (row.qualifies ? " qualifies" : "") + "'>" +
+
             "<span>" + escapeHtml(row.third_rank) + ". " + escapeHtml(row.team) + "</span>" +
+
             "<strong>" + escapeHtml(row.points) + " pts</strong>" +
+
             "</div>" +
+
             (row.third_rank === 8 ? "<div class='third-cut'>Cut line</div>" : "");
+
         }).join("");
+
       }
 
     }
@@ -1253,13 +1382,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         : modelWinner(finalMatch);
 
       championNode.innerHTML = champion
+
         ? "<span>Projected Champion</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
+
         : "";
+
       renderTabs();
+
       renderModelPathPanel();
+
       document.querySelectorAll("[data-bracket-action='toggle-view']").forEach(function (button) {
+
         button.textContent = fullView ? "Round view" : "Full bracket";
+
         button.setAttribute("aria-pressed", String(fullView));
+
       });
 
     }
@@ -1273,35 +1410,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         var action = button.getAttribute("data-bracket-action");
 
         if (action === "toggle-view") {
+
           fullView = !fullView;
+
           render();
+
           return;
+
         }
+
         if (action === "model") {
+
           modelPathOpen = !modelPathOpen;
+
           if (modelPathOpen) {
+
             Object.keys(picks).forEach(function (key) {
+
               delete picks[key];
+
             });
+
             announce("Showing the model path through the bracket.");
+
           } else {
+
             announce("Model path hidden.");
+
           }
+
           render();
+
           if (modelPathOpen && modelPathPanel) {
+
             modelPathPanel.focus({ preventScroll: true });
+
             modelPathPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
           }
+
           return;
+
         }
+
         Object.keys(picks).forEach(function (key) {
+
           delete picks[key];
+
         });
+
         modelPathOpen = false;
+
         announce("Bracket picks cleared.");
+
         render();
+
       });
+
     });
+
 
 
     renderSeeds();

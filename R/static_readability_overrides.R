@@ -61,15 +61,15 @@ refresh_time_display <- function(row) {
 render_static_api_note <- function(summary, compact = FALSE) {
   updated <- summary_value(summary, "last_refreshed_local", "Not available yet")
   body <- if (compact) {
-    "Forecasts are generated offline from prepared model files and published as a fast static report."
+    "Forecasts refresh from the prepared model outputs and publish to this page for quick review."
   } else {
-    "Forecasts are generated offline from prepared model files and published as a static report. The public page shows outputs and documentation without exposing private feeds or keys."
+    "Forecasts refresh from the prepared model outputs and publish here as a fast, shareable board. The public page shows results and documentation while keeping private feeds out of the site."
   }
 
   paste0(
     '<section class="page-section static-note-section">',
-    '<div class="performance-note">',
-    '<strong>Static-site setup:</strong> ', escape_html(body),
+    '<div class="freshness-note">',
+    '<strong>Forecast freshness:</strong> ', escape_html(body),
     ' <span class="section-note">Last generated: ', escape_html(updated), '.</span>',
     '</div>',
     '</section>'
@@ -207,7 +207,7 @@ render_home_hero <- function(summary, board) {
       '<div class="hero-pick">',
       '<span>', escape_html(pick_label), '</span>',
       '<strong>', escape_html(safe_text(row$predicted_winner, "No model pick yet")), '</strong>',
-      '<small>', escape_html(prediction_strength(row)), ' strength · ', escape_html(probability_edge(row)), ' edge</small>',
+      '<small>', escape_html(prediction_strength(row)), ' strength &middot; ', escape_html(probability_edge(row)), ' edge</small>',
       '</div>',
       '<div class="hero-prob-list">',
       '<div><span>', escape_html(home_label), '</span><strong>', display_percent(home_prob, 1), '</strong></div>',
@@ -277,6 +277,78 @@ render_quick_status <- function(summary) {
   paste0(
     '<section class="quick-read-section" aria-label="Forecast board summary">',
     paste(card_html, collapse = ""),
+    '</section>'
+  )
+}
+
+render_forecast_command_center <- function(bundle, board, compact = FALSE, base_path = "") {
+  champion <- bundle$champion_summary
+  accuracy <- bundle$accuracy
+  today <- today_board(board)
+  upcoming <- future_board(board)
+
+  next_match_html <- if (nrow(upcoming) > 0) {
+    row <- upcoming[1, ]
+    paste0(
+      '<span>Next match</span>',
+      '<strong>', escape_html(safe_text(row$home_team, "Home team")), ' vs ', escape_html(safe_text(row$away_team, "Away team")), '</strong>',
+      '<small>', escape_html(safe_text(row$predicted_winner, "No model pick yet")), ' is the current pick.</small>'
+    )
+  } else {
+    '<span>Next match</span><strong>No future match posted</strong><small>The board updates after the next refresh.</small>'
+  }
+
+  champion_html <- if (!is.null(champion) && nrow(champion) > 0) {
+    top <- champion |>
+      dplyr::arrange(dplyr::desc(.data$champion_probability)) |>
+      dplyr::slice_head(n = 1)
+    paste0(
+      '<span>Tournament favorite</span>',
+      '<strong>', escape_html(top$team[[1]]), '</strong>',
+      '<small>', display_percent(top$champion_probability[[1]], 1), ' champion probability across ',
+      escape_html(summary_value(bundle$champion_metadata, "simulations", "simulations")), ' simulations.</small>'
+    )
+  } else {
+    '<span>Tournament favorite</span><strong>Pending simulation</strong><small>Champion projections appear after simulation output is available.</small>'
+  }
+
+  accuracy_html <- if (!is.null(accuracy) && nrow(accuracy) > 0) {
+    ensemble <- accuracy |>
+      dplyr::filter(.data$model == "Ensemble") |>
+      dplyr::slice_head(n = 1)
+    if (nrow(ensemble) == 0) {
+      ensemble <- accuracy |> dplyr::slice_head(n = 1)
+    }
+    paste0(
+      '<span>Model reliability</span>',
+      '<strong>', display_percent(ensemble$outcome_accuracy[[1]], 1), '</strong>',
+      '<small>Correct winner/result picks over ', escape_html(ensemble$completed_matches[[1]]), ' completed matches.</small>'
+    )
+  } else {
+    '<span>Model reliability</span><strong>Pending results</strong><small>Accuracy appears after completed matches are scored.</small>'
+  }
+
+  today_label <- if (nrow(today) > 0) {
+    paste0(nrow(today), " match", if (nrow(today) == 1) "" else "es", " today")
+  } else {
+    "No matches today"
+  }
+
+  section_class <- if (compact) "decision-panel decision-panel-compact" else "decision-panel"
+  href <- function(anchor) {
+    paste0(base_path, "#", anchor)
+  }
+  paste0(
+    '<section class="', section_class, '" aria-label="Forecast command center">',
+    '<div class="decision-card decision-card-primary">',
+    '<span>Start here</span>',
+    '<strong>', escape_html(today_label), '</strong>',
+    '<small>Jump straight to the current board, then use the bracket to test paths.</small>',
+    '<a href="', escape_html(href("today")), '">Review today</a>',
+    '</div>',
+    '<div class="decision-card">', next_match_html, '<a href="', escape_html(href("next-match")), '">Open next forecast</a></div>',
+    '<div class="decision-card">', champion_html, '<a href="', escape_html(href("champion-outlook")), '">See champion outlook</a></div>',
+    '<div class="decision-card">', accuracy_html, '<a href="', escape_html(href("model-performance")), '">Check accuracy</a></div>',
     '</section>'
   )
 }
