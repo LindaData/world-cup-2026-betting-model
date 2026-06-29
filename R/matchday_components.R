@@ -174,7 +174,10 @@ load_matchday_bundle <- function(root) {
     ordinal_metrics = read_csv_if_exists(file.path(model_dir, "result_ordinal_model_metrics.csv")),
     goals_metrics = read_csv_if_exists(file.path(model_dir, "goals_linear_model_metrics.csv")),
     poisson_metrics = read_csv_if_exists(file.path(model_dir, "goals_poisson_model_metrics.csv")),
-    data_sources = read_csv_if_exists(file.path(model_dir, "matchday_prediction_data_sources.csv"))
+    data_sources = read_csv_if_exists(file.path(model_dir, "matchday_prediction_data_sources.csv")),
+    challenger_metrics = read_csv_if_exists(file.path(model_dir, "model_challenger_metrics.csv")),
+    challenger_importance = read_csv_if_exists(file.path(model_dir, "model_challenger_feature_importance.csv")),
+    challenger_status = read_csv_if_exists(file.path(model_dir, "model_challenger_status.csv"))
   )
 }
 
@@ -581,6 +584,115 @@ render_methodology_short <- function() {
     '<div><strong>Similarity check</strong><span>Compares fixtures with similar historical matches as a challenger model.</span></div>',
     '</div>',
     '<p class="responsible-note">This is a forecasting and research project. It does not guarantee accuracy, and it should not be treated as financial advice.</p>',
+    '</section>'
+  )
+}
+
+render_challenger_section <- function(bundle, compact = TRUE) {
+  challengers <- bundle$challenger_metrics
+  importance <- bundle$challenger_importance
+  status <- bundle$challenger_status
+
+  if (nrow(challengers) == 0) {
+    return(
+      paste0(
+        '<section id="model-comparison" class="page-section model-comparison-section">',
+        '<div class="empty-state"><strong>Model challenger results will appear after the next full local model run.</strong></div>',
+        '</section>'
+      )
+    )
+  }
+
+  challengers <- challengers |>
+    dplyr::mutate(
+      rank = dplyr::dense_rank(test_rmse),
+      rmse_label = paste0(fmt_number(test_rmse, 3), " RMSE"),
+      mae_label = paste0(fmt_number(test_mae, 3), " MAE"),
+      width = ifelse(is.finite(test_rmse), 100 * min(test_rmse, na.rm = TRUE) / test_rmse, 0),
+      status_text = dplyr::case_when(
+        status == "fit" ~ "Fit locally",
+        TRUE ~ tools::toTitleCase(gsub("_", " ", status))
+      )
+    ) |>
+    dplyr::arrange(test_rmse)
+
+  model_cards <- vapply(seq_len(nrow(challengers)), function(i) {
+    row <- challengers[i, ]
+    paste0(
+      '<article class="model-score-card', ifelse(row$rank[[1]] == 1, ' is-leader', ''), '">',
+      '<div class="model-score-top">',
+      '<span>', escape_html(row$model_family[[1]]), '</span>',
+      '<strong>#', escape_html(row$rank[[1]]), '</strong>',
+      '</div>',
+      '<h3>', escape_html(row$model[[1]]), '</h3>',
+      '<div class="model-score-main">', escape_html(row$rmse_label[[1]]), '</div>',
+      '<div class="score-track" aria-hidden="true"><span style="width:', fmt_number(row$width[[1]], 1), '%"></span></div>',
+      '<dl>',
+      '<div><dt>Average miss</dt><dd>', escape_html(row$mae_label[[1]]), '</dd></div>',
+      '<div><dt>Training rows</dt><dd>', escape_html(fmt_integer(row$rows_train[[1]])), '</dd></div>',
+      '<div><dt>Status</dt><dd>', escape_html(row$status_text[[1]]), '</dd></div>',
+      '</dl>',
+      '<p>', escape_html(row$note[[1]]), '</p>',
+      '</article>'
+    )
+  }, character(1))
+
+  status_note <- ""
+  if (nrow(status) > 0) {
+    status_note <- paste0(
+      '<div class="model-status-strip">',
+      paste(vapply(seq_len(nrow(status)), function(i) {
+        row <- status[i, ]
+        paste0(
+          '<span><strong>', escape_html(row$component[[1]]), ':</strong> ',
+          escape_html(gsub("_", " ", row$status[[1]])), '</span>'
+        )
+      }, character(1)), collapse = ""),
+      '</div>'
+    )
+  }
+
+  importance_html <- ""
+  if (!compact && nrow(importance) > 0) {
+    top_importance <- importance |>
+      dplyr::group_by(model) |>
+      dplyr::slice_max(importance_scaled, n = 5, with_ties = FALSE) |>
+      dplyr::ungroup() |>
+      dplyr::arrange(model, dplyr::desc(importance_scaled))
+
+    bars <- vapply(seq_len(nrow(top_importance)), function(i) {
+      row <- top_importance[i, ]
+      paste0(
+        '<div class="feature-importance-row">',
+        '<span>', escape_html(row$model[[1]]), '</span>',
+        '<strong>', escape_html(row$feature[[1]]), '</strong>',
+        '<i aria-hidden="true"><b style="width:', fmt_number(100 * row$importance_scaled[[1]], 1), '%"></b></i>',
+        '</div>'
+      )
+    }, character(1))
+
+    importance_html <- paste0(
+      '<div class="feature-importance-panel">',
+      '<h3>What The Challengers Used Most</h3>',
+      '<p>Scaled importance is shown within each model, so the top feature for a model is 100%.</p>',
+      paste(bars, collapse = ""),
+      '</div>'
+    )
+  }
+
+  paste0(
+    '<section id="model-comparison" class="page-section model-comparison-section">',
+    '<div class="section-heading">',
+    '<span class="section-kicker">Model lab</span>',
+    '<h2>Challenger Model Comparison</h2>',
+    '<p>Stepwise regression and tree-based models run beside the production forecast. Lower RMSE means the model missed team goals by less on held-out rows.</p>',
+    '</div>',
+    '<div class="model-score-grid">',
+    paste(model_cards, collapse = ""),
+    '</div>',
+    status_note,
+    importance_html,
+    '<p class="section-note">These challengers are not automatically promoted into the public pick. They need stable backtesting and calibration before replacing the current forecast ensemble.</p>',
     '</section>'
   )
 }

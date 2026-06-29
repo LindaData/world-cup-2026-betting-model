@@ -58,6 +58,7 @@ cat(render_bracket(root))
 
 ```{r accuracy, results="asis"}
 cat(render_performance_section(bundle, compact = FALSE))
+cat(render_challenger_section(bundle, compact = FALSE))
 ```
 
 ## Methodology Details {#methodology-details}

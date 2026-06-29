@@ -1,0 +1,198 @@
+---
+title: "Model Challengers"
+subtitle: "Stepwise regression, XGBoost readiness, and tree-based goal models."
+description: "Challenger model comparison for the World Cup forecasting system, including stepwise regression, XGBoost readiness, random forest fallback, and feature importance."
+toc: true
+number-sections: true
+code-fold: true
+code-tools: true
+execute:
+  echo: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+root <- if (file.exists("data/processed/modeling")) "." else ".."
+source(file.path(root, "R", "report_helpers.R"))
+read_csv_if_exists <- function(path) {
+  if (file.exists(path)) {
+    readr::read_csv(path, show_col_types = FALSE)
+  } else {
+    data.frame()
+  }
+}
+challengers <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "model_challenger_metrics.csv"))
+importance <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "model_challenger_feature_importance.csv"))
+status <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "model_challenger_status.csv"))
+predictions <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "model_challenger_prediction_sample.csv"))
+```
+
+## Purpose
+
+The production forecast should not change just because a model sounds more advanced.
+This page compares challenger models against the current regression stack before any
+promotion into the public prediction cards.
+
+Current challengers:
+
+- **Stepwise OLS:** an interpretable regression that selects terms by AIC.
+- **XGBoost goals:** a gradient-boosted count model when the local `xgboost`
+  package is installed.
+- **Random forest goals:** a free local tree fallback while XGBoost is not
+  installed.
+
+## Challenger Leaderboard
+
+```{r leaderboard, echo=FALSE, results="asis"}
+if (nrow(challengers) > 0) {
+  cards <- challengers |>
+    dplyr::arrange(test_rmse) |>
+    dplyr::mutate(
+      label = model,
+      value = paste0(fmt_number(test_rmse, 3), " RMSE"),
+      note = paste0(model_family, " | MAE ", fmt_number(test_mae, 3))
+    ) |>
+    dplyr::select(label, value, note)
+  cat(metric_cards(cards))
+} else {
+  display_table(empty_note("Challenger metrics are available after running R/18_fit_model_challengers.R."))
+}
+```
+
+```{r metric-table}
+if (nrow(challengers) > 0) {
+  challengers |>
+    dplyr::arrange(test_rmse) |>
+    dplyr::mutate(
+      test_rmse = fmt_number(test_rmse, 3),
+      test_mae = fmt_number(test_mae, 3),
+      mean_prediction = fmt_number(mean_prediction, 3),
+      rows_train = fmt_integer(rows_train),
+      rows_test = fmt_integer(rows_test)
+    ) |>
+    display_table(caption = "Held-out challenger model performance.")
+} else {
+  display_table(empty_note("No challenger metrics are available yet."))
+}
+```
+
+## RMSE Visual
+
+```{r rmse-plot, fig.cap="Held-out RMSE for the challenger goal models. Lower is better."}
+if (nrow(challengers) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  plot_data <- challengers |>
+    dplyr::arrange(test_rmse) |>
+    dplyr::mutate(model = factor(model, levels = rev(model)))
+
+  ggplot2::ggplot(plot_data, ggplot2::aes(x = test_rmse, y = model, fill = model_family)) +
+    ggplot2::geom_col(width = 0.64, show.legend = FALSE) +
+    ggplot2::geom_text(
+      ggplot2::aes(label = round(test_rmse, 3)),
+      hjust = -0.12,
+      color = "#24313d",
+      size = 3.7
+    ) +
+    ggplot2::scale_fill_manual(values = c(
+      "Interpretable regression" = "#0f6b68",
+      "Gradient-boosted trees" = "#d9a441",
+      "Tree ensemble fallback" = "#3d5873"
+    )) +
+    ggplot2::coord_cartesian(xlim = c(0, max(plot_data$test_rmse, na.rm = TRUE) * 1.14)) +
+    ggplot2::labs(
+      title = "Goal model challenger leaderboard",
+      x = "RMSE",
+      y = NULL
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "RMSE plot is available after challenger metrics are refreshed.")
+}
+```
+
+## Feature Importance
+
+```{r feature-importance-plot, fig.cap="Top feature importance by challenger model. Importance is scaled within each model."}
+if (nrow(importance) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  top_importance <- importance |>
+    dplyr::group_by(model) |>
+    dplyr::slice_max(importance_scaled, n = 6, with_ties = FALSE) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(feature = gsub("TRUE$", "", feature))
+
+  ggplot2::ggplot(top_importance, ggplot2::aes(x = importance_scaled, y = reorder(feature, importance_scaled))) +
+    ggplot2::geom_col(fill = "#0f6b68", width = 0.68) +
+    ggplot2::facet_wrap(~ model, scales = "free_y") +
+    ggplot2::scale_x_continuous(labels = function(x) paste0(round(100 * x), "%")) +
+    ggplot2::labs(
+      title = "Top features by challenger",
+      x = "Scaled importance",
+      y = NULL
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Feature importance is available after challenger models are fit.")
+}
+```
+
+```{r feature-importance-table}
+if (nrow(importance) > 0) {
+  importance |>
+    dplyr::group_by(model) |>
+    dplyr::slice_max(importance_scaled, n = 8, with_ties = FALSE) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(
+      importance = fmt_number(importance, 3),
+      importance_scaled = fmt_percent(importance_scaled, 1)
+    ) |>
+    display_table(caption = "Top model-specific feature importance.")
+} else {
+  display_table(empty_note("Feature importance is available after challenger models are fit."))
+}
+```
+
+## XGBoost Status
+
+```{r xgboost-status}
+if (nrow(status) > 0) {
+  status |>
+    display_table(caption = "Local challenger package status.")
+} else {
+  display_table(empty_note("Package status is available after the challenger run."))
+}
+```
+
+## Prediction Sample
+
+```{r prediction-sample}
+if (nrow(predictions) > 0) {
+  predictions |>
+    dplyr::arrange(model, dplyr::desc(abs(residual))) |>
+    dplyr::mutate(
+      predicted_goals = fmt_number(predicted_goals, 2),
+      residual = fmt_number(residual, 2)
+    ) |>
+    dplyr::select(model, date, team, opponent, actual_goals, predicted_goals, residual) |>
+    display_table(caption = "Largest held-out challenger residuals.", max_rows = 20)
+} else {
+  display_table(empty_note("Prediction samples are available after challenger models are fit."))
+}
+```
+
+## Interpretation
+
+The challenger models are useful for two separate reasons:
+
+- Stepwise regression helps simplify the equation while staying interpretable.
+- Tree models can capture nonlinear interactions without hand-writing every term.
+
+The tree results should be treated as a candidate signal, not an automatic upgrade.
+Before promotion, the next pass should compare calibration, tournament backtesting,
+and stability across multiple time splits.
+
+## Reproduce Locally
+
+```{r reproduce, eval=FALSE}
+source("R/18_fit_model_challengers.R")
+```

@@ -42,6 +42,10 @@ cat(render_upcoming_section(board, limit = 6))
 cat(render_performance_section(bundle, compact = TRUE))
 ```
 
+```{r model-comparison, results="asis"}
+cat(render_challenger_section(bundle, compact = TRUE))
+```
+
 ```{r bracket-preview, results="asis"}
 cat('<section id="bracket-preview" class="page-section">')
 cat('<div class="section-heading">')

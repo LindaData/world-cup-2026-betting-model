@@ -16,6 +16,7 @@ project:
     - reports/09_multisport_expansion.qmd
     - reports/03_distribution_review.qmd
     - reports/04_knn_similarity_model.qmd
+    - reports/10_model_challengers.qmd
 
 website:
   title: "World Cup 2026 Forecasting Model"
@@ -44,6 +45,8 @@ website:
             text: Similar Match Model
           - href: reports/01_goals_linear_regression.qmd
             text: OLS Benchmark
+          - href: reports/10_model_challengers.qmd
+            text: Model Challengers
       - text: Methodology
         menu:
           - href: reports/00_data_overview.qmd

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
@@ -140,6 +140,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./reports/01_goals_linear_regression.html">
  <span class="dropdown-text">OLS Benchmark</span></a>
   </li>
+        <li>
+    <a class="dropdown-item" href="./reports/10_model_challengers.html">
+ <span class="dropdown-text">Model Challengers</span></a>
+  </li>
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -230,7 +234,7 @@ ul.task-list li input[type="checkbox"] {
 <section class="product-hero">
 <div class="hero-copy">
 <div class="status-row">
-<span class="status-chip">Beta</span><span class="status-chip">Knockout stage</span><span class="status-chip muted">Last updated 2026-06-28 22:28:26 EDT</span><span class="status-chip muted">Data current through June 27, 2026</span>
+<span class="status-chip">Beta</span><span class="status-chip">Knockout stage</span><span class="status-chip muted">Last updated 2026-06-28 23:06:38 EDT</span><span class="status-chip muted">Data current through June 27, 2026</span>
 </div>
 <h1>
 World Cup 2026 Forecasting Model
@@ -1121,6 +1125,111 @@ These numbers separate current tournament checks from historical validation. The
 <div class="performance-note">
 <strong>Plain English:</strong> accuracy is the share of completed matches where the top predicted outcome was right. Goal miss is the average distance between projected and actual goals. Brier score measures probability quality; lower is better.
 </div>
+</section>
+<section id="model-comparison" class="page-section model-comparison-section">
+<div class="section-heading">
+<span class="section-kicker">Model lab</span>
+<h2 class="anchored">
+Challenger Model Comparison
+</h2>
+<p>
+Stepwise regression and tree-based models run beside the production forecast. Lower RMSE means the model missed team goals by less on held-out rows.
+</p>
+</div>
+<div class="model-score-grid">
+<article class="model-score-card is-leader">
+<div class="model-score-top">
+<span>Tree ensemble fallback</span><strong>#1</strong>
+</div>
+<h3 class="anchored">
+Random forest goals
+</h3>
+<div class="model-score-main">
+1.401 RMSE
+</div>
+<div class="score-track" aria-hidden="true">
+<span style="width:100.0%"></span>
+</div>
+<dl>
+<div>
+<dt>
+Average miss
+</dt>
+<dd>
+1.035 MAE
+</dd>
+</div>
+<div>
+<dt>
+Training rows
+</dt>
+<dd>
+12,000
+</dd>
+</div>
+<div>
+<dt>
+Status
+</dt>
+<dd>
+Fit locally
+</dd>
+</div>
+</dl>
+<p>
+Free local tree challenger used while xgboost is not installed.
+</p>
+</article>
+<article class="model-score-card">
+<div class="model-score-top">
+<span>Interpretable regression</span><strong>#2</strong>
+</div>
+<h3 class="anchored">
+Stepwise OLS
+</h3>
+<div class="model-score-main">
+1.406 RMSE
+</div>
+<div class="score-track" aria-hidden="true">
+<span style="width:99.7%"></span>
+</div>
+<dl>
+<div>
+<dt>
+Average miss
+</dt>
+<dd>
+1.024 MAE
+</dd>
+</div>
+<div>
+<dt>
+Training rows
+</dt>
+<dd>
+31,961
+</dd>
+</div>
+<div>
+<dt>
+Status
+</dt>
+<dd>
+Fit locally
+</dd>
+</div>
+</dl>
+<p>
+AIC-selected regression terms; kept as a transparent challenger.
+</p>
+</article>
+</div>
+<div class="model-status-strip">
+<span><strong>xgboost:</strong> not installed</span><span><strong>randomForest:</strong> available</span>
+</div>
+<p class="section-note">
+These challengers are not automatically promoted into the public pick. They need stable backtesting and calibration before replacing the current forecast ensemble.
+</p>
 </section>
 <section id="bracket-preview" class="page-section">
 <div class="section-heading">
