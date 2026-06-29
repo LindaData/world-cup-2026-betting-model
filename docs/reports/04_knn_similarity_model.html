@@ -651,340 +651,675 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </main> <!-- /main -->
 <script>
+
 (function () {
+
   "use strict";
 
+
+
   function ready(fn) {
+
     if (document.readyState === "loading") {
+
       document.addEventListener("DOMContentLoaded", fn);
+
     } else {
+
       fn();
+
     }
+
   }
+
+
 
   function formatLocalTimes() {
+
     var formatter = new Intl.DateTimeFormat(undefined, {
+
       weekday: "short",
+
       month: "short",
+
       day: "numeric",
+
       hour: "numeric",
+
       minute: "2-digit",
+
       timeZoneName: "short"
+
     });
+
+
 
     document.querySelectorAll("time.js-local-time[datetime]").forEach(function (node) {
+
       var value = node.getAttribute("datetime");
+
       if (!value) {
+
         return;
+
       }
+
       var date = new Date(value);
+
       if (Number.isNaN(date.getTime())) {
+
         return;
+
       }
+
       node.textContent = formatter.format(date);
+
       node.setAttribute("data-localized", "true");
+
     });
+
   }
+
+
 
   function initBracket() {
+
     var dataNode = document.getElementById("wc-bracket-data");
+
     var root = document.getElementById("model-bracket-root");
+
     var championNode = document.getElementById("model-bracket-champion");
+
     var seedWatch = document.getElementById("group-seed-watch");
+
     var thirdWatch = document.getElementById("third-place-watch");
+
     var statusNode = document.getElementById("model-bracket-status");
+
     var tabsNode = document.querySelector(".bracket-tabs");
 
+
+
     if (!dataNode || !root || !championNode) {
+
       return;
+
     }
+
+
 
     var data = JSON.parse(dataNode.textContent);
+
     var roundNames = ["Round of 32", "Round of 16", "Quarterfinals", "Semifinals", "Final"];
+
     var shortRoundNames = ["R32", "R16", "QF", "SF", "Final"];
+
     var picks = {};
+
     var activeRound = 0;
+
     var fullView = !window.matchMedia("(max-width: 700px)").matches;
 
+
+
     function announce(text) {
+
       if (statusNode) {
+
         statusNode.textContent = text;
+
       }
+
     }
+
+
 
     function cloneTeam(team) {
+
       return team ? Object.assign({}, team) : null;
+
     }
+
+
 
     function cloneMatch(match) {
+
       return {
+
         slotA: match.slotA,
+
         slotB: match.slotB,
+
         teamA: cloneTeam(match.teamA),
+
         teamB: cloneTeam(match.teamB)
+
       };
+
     }
+
+
 
     function teamStrength(team) {
+
       var elo = team && Number(team.elo);
+
       return Number.isFinite(elo) ? elo : 1500;
+
     }
+
+
 
     function advanceProbability(teamA, teamB) {
+
       var diff = teamStrength(teamA) - teamStrength(teamB);
+
       return 1 / (1 + Math.pow(10, -diff / 400));
+
     }
+
+
 
     function formatPct(value) {
+
       if (!Number.isFinite(value)) {
+
         return "";
+
       }
+
       return Math.round(value * 100) + "%";
+
     }
+
+
 
     function modelWinner(match) {
+
       if (!match.teamA && !match.teamB) {
+
         return null;
+
       }
+
       if (match.teamA && !match.teamB) {
+
         return match.teamA;
+
       }
+
       if (!match.teamA && match.teamB) {
+
         return match.teamB;
+
       }
+
       return advanceProbability(match.teamA, match.teamB) >= 0.5 ? match.teamA : match.teamB;
+
     }
+
+
 
     function clearLaterPicks(roundIndex) {
+
       Object.keys(picks).forEach(function (key) {
+
         var keyRound = Number(key.split("-")[0]);
+
         if (keyRound > roundIndex) {
+
           delete picks[key];
+
         }
+
       });
+
     }
+
+
 
     function buildRounds() {
+
       var rounds = [data.round32.map(cloneMatch)];
 
+
+
       for (var roundIndex = 0; roundIndex < 4; roundIndex += 1) {
+
         var currentRound = rounds[roundIndex];
+
         var nextRound = Array.from({ length: Math.ceil(currentRound.length / 2) }, function (_, index) {
+
           return {
+
             slotA: "W" + (roundIndex + 1) + "." + (2 * index + 1),
+
             slotB: "W" + (roundIndex + 1) + "." + (2 * index + 2),
+
             teamA: null,
+
             teamB: null
+
           };
+
         });
+
+
 
         currentRound.forEach(function (match, matchIndex) {
+
           var key = roundIndex + "-" + matchIndex;
+
           var validNames = [match.teamA && match.teamA.name, match.teamB && match.teamB.name].filter(Boolean);
+
           if (picks[key] && validNames.indexOf(picks[key]) === -1) {
+
             delete picks[key];
+
           }
+
           var pickedName = picks[key];
+
           var winner = pickedName
+
             ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
+
             : modelWinner(match);
+
           var nextMatch = nextRound[Math.floor(matchIndex / 2)];
+
           if (matchIndex % 2 === 0) {
+
             nextMatch.teamA = cloneTeam(winner);
+
           } else {
+
             nextMatch.teamB = cloneTeam(winner);
+
           }
+
         });
+
+
 
         rounds.push(nextRound);
+
       }
+
+
 
       return rounds;
+
     }
+
+
 
     function teamButton(team, slot, probability, selected, modelSelected, userSelected, roundIndex, matchIndex) {
+
       var button = document.createElement("button");
+
       button.type = "button";
+
       button.className = "bracket-team";
 
+
+
       if (selected) {
+
         button.classList.add("selected");
+
       }
+
       if (modelSelected) {
+
         button.classList.add("model-selected");
+
       }
+
       if (userSelected) {
+
         button.classList.add("user-selected");
+
       }
+
       if (!team) {
+
         button.classList.add("empty");
+
         button.disabled = true;
+
         button.innerHTML = "<span class='team-name'>" + slot + "</span><small>Seed unresolved</small>";
+
         return button;
+
       }
+
+
 
       var label = userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender");
+
       button.innerHTML =
+
         "<span class='team-name'>" + team.name + "</span>" +
+
         "<span class='team-meta'>" + team.seed + " | " + formatPct(probability) + "</span>" +
+
         "<small class='pick-label'>" + label + "</small>";
+
       button.setAttribute("aria-label", "Advance " + team.name + " from " + roundNames[roundIndex]);
+
       button.addEventListener("click", function () {
+
         picks[roundIndex + "-" + matchIndex] = team.name;
+
         clearLaterPicks(roundIndex);
+
         announce(team.name + " advanced from " + roundNames[roundIndex] + ".");
+
         render();
+
       });
+
       return button;
+
     }
+
+
 
     function matchCard(match, roundIndex, matchIndex) {
+
       var card = document.createElement("article");
+
       card.className = "bracket-match-card";
+
       var pA = match.teamA && match.teamB ? advanceProbability(match.teamA, match.teamB) : null;
+
       var pB = Number.isFinite(pA) ? 1 - pA : null;
+
       var winner = modelWinner(match);
+
       var pickedName = picks[roundIndex + "-" + matchIndex];
+
       var selectedName = pickedName || (winner && winner.name);
 
+
+
       var label = document.createElement("div");
+
       label.className = "bracket-match-label";
+
       label.textContent = "Match " + (matchIndex + 1);
+
       card.appendChild(label);
+
       card.appendChild(teamButton(
+
         match.teamA,
+
         match.slotA,
+
         pA,
+
         match.teamA && match.teamA.name === selectedName,
+
         !pickedName && winner && match.teamA && match.teamA.name === winner.name,
+
         pickedName && match.teamA && match.teamA.name === pickedName,
+
         roundIndex,
+
         matchIndex
+
       ));
+
       card.appendChild(teamButton(
+
         match.teamB,
+
         match.slotB,
+
         pB,
+
         match.teamB && match.teamB.name === selectedName,
+
         !pickedName && winner && match.teamB && match.teamB.name === winner.name,
+
         pickedName && match.teamB && match.teamB.name === pickedName,
+
         roundIndex,
+
         matchIndex
+
       ));
+
+
 
       return card;
+
     }
+
+
 
     function renderSeeds() {
+
       if (seedWatch && data.groupSeeds) {
+
         var seedsByGroup = {};
+
         data.groupSeeds.forEach(function (row) {
+
           seedsByGroup[row.group] = seedsByGroup[row.group] || [];
+
           seedsByGroup[row.group].push(row);
+
         });
+
         seedWatch.innerHTML = Object.keys(seedsByGroup).sort().map(function (group) {
+
           var rows = seedsByGroup[group].slice(0, 2).map(function (row) {
+
             return "<span><strong>" + row.seed + "</strong>" + row.team + "</span>";
+
           }).join("");
+
           return "<div class='seed-group'><b>Group " + group + "</b>" + rows + "</div>";
+
         }).join("");
+
       }
+
+
 
       if (thirdWatch && data.thirdWatch) {
+
         thirdWatch.innerHTML = data.thirdWatch.map(function (row) {
+
           return "<div class='third-row" + (row.qualifies ? " qualifies" : "") + "'>" +
+
             "<span>" + row.third_rank + ". " + row.team + "</span>" +
+
             "<strong>" + row.points + " pts</strong>" +
+
             "</div>" +
+
             (row.third_rank === 8 ? "<div class='third-cut'>Cut line</div>" : "");
+
         }).join("");
+
       }
+
     }
+
+
 
     function renderTabs() {
+
       if (!tabsNode) {
+
         return;
+
       }
+
       tabsNode.innerHTML = "";
+
       roundNames.forEach(function (name, index) {
+
         var tab = document.createElement("button");
+
         tab.type = "button";
+
         tab.className = "bracket-tab";
+
         tab.setAttribute("role", "tab");
+
         tab.setAttribute("aria-selected", String(index === activeRound));
+
         tab.textContent = shortRoundNames[index];
+
         tab.addEventListener("click", function () {
+
           activeRound = index;
+
           fullView = false;
+
           render();
+
         });
+
         tabsNode.appendChild(tab);
+
       });
+
     }
+
+
 
     function render() {
+
       var rounds = buildRounds();
+
       root.innerHTML = "";
+
       root.setAttribute("data-view", fullView ? "full" : "round");
 
+
+
       rounds.forEach(function (round, roundIndex) {
+
         var column = document.createElement("section");
+
         column.className = "bracket-round";
+
         if (!fullView && roundIndex === activeRound) {
+
           column.classList.add("is-active");
+
         }
+
         var heading = document.createElement("h3");
+
         heading.textContent = roundNames[roundIndex];
+
         column.appendChild(heading);
+
         var list = document.createElement("div");
+
         list.className = "bracket-round-list";
+
         round.forEach(function (match, matchIndex) {
+
           list.appendChild(matchCard(match, roundIndex, matchIndex));
+
         });
+
         column.appendChild(list);
+
         root.appendChild(column);
+
       });
+
+
 
       var finalMatch = rounds[rounds.length - 1][0];
+
       var champion = picks["4-0"]
+
         ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
+
         : modelWinner(finalMatch);
+
       championNode.innerHTML = champion
+
         ? "<span>Projected Champion</span><strong>" + champion.name + "</strong><small>" + champion.seed + " | strength " + champion.elo + "</small>"
+
         : "";
+
       renderTabs();
+
       document.querySelectorAll("[data-bracket-action='toggle-view']").forEach(function (button) {
+
         button.textContent = fullView ? "Round view" : "Full bracket";
+
         button.setAttribute("aria-pressed", String(fullView));
+
       });
+
     }
 
+
+
     document.querySelectorAll("[data-bracket-action]").forEach(function (button) {
+
       button.addEventListener("click", function () {
+
         var action = button.getAttribute("data-bracket-action");
+
         if (action === "toggle-view") {
+
           fullView = !fullView;
+
           render();
+
           return;
+
         }
+
         Object.keys(picks).forEach(function (key) {
+
           delete picks[key];
+
         });
+
         announce(action === "model" ? "Bracket reset to model picks." : "Bracket picks cleared.");
+
         render();
+
       });
+
     });
 
+
+
     renderSeeds();
+
     render();
+
   }
 
+
+
   ready(function () {
+
     formatLocalTimes();
+
     initBracket();
+
   });
+
 })();
+
 </script>
+
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "î§‹";

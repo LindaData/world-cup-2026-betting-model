@@ -1,6 +1,6 @@
 # Current Model Data Status
 
-Last refreshed: 2026-06-29T02:06:03.325747Z.
+Last refreshed: 2026-06-29T02:26:54.048913Z.
 
 Refresh profile: `local-rebuild`.
 
@@ -91,10 +91,17 @@ data/processed/metadata/column_inventory.csv
 
 | Step | Status | Seconds |
 | --- | --- | --- |
-| Build processed public CSVs | ok | 12.379 |
-| Build DuckDB | ok | 8.384 |
-| Export DuckDB metadata | ok | 4.749 |
-| Render R Markdown reports | ok | 86.071 |
+| Build processed public CSVs | ok | 9.92 |
+| Build DuckDB | ok | 9.773 |
+| Export DuckDB metadata | ok | 4.063 |
+| Fit goals model | ok | 5.786 |
+| Fit Poisson goals model | ok | 9.149 |
+| Fit ordinal result model | ok | 11.297 |
+| Fit KNN similarity model | ok | 28.195 |
+| Run regression diagnostics | ok | 6.167 |
+| Score 2026 fixtures | ok | 4.103 |
+| Build matchday prediction board | ok | 4.429 |
+| Render R Markdown reports | ok | 132.424 |
 
 ## Public Artifacts Updated
 
