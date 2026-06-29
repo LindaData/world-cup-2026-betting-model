@@ -31,7 +31,9 @@ data/samples/*.csv
 docs/samples/*.csv
 reports/*.html
 reports/*_files/
-site_libs/
+/site_libs/
+!docs/site_libs/
+!docs/site_libs/**
 
 /.quarto/
 .quarto-deno/
