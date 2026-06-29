@@ -22,7 +22,7 @@ website:
   title: "World Cup 2026 Forecasting Model"
   site-url: "https://lindadata.github.io/world-cup-2026-betting-model/"
   repo-url: "https://github.com/LindaData/world-cup-2026-betting-model"
-  description: "Match probabilities, projected scores, and tournament simulations powered by historical results and team-strength models."
+  description: "Static World Cup 2026 match probabilities, projected scores, bracket projections, and model performance notes."
   favicon: assets/favicon.svg
   navbar:
     background: "#102a43"
@@ -33,8 +33,12 @@ website:
         text: Predictions
       - href: reports/08_matchday_predictions.qmd#bracket
         text: Bracket
-      - text: Models
+      - href: reports/00_data_overview.qmd
+        text: Data
+      - text: Methodology
         menu:
+          - href: reports/08_matchday_predictions.qmd#model-performance
+            text: Model Performance
           - href: reports/07_fixture_predictions.qmd
             text: Model Overview
           - href: reports/05_poisson_goals_model.qmd
@@ -43,34 +47,16 @@ website:
             text: Win / Draw / Loss Model
           - href: reports/04_knn_similarity_model.qmd
             text: Similar Match Model
-          - href: reports/01_goals_linear_regression.qmd
-            text: OLS Benchmark
-          - href: reports/10_model_challengers.qmd
-            text: Model Challengers
-      - text: Methodology
-        menu:
-          - href: reports/00_data_overview.qmd
-            text: Data & Coverage
-          - href: reports/08_matchday_predictions.qmd#model-performance
-            text: Model Performance
           - href: reports/06_regression_diagnostics.qmd
             text: Diagnostics
-          - href: reports/03_distribution_review.qmd
-            text: Statistical Details
           - href: reports/09_multisport_expansion.qmd
             text: Multi-Sport Roadmap
-          - href: sports-data/index.html
-            text: Sports Data
-          - href: https://github.com/LindaData/world-cup-2026-betting-model
-            text: GitHub Repository
     right:
-      - text: LindaData
-        href: https://lindadata.github.io/
       - text: GitHub
         href: https://github.com/LindaData/world-cup-2026-betting-model
   page-footer:
     left: "LindaData World Cup 2026 forecasting model."
-    right: "Built with R, Python, SQL, DuckDB, and Quarto."
+    right: "Static forecasts built with R, Python, SQL, DuckDB, and Quarto."
 
 format:
   html:
