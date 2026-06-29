@@ -21,6 +21,12 @@ board <- bundle$board
 summary <- bundle$summary
 ```
 
+<section class="page-intro prediction-intro">
+  <span class="section-kicker">Forecast board</span>
+  <h1>Predictions</h1>
+  <p>Today's slate, the next match, upcoming fixtures, bracket projections, and model accuracy in one place.</p>
+</section>
+
 <nav class="prediction-page-nav" aria-label="Prediction page sections">
   <a href="#today">Today</a>
   <a href="#next-match">Next match</a>

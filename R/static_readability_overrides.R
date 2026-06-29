@@ -61,9 +61,9 @@ refresh_time_display <- function(row) {
 render_static_api_note <- function(summary, compact = FALSE) {
   updated <- summary_value(summary, "last_refreshed_local", "Not available yet")
   body <- if (compact) {
-    "This is a static page. APIs are pulled offline, converted into model-ready files, and rendered into this public report."
+    "Forecasts are generated offline from prepared model files and published as a fast static report."
   } else {
-    "This is a static forecasting report. APIs are pulled offline, cleaned into model files, and rendered into GitHub Pages. The public browser does not call paid APIs or expose keys."
+    "Forecasts are generated offline from prepared model files and published as a static report. The public page shows outputs and documentation without exposing private feeds or keys."
   }
 
   paste0(
@@ -83,7 +83,7 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
   status <- safe_text(row$match_timing, "Scheduled")
   knockout <- is_knockout_forecast(row)
   pick_label <- if (knockout) "Projected to advance" else "Model pick"
-  probability_label <- if (knockout) "Advance and regulation-level probabilities" else "Win draw loss probabilities"
+  probability_label <- if (knockout) "Advancement and regulation-level probabilities" else "Win draw loss probabilities"
   draw_label <- safe_text(row$draw_probability_label, if (knockout) "Level after regulation" else "Draw")
   strength <- prediction_strength(row)
   expected_goals <- paste0(
@@ -144,7 +144,7 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
     '<div class="forecast-pick-panel">',
     '<span>', escape_html(pick_label), '</span>',
     '<strong>', escape_html(pick), '</strong>',
-    '<small>Strength: ', escape_html(strength), '. ', escape_html(model_agreement(row)), ' agree.</small>',
+    '<small>Prediction strength: ', escape_html(strength), '. ', escape_html(model_agreement(row)), ' agree.</small>',
     '</div>',
     knockout_note,
     '<div class="forecast-probabilities" aria-label="', escape_html(probability_label), '">',
@@ -196,14 +196,13 @@ render_home_hero <- function(summary, board) {
     '<span class="status-chip muted">Data current through ', escape_html(completed_text), '</span>',
     '</div>',
     '<h1>World Cup 2026 Forecasting Model</h1>',
-    '<p>Readable static forecasts: match probabilities, likely scores, bracket path, and model reliability notes.</p>',
-    '<p class="hero-context">Built as a static Quarto report from offline model outputs. No paid API keys or raw feeds are exposed on the public page.</p>',
+    '<p>Match probabilities, projected scores, bracket path, and model reliability notes for the 2026 World Cup.</p>',
+    '<p class="hero-context">Forecasts come first. Data coverage, methodology, and diagnostics stay available when you want to inspect the work behind the numbers.</p>',
     '<div class="hero-actions product-actions">',
-    '<a class="button-primary" href="reports/08_matchday_predictions.html">View predictions</a>',
+    '<a class="button-primary" href="reports/08_matchday_predictions.html">View today&apos;s predictions</a>',
     '<a class="button-secondary" href="reports/08_matchday_predictions.html#bracket">Open bracket</a>',
-    '<a class="button-secondary" href="reports/00_data_overview.html">Check data</a>',
     '</div>',
-    '<p class="timezone-note">Times show in your local timezone when available. UTC is the fallback.</p>',
+    '<p class="timezone-note">Times are shown in your local timezone when available. UTC is the fallback.</p>',
     '</div>',
     '</section>'
   )
@@ -222,7 +221,7 @@ render_next_match_section <- function(board) {
     '<div class="section-heading">',
     '<span class="section-kicker">Next match</span>',
     '<h2>Next Match Forecast</h2>',
-    '<p>The next match after today\'s slate is expanded by default so the pick and details are visible without hunting.</p>',
+    '<p>The next match after today\'s slate is expanded by default so the pick, probabilities, and details are immediately visible.</p>',
     '</div>',
     render_forecast_list(upcoming |> dplyr::slice_head(n = 1), "No next match is available.", card_variant = "next"),
     '</section>'
@@ -236,7 +235,7 @@ render_upcoming_section <- function(board, limit = 8) {
     '<div class="section-heading">',
     '<span class="section-kicker">Upcoming</span>',
     '<h2>Upcoming Matches</h2>',
-    '<p>Additional static forecast cards after today and the featured next match.</p>',
+    '<p>Additional forecast cards after today and the featured next match.</p>',
     '</div>',
     render_forecast_list(upcoming, "No additional upcoming matches are available in the current fixture table.", limit = limit, card_variant = "upcoming"),
     '</section>'
