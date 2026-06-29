@@ -168,12 +168,64 @@ actual_result <- ifelse(
   )
 )
 
+# The knockout bracket starts on 2026-06-28 in the local fixture shell. These
+# matches can be level after regulation, but they cannot have a final draw. The
+# score model still estimates 90-minute result probabilities; the public
+# winner call reallocates draw-after-regulation probability through a simple
+# strength-based tiebreak path until extra-time/penalty data is available.
+knockout_start_date <- as.Date("2026-06-28")
+fixture_dates <- as.Date(fixtures_ordered$date)
+is_knockout_match <- fixture_dates >= knockout_start_date
+
+home_tiebreak_share <- 1 / (1 + 10^(-(fixtures_ordered$home_latest_elo - fixtures_ordered$away_latest_elo) / 400))
+probability_denominator <- home_probabilities$pred_home_win_prob + home_probabilities$pred_away_win_prob
+fallback_home_tiebreak_share <- ifelse(
+  is.finite(probability_denominator) & probability_denominator > 0,
+  home_probabilities$pred_home_win_prob / probability_denominator,
+  0.5
+)
+home_tiebreak_share <- ifelse(
+  is.finite(home_tiebreak_share),
+  home_tiebreak_share,
+  fallback_home_tiebreak_share
+)
+home_tiebreak_share <- pmax(0, pmin(1, home_tiebreak_share))
+away_tiebreak_share <- 1 - home_tiebreak_share
+
+home_advance_prob <- ifelse(
+  is_knockout_match,
+  home_probabilities$pred_home_win_prob + home_probabilities$pred_draw_prob * home_tiebreak_share,
+  home_probabilities$pred_home_win_prob
+)
+away_advance_prob <- ifelse(
+  is_knockout_match,
+  home_probabilities$pred_away_win_prob + home_probabilities$pred_draw_prob * away_tiebreak_share,
+  home_probabilities$pred_away_win_prob
+)
+predicted_advancing_team <- ifelse(
+  is_knockout_match,
+  ifelse(home_advance_prob >= away_advance_prob, fixtures_ordered$home_team, fixtures_ordered$away_team),
+  NA_character_
+)
+predicted_advancement_outcome <- ifelse(
+  is_knockout_match,
+  ifelse(home_advance_prob >= away_advance_prob, "home advances", "away advances"),
+  NA_character_
+)
+final_result_mode <- ifelse(
+  is_knockout_match,
+  "Knockout: final winner includes extra time and penalties",
+  "Group stage: final result can be win, draw, or loss"
+)
+
 match_predictions <- data.frame(
   source_match_id = fixtures_ordered$source_match_id,
   date = fixtures_ordered$date,
   home_team = fixtures_ordered$home_team,
   away_team = fixtures_ordered$away_team,
   status = fixtures_ordered$status,
+  is_knockout_match = is_knockout_match,
+  final_result_mode = final_result_mode,
   city = fixtures_ordered$city,
   country = fixtures_ordered$country,
   neutral = fixtures_ordered$neutral,
@@ -187,7 +239,14 @@ match_predictions <- data.frame(
   pred_home_win_prob = home_probabilities$pred_home_win_prob,
   pred_draw_prob = home_probabilities$pred_draw_prob,
   pred_away_win_prob = home_probabilities$pred_away_win_prob,
+  regulation_draw_prob = home_probabilities$pred_draw_prob,
+  home_tiebreak_share = home_tiebreak_share,
+  away_tiebreak_share = away_tiebreak_share,
+  home_advance_prob = home_advance_prob,
+  away_advance_prob = away_advance_prob,
   predicted_result = predicted_result,
+  predicted_advancing_team = predicted_advancing_team,
+  predicted_advancement_outcome = predicted_advancement_outcome,
   home_latest_elo = fixtures_ordered$home_latest_elo,
   away_latest_elo = fixtures_ordered$away_latest_elo,
   elo_diff_home_minus_away = fixtures_ordered$elo_diff_home_minus_away,
@@ -216,6 +275,8 @@ metrics <- data.frame(
     "fixtures_with_final_scores",
     "fixtures_with_weather_context",
     "team_rows_scored",
+    "knockout_fixtures_scored",
+    "knockout_draw_probabilities_reallocated",
     "ols_completed_fixture_rmse",
     "ols_completed_fixture_mae",
     "poisson_completed_fixture_rmse",
@@ -227,6 +288,8 @@ metrics <- data.frame(
     sum(completed_match_rows, na.rm = TRUE),
     sum(!is.na(match_predictions$avg_temperature_2m), na.rm = TRUE),
     sum(complete_feature_rows, na.rm = TRUE),
+    sum(match_predictions$is_knockout_match, na.rm = TRUE),
+    sum(match_predictions$is_knockout_match & is.finite(match_predictions$regulation_draw_prob), na.rm = TRUE),
     ols_rmse,
     ols_mae,
     poisson_rmse,
@@ -241,6 +304,8 @@ metrics$display_label <- c(
   "Fixtures with final scores",
   "Fixtures with weather context",
   "Team-fixture rows scored",
+  "Knockout fixtures scored",
+  "Knockout draw probabilities reallocated",
   "OLS RMSE on completed fixtures",
   "OLS MAE on completed fixtures",
   "Poisson RMSE on completed fixtures",
@@ -253,6 +318,8 @@ metrics$plain_english <- c(
   "Matches available for early score checking.",
   "Matches with joined weather summaries.",
   "Team-perspective rows that had enough features to score.",
+  "Knockout-stage matches with advance probabilities.",
+  "Knockout-stage rows where draw-after-regulation was allocated to advance probabilities.",
   "Typical OLS goal miss on completed 2026 team rows.",
   "Average OLS absolute goal miss on completed 2026 team rows.",
   "Typical Poisson goal miss on completed 2026 team rows.",

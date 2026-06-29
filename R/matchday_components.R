@@ -38,6 +38,17 @@ safe_number <- function(x) {
   suppressWarnings(as.numeric(x[[1]]))
 }
 
+is_truthy <- function(x) {
+  if (length(x) == 0 || is.null(x)) {
+    return(FALSE)
+  }
+  tolower(as.character(x[[1]])) %in% c("true", "1", "yes")
+}
+
+is_knockout_forecast <- function(row) {
+  is_truthy(row$is_knockout_match)
+}
+
 display_percent <- function(x, digits = 1, fallback = "Not available yet") {
   value <- safe_number(x)
   if (is.na(value) || !is.finite(value)) {
@@ -246,11 +257,18 @@ model_agreement <- function(row) {
 }
 
 probability_edge <- function(row) {
-  probs <- c(
-    safe_number(row$ensemble_home_win_prob),
-    safe_number(row$ensemble_draw_prob),
-    safe_number(row$ensemble_away_win_prob)
-  )
+  probs <- if (is_knockout_forecast(row)) {
+    c(
+      safe_number(row$home_advance_prob),
+      safe_number(row$away_advance_prob)
+    )
+  } else {
+    c(
+      safe_number(row$ensemble_home_win_prob),
+      safe_number(row$ensemble_draw_prob),
+      safe_number(row$ensemble_away_win_prob)
+    )
+  }
   probs <- probs[is.finite(probs)]
   if (length(probs) < 2) {
     return("Not available yet")
@@ -297,6 +315,10 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
   away <- safe_text(row$away_team, "Away team")
   pick <- safe_text(row$predicted_winner, "No model pick yet")
   status <- safe_text(row$match_timing, "Scheduled")
+  knockout <- is_knockout_forecast(row)
+  pick_label <- if (knockout) "Projected to advance" else "Model pick"
+  probability_label <- if (knockout) "Advance and regulation-level probabilities" else "Win draw loss probabilities"
+  draw_label <- safe_text(row$draw_probability_label, if (knockout) "Level after regulation" else "Draw")
   strength <- prediction_strength(row)
   expected_goals <- paste0(
     display_number(row$pred_home_goals_poisson, 2),
@@ -310,6 +332,38 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
   )
   refresh <- refresh_time_display(row)
   open_attr <- if (initially_open) " open" else ""
+  probability_rows <- if (knockout) {
+    paste0(
+      probability_row(paste(home, "advance"), row$home_advance_prob, "home-prob"),
+      probability_row(draw_label, row$regulation_draw_prob, "draw-prob"),
+      probability_row(paste(away, "advance"), row$away_advance_prob, "away-prob")
+    )
+  } else {
+    paste0(
+      probability_row(paste(home, "win"), row$ensemble_home_win_prob, "home-prob"),
+      probability_row(draw_label, row$ensemble_draw_prob, "draw-prob"),
+      probability_row(paste(away, "win"), row$ensemble_away_win_prob, "away-prob")
+    )
+  }
+  knockout_note <- if (knockout) {
+    '<p class="forecast-context-note">Knockout match: level after regulation is not a final draw. Advance probability includes the path through extra time or penalties.</p>'
+  } else {
+    ""
+  }
+  regulation_detail <- if (knockout) {
+    paste0(
+      '<dt>90-minute result</dt><dd>',
+      escape_html(home), ' win ', display_percent(row$ensemble_home_win_prob, 1),
+      '; level ', display_percent(row$regulation_draw_prob, 1),
+      '; ', escape_html(away), ' win ', display_percent(row$ensemble_away_win_prob, 1),
+      '<small>The level probability is reallocated to advancement because knockout matches need a winner.</small></dd>',
+      '<dt>Extra time / penalties</dt><dd>',
+      escape_html(safe_text(row$final_result_mode, "Winner can be decided after regulation.")),
+      '</dd>'
+    )
+  } else {
+    ""
+  }
 
   paste0(
     '<article class="forecast-card forecast-card-', escape_html(variant), '" data-forecast-card>',
@@ -322,14 +376,13 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
     '<p>', escape_html(venue), '</p>',
     '</div>',
     '<div class="forecast-pick-panel">',
-    '<span>Model pick</span>',
+    '<span>', escape_html(pick_label), '</span>',
     '<strong>', escape_html(pick), '</strong>',
     '<small>Prediction strength: ', escape_html(strength), '. ', escape_html(model_agreement(row)), ' agree.</small>',
     '</div>',
-    '<div class="forecast-probabilities" aria-label="Win draw loss probabilities">',
-    probability_row(paste(home, "win"), row$ensemble_home_win_prob, "home-prob"),
-    probability_row("Draw", row$ensemble_draw_prob, "draw-prob"),
-    probability_row(paste(away, "win"), row$ensemble_away_win_prob, "away-prob"),
+    knockout_note,
+    '<div class="forecast-probabilities" aria-label="', escape_html(probability_label), '">',
+    probability_rows,
     '</div>',
     '<div class="forecast-stat-grid">',
     '<div><span>Most likely score</span><strong>', escape_html(safe_text(row$most_likely_score, "Not available yet")), '</strong></div>',
@@ -340,13 +393,14 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
     '<details class="forecast-details"', open_attr, '>',
     '<summary>View details</summary>',
     '<dl>',
+    regulation_detail,
     '<dt>Over 2.5 goals</dt><dd>', display_percent(row$over_2_5_prob, 1), '<small>Chance the match has at least 3 total goals.</small></dd>',
     '<dt>Both teams to score</dt><dd>', display_percent(row$both_teams_to_score_prob, 1), '<small>Chance both teams score at least once.</small></dd>',
     '<dt>Yellow cards</dt><dd>', escape_html(yellow_card_text(row)), '</dd>',
     '<dt>Lineups</dt><dd>', escape_html(lineup_text(row)), '</dd>',
     '<dt>Model votes</dt><dd>OLS: ', escape_html(safe_text(row$ols_predicted_winner, "Not available yet")),
     '; Poisson: ', escape_html(safe_text(row$poisson_predicted_winner, "Not available yet")),
-    '; Win/draw/loss: ', escape_html(safe_text(row$ordinal_predicted_winner, "Not available yet")), '</dd>',
+    '; Result model: ', escape_html(safe_text(row$ordinal_predicted_winner, "Not available yet")), '</dd>',
     '<dt>Venue</dt><dd>', escape_html(venue), '</dd>',
     '</dl>',
     '</details>',
@@ -470,7 +524,7 @@ render_upcoming_section <- function(board, limit = 8) {
     '<div class="section-heading">',
     '<span class="section-kicker">Upcoming</span>',
     '<h2>Upcoming Matches</h2>',
-    '<p>Each card shows readable win, draw, and loss probabilities. Open details for totals, cards, lineups, and model votes.</p>',
+    '<p>Each card shows the public pick, readable probabilities, expected score, and refresh timing. Knockout cards show advance probabilities and keep the regulation-level probability separate.</p>',
     '</div>',
     render_forecast_list(upcoming, "No upcoming matches are available in the current fixture table.", limit = limit, card_variant = "upcoming"),
     '</section>'
@@ -576,10 +630,10 @@ render_methodology_short <- function() {
     '<div class="section-heading">',
     '<span class="section-kicker">Methodology</span>',
     '<h2>How The Forecast Works</h2>',
-    '<p>The site combines historical international results, team-strength features, recent form, venue context, weather, and live football feeds where available. The public forecast is an ensemble of a win/draw/loss model and a score-grid model.</p>',
+    '<p>The site combines historical international results, team-strength features, recent form, venue context, weather, and live football feeds where available. The public forecast is an ensemble of a result model and a score-grid model. In knockout matches, the draw-after-regulation probability is converted into advance probability because the match must produce a team that moves on.</p>',
     '</div>',
     '<div class="method-grid">',
-    '<div><strong>Win / draw / loss</strong><span>Estimates match outcome probabilities from team strength and context.</span></div>',
+    '<div><strong>Result probabilities</strong><span>Estimates regulation outcome probabilities from team strength and context, then converts knockout ties into advance probabilities.</span></div>',
     '<div><strong>Score forecast</strong><span>Uses a Poisson goals model to project expected goals and likely scorelines.</span></div>',
     '<div><strong>Similarity check</strong><span>Compares fixtures with similar historical matches as a challenger model.</span></div>',
     '</div>',
@@ -730,9 +784,22 @@ render_technical_prediction_table <- function(board, limit = 48) {
     dplyr::slice_head(n = limit) |>
     dplyr::mutate(
       kickoff_utc = kickoff_utc_iso,
-      home_win = fmt_percent(ensemble_home_win_prob, 1),
-      draw = fmt_percent(ensemble_draw_prob, 1),
-      away_win = fmt_percent(ensemble_away_win_prob, 1),
+      phase = dplyr::if_else(is_knockout_match, "Knockout", "Group"),
+      home_public_probability = dplyr::if_else(
+        is_knockout_match,
+        fmt_percent(home_advance_prob, 1),
+        fmt_percent(ensemble_home_win_prob, 1)
+      ),
+      level_or_draw_probability = dplyr::if_else(
+        is_knockout_match,
+        fmt_percent(regulation_draw_prob, 1),
+        fmt_percent(ensemble_draw_prob, 1)
+      ),
+      away_public_probability = dplyr::if_else(
+        is_knockout_match,
+        fmt_percent(away_advance_prob, 1),
+        fmt_percent(ensemble_away_win_prob, 1)
+      ),
       expected_goals = paste0(fmt_number(pred_home_goals_poisson, 2), " - ", fmt_number(pred_away_goals_poisson, 2)),
       over_2_5 = fmt_percent(over_2_5_prob, 1),
       both_score = fmt_percent(both_teams_to_score_prob, 1)
@@ -741,11 +808,12 @@ render_technical_prediction_table <- function(board, limit = 48) {
       date,
       kickoff_utc,
       match_timing,
+      phase,
       match_label,
       predicted_winner,
-      home_win,
-      draw,
-      away_win,
+      home_public_probability,
+      level_or_draw_probability,
+      away_public_probability,
       expected_goals,
       most_likely_score,
       over_2_5,

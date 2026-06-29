@@ -68,33 +68,89 @@ poisson_rows <- do.call(
 
 board <- cbind(predictions, poisson_rows)
 
-board$ordinal_predicted_outcome <- board$predicted_result
-board$ordinal_predicted_winner <- ifelse(
-  board$ordinal_predicted_outcome == "home win",
+if (!"is_knockout_match" %in% names(board)) {
+  board$is_knockout_match <- as.Date(board$date) >= as.Date("2026-06-28")
+}
+board$is_knockout_match <- as.logical(board$is_knockout_match)
+
+if (!"home_tiebreak_share" %in% names(board) || !"away_tiebreak_share" %in% names(board)) {
+  home_tiebreak <- 1 / (1 + 10^(-((board$home_latest_elo - board$away_latest_elo) / 400)))
+  board$home_tiebreak_share <- ifelse(is.finite(home_tiebreak), home_tiebreak, 0.5)
+  board$away_tiebreak_share <- 1 - board$home_tiebreak_share
+}
+
+board$ordinal_regulation_predicted_outcome <- board$predicted_result
+board$ordinal_regulation_predicted_winner <- ifelse(
+  board$ordinal_regulation_predicted_outcome == "home win",
   board$home_team,
-  ifelse(board$ordinal_predicted_outcome == "away win", board$away_team, "Draw")
+  ifelse(board$ordinal_regulation_predicted_outcome == "away win", board$away_team, "Draw")
 )
-board$poisson_predicted_outcome <- c("home win", "draw", "away win")[
+board$ordinal_home_advance_prob <- ifelse(
+  board$is_knockout_match,
+  board$pred_home_win_prob + board$pred_draw_prob * board$home_tiebreak_share,
+  board$pred_home_win_prob
+)
+board$ordinal_away_advance_prob <- ifelse(
+  board$is_knockout_match,
+  board$pred_away_win_prob + board$pred_draw_prob * board$away_tiebreak_share,
+  board$pred_away_win_prob
+)
+board$ordinal_predicted_outcome <- ifelse(
+  board$is_knockout_match,
+  ifelse(board$ordinal_home_advance_prob >= board$ordinal_away_advance_prob, "home advances", "away advances"),
+  board$ordinal_regulation_predicted_outcome
+)
+board$ordinal_predicted_winner <- ifelse(
+  board$ordinal_predicted_outcome %in% c("home win", "home advances"),
+  board$home_team,
+  ifelse(board$ordinal_predicted_outcome %in% c("away win", "away advances"), board$away_team, "Draw")
+)
+board$poisson_regulation_predicted_outcome <- c("home win", "draw", "away win")[
   max.col(as.matrix(board[, c(
     "poisson_home_win_prob",
     "poisson_draw_prob",
     "poisson_away_win_prob"
   )]), ties.method = "first")
 ]
-board$poisson_predicted_winner <- ifelse(
-  board$poisson_predicted_outcome == "home win",
-  board$home_team,
-  ifelse(board$poisson_predicted_outcome == "away win", board$away_team, "Draw")
+board$poisson_home_advance_prob <- ifelse(
+  board$is_knockout_match,
+  board$poisson_home_win_prob + board$poisson_draw_prob * board$home_tiebreak_share,
+  board$poisson_home_win_prob
 )
-board$ols_predicted_outcome <- ifelse(
+board$poisson_away_advance_prob <- ifelse(
+  board$is_knockout_match,
+  board$poisson_away_win_prob + board$poisson_draw_prob * board$away_tiebreak_share,
+  board$poisson_away_win_prob
+)
+board$poisson_predicted_outcome <- ifelse(
+  board$is_knockout_match,
+  ifelse(board$poisson_home_advance_prob >= board$poisson_away_advance_prob, "home advances", "away advances"),
+  board$poisson_regulation_predicted_outcome
+)
+board$poisson_predicted_winner <- ifelse(
+  board$poisson_predicted_outcome %in% c("home win", "home advances"),
+  board$home_team,
+  ifelse(board$poisson_predicted_outcome %in% c("away win", "away advances"), board$away_team, "Draw")
+)
+board$ols_regulation_predicted_outcome <- ifelse(
   abs(board$pred_home_goals_ols - board$pred_away_goals_ols) < 0.15,
   "draw",
   ifelse(board$pred_home_goals_ols > board$pred_away_goals_ols, "home win", "away win")
 )
+home_ols_advances <- ifelse(
+  abs(board$pred_home_goals_ols - board$pred_away_goals_ols) < 0.15,
+  board$home_tiebreak_share >= 0.5,
+  board$pred_home_goals_ols > board$pred_away_goals_ols
+)
+board$ols_predicted_outcome <- ifelse(
+  board$is_knockout_match,
+  ifelse(home_ols_advances, "home advances", "away advances"),
+  board$ols_regulation_predicted_outcome
+)
 board$ols_predicted_winner <- ifelse(
-  board$ols_predicted_outcome == "home win",
+  board$ols_predicted_outcome %in% c("home win", "home advances"),
   board$home_team,
-  ifelse(board$ols_predicted_outcome == "away win", board$away_team, "Draw")
+  ifelse(board$ols_predicted_outcome %in% c("away win", "away advances"), board$away_team, "Draw")
 )
 
 board$ensemble_home_win_prob <- rowMeans(
@@ -119,19 +175,51 @@ board$ensemble_draw_prob[valid_ensemble_total] <- board$ensemble_draw_prob[valid
 board$ensemble_away_win_prob[valid_ensemble_total] <- board$ensemble_away_win_prob[valid_ensemble_total] /
   ensemble_total[valid_ensemble_total]
 
+board$regulation_draw_prob <- board$ensemble_draw_prob
+board$home_advance_prob <- ifelse(
+  board$is_knockout_match,
+  board$ensemble_home_win_prob + board$ensemble_draw_prob * board$home_tiebreak_share,
+  board$ensemble_home_win_prob
+)
+board$away_advance_prob <- ifelse(
+  board$is_knockout_match,
+  board$ensemble_away_win_prob + board$ensemble_draw_prob * board$away_tiebreak_share,
+  board$ensemble_away_win_prob
+)
+advance_total <- board$home_advance_prob + board$away_advance_prob
+valid_advance_total <- is.finite(advance_total) & advance_total > 0
+board$home_advance_prob[valid_advance_total] <- board$home_advance_prob[valid_advance_total] /
+  advance_total[valid_advance_total]
+board$away_advance_prob[valid_advance_total] <- board$away_advance_prob[valid_advance_total] /
+  advance_total[valid_advance_total]
+
 ensemble_matrix <- as.matrix(board[, c(
   "ensemble_home_win_prob",
   "ensemble_draw_prob",
   "ensemble_away_win_prob"
 )])
 outcome_index <- max.col(ensemble_matrix, ties.method = "first")
-board$predicted_outcome <- c("home win", "draw", "away win")[outcome_index]
-board$predicted_winner <- ifelse(
-  board$predicted_outcome == "home win",
+board$regulation_predicted_outcome <- c("home win", "draw", "away win")[outcome_index]
+board$regulation_predicted_winner <- ifelse(
+  board$regulation_predicted_outcome == "home win",
   board$home_team,
-  ifelse(board$predicted_outcome == "away win", board$away_team, "Draw")
+  ifelse(board$regulation_predicted_outcome == "away win", board$away_team, "Draw")
 )
-board$prediction_confidence <- apply(ensemble_matrix, 1, max, na.rm = TRUE)
+board$predicted_outcome <- ifelse(
+  board$is_knockout_match,
+  ifelse(board$home_advance_prob >= board$away_advance_prob, "home advances", "away advances"),
+  board$regulation_predicted_outcome
+)
+board$predicted_winner <- ifelse(
+  board$predicted_outcome %in% c("home win", "home advances"),
+  board$home_team,
+  ifelse(board$predicted_outcome %in% c("away win", "away advances"), board$away_team, "Draw")
+)
+board$prediction_confidence <- ifelse(
+  board$is_knockout_match,
+  pmax(board$home_advance_prob, board$away_advance_prob),
+  apply(ensemble_matrix, 1, max, na.rm = TRUE)
+)
 board$confidence_band <- cut(
   board$prediction_confidence,
   breaks = c(-Inf, 0.45, 0.60, Inf),
@@ -139,6 +227,12 @@ board$confidence_band <- cut(
   right = FALSE
 )
 board$expected_total_goals <- board$pred_home_goals_poisson + board$pred_away_goals_poisson
+board$final_result_mode <- ifelse(
+  board$is_knockout_match,
+  "Knockout: projected winner means advances after regulation, extra time, or penalties",
+  "Group stage: projected result can be a win, draw, or loss"
+)
+board$draw_probability_label <- ifelse(board$is_knockout_match, "Level after regulation", "Draw")
 
 db_path <- file.path(here::here(), "data", "processed", "world_cup.duckdb")
 drv <- duckdb::duckdb(dbdir = db_path, read_only = TRUE)
@@ -200,14 +294,70 @@ if (nrow(api_fixtures) > 0) {
     norm_team(board$away_team),
     sep = "|"
   )
-  api_lookup <- api_fixtures[, c("join_key", "api_fixture_id", "status_long", "status_short")]
+  api_columns <- c(
+    "join_key",
+    "api_fixture_id",
+    "status_long",
+    "status_short",
+    "round",
+    "home_winner",
+    "away_winner",
+    "extratime_home",
+    "extratime_away",
+    "penalty_home",
+    "penalty_away"
+  )
+  api_columns <- api_columns[api_columns %in% names(api_fixtures)]
+  api_lookup <- api_fixtures[, api_columns]
   api_lookup <- api_lookup[!duplicated(api_lookup$join_key), ]
   board <- merge(board, api_lookup, by = "join_key", all.x = TRUE, sort = FALSE)
 } else {
   board$api_fixture_id <- NA
   board$status_long <- NA
   board$status_short <- NA
+  board$round <- NA_character_
+  board$home_winner <- NA
+  board$away_winner <- NA
+  board$extratime_home <- NA_real_
+  board$extratime_away <- NA_real_
+  board$penalty_home <- NA_real_
+  board$penalty_away <- NA_real_
 }
+
+for (column in c(
+  "round",
+  "home_winner",
+  "away_winner",
+  "extratime_home",
+  "extratime_away",
+  "penalty_home",
+  "penalty_away"
+)) {
+  if (!column %in% names(board)) {
+    board[[column]] <- NA
+  }
+}
+
+flag_true <- function(x) {
+  tolower(as.character(x)) %in% c("true", "1", "yes")
+}
+board$actual_advancing_team <- ifelse(
+  flag_true(board$home_winner),
+  board$home_team,
+  ifelse(flag_true(board$away_winner), board$away_team, NA_character_)
+)
+board$extra_time_score <- ifelse(
+  is.finite(suppressWarnings(as.numeric(board$extratime_home))) |
+    is.finite(suppressWarnings(as.numeric(board$extratime_away))),
+  paste0(board$extratime_home, "-", board$extratime_away),
+  NA_character_
+)
+board$penalty_score <- ifelse(
+  is.finite(suppressWarnings(as.numeric(board$penalty_home))) |
+    is.finite(suppressWarnings(as.numeric(board$penalty_away))),
+  paste0(board$penalty_home, "-", board$penalty_away),
+  NA_character_
+)
 
 lineup_status <- data.frame()
 if (nrow(lineups) > 0 && "lineup_role" %in% names(lineups)) {
@@ -374,11 +524,19 @@ public_columns <- c(
   "away_team",
   "score_state",
   "actual_result",
+  "actual_advancing_team",
+  "extra_time_score",
+  "penalty_score",
   "kickoff_local_iso",
   "kickoff_utc_iso",
   "refresh_utc_iso",
+  "is_knockout_match",
+  "final_result_mode",
+  "draw_probability_label",
   "predicted_winner",
   "predicted_outcome",
+  "regulation_predicted_winner",
+  "regulation_predicted_outcome",
   "ols_predicted_winner",
   "poisson_predicted_winner",
   "ordinal_predicted_winner",
@@ -387,6 +545,11 @@ public_columns <- c(
   "ensemble_home_win_prob",
   "ensemble_draw_prob",
   "ensemble_away_win_prob",
+  "regulation_draw_prob",
+  "home_tiebreak_share",
+  "away_tiebreak_share",
+  "home_advance_prob",
+  "away_advance_prob",
   "most_likely_score",
   "pred_home_goals_poisson",
   "pred_away_goals_poisson",
@@ -422,7 +585,8 @@ summary <- data.frame(
     "event_rows_available",
     "provider_prediction_rows_available",
     "api_fixture_rows_available",
-    "player_card_rows_available"
+    "player_card_rows_available",
+    "knockout_matches_on_board"
   ),
   value = c(
     format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"),
@@ -434,7 +598,8 @@ summary <- data.frame(
     nrow(events),
     nrow(api_predictions),
     nrow(api_fixtures),
-    nrow(api_players)
+    nrow(api_players),
+    sum(board_public$is_knockout_match, na.rm = TRUE)
   ),
   stringsAsFactors = FALSE
 )
@@ -446,6 +611,7 @@ data_sources <- data.frame(
     "Most likely score",
     "Over 2.5 goals",
     "Both teams to score",
+    "Knockout advancement",
     "Yellow cards",
     "Lineups",
     "Provider prediction"
@@ -456,6 +622,7 @@ data_sources <- data.frame(
     "Independent Poisson score grid",
     "Independent Poisson score grid",
     "Independent Poisson score grid",
+    "Draw-after-regulation probability allocated through team-strength tiebreak share",
     "API player card rates when available",
     "API-Football fixture lineups when posted",
     "API-Football fixture prediction feed when available"
@@ -466,6 +633,7 @@ data_sources <- data.frame(
     "Active",
     "Active",
     "Active",
+    ifelse(any(board_public$is_knockout_match, na.rm = TRUE), "Active for knockout matches", "Not needed for group-stage matches"),
     ifelse(any(is.finite(board_public$home_projected_yellow_cards)), "Active", "Awaiting card-history rows"),
     ifelse(any(board_public$home_lineup_status == "Confirmed"), "Active", "Awaiting posted lineups"),
     ifelse(any(!is.na(board_public$provider_prediction)), "Active", "Awaiting provider prediction rows")
@@ -484,10 +652,43 @@ completed_accuracy <- board[
 accuracy <- data.frame()
 accuracy_detail <- data.frame()
 if (nrow(completed_accuracy) > 0) {
-  completed_accuracy$actual_winner <- ifelse(
+  actual_advancer_available <- !is.na(completed_accuracy$actual_advancing_team) &
+    nzchar(completed_accuracy$actual_advancing_team)
+  completed_accuracy$actual_advancing_team <- ifelse(
+    completed_accuracy$is_knockout_match & actual_advancer_available,
+    completed_accuracy$actual_advancing_team,
+    ifelse(
+      completed_accuracy$is_knockout_match & completed_accuracy$home_score > completed_accuracy$away_score,
+      completed_accuracy$home_team,
+      ifelse(
+        completed_accuracy$is_knockout_match & completed_accuracy$home_score < completed_accuracy$away_score,
+        completed_accuracy$away_team,
+        ifelse(completed_accuracy$is_knockout_match, NA_character_, completed_accuracy$actual_advancing_team)
+      )
+    )
+  )
+  completed_accuracy$actual_public_outcome <- ifelse(
+    completed_accuracy$is_knockout_match,
+    ifelse(
+      completed_accuracy$actual_advancing_team == completed_accuracy$home_team,
+      "home advances",
+      ifelse(completed_accuracy$actual_advancing_team == completed_accuracy$away_team, "away advances", NA_character_)
+    ),
+    completed_accuracy$actual_result
+  )
+  group_stage_actual_winner <- ifelse(
     completed_accuracy$actual_result == "home win",
     completed_accuracy$home_team,
     ifelse(completed_accuracy$actual_result == "away win", completed_accuracy$away_team, "Draw")
+  )
+  completed_accuracy$actual_winner <- ifelse(
+    completed_accuracy$is_knockout_match,
+    ifelse(
+      !is.na(completed_accuracy$actual_advancing_team),
+      completed_accuracy$actual_advancing_team,
+      "Official advancement pending"
+    ),
+    group_stage_actual_winner
   )
   completed_accuracy$actual_total_goals <- completed_accuracy$home_score + completed_accuracy$away_score
   completed_accuracy$ols_total_goals <- completed_accuracy$pred_home_goals_ols + completed_accuracy$pred_away_goals_ols
@@ -502,29 +703,39 @@ if (nrow(completed_accuracy) > 0) {
     abs(completed_accuracy$pred_home_goals_poisson - completed_accuracy$home_score) +
       abs(completed_accuracy$pred_away_goals_poisson - completed_accuracy$away_score)
   ) / 2
+  ensemble_home_probability_actual <- ifelse(
+    completed_accuracy$is_knockout_match,
+    completed_accuracy$home_advance_prob,
+    completed_accuracy$ensemble_home_win_prob
+  )
+  ensemble_away_probability_actual <- ifelse(
+    completed_accuracy$is_knockout_match,
+    completed_accuracy$away_advance_prob,
+    completed_accuracy$ensemble_away_win_prob
+  )
   completed_accuracy$ensemble_probability_actual <- ifelse(
-    completed_accuracy$actual_result == "home win",
-    completed_accuracy$ensemble_home_win_prob,
+    completed_accuracy$actual_public_outcome %in% c("home win", "home advances"),
+    ensemble_home_probability_actual,
     ifelse(
-      completed_accuracy$actual_result == "away win",
-      completed_accuracy$ensemble_away_win_prob,
+      completed_accuracy$actual_public_outcome %in% c("away win", "away advances"),
+      ensemble_away_probability_actual,
       completed_accuracy$ensemble_draw_prob
     )
   )
   completed_accuracy$poisson_probability_actual <- ifelse(
-    completed_accuracy$actual_result == "home win",
+    completed_accuracy$actual_public_outcome %in% c("home win", "home advances"),
     completed_accuracy$poisson_home_win_prob,
     ifelse(
-      completed_accuracy$actual_result == "away win",
+      completed_accuracy$actual_public_outcome %in% c("away win", "away advances"),
       completed_accuracy$poisson_away_win_prob,
       completed_accuracy$poisson_draw_prob
     )
   )
   completed_accuracy$ordinal_probability_actual <- ifelse(
-    completed_accuracy$actual_result == "home win",
+    completed_accuracy$actual_public_outcome %in% c("home win", "home advances"),
     completed_accuracy$pred_home_win_prob,
     ifelse(
-      completed_accuracy$actual_result == "away win",
+      completed_accuracy$actual_public_outcome %in% c("away win", "away advances"),
       completed_accuracy$pred_away_win_prob,
       completed_accuracy$pred_draw_prob
     )
@@ -534,10 +745,10 @@ if (nrow(completed_accuracy) > 0) {
     model = c("Ensemble", "OLS goals", "Poisson score grid", "Ordinal result"),
     completed_matches = nrow(completed_accuracy),
     outcome_accuracy = c(
-      mean(completed_accuracy$predicted_outcome == completed_accuracy$actual_result, na.rm = TRUE),
-      mean(completed_accuracy$ols_predicted_outcome == completed_accuracy$actual_result, na.rm = TRUE),
-      mean(completed_accuracy$poisson_predicted_outcome == completed_accuracy$actual_result, na.rm = TRUE),
-      mean(completed_accuracy$ordinal_predicted_outcome == completed_accuracy$actual_result, na.rm = TRUE)
+      mean(completed_accuracy$predicted_outcome == completed_accuracy$actual_public_outcome, na.rm = TRUE),
+      mean(completed_accuracy$ols_predicted_outcome == completed_accuracy$actual_public_outcome, na.rm = TRUE),
+      mean(completed_accuracy$poisson_predicted_outcome == completed_accuracy$actual_public_outcome, na.rm = TRUE),
+      mean(completed_accuracy$ordinal_predicted_outcome == completed_accuracy$actual_public_outcome, na.rm = TRUE)
     ),
     avg_total_goal_error = c(
       mean(completed_accuracy$poisson_total_goal_error, na.rm = TRUE),
@@ -566,25 +777,28 @@ if (nrow(completed_accuracy) > 0) {
     match_label = completed_accuracy$match_label,
     actual_score = paste0(completed_accuracy$home_score, "-", completed_accuracy$away_score),
     actual_result = completed_accuracy$actual_result,
+    actual_public_outcome = completed_accuracy$actual_public_outcome,
     actual_winner = completed_accuracy$actual_winner,
+    extra_time_score = completed_accuracy$extra_time_score,
+    penalty_score = completed_accuracy$penalty_score,
     ensemble_pick = completed_accuracy$predicted_winner,
     ensemble_result = completed_accuracy$predicted_outcome,
-    ensemble_correct = completed_accuracy$predicted_outcome == completed_accuracy$actual_result,
+    ensemble_correct = completed_accuracy$predicted_outcome == completed_accuracy$actual_public_outcome,
     ensemble_probability_actual = completed_accuracy$ensemble_probability_actual,
     ols_pick = completed_accuracy$ols_predicted_winner,
     ols_result = completed_accuracy$ols_predicted_outcome,
-    ols_correct = completed_accuracy$ols_predicted_outcome == completed_accuracy$actual_result,
+    ols_correct = completed_accuracy$ols_predicted_outcome == completed_accuracy$actual_public_outcome,
     ols_total_goal_error = completed_accuracy$ols_total_goal_error,
     ols_team_goal_mae = completed_accuracy$ols_team_goal_mae,
     poisson_pick = completed_accuracy$poisson_predicted_winner,
     poisson_result = completed_accuracy$poisson_predicted_outcome,
-    poisson_correct = completed_accuracy$poisson_predicted_outcome == completed_accuracy$actual_result,
+    poisson_correct = completed_accuracy$poisson_predicted_outcome == completed_accuracy$actual_public_outcome,
     poisson_probability_actual = completed_accuracy$poisson_probability_actual,
     poisson_total_goal_error = completed_accuracy$poisson_total_goal_error,
     poisson_team_goal_mae = completed_accuracy$poisson_team_goal_mae,
     ordinal_pick = completed_accuracy$ordinal_predicted_winner,
     ordinal_result = completed_accuracy$ordinal_predicted_outcome,
-    ordinal_correct = completed_accuracy$ordinal_predicted_outcome == completed_accuracy$actual_result,
+    ordinal_correct = completed_accuracy$ordinal_predicted_outcome == completed_accuracy$actual_public_outcome,
     ordinal_probability_actual = completed_accuracy$ordinal_probability_actual,
     stringsAsFactors = FALSE
   )

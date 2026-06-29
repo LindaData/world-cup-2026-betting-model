@@ -1,6 +1,6 @@
 ---
 title: "Model Overview"
-subtitle: "2026 match scores and win/draw/loss probabilities from local models"
+subtitle: "2026 match scores, regulation probabilities, and knockout advancement forecasts from local models"
 ---
 
 ```{r setup, include=FALSE}
@@ -25,6 +25,7 @@ Each fixture receives:
 - OLS expected goals for the home and away team.
 - Poisson expected goals for the home and away team.
 - Ordinal win, draw, and loss probabilities from the home team's perspective.
+- Knockout-stage advance probabilities, where draw-after-regulation is reallocated through a team-strength tiebreak signal.
 - Weather context when venue-level weather summaries are available.
 
 ## Scoring Summary
@@ -53,6 +54,16 @@ The table below shows a compact version of the scored fixture set. Probabilities
 
 ```{r predictions}
 predictions <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "world_cup_2026_fixture_predictions.csv"))
+if (nrow(predictions) > 0 && !"is_knockout_match" %in% names(predictions)) {
+  predictions <- predictions |>
+    dplyr::mutate(
+      is_knockout_match = as.Date(date) >= as.Date("2026-06-28"),
+      regulation_draw_prob = pred_draw_prob,
+      home_advance_prob = pred_home_win_prob,
+      away_advance_prob = pred_away_win_prob,
+      predicted_advancing_team = NA_character_
+    )
+}
 
 if (nrow(predictions) > 0) {
   predictions |>
@@ -72,8 +83,28 @@ if (nrow(predictions) > 0) {
         fmt_number(pred_away_goals_ols, 2)
       ),
       home_win = fmt_percent(pred_home_win_prob, 1),
-      draw = fmt_percent(pred_draw_prob, 1),
+      draw_or_level = dplyr::if_else(
+        is_knockout_match,
+        paste0("Level after regulation ", fmt_percent(regulation_draw_prob, 1)),
+        paste0("Draw ", fmt_percent(pred_draw_prob, 1))
+      ),
       away_win = fmt_percent(pred_away_win_prob, 1),
+      home_advances = dplyr::if_else(
+        is_knockout_match,
+        fmt_percent(home_advance_prob, 1),
+        ""
+      ),
+      away_advances = dplyr::if_else(
+        is_knockout_match,
+        fmt_percent(away_advance_prob, 1),
+        ""
+      ),
+      public_pick = dplyr::if_else(
+        is_knockout_match,
+        predicted_advancing_team,
+        predicted_result
+      ),
+      phase = dplyr::if_else(is_knockout_match, "Knockout", "Group"),
       weather = dplyr::if_else(
         is.na(avg_temperature_2m),
         "",
@@ -82,15 +113,18 @@ if (nrow(predictions) > 0) {
     ) |>
     dplyr::select(
       date,
+      phase,
       home_team,
       away_team,
       score,
       poisson_expected_goals,
       ols_expected_goals,
       home_win,
-      draw,
+      draw_or_level,
       away_win,
-      predicted_result,
+      home_advances,
+      away_advances,
+      public_pick,
       city,
       weather
     ) |>
@@ -116,11 +150,14 @@ if (nrow(predictions) > 0) {
         fmt_number(pred_away_goals_poisson, 2)
       ),
       probabilities = paste0(
-        "H ",
+        home_team,
+        " ",
         fmt_percent(pred_home_win_prob, 1),
-        " / D ",
-        fmt_percent(pred_draw_prob, 1),
-        " / A ",
+        " / level ",
+        fmt_percent(regulation_draw_prob, 1),
+        " / ",
+        away_team,
+        " ",
         fmt_percent(pred_away_win_prob, 1)
       )
     )
@@ -148,27 +185,43 @@ if (nrow(predictions) > 0) {
 
 ## Probability View
 
-```{r probability-plot, fig.cap="Predicted home win, draw, and away win probabilities for upcoming fixtures."}
+```{r probability-plot, fig.cap="Predicted public probabilities for upcoming fixtures."}
 if (nrow(predictions) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
   wide_plot_data <- predictions |>
+    dplyr::filter(is.na(home_score), is.na(away_score)) |>
     dplyr::mutate(match = paste(home_team, "vs", away_team)) |>
     dplyr::arrange(date, source_match_id) |>
     dplyr::slice_head(n = 12) |>
-    dplyr::select(match, pred_home_win_prob, pred_draw_prob, pred_away_win_prob)
+    dplyr::mutate(
+      home_public_prob = dplyr::if_else(is_knockout_match, home_advance_prob, pred_home_win_prob),
+      middle_public_prob = dplyr::if_else(is_knockout_match, regulation_draw_prob, pred_draw_prob),
+      away_public_prob = dplyr::if_else(is_knockout_match, away_advance_prob, pred_away_win_prob),
+      middle_label = dplyr::if_else(is_knockout_match, "Level after regulation", "Draw"),
+      home_label = dplyr::if_else(is_knockout_match, "Home advances", "Home win"),
+      away_label = dplyr::if_else(is_knockout_match, "Away advances", "Away win")
+    ) |>
+    dplyr::select(match, home_public_prob, middle_public_prob, away_public_prob, home_label, middle_label, away_label)
 
   plot_data <- rbind(
-    data.frame(match = wide_plot_data$match, outcome = "Home win", probability = wide_plot_data$pred_home_win_prob),
-    data.frame(match = wide_plot_data$match, outcome = "Draw", probability = wide_plot_data$pred_draw_prob),
-    data.frame(match = wide_plot_data$match, outcome = "Away win", probability = wide_plot_data$pred_away_win_prob)
+    data.frame(match = wide_plot_data$match, outcome = wide_plot_data$home_label, probability = wide_plot_data$home_public_prob),
+    data.frame(match = wide_plot_data$match, outcome = wide_plot_data$middle_label, probability = wide_plot_data$middle_public_prob),
+    data.frame(match = wide_plot_data$match, outcome = wide_plot_data$away_label, probability = wide_plot_data$away_public_prob)
   )
   plot_data$match <- factor(plot_data$match, levels = rev(unique(wide_plot_data$match)))
 
   ggplot2::ggplot(plot_data, ggplot2::aes(x = probability, y = match, fill = outcome)) +
     ggplot2::geom_col(position = "stack", width = 0.72) +
     ggplot2::scale_x_continuous(labels = function(x) paste0(round(100 * x), "%")) +
-    ggplot2::scale_fill_manual(values = c("Home win" = "#0f6b68", "Draw" = "#d9a441", "Away win" = "#b85c5c")) +
+    ggplot2::scale_fill_manual(values = c(
+      "Home win" = "#0f6b68",
+      "Home advances" = "#0f6b68",
+      "Draw" = "#d9a441",
+      "Level after regulation" = "#d9a441",
+      "Away win" = "#b85c5c",
+      "Away advances" = "#b85c5c"
+    )) +
     ggplot2::labs(
-      title = "Fixture result probabilities",
+      title = "Fixture public probabilities",
       x = "Predicted probability",
       y = NULL,
       fill = NULL
@@ -186,6 +239,7 @@ The fixture table is the model's operational output:
 
 - The Poisson goal estimates are the main expected-goals baseline.
 - The ordinal model supplies win/draw/loss probabilities.
+- Knockout forecasts convert draw-after-regulation into advance probabilities, because those matches must eventually produce a winner.
 - OLS remains a transparent benchmark, but count models are better suited for goals.
 - Weather is shown as context until enough historical weather coverage exists for coefficient estimation.
 

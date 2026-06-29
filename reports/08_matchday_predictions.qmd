@@ -1,7 +1,7 @@
 ---
 title: "Predictions"
 subtitle: "Today, upcoming matches, bracket projections, and post-match model review."
-description: "World Cup 2026 match predictions with win, draw, and loss probabilities, expected scores, model performance, and a mobile-friendly bracket."
+description: "World Cup 2026 match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket."
 toc: false
 number-sections: false
 code-tools: false
@@ -71,10 +71,12 @@ cat(render_technical_prediction_table(board))
 
 ## Reading The Forecast
 
-- **Win probability** is the model-estimated chance that a specific team wins the match.
-- **Draw probability** is the model-estimated chance that the match ends level.
+- **Win probability** is the model-estimated chance that a specific team wins the match in regulation or group-stage scoring.
+- **Advance probability** appears for knockout matches. It includes the path through regulation, extra time, or penalties.
+- **Level after regulation** is the chance that a knockout match is tied after 90 minutes. It is not treated as a final draw.
+- **Draw probability** applies to matches where a draw can be the final result.
 - **Prediction strength** is the top outcome probability grouped into plain language. It is not a guarantee.
-- **Model agreement** counts how many baseline models point to the same winner or draw.
+- **Model agreement** counts how many baseline models point to the same winner, draw, or advancing team.
 - **Expected goals** is the model average score, not the single most likely score.
 - **Most likely score** is the exact scoreline with the largest probability in the score grid.
 - **Over 2.5 goals** means the match has at least 3 total goals.
