@@ -21,7 +21,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
   vertical-align: middle;
 }
 </style>
@@ -104,62 +104,70 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link active" href="./index.html" aria-current="page">
 <span class="menu-text">Home</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="./reports/08_matchday_predictions.html"> 
+    <a class="nav-link" href="./reports/08_matchday_predictions.html">
 <span class="menu-text">Predictions</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="./reports/08_matchday_predictions.html#bracket"> 
+    <a class="nav-link" href="./reports/08_matchday_predictions.html#bracket">
 <span class="menu-text">Bracket</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="./reports/00_data_overview.html"> 
-<span class="menu-text">Data</span></a>
-  </li>  
+    <a class="nav-link" href="./reports/00_data_overview.html">
+<span class="menu-text">Coverage</span></a>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Methodology</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">
         <li>
     <a class="dropdown-item" href="./reports/08_matchday_predictions.html#model-performance">
  <span class="dropdown-text">Model Performance</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./reports/07_fixture_predictions.html">
  <span class="dropdown-text">Model Overview</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./reports/05_poisson_goals_model.html">
  <span class="dropdown-text">Goals Forecast</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./reports/02_ordinal_result_model.html">
  <span class="dropdown-text">Win / Draw / Loss Model</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./reports/04_knn_similarity_model.html">
  <span class="dropdown-text">Similar Match Model</span></a>
-  </li>  
+  </li>
+        <li>
+    <a class="dropdown-item" href="./reports/10_model_challengers.html">
+ <span class="dropdown-text">Model Challengers</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="./reports/03_distribution_review.html">
+ <span class="dropdown-text">Distribution Checks</span></a>
+  </li>
         <li>
     <a class="dropdown-item" href="./reports/06_regression_diagnostics.html">
  <span class="dropdown-text">Diagnostics</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./reports/09_multisport_expansion.html">
  <span class="dropdown-text">Multi-Sport Roadmap</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model"> 
+    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model">
 <span class="menu-text">GitHub</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -171,9 +179,9 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -190,17 +198,17 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
 
 
-<section class="product-hero">
+<section class="product-hero page-columns page-full">
 <div class="hero-copy">
 <div class="status-row">
 <span class="status-chip">Beta</span><span class="status-chip">Knockout stage</span><span class="status-chip muted">Last updated 2026-06-29 15:44:30 EDT</span><span class="status-chip muted">Data current through June 27, 2026</span>
@@ -221,21 +229,45 @@ Forecasts come first. Data coverage, methodology, and diagnostics stay available
 Times are shown in your local timezone when available. UTC is the fallback.
 </p>
 </div>
+<aside class="hero-forecast-panel" aria-label="Featured next forecast">
+<span class="section-kicker">Next forecast</span>
+<h2 class="anchored">
+South Africa <span>vs</span> Canada
+</h2>
+<p class="hero-kickoff">
+<span class="time-unavailable">Sun, Jun 28 <small>Kickoff time not posted</small></span>
+</p>
+<div class="hero-pick">
+<span>Projected to advance</span><strong>Canada</strong><small>Strong strength · 33.1 percentage points edge</small>
+</div>
+<div class="hero-prob-list">
+<div>
+<span>South Africa advance</span><strong>33.5%</strong>
+</div>
+<div>
+<span>Level after regulation</span><strong>26.6%</strong>
+</div>
+<div>
+<span>Canada advance</span><strong>66.5%</strong>
+</div>
+</div>
+<a class="button-secondary hero-panel-link" href="reports/08_matchday_predictions.html#next-match">Open forecast</a>
+</aside>
 </section>
-<div class="metric-strip">
-<div class="metric">
-<strong>Matches tracked</strong><span>88</span><small>fixture board</small>
+<section class="quick-read-section" aria-label="Forecast board summary">
+<div class="quick-read-card">
+<span>Matches tracked</span><strong>88</strong><small>fixture board</small>
 </div>
-<div class="metric">
-<strong>Today</strong><span>3</span><small>current slate</small>
+<div class="quick-read-card">
+<span>Today</span><strong>3</strong><small>current slate</small>
 </div>
-<div class="metric">
-<strong>Upcoming</strong><span>12</span><small>future fixtures</small>
+<div class="quick-read-card">
+<span>Upcoming</span><strong>12</strong><small>future forecasts</small>
 </div>
-<div class="metric">
-<strong>Completed</strong><span>72</span><small>graded results</small>
+<div class="quick-read-card">
+<span>Completed</span><strong>72</strong><small>graded results</small>
 </div>
-</div>
+</section>
 <section class="page-section static-note-section">
 <div class="performance-note">
 <strong>Static-site setup:</strong> Forecasts are generated offline from prepared model files and published as a static report. The public page shows outputs and documentation without exposing private feeds or keys. <span class="section-note">Last generated: 2026-06-29 15:44:30 EDT.</span>
@@ -312,7 +344,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 </div>
 <details class="forecast-details">
 <summary>
-View details
+View match details
 </summary>
 <dl>
 <dt>
@@ -426,7 +458,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 </div>
 <details class="forecast-details">
 <summary>
-View details
+View match details
 </summary>
 <dl>
 <dt>
@@ -540,7 +572,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 </div>
 <details class="forecast-details">
 <summary>
-View details
+View match details
 </summary>
 <dl>
 <dt>
@@ -667,7 +699,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 </div>
 <details class="forecast-details" open="">
 <summary>
-View details
+View match details
 </summary>
 <dl>
 <dt>
@@ -794,7 +826,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 </div>
 <details class="forecast-details">
 <summary>
-View details
+View match details
 </summary>
 <dl>
 <dt>
@@ -908,7 +940,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 </div>
 <details class="forecast-details">
 <summary>
-View details
+View match details
 </summary>
 <dl>
 <dt>
@@ -1022,7 +1054,7 @@ Knockout match: level after regulation is not a final draw. Advance probability 
 </div>
 <details class="forecast-details">
 <summary>
-View details
+View match details
 </summary>
 <dl>
 <dt>
@@ -2198,7 +2230,7 @@ Responsible use: this site presents statistical forecasts for education and rese
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -2218,11 +2250,11 @@ Responsible use: this site presents statistical forecasts for education and rese
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -2304,7 +2336,7 @@ Responsible use: this site presents statistical forecasts for education and rese
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -2379,7 +2411,7 @@ Responsible use: this site presents statistical forecasts for education and rese
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -2407,7 +2439,7 @@ Responsible use: this site presents statistical forecasts for education and rese
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -2431,7 +2463,7 @@ Responsible use: this site presents statistical forecasts for education and rese
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -2471,7 +2503,7 @@ Responsible use: this site presents statistical forecasts for education and rese
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -2597,7 +2629,7 @@ Responsible use: this site presents statistical forecasts for education and rese
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>LindaData World Cup 2026 forecasting model.</p>
-</div>   
+</div>
     <div class="nav-footer-center">
       &nbsp;
     </div>

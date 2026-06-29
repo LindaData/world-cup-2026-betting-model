@@ -83,7 +83,7 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
   status <- safe_text(row$match_timing, "Scheduled")
   knockout <- is_knockout_forecast(row)
   pick_label <- if (knockout) "Projected to advance" else "Model pick"
-  probability_label <- if (knockout) "Advancement and regulation-level probabilities" else "Win draw loss probabilities"
+  probability_label <- if (knockout) "Advancement and regulation-level probabilities" else "Win / draw / loss probabilities"
   draw_label <- safe_text(row$draw_probability_label, if (knockout) "Level after regulation" else "Draw")
   strength <- prediction_strength(row)
   expected_goals <- paste0(
@@ -157,7 +157,7 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
     '<div><span>Forecast generated</span><strong>', refresh, '</strong></div>',
     '</div>',
     '<details class="forecast-details"', open_attr, '>',
-    '<summary>View details</summary>',
+    '<summary>View match details</summary>',
     '<dl>',
     regulation_detail,
     '<dt>Over 2.5 goals</dt><dd>', display_percent(row$over_2_5_prob, 1), '<small>Chance the match has at least 3 total goals.</small></dd>',
@@ -175,6 +175,7 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
 }
 
 render_home_hero <- function(summary, board) {
+  next_match <- future_board(board)
   completed <- if (nrow(board) > 0) {
     max(as.Date(board$date[board$match_timing == "Completed"]), na.rm = TRUE)
   } else {
@@ -184,6 +185,47 @@ render_home_hero <- function(summary, board) {
     format(completed, "%B %d, %Y")
   } else {
     "the latest refresh"
+  }
+
+  hero_panel <- if (nrow(next_match) > 0) {
+    row <- next_match[1, ]
+    knockout <- is_knockout_forecast(row)
+    home <- safe_text(row$home_team, "Home team")
+    away <- safe_text(row$away_team, "Away team")
+    pick_label <- if (knockout) "Projected to advance" else "Model pick"
+    home_label <- if (knockout) paste(home, "advance") else paste(home, "win")
+    away_label <- if (knockout) paste(away, "advance") else paste(away, "win")
+    middle_label <- if (knockout) safe_text(row$draw_probability_label, "Level after regulation") else "Draw"
+    home_prob <- if (knockout) row$home_advance_prob else row$ensemble_home_win_prob
+    away_prob <- if (knockout) row$away_advance_prob else row$ensemble_away_win_prob
+    middle_prob <- if (knockout) row$regulation_draw_prob else row$ensemble_draw_prob
+    paste0(
+      '<aside class="hero-forecast-panel" aria-label="Featured next forecast">',
+      '<span class="section-kicker">Next forecast</span>',
+      '<h2>', escape_html(home), ' <span>vs</span> ', escape_html(away), '</h2>',
+      '<p class="hero-kickoff">', match_time_display(row), '</p>',
+      '<div class="hero-pick">',
+      '<span>', escape_html(pick_label), '</span>',
+      '<strong>', escape_html(safe_text(row$predicted_winner, "No model pick yet")), '</strong>',
+      '<small>', escape_html(prediction_strength(row)), ' strength · ', escape_html(probability_edge(row)), ' edge</small>',
+      '</div>',
+      '<div class="hero-prob-list">',
+      '<div><span>', escape_html(home_label), '</span><strong>', display_percent(home_prob, 1), '</strong></div>',
+      '<div><span>', escape_html(middle_label), '</span><strong>', display_percent(middle_prob, 1), '</strong></div>',
+      '<div><span>', escape_html(away_label), '</span><strong>', display_percent(away_prob, 1), '</strong></div>',
+      '</div>',
+      '<a class="button-secondary hero-panel-link" href="reports/08_matchday_predictions.html#next-match">Open forecast</a>',
+      '</aside>'
+    )
+  } else {
+    paste0(
+      '<aside class="hero-forecast-panel" aria-label="Featured forecast status">',
+      '<span class="section-kicker">Forecast status</span>',
+      '<h2>No upcoming match is available</h2>',
+      '<p>The board will update after the next fixture refresh.</p>',
+      '<a class="button-secondary hero-panel-link" href="reports/08_matchday_predictions.html">Open prediction board</a>',
+      '</aside>'
+    )
   }
 
   paste0(
@@ -204,6 +246,37 @@ render_home_hero <- function(summary, board) {
     '</div>',
     '<p class="timezone-note">Times are shown in your local timezone when available. UTC is the fallback.</p>',
     '</div>',
+    hero_panel,
+    '</section>'
+  )
+}
+
+render_quick_status <- function(summary) {
+  cards <- data.frame(
+    label = c("Matches tracked", "Today", "Upcoming", "Completed"),
+    value = c(
+      summary_value(summary, "matches_on_board", "0"),
+      summary_value(summary, "matches_today", "0"),
+      summary_value(summary, "upcoming_matches", "0"),
+      summary_value(summary, "completed_matches", "0")
+    ),
+    note = c("fixture board", "current slate", "future forecasts", "graded results"),
+    stringsAsFactors = FALSE
+  )
+
+  card_html <- apply(cards, 1, function(row) {
+    paste0(
+      '<div class="quick-read-card">',
+      '<span>', escape_html(row[["label"]]), '</span>',
+      '<strong>', escape_html(row[["value"]]), '</strong>',
+      '<small>', escape_html(row[["note"]]), '</small>',
+      '</div>'
+    )
+  })
+
+  paste0(
+    '<section class="quick-read-section" aria-label="Forecast board summary">',
+    paste(card_html, collapse = ""),
     '</section>'
   )
 }

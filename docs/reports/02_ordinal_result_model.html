@@ -20,7 +20,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
@@ -171,62 +171,70 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../index.html">
 <span class="menu-text">Home</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../reports/08_matchday_predictions.html"> 
+    <a class="nav-link" href="../reports/08_matchday_predictions.html">
 <span class="menu-text">Predictions</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket"> 
+    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket">
 <span class="menu-text">Bracket</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../reports/00_data_overview.html"> 
-<span class="menu-text">Data</span></a>
-  </li>  
+    <a class="nav-link" href="../reports/00_data_overview.html">
+<span class="menu-text">Coverage</span></a>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Methodology</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">
         <li>
     <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-performance">
  <span class="dropdown-text">Model Performance</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../reports/07_fixture_predictions.html">
  <span class="dropdown-text">Model Overview</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../reports/05_poisson_goals_model.html">
  <span class="dropdown-text">Goals Forecast</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../reports/02_ordinal_result_model.html">
  <span class="dropdown-text">Win / Draw / Loss Model</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../reports/04_knn_similarity_model.html">
  <span class="dropdown-text">Similar Match Model</span></a>
-  </li>  
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/10_model_challengers.html">
+ <span class="dropdown-text">Model Challengers</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../reports/03_distribution_review.html">
+ <span class="dropdown-text">Distribution Checks</span></a>
+  </li>
         <li>
     <a class="dropdown-item" href="../reports/06_regression_diagnostics.html">
  <span class="dropdown-text">Diagnostics</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../reports/09_multisport_expansion.html">
  <span class="dropdown-text">Multi-Sport Roadmap</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model"> 
+    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model">
 <span class="menu-text">GitHub</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -241,7 +249,7 @@ window.Quarto = {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
-   
+
   <ul>
   <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#unit-of-observation" id="toc-unit-of-observation" class="nav-link" data-scroll-target="#unit-of-observation"><span class="header-section-number">2</span> Unit Of Observation</a></li>
@@ -270,11 +278,11 @@ window.Quarto = {
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
@@ -1650,7 +1658,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -1670,11 +1678,11 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -1748,7 +1756,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
           if (codeDiv.classList.contains(fromCls)) {
             codeDiv.classList.remove(fromCls);
             codeDiv.classList.add(toCls);
-          } 
+          }
         }
         return false;
       }
@@ -1807,7 +1815,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -1882,7 +1890,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -1910,7 +1918,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -1934,7 +1942,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -1974,7 +1982,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -2341,7 +2349,7 @@ P(\text{loss}), \quad P(\text{draw}), \quad P(\text{win})
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>LindaData World Cup 2026 forecasting model.</p>
-</div>   
+</div>
     <div class="nav-footer-center">
       &nbsp;
     </div>
