@@ -1,0 +1,26 @@
+sport,game_id,date_utc,status,league_id,league,season,home_team_id,home_team,away_team_id,away_team,home_score,away_score
+baseball,163092,2024-10-09T01:08:00Z,FT,1,MLB,2024,30,San Diego Padres,18,Los Angeles Dodgers,6,5
+baseball,163093,2024-10-09T19:08:00Z,FT,1,MLB,2024,12,Detroit Tigers,9,Cleveland Guardians,3,0
+baseball,163104,2024-10-09T21:08:00Z,FT,1,MLB,2024,24,New York Mets,27,Philadelphia Phillies,4,1
+baseball,163094,2024-10-09T23:08:00Z,FT,1,MLB,2024,16,Kansas City Royals,25,New York Yankees,2,3
+baseball,163105,2024-10-10T01:08:00Z,FT,1,MLB,2024,30,San Diego Padres,18,Los Angeles Dodgers,0,8
+baseball,163106,2024-10-10T22:08:00Z,FT,1,MLB,2024,12,Detroit Tigers,9,Cleveland Guardians,4,5
+baseball,163107,2024-10-11T00:08:00Z,FT,1,MLB,2024,16,Kansas City Royals,25,New York Yankees,1,3
+baseball,163109,2024-10-12T00:08:00Z,FT,1,MLB,2024,18,Los Angeles Dodgers,30,San Diego Padres,2,0
+baseball,163110,2024-10-12T17:08:00Z,FT,1,MLB,2024,9,Cleveland Guardians,12,Detroit Tigers,7,3
+baseball,163119,2024-10-14T00:15:00Z,FT,1,MLB,2024,18,Los Angeles Dodgers,24,New York Mets,9,0
+baseball,163120,2024-10-14T20:08:00Z,FT,1,MLB,2024,18,Los Angeles Dodgers,24,New York Mets,3,7
+baseball,163123,2024-10-14T23:38:00Z,FT,1,MLB,2024,25,New York Yankees,9,Cleveland Guardians,5,2
+baseball,163124,2024-10-15T23:38:00Z,FT,1,MLB,2024,25,New York Yankees,9,Cleveland Guardians,6,3
+baseball,163121,2024-10-17T00:08:00Z,FT,1,MLB,2024,24,New York Mets,18,Los Angeles Dodgers,0,8
+baseball,163125,2024-10-17T21:08:00Z,FT,1,MLB,2024,9,Cleveland Guardians,25,New York Yankees,7,5
+baseball,163122,2024-10-18T00:08:00Z,FT,1,MLB,2024,24,New York Mets,18,Los Angeles Dodgers,2,10
+baseball,163135,2024-10-18T21:08:00Z,FT,1,MLB,2024,24,New York Mets,18,Los Angeles Dodgers,12,6
+baseball,163126,2024-10-19T00:08:00Z,FT,1,MLB,2024,9,Cleveland Guardians,25,New York Yankees,6,8
+baseball,163142,2024-10-20T00:08:00Z,FT,1,MLB,2024,9,Cleveland Guardians,25,New York Yankees,2,5
+baseball,163143,2024-10-21T00:08:00Z,FT,1,MLB,2024,18,Los Angeles Dodgers,24,New York Mets,10,5
+baseball,163151,2024-10-26T00:08:00Z,FT,1,MLB,2024,18,Los Angeles Dodgers,25,New York Yankees,6,3
+baseball,163152,2024-10-27T00:08:00Z,FT,1,MLB,2024,18,Los Angeles Dodgers,25,New York Yankees,4,2
+baseball,163153,2024-10-29T00:08:00Z,FT,1,MLB,2024,25,New York Yankees,18,Los Angeles Dodgers,2,4
+baseball,163154,2024-10-30T00:08:00Z,FT,1,MLB,2024,25,New York Yankees,18,Los Angeles Dodgers,11,4
+baseball,163280,2024-10-31T00:08:00Z,FT,1,MLB,2024,25,New York Yankees,18,Los Angeles Dodgers,6,7

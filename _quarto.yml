@@ -56,6 +56,8 @@ website:
             text: Statistical Details
           - href: reports/09_multisport_expansion.qmd
             text: Multi-Sport Roadmap
+          - href: sports-data/index.html
+            text: Sports Data
           - href: https://github.com/LindaData/world-cup-2026-betting-model
             text: GitHub Repository
     right:

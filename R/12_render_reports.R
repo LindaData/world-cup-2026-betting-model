@@ -40,6 +40,18 @@ if (has_status_doc) {
   file.copy(status_doc, status_doc_backup, overwrite = TRUE)
 }
 
+sports_data_dir <- file.path("docs", "sports-data")
+sports_data_backup <- file.path(tempdir(), paste0("sports-data-", Sys.getpid()))
+has_sports_data <- dir.exists(sports_data_dir)
+if (has_sports_data) {
+  dir.create(sports_data_backup, recursive = TRUE, showWarnings = FALSE)
+  file.copy(
+    list.files(sports_data_dir, all.files = TRUE, no.. = TRUE, full.names = TRUE),
+    sports_data_backup,
+    recursive = TRUE
+  )
+}
+
 result <- system2(quarto, args = c("render"), stdout = TRUE, stderr = TRUE)
 cat(paste(result, collapse = "\n"), "\n")
 
@@ -53,8 +65,18 @@ file.create(file.path("docs", ".nojekyll"))
 if (has_status_doc && file.exists(status_doc_backup)) {
   file.copy(status_doc_backup, status_doc, overwrite = TRUE)
 }
+if (has_sports_data && dir.exists(sports_data_backup)) {
+  dir.create(sports_data_dir, recursive = TRUE, showWarnings = FALSE)
+  file.copy(
+    list.files(sports_data_backup, all.files = TRUE, no.. = TRUE, full.names = TRUE),
+    sports_data_dir,
+    recursive = TRUE,
+    overwrite = TRUE
+  )
+}
 static_docs <- c(
-  file.path("docs_static", "GITHUB_ACCOUNT_UX_REVIEW.md")
+  file.path("docs_static", "GITHUB_ACCOUNT_UX_REVIEW.md"),
+  file.path("docs_static", "github_actions_remote_runner.md")
 )
 for (static_doc in static_docs[file.exists(static_docs)]) {
   file.copy(static_doc, file.path("docs", basename(static_doc)), overwrite = TRUE)

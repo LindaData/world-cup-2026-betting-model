@@ -1,0 +1,93 @@
+name: API-Sports cloud pull
+
+run-name: API-Sports ${{ github.event_name == 'workflow_dispatch' && inputs.sport || 'basketball' }} /${{ github.event_name == 'workflow_dispatch' && inputs.endpoint || 'status' }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      sport:
+        description: API-Sports product
+        required: true
+        type: choice
+        default: basketball
+        options:
+          - basketball
+          - baseball
+          - football
+      endpoint:
+        description: Endpoint without the leading slash, such as games, teams, leagues, or status
+        required: true
+        type: string
+        default: status
+      params:
+        description: JSON object of query parameters, such as {"league":12,"season":"2025-2026"}
+        required: true
+        type: string
+        default: "{}"
+      max_pages:
+        description: Maximum number of paginated responses to download
+        required: true
+        type: string
+        default: "1"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/api-sports-pull.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-sports-cloud-pull
+  cancel-in-progress: false
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate API secret
+        env:
+          API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
+        shell: bash
+        run: |
+          if [ -z "$API_SPORTS_KEY" ]; then
+            echo "Missing repository secret API_SPORTS_KEY." >&2
+            exit 1
+          fi
+
+      - name: Pull API-Sports data
+        env:
+          API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
+          API_SPORTS_PARAMS: ${{ github.event_name == 'workflow_dispatch' && inputs.params || '{}' }}
+          API_SPORTS_PRODUCT: ${{ github.event_name == 'workflow_dispatch' && inputs.sport || 'basketball' }}
+          API_SPORTS_ENDPOINT: ${{ github.event_name == 'workflow_dispatch' && inputs.endpoint || 'status' }}
+          API_SPORTS_MAX_PAGES: ${{ github.event_name == 'workflow_dispatch' && inputs.max_pages || '1' }}
+        shell: bash
+        run: |
+          python scripts/api_sports_bulk.py \
+            --sport "$API_SPORTS_PRODUCT" \
+            --endpoint "$API_SPORTS_ENDPOINT" \
+            --params-env API_SPORTS_PARAMS \
+            --max-pages "$API_SPORTS_MAX_PAGES" \
+            --output-dir data/raw/api_sports
+
+      - name: Upload raw snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-sports-${{ github.event_name == 'workflow_dispatch' && inputs.sport || 'basketball' }}-${{ github.run_id }}
+          path: data/raw/api_sports/
+          if-no-files-found: warn
+          retention-days: 7
+          compression-level: 9

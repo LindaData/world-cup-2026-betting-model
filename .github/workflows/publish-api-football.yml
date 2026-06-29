@@ -1,0 +1,80 @@
+name: Publish API-Football for Sports Hub
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/publish_api_football.py
+      - .github/workflows/publish-api-football.yml
+  workflow_dispatch:
+    inputs:
+      league_id:
+        description: API-Football league ID
+        required: true
+        default: "1"
+        type: string
+      season:
+        description: API-Football season
+        required: true
+        default: "2026"
+        type: string
+  schedule:
+    - cron: "17 10 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-api-football
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
+      API_FOOTBALL_LEAGUE_ID: ${{ inputs.league_id || vars.API_FOOTBALL_LEAGUE_ID || '1' }}
+      API_FOOTBALL_SEASON: ${{ inputs.season || vars.API_FOOTBALL_SEASON || '2026' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate API key
+        shell: bash
+        run: |
+          if [ -z "$API_FOOTBALL_KEY" ] && [ -z "$API_SPORTS_KEY" ]; then
+            echo "Add API_FOOTBALL_KEY or API_SPORTS_KEY as a repository Actions secret." >&2
+            exit 1
+          fi
+
+      - name: Pull and normalize football data
+        run: python scripts/publish_api_football.py
+
+      - name: Upload raw API snapshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-football-raw-${{ github.run_id }}
+          path: data/raw/api_football/latest/
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: Commit published Sports Hub files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/sports-data/data/football_fixtures.json \
+                  docs/sports-data/data/football_standings.json \
+                  docs/sports-data/data/football_manifest.json
+          if git diff --cached --quiet; then
+            echo "No football data changes."
+            exit 0
+          fi
+          git commit -m "data: refresh API-Football Sports Hub feed"
+          git push

@@ -1,0 +1,61 @@
+sport,position,group,team_id,team,played,wins,losses,percentage,form
+basketball,1,Western Conference,152,Oklahoma City Thunder,82,68,14,0.829,WWWWL
+basketball,2,Western Conference,142,Houston Rockets,82,52,30,0.634,LLLWW
+basketball,3,Western Conference,145,Los Angeles Lakers,82,50,32,0.610,LWWLW
+basketball,4,Western Conference,139,Denver Nuggets,82,50,32,0.610,WWWLL
+basketball,5,Western Conference,144,Los Angeles Clippers,82,50,32,0.610,WWWWW
+basketball,6,Western Conference,149,Minnesota Timberwolves,82,49,33,0.598,WWWLW
+basketball,7,Western Conference,141,Golden State Warriors,82,48,34,0.585,LWLWL
+basketball,8,Western Conference,146,Memphis Grizzlies,82,48,34,0.585,WLLWW
+basketball,9,Western Conference,157,Sacramento Kings,82,40,42,0.488,WLLWW
+basketball,10,Western Conference,138,Dallas Mavericks,82,39,43,0.476,LWLLL
+basketball,11,Western Conference,155,Phoenix Suns,82,36,46,0.439,LWLLL
+basketball,12,Western Conference,156,Portland Trail Blazers,82,36,46,0.439,WLLWL
+basketball,13,Western Conference,158,San Antonio Spurs,82,34,48,0.415,WLWLL
+basketball,14,Western Conference,150,New Orleans Pelicans,82,21,61,0.256,LLLLL
+basketball,15,Western Conference,160,Utah Jazz,82,17,65,0.207,LLWLL
+basketball,1,Eastern Conference,137,Cleveland Cavaliers,82,64,18,0.780,LWLWL
+basketball,2,Eastern Conference,133,Boston Celtics,82,61,21,0.744,WWLWW
+basketball,3,Eastern Conference,151,New York Knicks,82,51,31,0.622,WLLLW
+basketball,4,Eastern Conference,143,Indiana Pacers,82,50,32,0.610,WLWWW
+basketball,5,Eastern Conference,148,Milwaukee Bucks,82,48,34,0.585,WWWWW
+basketball,6,Eastern Conference,140,Detroit Pistons,82,44,38,0.537,LLWLL
+basketball,7,Eastern Conference,153,Orlando Magic,82,41,41,0.500,LWWWW
+basketball,8,Eastern Conference,132,Atlanta Hawks,82,40,42,0.488,WWWLW
+basketball,9,Eastern Conference,136,Chicago Bulls,82,39,43,0.476,WWWLW
+basketball,10,Eastern Conference,147,Miami Heat,82,37,45,0.451,LWLWL
+basketball,11,Eastern Conference,159,Toronto Raptors,82,30,52,0.366,LLWWL
+basketball,12,Eastern Conference,134,Brooklyn Nets,82,26,56,0.317,LLLWL
+basketball,13,Eastern Conference,154,Philadelphia 76ers,82,24,58,0.293,LLWLL
+basketball,14,Eastern Conference,135,Charlotte Hornets,82,19,63,0.232,LLLLL
+basketball,15,Eastern Conference,161,Washington Wizards,82,18,64,0.220,WLLLL
+basketball,1,Atlantic Division,133,Boston Celtics,82,61,21,0.744,WWLWW
+basketball,2,Atlantic Division,151,New York Knicks,82,51,31,0.622,WLLLW
+basketball,3,Atlantic Division,159,Toronto Raptors,82,30,52,0.366,LLWWL
+basketball,4,Atlantic Division,134,Brooklyn Nets,82,26,56,0.317,LLLWL
+basketball,5,Atlantic Division,154,Philadelphia 76ers,82,24,58,0.293,LLWLL
+basketball,1,Southeast Division,153,Orlando Magic,82,41,41,0.500,LWWWW
+basketball,2,Southeast Division,132,Atlanta Hawks,82,40,42,0.488,WWWLW
+basketball,3,Southeast Division,147,Miami Heat,82,37,45,0.451,LWLWL
+basketball,4,Southeast Division,135,Charlotte Hornets,82,19,63,0.232,LLLLL
+basketball,5,Southeast Division,161,Washington Wizards,82,18,64,0.220,WLLLL
+basketball,1,Central Division,137,Cleveland Cavaliers,82,64,18,0.780,LWLWL
+basketball,2,Central Division,143,Indiana Pacers,82,50,32,0.610,WLWWW
+basketball,3,Central Division,148,Milwaukee Bucks,82,48,34,0.585,WWWWW
+basketball,4,Central Division,140,Detroit Pistons,82,44,38,0.537,LLWLL
+basketball,5,Central Division,136,Chicago Bulls,82,39,43,0.476,WWWLW
+basketball,1,Northwest Division,152,Oklahoma City Thunder,82,68,14,0.829,WWWWL
+basketball,2,Northwest Division,139,Denver Nuggets,82,50,32,0.610,WWWLL
+basketball,3,Northwest Division,149,Minnesota Timberwolves,82,49,33,0.598,WWWLW
+basketball,4,Northwest Division,156,Portland Trail Blazers,82,36,46,0.439,WLLWL
+basketball,5,Northwest Division,160,Utah Jazz,82,17,65,0.207,LLWLL
+basketball,1,Pacific Division,145,Los Angeles Lakers,82,50,32,0.610,LWWLW
+basketball,2,Pacific Division,144,Los Angeles Clippers,82,50,32,0.610,WWWWW
+basketball,3,Pacific Division,141,Golden State Warriors,82,48,34,0.585,LWLWL
+basketball,4,Pacific Division,157,Sacramento Kings,82,40,42,0.488,WLLWW
+basketball,5,Pacific Division,155,Phoenix Suns,82,36,46,0.439,LWLLL
+basketball,1,Southwest Division,142,Houston Rockets,82,52,30,0.634,LLLWW
+basketball,2,Southwest Division,146,Memphis Grizzlies,82,48,34,0.585,WLLWW
+basketball,3,Southwest Division,138,Dallas Mavericks,82,39,43,0.476,LWLLL
+basketball,4,Southwest Division,158,San Antonio Spurs,82,34,48,0.415,WLWLL
+basketball,5,Southwest Division,150,New Orleans Pelicans,82,21,61,0.256,LLLLL
