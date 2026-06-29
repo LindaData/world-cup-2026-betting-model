@@ -37,6 +37,9 @@ The public forecast currently combines:
 - **OLS benchmark:** a simple linear goals model kept as an interpretable baseline.
 - **Similar match model:** a KNN-style challenger that compares fixtures with similar historical team-match rows.
 - **Champion simulation:** a tournament-path layer that reuses current fixture probabilities and strength signals to estimate title odds. It defaults to 50,000 simulations and reports Monte Carlo uncertainty.
+- **Expanded challenger suite:** Poisson, quasi-Poisson, negative binomial, zero-aware, GAM, tree, random forest, ordinal, multinomial, and regularized classifier comparisons are fit on historical train/test splits before any promotion into the public forecast.
+- **Expanded feature population:** local R scripts build rolling form, opponent form, head-to-head, rest, team-experience, and tournament-context features across the historical team-match population.
+- **Distribution diagnostics:** Bernoulli, binomial, Poisson, geometric, uniform, normal, exponential, gamma, beta, t, chi-squared, and F checks are mapped to soccer modeling targets with fit diagnostics and autocorrelation tests.
 
 The match models are trained on historical data and evaluated on held-out test splits. The champion simulation is downstream of those match forecasts: more simulations reduce simulation noise, while train/test validation measures predictive quality. The site presents consumer-facing predictions first. Technical diagnostics remain available under Methodology.
 

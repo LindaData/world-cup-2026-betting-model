@@ -19,6 +19,10 @@ if (nrow(goals_frame) == 0) {
   goals_frame <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "goals_linear_model_sample_1000.csv"))
 }
 result_distribution <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "result_ordinal_model_class_distribution.csv"))
+distribution_map <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "distribution_candidate_map.csv"))
+distribution_diagnostics <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "distribution_diagnostics_summary.csv"))
+distribution_autocorrelation <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "distribution_autocorrelation_tests.csv"))
+expanded_population_summary <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "expanded_population_summary.csv"))
 ```
 
 ::: {.reference-note}
@@ -30,6 +34,31 @@ These original project notes are influenced by public NC State statistics teachi
 Each variable has an explicit statistical shape. Soccer data mixes low-count outcomes, ordered categorical results, probabilities, text/news counts, player availability flags, and continuous context variables.
 
 The workflow lists plausible distributions, builds diagnostics, and filters models that do not fit the data or the betting question.
+
+## Expanded Population
+
+```{r expanded-population, echo=FALSE, results="asis"}
+if (nrow(expanded_population_summary) > 0) {
+  key_metrics <- expanded_population_summary |>
+    dplyr::filter(metric %in% c("rows", "matches", "teams", "first_match", "last_match", "feature_columns")) |>
+    dplyr::mutate(
+      label = dplyr::case_when(
+        metric == "rows" ~ "Team-Match Rows",
+        metric == "matches" ~ "Matches",
+        metric == "teams" ~ "Teams",
+        metric == "first_match" ~ "First Match",
+        metric == "last_match" ~ "Latest Match",
+        metric == "feature_columns" ~ "Feature Columns",
+        TRUE ~ metric
+      ),
+      note = "expanded local population"
+    ) |>
+    dplyr::select(label, value, note)
+  cat(metric_cards(key_metrics))
+} else {
+  display_table(empty_note("Expanded population metrics are available after running R/22_build_expanded_feature_population.R."))
+}
+```
 
 ## Current Outcome Shapes
 
@@ -106,6 +135,106 @@ if (nrow(goals_frame) > 0 && "y_goals_for" %in% names(goals_frame) && requireNam
   <div class="distribution-card"><strong>Latent team strength</strong>Gaussian random effects, dynamic state-space ratings, hierarchical priors.<small>Useful when teams have uneven schedule strength and sparse recent games.</small></div>
 </div>
 
+```{r distribution-map}
+if (nrow(distribution_map) > 0) {
+  distribution_map |>
+    display_table(caption = "How each distribution is used in the modeling workflow.")
+} else {
+  display_table(empty_note("Distribution mapping is available after running R/24_distribution_diagnostics.R."))
+}
+```
+
+## Distribution Test Results
+
+The table below does not ask whether a distribution is perfect. With a large
+historical soccer dataset, almost every simple distribution will fail a strict
+test. The useful question is practical: does the diagnostic support using the
+distribution as a model, a feature, a simulation tool, or a residual check?
+
+```{r distribution-diagnostics}
+if (nrow(distribution_diagnostics) > 0) {
+  distribution_diagnostics |>
+    dplyr::mutate(
+      rows = fmt_integer(rows),
+      estimate = fmt_number(estimate, 3),
+      statistic = fmt_number(statistic, 3),
+      p_value = fmt_p_value(p_value)
+    ) |>
+    dplyr::select(
+      distribution,
+      target,
+      rows,
+      estimate,
+      statistic,
+      p_value,
+      decision,
+      interpretation
+    ) |>
+    display_table(caption = "Distribution diagnostics and modeling decision.")
+} else {
+  display_table(empty_note("Distribution diagnostics are available after running R/24_distribution_diagnostics.R."))
+}
+```
+
+```{r distribution-test-plot, fig.cap="Distribution diagnostic p-values. Very small p-values are common with large soccer datasets and should be read with the modeling decision."}
+if (nrow(distribution_diagnostics) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  plot_data <- distribution_diagnostics |>
+    dplyr::filter(!is.na(p_value), p_value > 0) |>
+    dplyr::mutate(
+      log10_p = -log10(p_value),
+      distribution = factor(distribution, levels = rev(unique(distribution)))
+    )
+
+  ggplot2::ggplot(plot_data, ggplot2::aes(x = log10_p, y = distribution)) +
+    ggplot2::geom_col(fill = "#0f6b68", width = 0.64) +
+    ggplot2::geom_vline(xintercept = -log10(0.05), color = "#d9a441", linewidth = 0.9, linetype = "dashed") +
+    ggplot2::labs(
+      title = "Distribution checks by evidence against a simple fit",
+      x = "-log10(p-value)",
+      y = NULL
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Distribution diagnostic plot is available after the diagnostics refresh.")
+}
+```
+
+## Autocorrelation Checks
+
+Autocorrelation means model errors are related across nearby rows in time. If
+errors stay positive or negative for a stretch, the model may be missing a time
+pattern such as team form, schedule congestion, or changing tournament style.
+
+```{r autocorrelation-tests}
+if (nrow(distribution_autocorrelation) > 0) {
+  distribution_autocorrelation |>
+    dplyr::mutate(
+      autocorrelation = fmt_number(autocorrelation, 3),
+      durbin_watson = fmt_number(durbin_watson, 3)
+    ) |>
+    display_table(caption = "Residual autocorrelation checks.")
+} else {
+  display_table(empty_note("Autocorrelation checks are available after running R/24_distribution_diagnostics.R."))
+}
+```
+
+## Modeling Implications
+
+The current diagnostics point to these practical choices:
+
+- Use **Poisson** and **negative binomial** families for goals, cards, injuries,
+  and news-count features because these targets are event counts.
+- Keep **Bernoulli**, **binomial**, and **beta** thinking around win flags,
+  scoring flags, form-window summaries, and probability calibration.
+- Use **gamma**, **exponential**, and **geometric** ideas for rest, event timing,
+  and scoring drought features, but only after they improve validation metrics.
+- Use **normal**, **t**, **chi-squared**, and **F** distributions mainly for
+  diagnostics: residual shape, autocorrelation, heteroskedasticity, goodness of
+  fit, and variance shifts.
+- Use **uniform** draws for Monte Carlo simulation and randomized validation,
+  not as a claim about match outcomes.
+
 ```{r candidate-table}
 candidate_models <- data.frame(
   data_family = c(
@@ -175,3 +304,5 @@ Reference links:
 3. Calibration plots for ordinal result probabilities.
 4. Cross-validation by time split.
 5. Predicted versus observed W/D/L rates by probability bucket.
+6. Residual autocorrelation checks after every major model refresh.
+7. Distribution-specific tests before promoting a challenger model.

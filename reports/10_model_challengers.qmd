@@ -1,7 +1,7 @@
 ---
 title: "Model Challengers"
-subtitle: "Stepwise regression, XGBoost readiness, and tree-based goal models."
-description: "Challenger model comparison for the World Cup forecasting system, including stepwise regression, XGBoost readiness, random forest fallback, and feature importance."
+subtitle: "Expanded historical model comparison for goals and match results."
+description: "Challenger model comparison for the World Cup forecasting system, including count models, smooth models, ordinal and multinomial classifiers, stepwise regression, tree models, and feature importance."
 toc: true
 number-sections: true
 code-fold: true
@@ -25,6 +25,25 @@ challengers <- read_csv_if_exists(file.path(root, "data", "processed", "modeling
 importance <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "model_challenger_feature_importance.csv"))
 status <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "model_challenger_status.csv"))
 predictions <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "model_challenger_prediction_sample.csv"))
+expanded_goals <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "expanded_goal_model_metrics.csv"))
+expanded_results <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "expanded_result_model_metrics.csv"))
+expanded_status <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "expanded_model_suite_status.csv"))
+population_goals <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "population_expansion_goal_metrics.csv"))
+population_results <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "population_expansion_result_metrics.csv"))
+population_status <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "population_expansion_status.csv"))
+population_summary <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "expanded_population_summary.csv"))
+
+validation_label <- function(x) {
+  dplyr::case_when(
+    x == "random_80_20" ~ "Random 80/20 split",
+    x == "train_through_2018_test_2019_plus" ~ "Train through 2018, test 2019+",
+    x == "all_history_random_80_20" ~ "All history random 80/20 split",
+    x == "all_history_time_2019_plus" ~ "All history train through 2018, test 2019+",
+    x == "modern_1990_time_2019_plus" ~ "Modern era train 1990-2018, test 2019+",
+    x == "recent_2000_time_2019_plus" ~ "Recent era train 2000-2018, test 2019+",
+    TRUE ~ x
+  )
+}
 ```
 
 ## Purpose
@@ -36,10 +55,30 @@ promotion into the public prediction cards.
 Current challengers:
 
 - **Stepwise OLS:** an interpretable regression that selects terms by AIC.
+- **Count models:** Poisson, quasi-Poisson, negative binomial, and two-stage
+  zero-aware goal models.
+- **Smooth models:** a GAM Poisson model that can learn curved relationships.
+- **Result classifiers:** ordinal logistic, multinomial logistic, regularized
+  multinomial, classification tree, and random forest result models.
+- **Expanded population sweep:** rolling form, opponent form, head-to-head
+  history, rest, experience, tournament context, GBM, random forest, SVM, and
+  shrinkage baselines.
 - **XGBoost goals:** a gradient-boosted count model when the local `xgboost`
   package is installed.
 - **Random forest goals:** a free local tree fallback while XGBoost is not
   installed.
+
+How to read the tables:
+
+- **RMSE** is the average size of the goal prediction error. Lower is better.
+- **MAE** is the average absolute goal error. Lower is better.
+- **Brier score** measures probability quality for win, draw, and loss forecasts.
+  Lower is better.
+- **Log loss** heavily penalizes confident wrong probabilities. Lower is better.
+- **Accuracy** is the share of matches where the top predicted result matched
+  the actual result. Higher is better.
+- **Time split** is the stricter validation check because newer matches are held
+  out from older training data.
 
 ## Challenger Leaderboard
 
@@ -73,6 +112,289 @@ if (nrow(challengers) > 0) {
     display_table(caption = "Held-out challenger model performance.")
 } else {
   display_table(empty_note("No challenger metrics are available yet."))
+}
+```
+
+## Expanded Goal Model Suite
+
+This section compares goal-count models on the same historical modeling frame.
+These are candidate engines for projected scores and expected goals.
+
+```{r expanded-goal-cards, echo=FALSE, results="asis"}
+if (nrow(expanded_goals) > 0) {
+  goal_cards <- expanded_goals |>
+    dplyr::filter(status == "fit") |>
+    dplyr::group_by(validation_type) |>
+    dplyr::slice_min(test_rmse, n = 1, with_ties = FALSE) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(
+      label = validation_label(validation_type),
+      value = paste0(fmt_number(test_rmse, 3), " RMSE"),
+      note = paste0(model, " | MAE ", fmt_number(test_mae, 3))
+    ) |>
+    dplyr::select(label, value, note)
+  cat(metric_cards(goal_cards))
+} else {
+  display_table(empty_note("Expanded goal metrics are available after running R/21_fit_expanded_model_suite.R."))
+}
+```
+
+```{r expanded-goal-table}
+if (nrow(expanded_goals) > 0) {
+  expanded_goals |>
+    dplyr::arrange(validation_type, test_rmse) |>
+    dplyr::mutate(
+      validation_type = validation_label(validation_type),
+      test_rmse = fmt_number(test_rmse, 3),
+      test_mae = fmt_number(test_mae, 3),
+      mean_prediction = fmt_number(mean_prediction, 3),
+      mean_poisson_deviance = fmt_number(mean_poisson_deviance, 3),
+      rows_train = fmt_integer(rows_train),
+      rows_test = fmt_integer(rows_test)
+    ) |>
+    dplyr::select(
+      validation_type,
+      model,
+      model_family,
+      status,
+      rows_train,
+      rows_test,
+      test_rmse,
+      test_mae,
+      mean_prediction,
+      mean_poisson_deviance,
+      note
+    ) |>
+    display_table(caption = "Expanded held-out goal model comparison.")
+} else {
+  display_table(empty_note("No expanded goal model metrics are available yet."))
+}
+```
+
+```{r expanded-goal-plot, fig.cap="Goal-model RMSE by validation split. Lower is better."}
+if (nrow(expanded_goals) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  goal_plot <- expanded_goals |>
+    dplyr::filter(status == "fit") |>
+    dplyr::mutate(
+      validation_type = validation_label(validation_type),
+      model = reorder(model, test_rmse)
+    )
+
+  ggplot2::ggplot(goal_plot, ggplot2::aes(x = test_rmse, y = model)) +
+    ggplot2::geom_col(fill = "#0f6b68", width = 0.66) +
+    ggplot2::geom_text(
+      ggplot2::aes(label = round(test_rmse, 3)),
+      hjust = -0.08,
+      color = "#24313d",
+      size = 3.4
+    ) +
+    ggplot2::facet_wrap(~ validation_type, scales = "free_y") +
+    ggplot2::coord_cartesian(xlim = c(0, max(goal_plot$test_rmse, na.rm = TRUE) * 1.14)) +
+    ggplot2::labs(
+      title = "Expanded goal model comparison",
+      x = "RMSE",
+      y = NULL
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Expanded goal RMSE plot is available after the model suite is refreshed.")
+}
+```
+
+## Expanded Result Probability Suite
+
+This section compares models that estimate the probability of loss, draw, or
+win. For knockout matches, this is still regulation-time result modeling; the
+advancement layer handles extra time and penalties separately.
+
+```{r expanded-result-cards, echo=FALSE, results="asis"}
+if (nrow(expanded_results) > 0) {
+  result_cards <- expanded_results |>
+    dplyr::filter(status == "fit") |>
+    dplyr::group_by(validation_type) |>
+    dplyr::slice_min(test_multiclass_brier, n = 1, with_ties = FALSE) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(
+      label = validation_label(validation_type),
+      value = paste0(fmt_number(test_multiclass_brier, 3), " Brier"),
+      note = paste0(model, " | accuracy ", fmt_percent(test_accuracy, 1))
+    ) |>
+    dplyr::select(label, value, note)
+  cat(metric_cards(result_cards))
+} else {
+  display_table(empty_note("Expanded result metrics are available after running R/21_fit_expanded_model_suite.R."))
+}
+```
+
+```{r expanded-result-table}
+if (nrow(expanded_results) > 0) {
+  expanded_results |>
+    dplyr::arrange(validation_type, test_multiclass_brier) |>
+    dplyr::mutate(
+      validation_type = validation_label(validation_type),
+      test_accuracy = fmt_percent(test_accuracy, 1),
+      test_log_loss = fmt_number(test_log_loss, 3),
+      test_multiclass_brier = fmt_number(test_multiclass_brier, 3),
+      baseline_majority_accuracy = fmt_percent(baseline_majority_accuracy, 1),
+      rows_train = fmt_integer(rows_train),
+      rows_test = fmt_integer(rows_test)
+    ) |>
+    dplyr::select(
+      validation_type,
+      model,
+      model_family,
+      status,
+      rows_train,
+      rows_test,
+      test_accuracy,
+      test_log_loss,
+      test_multiclass_brier,
+      baseline_majority_accuracy,
+      note
+    ) |>
+    display_table(caption = "Expanded held-out win/draw/loss probability comparison.")
+} else {
+  display_table(empty_note("No expanded result model metrics are available yet."))
+}
+```
+
+```{r expanded-result-plot, fig.cap="Result-model Brier score by validation split. Lower is better."}
+if (nrow(expanded_results) > 0 && requireNamespace("ggplot2", quietly = TRUE)) {
+  result_plot <- expanded_results |>
+    dplyr::filter(status == "fit") |>
+    dplyr::mutate(
+      validation_type = validation_label(validation_type),
+      model = reorder(model, test_multiclass_brier)
+    )
+
+  ggplot2::ggplot(result_plot, ggplot2::aes(x = test_multiclass_brier, y = model)) +
+    ggplot2::geom_col(fill = "#d9a441", width = 0.66) +
+    ggplot2::geom_text(
+      ggplot2::aes(label = round(test_multiclass_brier, 3)),
+      hjust = -0.08,
+      color = "#24313d",
+      size = 3.4
+    ) +
+    ggplot2::facet_wrap(~ validation_type, scales = "free_y") +
+    ggplot2::coord_cartesian(xlim = c(0, max(result_plot$test_multiclass_brier, na.rm = TRUE) * 1.14)) +
+    ggplot2::labs(
+      title = "Expanded result probability comparison",
+      x = "Brier score",
+      y = NULL
+    ) +
+    ggplot2::theme_minimal(base_size = 12)
+} else {
+  plot.new()
+  text(0.5, 0.5, "Expanded result probability plot is available after the model suite is refreshed.")
+}
+```
+
+## Expanded Population Feature Sweep
+
+This sweep uses a wider local R feature population: historical rows, rolling
+team form, opponent form, head-to-head history, rest spacing, team experience,
+and tournament context. These are not automatically promoted. They first need
+calibration checks, knockout handling review, and repeatable backtesting.
+
+```{r population-summary, echo=FALSE, results="asis"}
+if (nrow(population_summary) > 0) {
+  pop_cards <- population_summary |>
+    dplyr::filter(metric %in% c("rows", "matches", "teams", "feature_columns")) |>
+    dplyr::mutate(
+      label = dplyr::case_when(
+        metric == "rows" ~ "Team-Match Rows",
+        metric == "matches" ~ "Matches",
+        metric == "teams" ~ "Teams",
+        metric == "feature_columns" ~ "Feature Columns",
+        TRUE ~ metric
+      ),
+      note = "expanded challenger population"
+    ) |>
+    dplyr::select(label, value, note)
+  cat(metric_cards(pop_cards))
+} else {
+  display_table(empty_note("Expanded population summary is available after running R/22_build_expanded_feature_population.R."))
+}
+```
+
+```{r population-goal-cards, echo=FALSE, results="asis"}
+if (nrow(population_goals) > 0) {
+  cards <- population_goals |>
+    dplyr::filter(status == "fit") |>
+    dplyr::group_by(validation_type) |>
+    dplyr::slice_min(test_rmse, n = 1, with_ties = FALSE) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(
+      label = validation_label(validation_type),
+      value = paste0(fmt_number(test_rmse, 3), " RMSE"),
+      note = paste0(model, " | MAE ", fmt_number(test_mae, 3))
+    ) |>
+    dplyr::select(label, value, note)
+  cat(metric_cards(cards))
+} else {
+  display_table(empty_note("Population goal metrics are available after running R/23_fit_population_expansion_models.R."))
+}
+```
+
+```{r population-goal-table}
+if (nrow(population_goals) > 0) {
+  population_goals |>
+    dplyr::filter(status == "fit") |>
+    dplyr::arrange(validation_type, test_rmse) |>
+    dplyr::mutate(
+      validation_type = validation_label(validation_type),
+      test_rmse = fmt_number(test_rmse, 3),
+      test_mae = fmt_number(test_mae, 3),
+      mean_prediction = fmt_number(mean_prediction, 3),
+      mean_poisson_deviance = fmt_number(mean_poisson_deviance, 3),
+      rows_train = fmt_integer(rows_train),
+      rows_test = fmt_integer(rows_test)
+    ) |>
+    dplyr::select(validation_type, model, model_family, rows_train, rows_test, test_rmse, test_mae, mean_prediction, mean_poisson_deviance, note) |>
+    display_table(caption = "Expanded population goal-model comparison.")
+} else {
+  display_table(empty_note("No expanded population goal metrics are available yet."))
+}
+```
+
+```{r population-result-cards, echo=FALSE, results="asis"}
+if (nrow(population_results) > 0) {
+  cards <- population_results |>
+    dplyr::filter(status == "fit") |>
+    dplyr::group_by(validation_type) |>
+    dplyr::slice_min(test_multiclass_brier, n = 1, with_ties = FALSE) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(
+      label = validation_label(validation_type),
+      value = paste0(fmt_number(test_multiclass_brier, 3), " Brier"),
+      note = paste0(model, " | accuracy ", fmt_percent(test_accuracy, 1))
+    ) |>
+    dplyr::select(label, value, note)
+  cat(metric_cards(cards))
+} else {
+  display_table(empty_note("Population result metrics are available after running R/23_fit_population_expansion_models.R."))
+}
+```
+
+```{r population-result-table}
+if (nrow(population_results) > 0) {
+  population_results |>
+    dplyr::filter(status == "fit") |>
+    dplyr::arrange(validation_type, test_multiclass_brier) |>
+    dplyr::mutate(
+      validation_type = validation_label(validation_type),
+      test_accuracy = fmt_percent(test_accuracy, 1),
+      test_log_loss = fmt_number(test_log_loss, 3),
+      test_multiclass_brier = fmt_number(test_multiclass_brier, 3),
+      baseline_majority_accuracy = fmt_percent(baseline_majority_accuracy, 1),
+      rows_train = fmt_integer(rows_train),
+      rows_test = fmt_integer(rows_test)
+    ) |>
+    dplyr::select(validation_type, model, model_family, rows_train, rows_test, test_accuracy, test_log_loss, test_multiclass_brier, baseline_majority_accuracy, note) |>
+    display_table(caption = "Expanded population win/draw/loss probability comparison.")
+} else {
+  display_table(empty_note("No expanded population result metrics are available yet."))
 }
 ```
 
@@ -152,7 +474,7 @@ if (nrow(importance) > 0) {
 }
 ```
 
-## XGBoost Status
+## Package Status
 
 ```{r xgboost-status}
 if (nrow(status) > 0) {
@@ -160,6 +482,24 @@ if (nrow(status) > 0) {
     display_table(caption = "Local challenger package status.")
 } else {
   display_table(empty_note("Package status is available after the challenger run."))
+}
+```
+
+```{r expanded-status}
+if (nrow(expanded_status) > 0) {
+  expanded_status |>
+    display_table(caption = "Expanded model-suite package status.")
+} else {
+  display_table(empty_note("Expanded package status is available after the expanded model-suite run."))
+}
+```
+
+```{r population-status}
+if (nrow(population_status) > 0) {
+  population_status |>
+    display_table(caption = "Expanded population sweep package status.")
+} else {
+  display_table(empty_note("Expanded population package status is available after the population sweep."))
 }
 ```
 
@@ -186,13 +526,20 @@ The challenger models are useful for two separate reasons:
 
 - Stepwise regression helps simplify the equation while staying interpretable.
 - Tree models can capture nonlinear interactions without hand-writing every term.
+- Count models better match the fact that goals are non-negative integers.
+- Smooth models can improve accuracy when the relationship between team strength
+  and goals is curved rather than straight.
+- Multinomial and ordinal models give direct win, draw, and loss probabilities.
 
 The tree results should be treated as a candidate signal, not an automatic upgrade.
 Before promotion, the next pass should compare calibration, tournament backtesting,
-and stability across multiple time splits.
+knockout advancement behavior, and stability across multiple time splits.
 
 ## Reproduce Locally
 
 ```{r reproduce, eval=FALSE}
 source("R/18_fit_model_challengers.R")
+source("R/21_fit_expanded_model_suite.R")
+source("R/22_build_expanded_feature_population.R")
+source("R/23_fit_population_expansion_models.R")
 ```
