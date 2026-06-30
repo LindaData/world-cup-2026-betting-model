@@ -37,6 +37,16 @@ cat('<span class="status-chip muted">Published forecast board</span>')
 cat('</section>')
 ```
 
+```{r market-board, results="asis"}
+cat(render_model_market_board(
+  board,
+  title = "Model Market Board",
+  subtitle = "A sportsbook-style scan of today's slate and the next available matches.",
+  limit = 10,
+  section_id = "model-board"
+))
+```
+
 ```{r today, results="asis"}
 cat(render_today_section(board, summary))
 ```
@@ -50,6 +60,7 @@ cat(render_upcoming_section(board, limit = 12))
 ```
 
 <nav class="prediction-page-nav" aria-label="Prediction page sections">
+  <a href="#model-board">Board</a>
   <a href="#today">Today</a>
   <a href="#next-match">Next match</a>
   <a href="#upcoming">Upcoming</a>

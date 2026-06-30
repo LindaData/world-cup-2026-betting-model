@@ -76,6 +76,148 @@ render_static_api_note <- function(summary, compact = FALSE) {
   )
 }
 
+model_fair_decimal <- function(probability) {
+  value <- safe_number(probability)
+  if (!is.finite(value) || value <= 0) {
+    return("N/A")
+  }
+  fmt_number(1 / value, 2)
+}
+
+market_price_option <- function(label, probability, class_name, is_favorite = FALSE) {
+  favorite_class <- if (is_favorite) " is-market-favorite" else ""
+  paste0(
+    '<div class="market-price ', escape_html(class_name), favorite_class, '">',
+    '<span>', escape_html(label), '</span>',
+    '<strong>', display_percent(probability, 1), '</strong>',
+    '<small>Fair ', escape_html(model_fair_decimal(probability)), '</small>',
+    '</div>'
+  )
+}
+
+market_price_grid <- function(row) {
+  home <- safe_text(row$home_team, "Home team")
+  away <- safe_text(row$away_team, "Away team")
+  knockout <- is_knockout_forecast(row)
+  labels <- if (knockout) {
+    c(home, "Level 90", away)
+  } else {
+    c(home, "Draw", away)
+  }
+  values <- if (knockout) {
+    c(row$home_advance_prob, row$regulation_draw_prob, row$away_advance_prob)
+  } else {
+    c(row$ensemble_home_win_prob, row$ensemble_draw_prob, row$ensemble_away_win_prob)
+  }
+  classes <- c("market-home", "market-draw", "market-away")
+  numeric_values <- vapply(values, safe_number, numeric(1))
+  favorite <- if (any(is.finite(numeric_values))) which.max(numeric_values) else 0
+
+  paste0(
+    '<div class="market-price-grid" aria-label="Model probability market">',
+    paste(vapply(seq_along(labels), function(i) {
+      market_price_option(labels[[i]], values[[i]], classes[[i]], is_favorite = identical(i, favorite))
+    }, character(1)), collapse = ""),
+    '</div>'
+  )
+}
+
+model_market_rows <- function(board, limit = 8) {
+  rows <- dplyr::bind_rows(today_board(board), future_board(board))
+  if (nrow(rows) == 0) {
+    return(rows)
+  }
+  rows <- rows[!duplicated(row_match_key(rows)), , drop = FALSE]
+  rows |> dplyr::slice_head(n = limit)
+}
+
+render_model_market_row <- function(row) {
+  home <- safe_text(row$home_team, "Home team")
+  away <- safe_text(row$away_team, "Away team")
+  pick <- safe_text(row$predicted_winner, "Pending")
+  status <- safe_text(row$match_timing, "Scheduled")
+  expected_goals <- paste0(
+    display_number(row$pred_home_goals_poisson, 2),
+    " - ",
+    display_number(row$pred_away_goals_poisson, 2)
+  )
+  venue <- paste(safe_text(row$city, "Venue"), safe_text(row$country, "location"), sep = ", ")
+  knockout_note <- if (is_knockout_forecast(row)) {
+    '<span class="market-tag">Advance market</span>'
+  } else {
+    '<span class="market-tag">Result market</span>'
+  }
+
+  paste0(
+    '<article class="model-market-row">',
+    '<div class="market-match-cell">',
+    '<div class="market-row-meta">',
+    '<span class="status-pill status-', escape_html(status_slug(status)), '">', escape_html(status), '</span>',
+    knockout_note,
+    '</div>',
+    '<h3>', escape_html(home), ' <span>vs</span> ', escape_html(away), '</h3>',
+    '<p>', match_time_display(row), '</p>',
+    '<small>', escape_html(venue), '</small>',
+    '</div>',
+    market_price_grid(row),
+    '<div class="market-pick-cell">',
+    '<span>Model pick</span>',
+    '<strong>', escape_html(pick), '</strong>',
+    '<small>', escape_html(prediction_strength(row)), ' strength</small>',
+    '</div>',
+    '<div class="market-score-cell">',
+    '<span>Score</span>',
+    '<strong>', escape_html(safe_text(row$most_likely_score, "Pending")), '</strong>',
+    '<small>Expected ', escape_html(expected_goals), '</small>',
+    '</div>',
+    '<details class="market-row-details">',
+    '<summary>More</summary>',
+    '<div class="market-detail-grid">',
+    '<div><span>Probability edge</span><strong>', escape_html(probability_edge(row)), '</strong></div>',
+    '<div><span>Over 2.5</span><strong>', display_percent(row$over_2_5_prob, 1), '</strong></div>',
+    '<div><span>Both teams score</span><strong>', display_percent(row$both_teams_to_score_prob, 1), '</strong></div>',
+    '<div><span>Cards</span><strong>', escape_html(yellow_card_text(row)), '</strong></div>',
+    '<div><span>Lineups</span><strong>', escape_html(lineup_text(row)), '</strong></div>',
+    '<div><span>Refresh</span><strong>', refresh_time_display(row), '</strong></div>',
+    '</div>',
+    '</details>',
+    '</article>'
+  )
+}
+
+render_model_market_board <- function(board, title = "Model Board", subtitle = NULL, limit = 8, section_id = "model-board") {
+  rows <- model_market_rows(board, limit = limit)
+  if (is.null(subtitle)) {
+    subtitle <- "Sportsbook-style scan of model probabilities, fair decimal prices, expected score, and pick."
+  }
+  if (nrow(rows) == 0) {
+    body <- '<div class="empty-state"><strong>No model board rows are available yet.</strong></div>'
+  } else {
+    body <- paste0(
+      '<div class="model-market-board">',
+      '<div class="model-market-head" aria-hidden="true">',
+      '<span>Match</span><span>Model market</span><span>Pick</span><span>Score</span><span>Details</span>',
+      '</div>',
+      paste(vapply(seq_len(nrow(rows)), function(i) render_model_market_row(rows[i, ]), character(1)), collapse = ""),
+      '</div>'
+    )
+  }
+
+  paste0(
+    '<section id="', escape_html(section_id), '" class="page-section model-market-section">',
+    '<div class="market-board-title">',
+    '<div>',
+    '<span class="section-kicker">Forecast board</span>',
+    '<h2>', escape_html(title), '</h2>',
+    '<p>', escape_html(subtitle), '</p>',
+    '</div>',
+    '<p class="market-board-note">Fair decimal is calculated from the model probability. These are not sportsbook odds.</p>',
+    '</div>',
+    body,
+    '</section>'
+  )
+}
+
 render_forecast_card <- function(row, variant = "standard", initially_open = FALSE) {
   home <- safe_text(row$home_team, "Home team")
   away <- safe_text(row$away_team, "Away team")
