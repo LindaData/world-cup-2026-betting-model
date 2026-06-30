@@ -93,6 +93,7 @@ cat(render_champion_section(bundle, compact = FALSE))
 ```{r accuracy, results="asis"}
 cat(render_model_review_section(bundle, compact = FALSE, limit = 12))
 cat(render_tuning_watch_section(bundle, compact = FALSE, limit = 8))
+cat(render_model_signal_section(bundle, compact = FALSE))
 cat(render_performance_section(bundle, compact = FALSE))
 cat(render_challenger_section(bundle, compact = FALSE))
 ```

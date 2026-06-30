@@ -4394,6 +4394,168 @@ Actual result finished level.
 Current read: the ensemble behaves like a winner-seeking model. Draws are the biggest blind spot in the graded sample, while strong favorite spots are generally solid outside of tied matches.
 </p>
 </section>
+<section id="model-signals" class="page-section model-signal-section">
+<div class="section-heading">
+<span class="section-kicker">Model signals</span>
+<h2 class="anchored">
+Which Model Is Helping Where?
+</h2>
+<p>
+This board shows what each baseline model contributes to the public forecast. The goal is to make tuning decisions without flooding the page with technical diagnostics.
+</p>
+</div>
+<div class="model-signal-grid">
+<article class="model-signal-card">
+<div class="model-signal-head">
+<h3 class="anchored">
+Ensemble
+</h3>
+<div class="model-signal-chip-row">
+
+</div>
+</div>
+<p>
+Combined result probability from ordinal and Poisson models.
+</p>
+<div class="model-signal-metrics">
+<div>
+<span>Hit rate</span><strong>64.4%</strong>
+</div>
+<div>
+<span>Actual draw probability</span><strong>21.5%</strong>
+</div>
+<div>
+<span>Actual decisive-result probability</span><strong>62.5%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>Result-only</strong>
+</div>
+<div>
+<span>Top-pick draw behavior</span><strong>0 draw calls / 0 correct</strong>
+</div>
+</div>
+</article>
+<article class="model-signal-card">
+<div class="model-signal-head">
+<h3 class="anchored">
+OLS goals
+</h3>
+<div class="model-signal-chip-row">
+
+</div>
+</div>
+<p>
+Outcome implied by the OLS expected-goals comparison.
+</p>
+<div class="model-signal-metrics">
+<div>
+<span>Hit rate</span><strong>64.4%</strong>
+</div>
+<div>
+<span>Actual draw probability</span><strong>21.5%</strong>
+</div>
+<div>
+<span>Actual decisive-result probability</span><strong>62.5%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.58 goals</strong>
+</div>
+<div>
+<span>Top-pick draw behavior</span><strong>2 draw calls / 0 correct</strong>
+</div>
+</div>
+</article>
+<article class="model-signal-card">
+<div class="model-signal-head">
+<h3 class="anchored">
+Poisson score grid
+</h3>
+<div class="model-signal-chip-row">
+<span class="model-signal-chip">Tightest score miss</span>
+</div>
+</div>
+<p>
+Outcome implied by the Poisson scoreline probability grid.
+</p>
+<div class="model-signal-metrics">
+<div>
+<span>Hit rate</span><strong>64.4%</strong>
+</div>
+<div>
+<span>Actual draw probability</span><strong>21.1%</strong>
+</div>
+<div>
+<span>Actual decisive-result probability</span><strong>62.7%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.54 goals</strong>
+</div>
+<div>
+<span>Top-pick draw behavior</span><strong>0 draw calls / 0 correct</strong>
+</div>
+</div>
+</article>
+<article class="model-signal-card">
+<div class="model-signal-head">
+<h3 class="anchored">
+Ordinal result
+</h3>
+<div class="model-signal-chip-row">
+<span class="model-signal-chip model-signal-chip-highlight">Best draw coverage</span>
+</div>
+</div>
+<p>
+Direct win/draw/loss ordinal logistic model.
+</p>
+<div class="model-signal-metrics">
+<div>
+<span>Hit rate</span><strong>64.4%</strong>
+</div>
+<div>
+<span>Actual draw probability</span><strong>22.0%</strong>
+</div>
+<div>
+<span>Actual decisive-result probability</span><strong>61.6%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>Result-only</strong>
+</div>
+<div>
+<span>Top-pick draw behavior</span><strong>0 draw calls / 0 correct</strong>
+</div>
+</div>
+</article>
+</div>
+<div class="model-disagreement-board">
+<div class="model-disagreement-title">
+<h3 class="anchored">
+Where The Baselines Split
+</h3>
+<p>
+These are the few graded matches where the baseline models did not all point to the same outcome.
+</p>
+</div>
+<article class="model-disagreement-row">
+<div class="model-disagreement-match">
+<strong>Ghana vs Panama</strong><small>home win / 1-0</small>
+</div>
+<div class="model-disagreement-picks">
+<span>Ensemble</span><strong>away win</strong><span>OLS</span><strong>draw</strong><span>Poisson</span><strong>away win</strong><span>Ordinal</span><strong>away win</strong>
+</div>
+</article>
+<article class="model-disagreement-row">
+<div class="model-disagreement-match">
+<strong>Canada vs Switzerland</strong><small>away win / 1-2</small>
+</div>
+<div class="model-disagreement-picks">
+<span>Ensemble</span><strong>home win</strong><span>OLS</span><strong>draw</strong><span>Poisson</span><strong>home win</strong><span>Ordinal</span><strong>home win</strong>
+</div>
+</article>
+</div>
+<p class="section-note">
+Current read: all four baseline models land on the same headline hit rate in the graded sample. The bigger issue is shared calibration, especially on matches that finish level. Baseline disagreement is rare (2 graded matches), so the public ensemble does not yet gain much diversity from mixing these four signals.
+</p>
+</section>
 <section id="model-performance" class="page-section performance-section">
 <div class="section-heading">
 <span class="section-kicker">Model trust</span>

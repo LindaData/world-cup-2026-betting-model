@@ -666,6 +666,181 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
   )
 }
 
+model_signal_frame <- function(bundle) {
+  detail <- bundle$accuracy_detail
+  accuracy <- bundle$accuracy
+
+  if (is.null(detail) || nrow(detail) == 0) {
+    return(data.frame())
+  }
+
+  model_rows <- data.frame(
+    model = c("Ensemble", "OLS goals", "Poisson score grid", "Ordinal result"),
+    result_col = c("ensemble_result", "ols_result", "poisson_result", "ordinal_result"),
+    correct_col = c("ensemble_correct", "ols_correct", "poisson_correct", "ordinal_correct"),
+    prob_col = c("ensemble_probability_actual", "ensemble_probability_actual", "poisson_probability_actual", "ordinal_probability_actual"),
+    goal_error_col = c(NA_character_, "ols_total_goal_error", "poisson_total_goal_error", NA_character_),
+    role = c(
+      "Public pick shown on the site.",
+      "Expected-goal benchmark translated into a result call.",
+      "Score-grid baseline for goals and scoreline context.",
+      "Direct win / draw / loss probability baseline."
+    ),
+    stringsAsFactors = FALSE
+  )
+
+  if (!is.null(accuracy) && nrow(accuracy) > 0) {
+    accuracy_lookup <- accuracy |>
+      dplyr::select(.data$model, .data$plain_english)
+    model_rows <- model_rows |>
+      dplyr::left_join(accuracy_lookup, by = "model")
+  } else {
+    model_rows$plain_english <- NA_character_
+  }
+
+  out <- lapply(seq_len(nrow(model_rows)), function(i) {
+    row <- model_rows[i, , drop = FALSE]
+    result_values <- as.character(detail[[row$result_col[[1]]]])
+    correct_values <- tolower(as.character(detail[[row$correct_col[[1]]]])) %in% c("true", "t", "1", "yes")
+    prob_values <- suppressWarnings(as.numeric(detail[[row$prob_col[[1]]]]))
+    goal_values <- if (is.na(row$goal_error_col[[1]])) rep(NA_real_, nrow(detail)) else suppressWarnings(as.numeric(detail[[row$goal_error_col[[1]]]]))
+
+    data.frame(
+      model = row$model[[1]],
+      role = row$role[[1]],
+      plain_english = safe_text(row$plain_english, row$role[[1]]),
+      matches = nrow(detail),
+      accuracy = mean(correct_values, na.rm = TRUE),
+      actual_prob_mean = mean(prob_values, na.rm = TRUE),
+      draw_actual_prob = mean(prob_values[detail$actual_result == "draw"], na.rm = TRUE),
+      decisive_actual_prob = mean(prob_values[detail$actual_result != "draw"], na.rm = TRUE),
+      top_pick_draws = sum(result_values == "draw", na.rm = TRUE),
+      top_pick_draw_hits = sum(result_values == "draw" & detail$actual_result == "draw", na.rm = TRUE),
+      goal_error = mean(goal_values, na.rm = TRUE),
+      stringsAsFactors = FALSE
+    )
+  })
+
+  dplyr::bind_rows(out)
+}
+
+render_model_signal_card <- function(row, draw_best, score_best) {
+  draw_badge <- if (identical(row$model[[1]], draw_best)) {
+    '<span class="model-signal-chip model-signal-chip-highlight">Best draw coverage</span>'
+  } else {
+    ""
+  }
+  score_badge <- if (identical(row$model[[1]], score_best)) {
+    '<span class="model-signal-chip">Tightest score miss</span>'
+  } else {
+    ""
+  }
+  score_text <- if (is.finite(row$goal_error[[1]])) {
+    paste0(fmt_number(row$goal_error[[1]], 2), " goals")
+  } else {
+    "Result-only"
+  }
+  draw_pick_text <- paste0(
+    fmt_integer(row$top_pick_draws[[1]]),
+    " draw calls / ",
+    fmt_integer(row$top_pick_draw_hits[[1]]),
+    " correct"
+  )
+
+  paste0(
+    '<article class="model-signal-card">',
+    '<div class="model-signal-head">',
+    '<h3>', escape_html(row$model[[1]]), '</h3>',
+    '<div class="model-signal-chip-row">', draw_badge, score_badge, '</div>',
+    '</div>',
+    '<p>', escape_html(row$plain_english[[1]]), '</p>',
+    '<div class="model-signal-metrics">',
+    '<div><span>Hit rate</span><strong>', display_percent(row$accuracy[[1]], 1), '</strong></div>',
+    '<div><span>Actual draw probability</span><strong>', display_percent(row$draw_actual_prob[[1]], 1), '</strong></div>',
+    '<div><span>Actual decisive-result probability</span><strong>', display_percent(row$decisive_actual_prob[[1]], 1), '</strong></div>',
+    '<div><span>Score miss</span><strong>', escape_html(score_text), '</strong></div>',
+    '<div><span>Top-pick draw behavior</span><strong>', escape_html(draw_pick_text), '</strong></div>',
+    '</div>',
+    '</article>'
+  )
+}
+
+render_model_disagreement_row <- function(row) {
+  paste0(
+    '<article class="model-disagreement-row">',
+    '<div class="model-disagreement-match">',
+    '<strong>', escape_html(row$match_label[[1]]), '</strong>',
+    '<small>', escape_html(safe_text(row$actual_result, "Result pending")), ' / ', escape_html(safe_text(row$actual_score, "")), '</small>',
+    '</div>',
+    '<div class="model-disagreement-picks">',
+    '<span>Ensemble</span><strong>', escape_html(safe_text(row$ensemble_result, "Pending")), '</strong>',
+    '<span>OLS</span><strong>', escape_html(safe_text(row$ols_result, "Pending")), '</strong>',
+    '<span>Poisson</span><strong>', escape_html(safe_text(row$poisson_result, "Pending")), '</strong>',
+    '<span>Ordinal</span><strong>', escape_html(safe_text(row$ordinal_result, "Pending")), '</strong>',
+    '</div>',
+    '</article>'
+  )
+}
+
+render_model_signal_section <- function(bundle, compact = FALSE) {
+  detail <- bundle$accuracy_detail
+  signals <- model_signal_frame(bundle)
+
+  if (nrow(signals) == 0 || is.null(detail) || nrow(detail) == 0) {
+    return(
+      paste0(
+        '<section id="model-signals" class="page-section model-signal-section">',
+        '<div class="empty-state"><strong>Model signal board will appear after completed matches are graded.</strong></div>',
+        '</section>'
+      )
+    )
+  }
+
+  draw_best <- signals$model[[which.max(signals$draw_actual_prob)]]
+  score_candidates <- signals[is.finite(signals$goal_error), , drop = FALSE]
+  score_best <- if (nrow(score_candidates) > 0) score_candidates$model[[which.min(score_candidates$goal_error)]] else ""
+
+  disagreement_rows <- detail |>
+    dplyr::filter(
+      .data$ensemble_result != .data$ols_result |
+        .data$ensemble_result != .data$poisson_result |
+        .data$ensemble_result != .data$ordinal_result
+    )
+  disagreement_count <- nrow(disagreement_rows)
+  cards <- paste(vapply(seq_len(nrow(signals)), function(i) render_model_signal_card(signals[i, , drop = FALSE], draw_best, score_best), character(1)), collapse = "")
+
+  disagreement_html <- if (disagreement_count > 0) {
+    paste(vapply(seq_len(nrow(disagreement_rows)), function(i) render_model_disagreement_row(disagreement_rows[i, , drop = FALSE]), character(1)), collapse = "")
+  } else {
+    '<div class="empty-state"><strong>The baseline models are fully aligned on the current graded sample.</strong></div>'
+  }
+
+  takeaway <- paste0(
+    'Current read: all four baseline models land on the same headline hit rate in the graded sample. ',
+    'The bigger issue is shared calibration, especially on matches that finish level. ',
+    'Baseline disagreement is rare (', fmt_integer(disagreement_count), ' graded matches), so the public ensemble does not yet gain much diversity from mixing these four signals.'
+  )
+
+  paste0(
+    '<section id="model-signals" class="page-section model-signal-section">',
+    '<div class="section-heading">',
+    '<span class="section-kicker">Model signals</span>',
+    '<h2>Which Model Is Helping Where?</h2>',
+    '<p>This board shows what each baseline model contributes to the public forecast. The goal is to make tuning decisions without flooding the page with technical diagnostics.</p>',
+    '</div>',
+    '<div class="model-signal-grid">', cards, '</div>',
+    '<div class="model-disagreement-board">',
+    '<div class="model-disagreement-title">',
+    '<h3>Where The Baselines Split</h3>',
+    '<p>These are the few graded matches where the baseline models did not all point to the same outcome.</p>',
+    '</div>',
+    disagreement_html,
+    '</div>',
+    '<p class="section-note">', escape_html(takeaway), '</p>',
+    '</section>'
+  )
+}
+
 render_forecast_card <- function(row, variant = "standard", initially_open = FALSE) {
   home <- safe_text(row$home_team, "Home team")
   away <- safe_text(row$away_team, "Away team")

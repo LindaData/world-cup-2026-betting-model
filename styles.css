@@ -3051,6 +3051,169 @@ pre code {
   display: none;
 }
 
+.model-signal-section {
+  position: relative;
+}
+
+.model-signal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.model-signal-card {
+  min-width: 0;
+  border: 1px solid rgba(16, 42, 67, 0.13);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(180deg, rgba(16, 42, 67, 0.03), rgba(255, 255, 255, 0) 32%),
+    #ffffff;
+  padding: var(--space-3);
+  box-shadow: 0 10px 24px rgba(16, 42, 67, 0.05);
+}
+
+.model-signal-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 0.55rem;
+}
+
+.model-signal-head h3 {
+  margin: 0;
+  color: var(--color-navy);
+  font-size: 1.08rem;
+  line-height: 1.15;
+}
+
+.model-signal-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.model-signal-chip {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  border: 1px solid rgba(16, 42, 67, 0.16);
+  border-radius: 999px;
+  background: #f5f8fb;
+  color: var(--color-navy);
+  padding: 0.1rem 0.55rem;
+  font-size: 0.74rem;
+  font-weight: 850;
+}
+
+.model-signal-chip-highlight {
+  border-color: rgba(217, 164, 65, 0.45);
+  background: #fff8e1;
+  color: #7a5600;
+}
+
+.model-signal-card p {
+  margin: 0 0 0.8rem;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.model-signal-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.model-signal-metrics div {
+  min-width: 0;
+  border: 1px solid #e7edf3;
+  border-radius: var(--radius-sm);
+  background: #fbfdff;
+  padding: 0.65rem;
+}
+
+.model-signal-metrics span,
+.model-disagreement-picks span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.model-signal-metrics strong,
+.model-disagreement-picks strong {
+  display: block;
+  color: var(--color-navy);
+  font-size: 1rem;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+.model-disagreement-board {
+  overflow: hidden;
+  border: 1px solid rgba(16, 42, 67, 0.14);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  box-shadow: 0 12px 26px rgba(16, 42, 67, 0.05);
+}
+
+.model-disagreement-title {
+  padding: var(--space-3);
+  border-bottom: 1px solid #e6edf3;
+  background: #f8fbfc;
+}
+
+.model-disagreement-title h3 {
+  margin: 0 0 0.25rem;
+  color: var(--color-navy);
+  font-size: 1.08rem;
+}
+
+.model-disagreement-title p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.model-disagreement-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.1fr) minmax(0, 1.4fr);
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-top: 1px solid #e6edf3;
+}
+
+.model-disagreement-row:first-of-type {
+  border-top: 0;
+}
+
+.model-disagreement-match strong {
+  display: block;
+  color: var(--color-navy);
+  font-size: 1rem;
+  line-height: 1.15;
+}
+
+.model-disagreement-match small {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.model-disagreement-picks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.model-disagreement-picks strong {
+  margin-top: 0.1rem;
+}
+
 .forecast-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
@@ -3692,6 +3855,10 @@ pre code {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .model-signal-grid {
+    grid-template-columns: 1fr;
+  }
+
   .review-learning-strip {
     grid-template-columns: 1fr;
   }
@@ -3718,6 +3885,14 @@ pre code {
 
   .tuning-segment-main {
     grid-column: 1 / -1;
+  }
+
+  .model-disagreement-row {
+    grid-template-columns: 1fr;
+  }
+
+  .model-disagreement-picks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .market-match-cell,
@@ -3890,6 +4065,11 @@ pre code {
     gap: 0.5rem;
   }
 
+  .model-signal-metrics,
+  .model-disagreement-picks {
+    grid-template-columns: 1fr;
+  }
+
   .review-score-card {
     padding: 0.8rem;
   }
@@ -3908,6 +4088,11 @@ pre code {
 
   .tuning-priority-card,
   .tuning-miss-card {
+    padding: 0.8rem;
+  }
+
+  .model-signal-card,
+  .model-disagreement-title {
     padding: 0.8rem;
   }
 
@@ -3937,6 +4122,11 @@ pre code {
 
   .tuning-miss-card .tuning-miss-grid {
     grid-template-columns: 1fr;
+  }
+
+  .model-disagreement-row {
+    gap: 0.55rem;
+    padding: 0.75rem;
   }
 
   .market-row-meta {
