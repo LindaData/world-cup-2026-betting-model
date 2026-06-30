@@ -95,7 +95,34 @@ The rendered static site is written to `docs/`.
 - Interactive bracket with mobile round tabs.
 - Champion probability section.
 - Post-match model review.
+- SEO metadata, sitemap, robots file, structured data, and social preview assets.
 - GitHub Pages publication from `docs/`.
+
+## SEO And Sharing
+
+The public site includes:
+
+- Canonical URLs generated from the configured GitHub Pages URL.
+- Page descriptions, Open Graph tags, Twitter card metadata, and a PNG social preview.
+- `robots.txt` and `sitemap.xml` for crawler discovery.
+- JSON-LD structured data describing the website, source repository, and public summary dataset.
+- A web manifest and theme color for consistent browser presentation.
+
+The public pages intentionally avoid exposing raw datasets, credentials, private API responses, or internal pricing notes.
+
+## Security And SSO
+
+The forecast site is a static GitHub Pages website and does not have a login surface, user accounts, or application-level SSO.
+
+Security controls for this repo should be handled through GitHub:
+
+- Enable two-factor authentication on the GitHub account or organization.
+- Require SAML/SSO only if the repo moves under a GitHub Enterprise organization that supports it.
+- Store API keys only in GitHub Actions secrets.
+- Keep Pages deployment scoped to the `github-pages` environment.
+- Use Dependabot to track GitHub Actions updates.
+
+See [SECURITY.md](SECURITY.md) for the repository security policy.
 
 ## Prototype Features
 

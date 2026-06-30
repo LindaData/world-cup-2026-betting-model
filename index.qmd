@@ -2,7 +2,7 @@
 title: "World Cup 2026 Forecasting Model"
 subtitle: "Static match probabilities, projected scores, and tournament paths."
 description: "A readable static World Cup 2026 forecasting site with match probabilities, expected scores, bracket projections, data freshness notes, and model performance monitoring."
-image: assets/social-preview.svg
+image: assets/social-preview.png
 toc: false
 number-sections: false
 code-tools: false

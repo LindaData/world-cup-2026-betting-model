@@ -2,6 +2,7 @@
 title: "Predictions"
 subtitle: "Today, upcoming matches, bracket projections, and post-match model review."
 description: "World Cup 2026 static match predictions with advance probabilities, regulation-level draw probabilities, expected scores, model performance, and a mobile-friendly bracket."
+image: ../assets/social-preview.png
 toc: false
 number-sections: false
 code-tools: false
