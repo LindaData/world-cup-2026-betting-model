@@ -23,9 +23,9 @@ summary <- bundle$summary
 ```
 
 <section class="page-intro prediction-intro">
-  <span class="section-kicker">Forecast board</span>
-  <h1>Current Predictions</h1>
-  <p>Model pick, probabilities, expected score, and refresh timing for the current board.</p>
+  <span class="section-kicker">Matchday</span>
+  <h1>Prediction Board</h1>
+  <p>Today&apos;s matches, next kickoff, bracket view, and model review in one place.</p>
 </section>
 
 ```{r status, results="asis"}
@@ -33,7 +33,7 @@ cat('<section class="prediction-status-bar" aria-label="Prediction status">')
 cat('<span class="status-chip">Beta</span>')
 cat('<span class="status-chip">', escape_html(tournament_phase(summary)), '</span>', sep = "")
 cat('<span class="status-chip muted">Last updated ', escape_html(summary_value(summary, "last_refreshed_local")), '</span>', sep = "")
-cat('<span class="status-chip muted">Published forecast board</span>')
+cat('<span class="status-chip muted">Times shown in your local timezone when available</span>')
 cat('</section>')
 ```
 
@@ -63,12 +63,10 @@ cat(render_upcoming_section(board, limit = 12))
   <a href="#model-board">Board</a>
   <a href="#today">Today</a>
   <a href="#next-match">Next match</a>
-  <a href="#upcoming">Upcoming</a>
   <a href="#bracket">Bracket</a>
-  <a href="#champion-outlook">Champion outlook</a>
   <a href="#model-review">Model review</a>
-  <a href="#tuning-watch">Tuning watch</a>
-  <a href="#methodology-details">Methodology</a>
+  <a href="#model-comparison">Model lab</a>
+  <a href="#dictionary">Guide</a>
 </nav>
 
 ```{r command-center, results="asis"}
@@ -106,17 +104,8 @@ cat(render_methodology_short())
 cat(render_technical_prediction_table(board))
 ```
 
-## Reading The Forecast
-
-- **Win probability** is the model-estimated chance that a specific team wins the match in regulation or group-stage scoring.
-- **Advance probability** appears for knockout matches. It includes the path through regulation, extra time, or penalties.
-- **Level after regulation** is the chance that a knockout match is tied after 90 minutes. It is not treated as a final draw.
-- **Draw probability** applies to matches where a draw can be the final result.
-- **Prediction strength** is the top outcome probability grouped into plain language. It is not a guarantee.
-- **Model agreement** counts how many baseline models point to the same winner, draw, or advancing team.
-- **Expected goals** is the model average score, not the single most likely score.
-- **Most likely score** is the exact scoreline with the largest probability in the score grid.
-- **Over 2.5 goals** means the match has at least 3 total goals.
-- **Both teams to score** means each team scores at least one goal.
+```{r dictionary, results="asis"}
+cat(render_forecast_dictionary_section())
+```
 
 <p class="responsible-note">Forecasts are probabilistic and should be used for research, discussion, and model review. They are not financial advice or guaranteed betting edges.</p>

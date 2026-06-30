@@ -171,7 +171,7 @@ render_model_market_row <- function(row) {
     '<small>Expected ', escape_html(expected_goals), '</small>',
     '</div>',
     '<details class="market-row-details">',
-    '<summary>More</summary>',
+    '<summary>View details</summary>',
     '<div class="market-detail-grid">',
     '<div><span>Probability edge</span><strong>', escape_html(probability_edge(row)), '</strong></div>',
     '<div><span>Over 2.5</span><strong>', display_percent(row$over_2_5_prob, 1), '</strong></div>',
@@ -572,6 +572,72 @@ render_tuning_miss_card <- function(row) {
   )
 }
 
+make_confidence_check <- function(data, label, note) {
+  if (nrow(data) == 0) {
+    return(NULL)
+  }
+
+  avg_conf <- mean(data$prediction_confidence_value, na.rm = TRUE)
+  hit_rate <- mean(data$ensemble_correct_flag, na.rm = TRUE)
+  gap <- hit_rate - avg_conf
+
+  data.frame(
+    band = label,
+    matches = nrow(data),
+    avg_confidence = avg_conf,
+    hit_rate = hit_rate,
+    gap = gap,
+    note = note,
+    stringsAsFactors = FALSE
+  )
+}
+
+confidence_check_state <- function(gap) {
+  if (!is.finite(gap)) {
+    return("neutral")
+  }
+  if (gap <= -0.07) {
+    return("high")
+  }
+  if (gap >= 0.07) {
+    return("low")
+  }
+  "balanced"
+}
+
+confidence_check_copy <- function(gap) {
+  if (!is.finite(gap)) {
+    return("Not enough completed matches yet.")
+  }
+  points <- abs(100 * gap)
+  if (gap <= -0.07) {
+    return(paste0("Actual hit rate is ", fmt_number(points, 1), " points lower than the stated confidence."))
+  }
+  if (gap >= 0.07) {
+    return(paste0("Actual hit rate is ", fmt_number(points, 1), " points higher than the stated confidence."))
+  }
+  paste0("Actual hit rate is within ", fmt_number(points, 1), " points of the stated confidence.")
+}
+
+render_confidence_check_card <- function(row) {
+  state <- confidence_check_state(row$gap[[1]])
+
+  paste0(
+    '<article class="confidence-check-card confidence-check-', escape_html(state), '">',
+    '<div class="confidence-check-head">',
+    '<span>', escape_html(row$band[[1]]), '</span>',
+    '<strong>', escape_html(fmt_integer(row$matches[[1]])), ' graded matches</strong>',
+    '</div>',
+    '<div class="confidence-check-metrics">',
+    '<div><small>Model usually said</small><b>', display_percent(row$avg_confidence[[1]], 1), '</b></div>',
+    '<div><small>Actually landed</small><b>', display_percent(row$hit_rate[[1]], 1), '</b></div>',
+    '</div>',
+    '<p>', escape_html(confidence_check_copy(row$gap[[1]])), '</p>',
+    '<small>', escape_html(row$note[[1]]), '</small>',
+    '</article>'
+  )
+}
+
 render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
   review <- review_analysis_frame(bundle)
 
@@ -628,6 +694,37 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
     '</div>'
   )
 
+  confidence_checks <- dplyr::bind_rows(
+    make_confidence_check(
+      review[is.finite(review$prediction_confidence_value) & review$prediction_confidence_value < 0.55, , drop = FALSE],
+      "Under 55%",
+      "Closest matches with the least separation."
+    ),
+    make_confidence_check(
+      review[is.finite(review$prediction_confidence_value) & review$prediction_confidence_value >= 0.55 & review$prediction_confidence_value < 0.65, , drop = FALSE],
+      "55% to 65%",
+      "Competitive matches with a small edge."
+    ),
+    make_confidence_check(
+      review[is.finite(review$prediction_confidence_value) & review$prediction_confidence_value >= 0.65 & review$prediction_confidence_value < 0.75, , drop = FALSE],
+      "65% to 75%",
+      "Solid lean spots where the model sees a clearer favorite."
+    ),
+    make_confidence_check(
+      review[is.finite(review$prediction_confidence_value) & review$prediction_confidence_value >= 0.75, , drop = FALSE],
+      "75%+",
+      "The strongest public calls on the board."
+    )
+  )
+
+  confidence_html <- if (nrow(confidence_checks) > 0) {
+    paste(vapply(seq_len(nrow(confidence_checks)), function(i) {
+      render_confidence_check_card(confidence_checks[i, , drop = FALSE])
+    }, character(1)), collapse = "")
+  } else {
+    '<div class="empty-state"><strong>Confidence checks will appear after completed matches are graded.</strong></div>'
+  }
+
   segment_rows <- paste(vapply(seq_len(nrow(segments)), function(i) render_tuning_segment_row(segments[i, , drop = FALSE]), character(1)), collapse = "")
 
   misses <- review |>
@@ -650,6 +747,13 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
     '<p>This section groups graded results into the segments that matter most for improving the model. It is meant to guide the next round of feature work and recalibration.</p>',
     '</div>',
     '<div class="tuning-priority-grid">', priority_cards, '</div>',
+    '<div class="confidence-check-section">',
+    '<div class="confidence-check-title">',
+    '<h3>Confidence Reality Check</h3>',
+    '<p>Each band compares what the public probability said before kickoff with what actually happened in completed matches.</p>',
+    '</div>',
+    '<div class="confidence-check-grid">', confidence_html, '</div>',
+    '</div>',
     '<div class="tuning-segment-board">',
     '<div class="tuning-segment-head" aria-hidden="true"><span>Segment</span><span>Matches</span><span>Hit rate</span><span>Score miss</span></div>',
     segment_rows,
@@ -1149,6 +1253,58 @@ render_upcoming_section <- function(board, limit = 8) {
     '<p>Additional forecast cards after today and the featured next match.</p>',
     '</div>',
     render_forecast_list(upcoming, "No additional upcoming matches are available in the current fixture table.", limit = limit, card_variant = "upcoming"),
+    '</section>'
+  )
+}
+
+render_forecast_dictionary_section <- function() {
+  dictionary <- data.frame(
+    term = c(
+      "Win probability",
+      "Advance probability",
+      "Level after regulation",
+      "Expected goals",
+      "Most likely score",
+      "Prediction strength",
+      "Model agreement",
+      "Brier score",
+      "RMSE",
+      "MAE",
+      "Calibration"
+    ),
+    definition = c(
+      "The model-estimated chance that a team wins the match when a regulation result can stand on its own.",
+      "The chance that a team moves on in a knockout match after regulation, extra time, or penalties.",
+      "For knockout matches, the chance the score is tied after 90 minutes. It is not treated as a final draw.",
+      "The average score the model expects, not the exact score it promises.",
+      "The single scoreline with the highest probability in the score grid.",
+      "A plain-language label that groups the top outcome probability into lean, medium, or strong.",
+      "How many of the baseline models point to the same winner, draw, or advancing team.",
+      "A probability-quality score. Lower is better because it means the forecast probabilities stayed closer to reality.",
+      "Root mean squared error. It punishes larger misses more than smaller ones. Lower is better.",
+      "Mean absolute error. It is the average size of the miss with no extra penalty for large errors. Lower is better.",
+      "How closely the published probabilities match long-run results after enough matches have been graded."
+    ),
+    stringsAsFactors = FALSE
+  )
+
+  cards <- paste(vapply(seq_len(nrow(dictionary)), function(i) {
+    paste0(
+      '<article class="dictionary-card">',
+      '<h3>', escape_html(dictionary$term[[i]]), '</h3>',
+      '<p>', escape_html(dictionary$definition[[i]]), '</p>',
+      '</article>'
+    )
+  }, character(1)), collapse = "")
+
+  paste0(
+    '<section id="dictionary" class="page-section dictionary-section">',
+    '<div class="section-heading">',
+    '<span class="section-kicker">Guide</span>',
+    '<h2>Forecast Dictionary</h2>',
+    '<p>Short definitions for the terms that appear most often on the public forecast board and review pages.</p>',
+    '</div>',
+    '<div class="dictionary-grid">', cards, '</div>',
     '</section>'
   )
 }

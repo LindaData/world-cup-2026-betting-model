@@ -342,16 +342,16 @@ ul.task-list li input[type="checkbox"] {
 
 
 <section class="page-intro prediction-intro">
-<span class="section-kicker">Forecast board</span>
+<span class="section-kicker">Matchday</span>
 <h1>
-Current Predictions
+Prediction Board
 </h1>
 <p>
-Model pick, probabilities, expected score, and refresh timing for the current board.
+Today's matches, next kickoff, bracket view, and model review in one place.
 </p>
 </section>
 <section class="prediction-status-bar" aria-label="Prediction status">
-<span class="status-chip">Beta</span><span class="status-chip">Knockout stage</span><span class="status-chip muted">Last updated 2026-06-30 02:31:57 EDT</span><span class="status-chip muted">Published forecast board</span>
+<span class="status-chip">Beta</span><span class="status-chip">Knockout stage</span><span class="status-chip muted">Last updated 2026-06-30 02:31:57 EDT</span><span class="status-chip muted">Times shown in your local timezone when available</span>
 </section>
 <section id="model-board" class="page-section model-market-section">
 <div class="market-board-title">
@@ -404,7 +404,7 @@ Ivory Coast <span>vs</span> Norway
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -460,7 +460,7 @@ France <span>vs</span> Sweden
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -516,7 +516,7 @@ Mexico <span>vs</span> Ecuador
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -572,7 +572,7 @@ Brazil <span>vs</span> Japan
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -628,7 +628,7 @@ Germany <span>vs</span> Paraguay
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -684,7 +684,7 @@ Netherlands <span>vs</span> Morocco
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -740,7 +740,7 @@ England <span>vs</span> DR Congo
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -796,7 +796,7 @@ Belgium <span>vs</span> Senegal
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -852,7 +852,7 @@ United States <span>vs</span> Bosnia and Herzegovina
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -908,7 +908,7 @@ Spain <span>vs</span> Austria
 </div>
 <details class="market-row-details">
 <summary>
-More
+View details
 </summary>
 <div class="market-detail-grid">
 <div>
@@ -2774,7 +2774,7 @@ Kansas City, United States
 </div>
 </section>
 <nav class="prediction-page-nav" aria-label="Prediction page sections">
-<a href="#model-board">Board</a> <a href="#today">Today</a> <a href="#next-match">Next match</a> <a href="#upcoming">Upcoming</a> <a href="#bracket">Bracket</a> <a href="#champion-outlook">Champion outlook</a> <a href="#model-review">Model review</a> <a href="#tuning-watch">Tuning watch</a> <a href="#methodology-details">Methodology</a>
+<a href="#model-board">Board</a> <a href="#today">Today</a> <a href="#next-match">Next match</a> <a href="#bracket">Bracket</a> <a href="#model-review">Model review</a> <a href="#model-comparison">Model lab</a> <a href="#dictionary">Guide</a>
 </nav>
 <section class="decision-panel decision-panel-compact" aria-label="Forecast command center">
 <div class="decision-card decision-card-primary">
@@ -4087,6 +4087,86 @@ This section groups graded results into the segments that matter most for improv
 </div>
 <div class="tuning-priority-card">
 <span>Knockout evidence</span><strong>1 graded match</strong><small>Too early to retune the knockout layer from public results alone.</small>
+</div>
+</div>
+<div class="confidence-check-section">
+<div class="confidence-check-title">
+<h3 class="anchored">
+Confidence Reality Check
+</h3>
+<p>
+Each band compares what the public probability said before kickoff with what actually happened in completed matches.
+</p>
+</div>
+<div class="confidence-check-grid">
+<article class="confidence-check-card confidence-check-high">
+<div class="confidence-check-head">
+<span>Under 55%</span><strong>23 graded matches</strong>
+</div>
+<div class="confidence-check-metrics">
+<div>
+<small>Model usually said</small><b>45.9%</b>
+</div>
+<div>
+<small>Actually landed</small><b>34.8%</b>
+</div>
+</div>
+<p>
+Actual hit rate is 11.1 points lower than the stated confidence.
+</p>
+<small>Closest matches with the least separation.</small>
+</article>
+<article class="confidence-check-card confidence-check-low">
+<div class="confidence-check-head">
+<span>55% to 65%</span><strong>15 graded matches</strong>
+</div>
+<div class="confidence-check-metrics">
+<div>
+<small>Model usually said</small><b>59.3%</b>
+</div>
+<div>
+<small>Actually landed</small><b>86.7%</b>
+</div>
+</div>
+<p>
+Actual hit rate is 27.3 points higher than the stated confidence.
+</p>
+<small>Competitive matches with a small edge.</small>
+</article>
+<article class="confidence-check-card confidence-check-balanced">
+<div class="confidence-check-head">
+<span>65% to 75%</span><strong>16 graded matches</strong>
+</div>
+<div class="confidence-check-metrics">
+<div>
+<small>Model usually said</small><b>70.5%</b>
+</div>
+<div>
+<small>Actually landed</small><b>68.8%</b>
+</div>
+</div>
+<p>
+Actual hit rate is within 1.7 points of the stated confidence.
+</p>
+<small>Solid lean spots where the model sees a clearer favorite.</small>
+</article>
+<article class="confidence-check-card confidence-check-balanced">
+<div class="confidence-check-head">
+<span>75%+</span><strong>19 graded matches</strong>
+</div>
+<div class="confidence-check-metrics">
+<div>
+<small>Model usually said</small><b>81.3%</b>
+</div>
+<div>
+<small>Actually landed</small><b>78.9%</b>
+</div>
+</div>
+<p>
+Actual hit rate is within 2.3 points of the stated confidence.
+</p>
+<small>The strongest public calls on the board.</small>
+</article>
 </div>
 </div>
 <div class="tuning-segment-board">
@@ -5965,21 +6045,107 @@ Colombia
 </tbody>
 </table>
 </details>
+<section id="dictionary" class="page-section dictionary-section">
+<div class="section-heading">
+<span class="section-kicker">Guide</span>
+<h2 class="anchored">
+Forecast Dictionary
+</h2>
+<p>
+Short definitions for the terms that appear most often on the public forecast board and review pages.
+</p>
+</div>
+<div class="dictionary-grid">
+<article class="dictionary-card">
+<h3 class="anchored">
+Win probability
+</h3>
+<p>
+The model-estimated chance that a team wins the match when a regulation result can stand on its own.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+Advance probability
+</h3>
+<p>
+The chance that a team moves on in a knockout match after regulation, extra time, or penalties.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+Level after regulation
+</h3>
+<p>
+For knockout matches, the chance the score is tied after 90 minutes. It is not treated as a final draw.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+Expected goals
+</h3>
+<p>
+The average score the model expects, not the exact score it promises.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+Most likely score
+</h3>
+<p>
+The single scoreline with the highest probability in the score grid.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+Prediction strength
+</h3>
+<p>
+A plain-language label that groups the top outcome probability into lean, medium, or strong.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+Model agreement
+</h3>
+<p>
+How many of the baseline models point to the same winner, draw, or advancing team.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+Brier score
+</h3>
+<p>
+A probability-quality score. Lower is better because it means the forecast probabilities stayed closer to reality.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+RMSE
+</h3>
+<p>
+Root mean squared error. It punishes larger misses more than smaller ones. Lower is better.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+MAE
+</h3>
+<p>
+Mean absolute error. It is the average size of the miss with no extra penalty for large errors. Lower is better.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+Calibration
+</h3>
+<p>
+How closely the published probabilities match long-run results after enough matches have been graded.
+</p>
+</article>
+</div>
 </section>
-<section id="reading-the-forecast" class="level2">
-<h2 class="anchored" data-anchor-id="reading-the-forecast">Reading The Forecast</h2>
-<ul>
-<li><strong>Win probability</strong> is the model-estimated chance that a specific team wins the match in regulation or group-stage scoring.</li>
-<li><strong>Advance probability</strong> appears for knockout matches. It includes the path through regulation, extra time, or penalties.</li>
-<li><strong>Level after regulation</strong> is the chance that a knockout match is tied after 90 minutes. It is not treated as a final draw.</li>
-<li><strong>Draw probability</strong> applies to matches where a draw can be the final result.</li>
-<li><strong>Prediction strength</strong> is the top outcome probability grouped into plain language. It is not a guarantee.</li>
-<li><strong>Model agreement</strong> counts how many baseline models point to the same winner, draw, or advancing team.</li>
-<li><strong>Expected goals</strong> is the model average score, not the single most likely score.</li>
-<li><strong>Most likely score</strong> is the exact scoreline with the largest probability in the score grid.</li>
-<li><strong>Over 2.5 goals</strong> means the match has at least 3 total goals.</li>
-<li><strong>Both teams to score</strong> means each team scores at least one goal.</li>
-</ul>
 <p class="responsible-note">
 Forecasts are probabilistic and should be used for research, discussion, and model review. They are not financial advice or guaranteed betting edges.
 </p>
