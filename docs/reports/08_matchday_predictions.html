@@ -2774,7 +2774,7 @@ Kansas City, United States
 </div>
 </section>
 <nav class="prediction-page-nav" aria-label="Prediction page sections">
-<a href="#model-board">Board</a> <a href="#today">Today</a> <a href="#next-match">Next match</a> <a href="#upcoming">Upcoming</a> <a href="#bracket">Bracket</a> <a href="#champion-outlook">Champion outlook</a> <a href="#model-review">Model review</a> <a href="#methodology-details">Methodology</a>
+<a href="#model-board">Board</a> <a href="#today">Today</a> <a href="#next-match">Next match</a> <a href="#upcoming">Upcoming</a> <a href="#bracket">Bracket</a> <a href="#champion-outlook">Champion outlook</a> <a href="#model-review">Model review</a> <a href="#tuning-watch">Tuning watch</a> <a href="#methodology-details">Methodology</a>
 </nav>
 <section class="decision-panel decision-panel-compact" aria-label="Forecast command center">
 <div class="decision-card decision-card-primary">
@@ -4063,6 +4063,335 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 </p>
 <p class="section-note">
 Reading this board: Hit/Miss grades the model pick. Score miss grades the projected score. A missed pick with a low actual-result probability is useful model feedback, not a failure of the site.
+</p>
+</section>
+<section id="tuning-watch" class="page-section tuning-watch-section">
+<div class="section-heading">
+<span class="section-kicker">Tuning watch</span>
+<h2 class="anchored">
+Where To Fine-Tune Next
+</h2>
+<p>
+This section groups graded results into the segments that matter most for improving the model. It is meant to guide the next round of feature work and recalibration.
+</p>
+</div>
+<div class="tuning-priority-grid">
+<div class="tuning-priority-card tuning-priority-card-primary">
+<span>Draw calibration</span><strong>20 actual draws / level finals</strong><small>0 top-pick draws so far. This is the clearest gap in the current sample.</small>
+</div>
+<div class="tuning-priority-card">
+<span>Lean-confidence spots</span><strong>22.2% hit rate</strong><small>9 graded matches. Treat lean picks as the noisiest segment.</small>
+</div>
+<div class="tuning-priority-card">
+<span>Strong-pick misses</span><strong>9 misses</strong><small>9 of those misses were actual draws. The model still leans too hard toward a winner.</small>
+</div>
+<div class="tuning-priority-card">
+<span>Knockout evidence</span><strong>1 graded match</strong><small>Too early to retune the knockout layer from public results alone.</small>
+</div>
+</div>
+<div class="tuning-segment-board">
+<div class="tuning-segment-head" aria-hidden="true">
+<span>Segment</span><span>Matches</span><span>Hit rate</span><span>Score miss</span>
+</div>
+<article class="tuning-segment-row">
+<div class="tuning-segment-main">
+<strong>Group-stage matches</strong><small>Where the current grading sample is deepest.</small>
+</div>
+<div class="tuning-segment-metric">
+<span>Matches</span><strong>72</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Hit rate</span><strong>63.9%</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Score miss</span><strong>1.54 goals</strong>
+</div>
+</article>
+<article class="tuning-segment-row">
+<div class="tuning-segment-main">
+<strong>Knockout matches</strong><small>Sample is still small; treat this as directional.</small>
+</div>
+<div class="tuning-segment-metric">
+<span>Matches</span><strong>1</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Hit rate</span><strong>100.0%</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Score miss</span><strong>1.62 goals</strong>
+</div>
+</article>
+<article class="tuning-segment-row">
+<div class="tuning-segment-main">
+<strong>Strong picks</strong><small>High-probability spots from the public ensemble.</small>
+</div>
+<div class="tuning-segment-metric">
+<span>Matches</span><strong>43</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Hit rate</span><strong>79.1%</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Score miss</span><strong>1.58 goals</strong>
+</div>
+</article>
+<article class="tuning-segment-row">
+<div class="tuning-segment-main">
+<strong>Medium picks</strong><small>Competitive matches with some separation.</small>
+</div>
+<div class="tuning-segment-metric">
+<span>Matches</span><strong>21</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Hit rate</span><strong>52.4%</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Score miss</span><strong>1.40 goals</strong>
+</div>
+</article>
+<article class="tuning-segment-row">
+<div class="tuning-segment-main">
+<strong>Lean picks</strong><small>Closest matches and lowest public conviction.</small>
+</div>
+<div class="tuning-segment-metric">
+<span>Matches</span><strong>9</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Hit rate</span><strong>22.2%</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Score miss</span><strong>1.69 goals</strong>
+</div>
+</article>
+<article class="tuning-segment-row">
+<div class="tuning-segment-main">
+<strong>Actual draws / level finals</strong><small>The current blind spot in the graded sample.</small>
+</div>
+<div class="tuning-segment-metric">
+<span>Matches</span><strong>20</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Hit rate</span><strong>0.0%</strong>
+</div>
+<div class="tuning-segment-metric">
+<span>Score miss</span><strong>1.69 goals</strong>
+</div>
+</article>
+</div>
+<div class="tuning-miss-section">
+<div class="tuning-miss-title">
+<h3 class="anchored">
+High-Confidence Misses
+</h3>
+<p>
+These are the misses worth reviewing first because the model was willing to make a strong public call.
+</p>
+</div>
+<div class="tuning-miss-grid">
+<article class="tuning-miss-card">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+</div>
+<h3 class="anchored">
+Spain vs Cape Verde
+</h3>
+<div class="tuning-miss-grid">
+<div>
+<span>Model pick</span><strong>Spain</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 0-0</strong>
+</div>
+<div>
+<span>Top probability</span><strong>88.5%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>3.64 goals</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+</article>
+<article class="tuning-miss-card">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+</div>
+<h3 class="anchored">
+England vs Ghana
+</h3>
+<div class="tuning-miss-grid">
+<div>
+<span>Model pick</span><strong>England</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 0-0</strong>
+</div>
+<div>
+<span>Top probability</span><strong>85.4%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>3.45 goals</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+</article>
+<article class="tuning-miss-card">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+</div>
+<h3 class="anchored">
+Ecuador vs Curaçao
+</h3>
+<div class="tuning-miss-grid">
+<div>
+<span>Model pick</span><strong>Ecuador</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 0-0</strong>
+</div>
+<div>
+<span>Top probability</span><strong>83.6%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>3.44 goals</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+</article>
+<article class="tuning-miss-card">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+</div>
+<h3 class="anchored">
+Qatar vs Switzerland
+</h3>
+<div class="tuning-miss-grid">
+<div>
+<span>Model pick</span><strong>Switzerland</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Top probability</span><strong>76.8%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.17 goals</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+</article>
+<article class="tuning-miss-card">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+</div>
+<h3 class="anchored">
+Canada vs Bosnia and Herzegovina
+</h3>
+<div class="tuning-miss-grid">
+<div>
+<span>Model pick</span><strong>Canada</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Top probability</span><strong>72.6%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.84 goals</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+</article>
+<article class="tuning-miss-card">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+</div>
+<h3 class="anchored">
+Uruguay vs Cape Verde
+</h3>
+<div class="tuning-miss-grid">
+<div>
+<span>Model pick</span><strong>Uruguay</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 2-2</strong>
+</div>
+<div>
+<span>Top probability</span><strong>71.8%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.06 goals</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+</article>
+<article class="tuning-miss-card">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+</div>
+<h3 class="anchored">
+Portugal vs DR Congo
+</h3>
+<div class="tuning-miss-grid">
+<div>
+<span>Model pick</span><strong>Portugal</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Top probability</span><strong>71.6%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.80 goals</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+</article>
+<article class="tuning-miss-card">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+</div>
+<h3 class="anchored">
+Iran vs New Zealand
+</h3>
+<div class="tuning-miss-grid">
+<div>
+<span>Model pick</span><strong>Iran</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 2-2</strong>
+</div>
+<div>
+<span>Top probability</span><strong>69.6%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.10 goals</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+</article>
+</div>
+</div>
+<p class="section-note">
+Current read: the ensemble behaves like a winner-seeking model. Draws are the biggest blind spot in the graded sample, while strong favorite spots are generally solid outside of tied matches.
 </p>
 </section>
 <section id="model-performance" class="page-section performance-section">

@@ -455,6 +455,217 @@ render_model_review_section <- function(bundle, compact = FALSE, limit = 8) {
   )
 }
 
+review_analysis_frame <- function(bundle) {
+  detail <- bundle$accuracy_detail
+  board <- bundle$board
+
+  if (is.null(detail) || nrow(detail) == 0) {
+    return(data.frame())
+  }
+
+  review <- detail
+  if (!is.null(board) && nrow(board) > 0 && "source_match_id" %in% names(detail) && "source_match_id" %in% names(board)) {
+    board_fields <- intersect(
+      c("source_match_id", "is_knockout_match", "confidence_band", "prediction_confidence"),
+      names(board)
+    )
+    board_lookup <- board |>
+      dplyr::select(dplyr::any_of(board_fields)) |>
+      dplyr::distinct(.data$source_match_id, .keep_all = TRUE)
+    review <- review |>
+      dplyr::left_join(board_lookup, by = "source_match_id")
+  }
+
+  if (!"is_knockout_match" %in% names(review)) {
+    review$is_knockout_match <- NA
+  }
+  if (!"confidence_band" %in% names(review)) {
+    review$confidence_band <- NA_character_
+  }
+  if (!"prediction_confidence" %in% names(review)) {
+    review$prediction_confidence <- NA_real_
+  }
+
+  review |>
+    dplyr::mutate(
+      ensemble_correct_flag = tolower(as.character(.data$ensemble_correct)) %in% c("true", "t", "1", "yes"),
+      actual_result_lower = tolower(as.character(.data$actual_result)),
+      ensemble_result_lower = tolower(as.character(.data$ensemble_result)),
+      is_knockout_flag = tolower(as.character(.data$is_knockout_match)) %in% c("true", "t", "1", "yes"),
+      phase = dplyr::if_else(.data$is_knockout_flag, "Knockout", "Group"),
+      actual_draw_flag = .data$actual_result_lower == "draw",
+      predicted_draw_flag = .data$ensemble_result_lower == "draw",
+      confidence_band_label = dplyr::coalesce(as.character(.data$confidence_band), "Not labeled"),
+      prediction_confidence_value = suppressWarnings(as.numeric(.data$prediction_confidence)),
+      poisson_total_goal_error_value = suppressWarnings(as.numeric(.data$poisson_total_goal_error)),
+      ensemble_probability_actual_value = suppressWarnings(as.numeric(.data$ensemble_probability_actual))
+    )
+}
+
+make_tuning_segment <- function(data, segment, note) {
+  if (nrow(data) == 0) {
+    return(NULL)
+  }
+
+  matches <- nrow(data)
+  accuracy <- mean(data$ensemble_correct_flag, na.rm = TRUE)
+  goal_error <- if (any(is.finite(data$poisson_total_goal_error_value))) {
+    mean(data$poisson_total_goal_error_value, na.rm = TRUE)
+  } else {
+    NA_real_
+  }
+
+  data.frame(
+    segment = segment,
+    matches = matches,
+    accuracy = accuracy,
+    goal_error = goal_error,
+    note = note,
+    stringsAsFactors = FALSE
+  )
+}
+
+render_tuning_segment_row <- function(row) {
+  paste0(
+    '<article class="tuning-segment-row">',
+    '<div class="tuning-segment-main">',
+    '<strong>', escape_html(row$segment[[1]]), '</strong>',
+    '<small>', escape_html(row$note[[1]]), '</small>',
+    '</div>',
+    '<div class="tuning-segment-metric"><span>Matches</span><strong>', escape_html(fmt_integer(row$matches[[1]])), '</strong></div>',
+    '<div class="tuning-segment-metric"><span>Hit rate</span><strong>', display_percent(row$accuracy[[1]], 1), '</strong></div>',
+    '<div class="tuning-segment-metric"><span>Score miss</span><strong>', ifelse(is.finite(row$goal_error[[1]]), paste0(fmt_number(row$goal_error[[1]], 2), " goals"), "Pending"), '</strong></div>',
+    '</article>'
+  )
+}
+
+render_tuning_miss_card <- function(row) {
+  actual_label <- paste0(
+    safe_text(row$actual_winner, "Result pending"),
+    " ",
+    safe_text(row$actual_score, "")
+  )
+  miss_note <- if (row$actual_draw_flag[[1]]) {
+    "Actual result finished level."
+  } else if (row$phase[[1]] == "Knockout") {
+    "Knockout path missed."
+  } else {
+    "Winner call missed."
+  }
+
+  paste0(
+    '<article class="tuning-miss-card">',
+    '<div class="tuning-miss-head">',
+    '<span class="review-badge review-miss">Miss</span>',
+    '<span class="tuning-phase-tag">', escape_html(row$phase[[1]]), '</span>',
+    '<span class="tuning-phase-tag">', escape_html(row$confidence_band_label[[1]]), '</span>',
+    '</div>',
+    '<h3>', escape_html(row$match_label[[1]]), '</h3>',
+    '<div class="tuning-miss-grid">',
+    '<div><span>Model pick</span><strong>', escape_html(safe_text(row$ensemble_pick, "Pick pending")), '</strong></div>',
+    '<div><span>Actual</span><strong>', escape_html(actual_label), '</strong></div>',
+    '<div><span>Top probability</span><strong>', display_percent(row$prediction_confidence_value[[1]], 1), '</strong></div>',
+    '<div><span>Score miss</span><strong>', ifelse(is.finite(row$poisson_total_goal_error_value[[1]]), paste0(fmt_number(row$poisson_total_goal_error_value[[1]], 2), " goals"), "Pending"), '</strong></div>',
+    '</div>',
+    '<p>', escape_html(miss_note), '</p>',
+    '</article>'
+  )
+}
+
+render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
+  review <- review_analysis_frame(bundle)
+
+  if (nrow(review) == 0) {
+    return(
+      paste0(
+        '<section id="tuning-watch" class="page-section tuning-watch-section">',
+        '<div class="empty-state"><strong>Tuning watch will appear after completed matches are graded.</strong></div>',
+        '</section>'
+      )
+    )
+  }
+
+  segments <- dplyr::bind_rows(
+    make_tuning_segment(review[review$phase == "Group", , drop = FALSE], "Group-stage matches", "Where the current grading sample is deepest."),
+    make_tuning_segment(review[review$phase == "Knockout", , drop = FALSE], "Knockout matches", "Sample is still small; treat this as directional."),
+    make_tuning_segment(review[review$confidence_band_label == "Strong", , drop = FALSE], "Strong picks", "High-probability spots from the public ensemble."),
+    make_tuning_segment(review[review$confidence_band_label == "Medium", , drop = FALSE], "Medium picks", "Competitive matches with some separation."),
+    make_tuning_segment(review[review$confidence_band_label == "Lean", , drop = FALSE], "Lean picks", "Closest matches and lowest public conviction."),
+    make_tuning_segment(review[review$actual_draw_flag, , drop = FALSE], "Actual draws / level finals", "The current blind spot in the graded sample.")
+  )
+
+  draw_matches <- sum(review$actual_draw_flag, na.rm = TRUE)
+  predicted_draws <- sum(review$predicted_draw_flag, na.rm = TRUE)
+  strong_rows <- review[review$confidence_band_label == "Strong", , drop = FALSE]
+  strong_misses <- sum(!strong_rows$ensemble_correct_flag, na.rm = TRUE)
+  strong_draw_misses <- sum(!strong_rows$ensemble_correct_flag & strong_rows$actual_draw_flag, na.rm = TRUE)
+  lean_rows <- review[review$confidence_band_label == "Lean", , drop = FALSE]
+  lean_accuracy <- if (nrow(lean_rows) > 0) mean(lean_rows$ensemble_correct_flag, na.rm = TRUE) else NA_real_
+  knockout_rows <- review[review$phase == "Knockout", , drop = FALSE]
+  knockout_matches <- nrow(knockout_rows)
+  knockout_accuracy <- if (knockout_matches > 0) mean(knockout_rows$ensemble_correct_flag, na.rm = TRUE) else NA_real_
+
+  priority_cards <- paste0(
+    '<div class="tuning-priority-card tuning-priority-card-primary">',
+    '<span>Draw calibration</span>',
+    '<strong>', escape_html(fmt_integer(draw_matches)), ' actual draws / level finals</strong>',
+    '<small>', escape_html(fmt_integer(predicted_draws)), ' top-pick draws so far. This is the clearest gap in the current sample.</small>',
+    '</div>',
+    '<div class="tuning-priority-card">',
+    '<span>Lean-confidence spots</span>',
+    '<strong>', display_percent(lean_accuracy, 1), ' hit rate</strong>',
+    '<small>', escape_html(fmt_integer(nrow(lean_rows))), ' graded matches. Treat lean picks as the noisiest segment.</small>',
+    '</div>',
+    '<div class="tuning-priority-card">',
+    '<span>Strong-pick misses</span>',
+    '<strong>', escape_html(fmt_integer(strong_misses)), ' misses</strong>',
+    '<small>', escape_html(fmt_integer(strong_draw_misses)), ' of those misses were actual draws. The model still leans too hard toward a winner.</small>',
+    '</div>',
+    '<div class="tuning-priority-card">',
+    '<span>Knockout evidence</span>',
+    '<strong>', escape_html(fmt_integer(knockout_matches)), ' graded match', ifelse(knockout_matches == 1, "", "es"), '</strong>',
+    '<small>', ifelse(knockout_matches < 5, "Too early to retune the knockout layer from public results alone.", paste0(display_percent(knockout_accuracy, 1), " accuracy so far.")), '</small>',
+    '</div>'
+  )
+
+  segment_rows <- paste(vapply(seq_len(nrow(segments)), function(i) render_tuning_segment_row(segments[i, , drop = FALSE]), character(1)), collapse = "")
+
+  misses <- review |>
+    dplyr::filter(!.data$ensemble_correct_flag) |>
+    dplyr::arrange(dplyr::desc(.data$prediction_confidence_value), dplyr::desc(.data$date)) |>
+    dplyr::slice_head(n = limit)
+  miss_cards <- if (nrow(misses) > 0) {
+    paste(vapply(seq_len(nrow(misses)), function(i) render_tuning_miss_card(misses[i, , drop = FALSE]), character(1)), collapse = "")
+  } else {
+    '<div class="empty-state"><strong>No missed predictions are available yet.</strong></div>'
+  }
+
+  compact_class <- if (compact) " tuning-watch-compact" else ""
+
+  paste0(
+    '<section id="tuning-watch" class="page-section tuning-watch-section', compact_class, '">',
+    '<div class="section-heading">',
+    '<span class="section-kicker">Tuning watch</span>',
+    '<h2>Where To Fine-Tune Next</h2>',
+    '<p>This section groups graded results into the segments that matter most for improving the model. It is meant to guide the next round of feature work and recalibration.</p>',
+    '</div>',
+    '<div class="tuning-priority-grid">', priority_cards, '</div>',
+    '<div class="tuning-segment-board">',
+    '<div class="tuning-segment-head" aria-hidden="true"><span>Segment</span><span>Matches</span><span>Hit rate</span><span>Score miss</span></div>',
+    segment_rows,
+    '</div>',
+    '<div class="tuning-miss-section">',
+    '<div class="tuning-miss-title">',
+    '<h3>High-Confidence Misses</h3>',
+    '<p>These are the misses worth reviewing first because the model was willing to make a strong public call.</p>',
+    '</div>',
+    '<div class="tuning-miss-grid">', miss_cards, '</div>',
+    '</div>',
+    '<p class="section-note">Current read: the ensemble behaves like a winner-seeking model. Draws are the biggest blind spot in the graded sample, while strong favorite spots are generally solid outside of tied matches.</p>',
+    '</section>'
+  )
+}
+
 render_forecast_card <- function(row, variant = "standard", initially_open = FALSE) {
   home <- safe_text(row$home_team, "Home team")
   away <- safe_text(row$away_team, "Away team")
