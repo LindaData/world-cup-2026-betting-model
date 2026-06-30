@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-06-30T21:12:11.459822Z",
+  "refreshed_at_utc": "2026-06-30T22:47:48.755402Z",
   "dates_requested": [
     "20260629",
     "20260630",
@@ -339,15 +339,15 @@
       "date_utc": "2026-06-30T22:35Z",
       "name": "Chicago White Sox at Baltimore Orioles",
       "short_name": "CHW @ BAL",
-      "status": "Scheduled",
-      "status_short": "6/30 - 6:35 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Mid 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Baltimore Orioles",
       "away_team": "Chicago White Sox",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "1",
       "home_record": "39-47",
       "away_record": "44-39",
       "venue": "Oriole Park at Camden Yards",
@@ -356,7 +356,7 @@
         "MASN",
         "CHSN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815964/white-sox-orioles"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815964"
     },
     {
       "sport": "mlb",
@@ -364,9 +364,9 @@
       "date_utc": "2026-06-30T22:40Z",
       "name": "Pittsburgh Pirates at Philadelphia Phillies",
       "short_name": "PIT @ PHI",
-      "status": "Scheduled",
-      "status_short": "6/30 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Mid 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Philadelphia Phillies",
@@ -380,7 +380,7 @@
         "MLB.TV",
         "NBC Sports Phil"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815967/pirates-phillies"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815967"
     },
     {
       "sport": "mlb",
@@ -388,9 +388,9 @@
       "date_utc": "2026-06-30T22:40Z",
       "name": "Texas Rangers at Cleveland Guardians",
       "short_name": "TEX @ CLE",
-      "status": "Scheduled",
-      "status_short": "6/30 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Mid 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
@@ -405,7 +405,7 @@
         "CLEGuardians.TV",
         "Rangers Sports Network"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815969/rangers-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815969"
     },
     {
       "sport": "mlb",
