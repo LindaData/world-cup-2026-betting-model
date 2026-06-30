@@ -109,69 +109,133 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 <meta name="author" content="Sergio Mora">
+
 <meta name="robots" content="index, follow, max-image-preview:large">
+
 <meta name="theme-color" content="#102a43">
+
 <meta property="og:type" content="website">
+
 <meta property="og:locale" content="en_US">
+
 <link rel="author" href="https://github.com/LindaData">
+
 <link rel="manifest" href="https://lindadata.github.io/world-cup-2026-betting-model/assets/site.webmanifest">
+
 <script type="application/ld+json">
+
 {
+
   "@context": "https://schema.org",
+
   "@graph": [
+
     {
+
       "@type": "WebSite",
+
       "@id": "https://lindadata.github.io/world-cup-2026-betting-model/#website",
+
       "name": "World Cup 2026 Forecasting Model",
+
       "alternateName": "WC 2026 Forecasts",
+
       "url": "https://lindadata.github.io/world-cup-2026-betting-model/",
+
       "description": "Match probabilities, projected scores, champion probabilities, tournament paths, and post-match model evaluation for the 2026 World Cup.",
+
       "inLanguage": "en-US",
+
       "creator": {
+
         "@type": "Person",
+
         "name": "Sergio Mora",
+
         "url": "https://github.com/LindaData"
+
       },
+
       "publisher": {
+
         "@type": "Organization",
+
         "name": "LindaData",
+
         "url": "https://github.com/LindaData"
+
       }
+
     },
+
     {
+
       "@type": "SoftwareSourceCode",
+
       "@id": "https://github.com/LindaData/world-cup-2026-betting-model#source",
+
       "name": "World Cup 2026 Forecasting Model",
+
       "codeRepository": "https://github.com/LindaData/world-cup-2026-betting-model",
+
       "programmingLanguage": ["R", "Python", "SQL"],
+
       "runtimePlatform": "Quarto, GitHub Pages",
+
       "applicationCategory": "Sports forecasting",
+
       "isAccessibleForFree": true,
+
       "license": "https://github.com/LindaData/world-cup-2026-betting-model"
+
     },
+
     {
+
       "@type": "Dataset",
+
       "@id": "https://lindadata.github.io/world-cup-2026-betting-model/reports/00_data_overview.html#coverage",
+
       "name": "World Cup 2026 Forecasting Model Public Summary Data",
+
       "description": "Public metadata summaries and model-output samples used to explain match forecasts, model performance, and data coverage. Raw datasets and credentials are not published.",
+
       "url": "https://lindadata.github.io/world-cup-2026-betting-model/reports/00_data_overview.html",
+
       "creator": {
+
         "@type": "Person",
+
         "name": "Sergio Mora"
+
       },
+
       "isAccessibleForFree": true,
+
       "keywords": [
+
         "World Cup 2026",
+
         "soccer forecasting",
+
         "match probabilities",
+
         "sports analytics",
+
         "R",
+
         "Quarto"
+
       ]
+
     }
+
   ]
+
 }
+
 </script>
+
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -357,6 +421,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="challenger-leaderboard"><span class="header-section-number">2</span> Challenger Leaderboard</h2>
 <div class="metric-strip">
 <div class="metric">
+<strong>XGBoost goals</strong><span>1.364 RMSE</span><small>Gradient-boosted trees | MAE 1.002</small>
+</div>
+<div class="metric">
 <strong>Random forest goals</strong><span>1.401 RMSE</span><small>Tree ensemble fallback | MAE 1.035</small>
 </div>
 <div class="metric">
@@ -399,6 +466,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">XGBoost goals</td>
+<td style="text-align: left;">Gradient-boosted trees</td>
+<td style="text-align: left;">fit</td>
+<td style="text-align: left;">12,000</td>
+<td style="text-align: left;">4,000</td>
+<td style="text-align: left;">1.364</td>
+<td style="text-align: left;">1.002</td>
+<td style="text-align: left;">1.480</td>
+<td style="text-align: left;">Uses the xgboost package when installed locally.</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Random forest goals</td>
 <td style="text-align: left;">Tree ensemble fallback</td>
 <td style="text-align: left;">fit</td>
@@ -407,9 +485,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">1.401</td>
 <td style="text-align: left;">1.035</td>
 <td style="text-align: left;">1.512</td>
-<td style="text-align: left;">Free local tree challenger used while xgboost is not installed.</td>
+<td style="text-align: left;">Additional free local tree-ensemble benchmark.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Stepwise OLS</td>
 <td style="text-align: left;">Interpretable regression</td>
 <td style="text-align: left;">fit</td>
@@ -430,10 +508,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This section compares goal-count models on the same historical modeling frame. These are candidate engines for projected scores and expected goals.</p>
 <div class="metric-strip">
 <div class="metric">
-<strong>Random 80/20 split</strong><span>1.453 RMSE</span><small>GAM Poisson goals | MAE 1.020</small>
+<strong>Random 80/20 split</strong><span>1.454 RMSE</span><small>GAM Poisson goals | MAE 1.020</small>
 </div>
 <div class="metric">
-<strong>Train through 2018, test 2019+</strong><span>1.273 RMSE</span><small>GAM Poisson goals | MAE 0.940</small>
+<strong>Train through 2018, test 2019+</strong><span>1.274 RMSE</span><small>GAM Poisson goals | MAE 0.944</small>
 </div>
 </div>
 <div class="cell">
@@ -493,11 +571,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">GAM Poisson goals</td>
 <td style="text-align: left;">Smooth count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">50,000</td>
+<td style="text-align: left;">30,000</td>
 <td style="text-align: left;">19,675</td>
-<td style="text-align: left;">1.453</td>
+<td style="text-align: left;">1.454</td>
 <td style="text-align: left;">1.020</td>
-<td style="text-align: left;">1.474</td>
+<td style="text-align: left;">1.475</td>
 <td style="text-align: left;">1.322</td>
 <td style="text-align: left;">Allows curved relationships for Elo and expected result.</td>
 </tr>
@@ -506,11 +584,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Poisson GLM goals</td>
 <td style="text-align: left;">Count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">19,675</td>
 <td style="text-align: left;">1.457</td>
 <td style="text-align: left;">1.026</td>
-<td style="text-align: left;">1.467</td>
+<td style="text-align: left;">1.468</td>
 <td style="text-align: left;">1.331</td>
 <td style="text-align: left;">Standard count model for goals.</td>
 </tr>
@@ -519,11 +597,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Quasi-Poisson goals</td>
 <td style="text-align: left;">Overdispersion-aware count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">19,675</td>
 <td style="text-align: left;">1.457</td>
 <td style="text-align: left;">1.026</td>
-<td style="text-align: left;">1.467</td>
+<td style="text-align: left;">1.468</td>
 <td style="text-align: left;">1.331</td>
 <td style="text-align: left;">Uses the same mean structure as Poisson while allowing extra variance.</td>
 </tr>
@@ -532,11 +610,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Negative binomial goals</td>
 <td style="text-align: left;">Overdispersion-aware count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">35,000</td>
 <td style="text-align: left;">19,675</td>
 <td style="text-align: left;">1.457</td>
-<td style="text-align: left;">1.026</td>
-<td style="text-align: left;">1.467</td>
+<td style="text-align: left;">1.028</td>
+<td style="text-align: left;">1.478</td>
 <td style="text-align: left;">1.331</td>
 <td style="text-align: left;">Count model designed for variance above the mean.</td>
 </tr>
@@ -545,12 +623,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Two-stage zero-aware goals</td>
 <td style="text-align: left;">Two-stage count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">19,675</td>
 <td style="text-align: left;">1.462</td>
 <td style="text-align: left;">1.029</td>
-<td style="text-align: left;">1.466</td>
-<td style="text-align: left;">1.337</td>
+<td style="text-align: left;">1.467</td>
+<td style="text-align: left;">1.338</td>
 <td style="text-align: left;">Separates the chance of scoring at all from expected goals after a team scores.</td>
 </tr>
 <tr class="even">
@@ -558,12 +636,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Regression tree goals</td>
 <td style="text-align: left;">Single tree</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">19,675</td>
-<td style="text-align: left;">1.467</td>
-<td style="text-align: left;">1.028</td>
-<td style="text-align: left;">1.467</td>
-<td style="text-align: left;">1.346</td>
+<td style="text-align: left;">1.470</td>
+<td style="text-align: left;">1.034</td>
+<td style="text-align: left;">1.469</td>
+<td style="text-align: left;">1.349</td>
 <td style="text-align: left;">Interpretable nonlinear tree benchmark.</td>
 </tr>
 <tr class="odd">
@@ -571,7 +649,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Elo OLS goals</td>
 <td style="text-align: left;">Linear benchmark</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">19,675</td>
 <td style="text-align: left;">1.492</td>
 <td style="text-align: left;">1.046</td>
@@ -597,11 +675,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">GAM Poisson goals</td>
 <td style="text-align: left;">Smooth count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">50,000</td>
+<td style="text-align: left;">30,000</td>
 <td style="text-align: left;">14,358</td>
-<td style="text-align: left;">1.273</td>
-<td style="text-align: left;">0.940</td>
-<td style="text-align: left;">1.355</td>
+<td style="text-align: left;">1.274</td>
+<td style="text-align: left;">0.944</td>
+<td style="text-align: left;">1.369</td>
 <td style="text-align: left;">1.195</td>
 <td style="text-align: left;">Allows curved relationships for Elo and expected result.</td>
 </tr>
@@ -610,11 +688,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Poisson GLM goals</td>
 <td style="text-align: left;">Count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">14,358</td>
 <td style="text-align: left;">1.278</td>
 <td style="text-align: left;">0.935</td>
-<td style="text-align: left;">1.271</td>
+<td style="text-align: left;">1.273</td>
 <td style="text-align: left;">1.203</td>
 <td style="text-align: left;">Standard count model for goals.</td>
 </tr>
@@ -623,11 +701,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Quasi-Poisson goals</td>
 <td style="text-align: left;">Overdispersion-aware count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">14,358</td>
 <td style="text-align: left;">1.278</td>
 <td style="text-align: left;">0.935</td>
-<td style="text-align: left;">1.271</td>
+<td style="text-align: left;">1.273</td>
 <td style="text-align: left;">1.203</td>
 <td style="text-align: left;">Uses the same mean structure as Poisson while allowing extra variance.</td>
 </tr>
@@ -636,12 +714,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Negative binomial goals</td>
 <td style="text-align: left;">Overdispersion-aware count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">35,000</td>
 <td style="text-align: left;">14,358</td>
-<td style="text-align: left;">1.279</td>
+<td style="text-align: left;">1.280</td>
 <td style="text-align: left;">0.935</td>
-<td style="text-align: left;">1.265</td>
-<td style="text-align: left;">1.204</td>
+<td style="text-align: left;">1.260</td>
+<td style="text-align: left;">1.205</td>
 <td style="text-align: left;">Count model designed for variance above the mean.</td>
 </tr>
 <tr class="odd">
@@ -649,11 +727,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Two-stage zero-aware goals</td>
 <td style="text-align: left;">Two-stage count model</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">14,358</td>
 <td style="text-align: left;">1.283</td>
 <td style="text-align: left;">0.934</td>
-<td style="text-align: left;">1.252</td>
+<td style="text-align: left;">1.253</td>
 <td style="text-align: left;">1.215</td>
 <td style="text-align: left;">Separates the chance of scoring at all from expected goals after a team scores.</td>
 </tr>
@@ -662,12 +740,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Regression tree goals</td>
 <td style="text-align: left;">Single tree</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">14,358</td>
-<td style="text-align: left;">1.284</td>
-<td style="text-align: left;">0.962</td>
-<td style="text-align: left;">1.452</td>
-<td style="text-align: left;">1.211</td>
+<td style="text-align: left;">1.289</td>
+<td style="text-align: left;">0.969</td>
+<td style="text-align: left;">1.471</td>
+<td style="text-align: left;">1.217</td>
 <td style="text-align: left;">Interpretable nonlinear tree benchmark.</td>
 </tr>
 <tr class="odd">
@@ -675,12 +753,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Elo OLS goals</td>
 <td style="text-align: left;">Linear benchmark</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">14,358</td>
-<td style="text-align: left;">1.307</td>
+<td style="text-align: left;">1.308</td>
 <td style="text-align: left;">0.976</td>
 <td style="text-align: left;">1.501</td>
-<td style="text-align: left;">1.583</td>
+<td style="text-align: left;">1.577</td>
 <td style="text-align: left;">Small transparent baseline using team strength and home/neutral context.</td>
 </tr>
 <tr class="even">
@@ -747,10 +825,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This section compares models that estimate the probability of loss, draw, or win. For knockout matches, this is still regulation-time result modeling; the advancement layer handles extra time and penalties separately.</p>
 <div class="metric-strip">
 <div class="metric">
-<strong>Random 80/20 split</strong><span>0.540 Brier</span><small>Elo ordinal result | accuracy 57.7%</small>
+<strong>Random 80/20 split</strong><span>0.540 Brier</span><small>Full ordinal result | accuracy 57.6%</small>
 </div>
 <div class="metric">
-<strong>Train through 2018, test 2019+</strong><span>0.510 Brier</span><small>Elo ordinal result | accuracy 60.4%</small>
+<strong>Train through 2018, test 2019+</strong><span>0.510 Brier</span><small>Full ordinal result | accuracy 60.5%</small>
 </div>
 </div>
 <div class="cell">
@@ -807,41 +885,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Random 80/20 split</td>
-<td style="text-align: left;">Elo ordinal result</td>
-<td style="text-align: left;">Ordinal logistic</td>
-<td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
-<td style="text-align: left;">19,675</td>
-<td style="text-align: left;">57.7%</td>
-<td style="text-align: left;">0.914</td>
-<td style="text-align: left;">0.540</td>
-<td style="text-align: left;">38.7%</td>
-<td style="text-align: left;">Transparent ordered model using strength and site context.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Random 80/20 split</td>
 <td style="text-align: left;">Full ordinal result</td>
 <td style="text-align: left;">Ordinal logistic</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">50,000</td>
+<td style="text-align: left;">19,675</td>
+<td style="text-align: left;">57.6%</td>
+<td style="text-align: left;">0.915</td>
+<td style="text-align: left;">0.540</td>
+<td style="text-align: left;">38.9%</td>
+<td style="text-align: left;">Ordered win/draw/loss probability model with the expanded feature set.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Random 80/20 split</td>
+<td style="text-align: left;">Elo ordinal result</td>
+<td style="text-align: left;">Ordinal logistic</td>
+<td style="text-align: left;">fit</td>
+<td style="text-align: left;">50,000</td>
 <td style="text-align: left;">19,675</td>
 <td style="text-align: left;">57.7%</td>
-<td style="text-align: left;">0.914</td>
+<td style="text-align: left;">0.915</td>
 <td style="text-align: left;">0.540</td>
-<td style="text-align: left;">38.7%</td>
-<td style="text-align: left;">Ordered win/draw/loss probability model with the expanded feature set.</td>
+<td style="text-align: left;">38.9%</td>
+<td style="text-align: left;">Transparent ordered model using strength and site context.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Random 80/20 split</td>
 <td style="text-align: left;">Multinomial result</td>
 <td style="text-align: left;">Multinomial logistic</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">50,000</td>
 <td style="text-align: left;">19,675</td>
-<td style="text-align: left;">57.7%</td>
+<td style="text-align: left;">57.6%</td>
 <td style="text-align: left;">0.914</td>
 <td style="text-align: left;">0.540</td>
-<td style="text-align: left;">38.7%</td>
+<td style="text-align: left;">38.9%</td>
 <td style="text-align: left;">Does not force loss, draw, and win into a proportional-odds structure.</td>
 </tr>
 <tr class="even">
@@ -849,12 +927,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Regularized multinomial result</td>
 <td style="text-align: left;">Regularized classifier</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">50,000</td>
 <td style="text-align: left;">19,675</td>
-<td style="text-align: left;">57.7%</td>
+<td style="text-align: left;">57.6%</td>
 <td style="text-align: left;">0.914</td>
 <td style="text-align: left;">0.540</td>
-<td style="text-align: left;">38.7%</td>
+<td style="text-align: left;">38.9%</td>
 <td style="text-align: left;">Adds a small penalty to reduce overfitting while estimating win, draw, and loss probabilities.</td>
 </tr>
 <tr class="odd">
@@ -862,9 +940,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Classification tree result</td>
 <td style="text-align: left;">Single tree</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">79,135</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">19,675</td>
-<td style="text-align: left;">57.6%</td>
+<td style="text-align: left;">57.5%</td>
 <td style="text-align: left;">0.974</td>
 <td style="text-align: left;">0.578</td>
 <td style="text-align: left;">38.7%</td>
@@ -898,41 +976,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td style="text-align: left;">Train through 2018, test 2019+</td>
-<td style="text-align: left;">Elo ordinal result</td>
-<td style="text-align: left;">Ordinal logistic</td>
-<td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
-<td style="text-align: left;">14,358</td>
-<td style="text-align: left;">60.4%</td>
-<td style="text-align: left;">0.869</td>
-<td style="text-align: left;">0.510</td>
-<td style="text-align: left;">38.6%</td>
-<td style="text-align: left;">Transparent ordered model using strength and site context.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Train through 2018, test 2019+</td>
 <td style="text-align: left;">Full ordinal result</td>
 <td style="text-align: left;">Ordinal logistic</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">50,000</td>
 <td style="text-align: left;">14,358</td>
-<td style="text-align: left;">60.4%</td>
+<td style="text-align: left;">60.5%</td>
 <td style="text-align: left;">0.869</td>
 <td style="text-align: left;">0.510</td>
-<td style="text-align: left;">38.6%</td>
+<td style="text-align: left;">38.8%</td>
 <td style="text-align: left;">Ordered win/draw/loss probability model with the expanded feature set.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Train through 2018, test 2019+</td>
+<td style="text-align: left;">Elo ordinal result</td>
+<td style="text-align: left;">Ordinal logistic</td>
+<td style="text-align: left;">fit</td>
+<td style="text-align: left;">50,000</td>
+<td style="text-align: left;">14,358</td>
+<td style="text-align: left;">60.5%</td>
+<td style="text-align: left;">0.869</td>
+<td style="text-align: left;">0.510</td>
+<td style="text-align: left;">38.8%</td>
+<td style="text-align: left;">Transparent ordered model using strength and site context.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Train through 2018, test 2019+</td>
 <td style="text-align: left;">Regularized multinomial result</td>
 <td style="text-align: left;">Regularized classifier</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">50,000</td>
 <td style="text-align: left;">14,358</td>
-<td style="text-align: left;">60.4%</td>
+<td style="text-align: left;">60.5%</td>
 <td style="text-align: left;">0.870</td>
 <td style="text-align: left;">0.511</td>
-<td style="text-align: left;">38.6%</td>
+<td style="text-align: left;">38.8%</td>
 <td style="text-align: left;">Adds a small penalty to reduce overfitting while estimating win, draw, and loss probabilities.</td>
 </tr>
 <tr class="odd">
@@ -940,12 +1018,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Multinomial result</td>
 <td style="text-align: left;">Multinomial logistic</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">50,000</td>
 <td style="text-align: left;">14,358</td>
-<td style="text-align: left;">60.4%</td>
+<td style="text-align: left;">60.5%</td>
 <td style="text-align: left;">0.870</td>
 <td style="text-align: left;">0.511</td>
-<td style="text-align: left;">38.6%</td>
+<td style="text-align: left;">38.8%</td>
 <td style="text-align: left;">Does not force loss, draw, and win into a proportional-odds structure.</td>
 </tr>
 <tr class="even">
@@ -953,9 +1031,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Classification tree result</td>
 <td style="text-align: left;">Single tree</td>
 <td style="text-align: left;">fit</td>
-<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">60,000</td>
 <td style="text-align: left;">14,358</td>
-<td style="text-align: left;">60.7%</td>
+<td style="text-align: left;">60.8%</td>
 <td style="text-align: left;">0.941</td>
 <td style="text-align: left;">0.554</td>
 <td style="text-align: left;">38.6%</td>
@@ -1038,10 +1116,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This sweep uses a wider local R feature population: historical rows, rolling team form, opponent form, head-to-head history, rest spacing, team experience, and tournament context. These are not automatically promoted. They first need calibration checks, knockout handling review, and repeatable backtesting.</p>
 <div class="metric-strip">
 <div class="metric">
-<strong>Team-Match Rows</strong><span>98954</span><small>expanded challenger population</small>
+<strong>Team-Match Rows</strong><span>98956</span><small>expanded challenger population</small>
 </div>
 <div class="metric">
-<strong>Matches</strong><span>49477</span><small>expanded challenger population</small>
+<strong>Matches</strong><span>49478</span><small>expanded challenger population</small>
 </div>
 <div class="metric">
 <strong>Teams</strong><span>336</span><small>expanded challenger population</small>
@@ -1052,10 +1130,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="metric-strip">
 <div class="metric">
-<strong>All history random 80/20 split</strong><span>1.034 RMSE</span><small>GBM Poisson goals | MAE 0.755</small>
+<strong>All history random 80/20 split</strong><span>1.002 RMSE</span><small>XGBoost Poisson goals | MAE 0.739</small>
 </div>
 <div class="metric">
-<strong>Recent era train 2000-2018, test 2019+</strong><span>0.917 RMSE</span><small>GBM Poisson goals | MAE 0.693</small>
+<strong>All history train through 2018, test 2019+</strong><span>0.897 RMSE</span><small>XGBoost Poisson goals | MAE 0.666</small>
+</div>
+<div class="metric">
+<strong>Modern era train 1990-2018, test 2019+</strong><span>0.898 RMSE</span><small>XGBoost Poisson goals | MAE 0.664</small>
+</div>
+<div class="metric">
+<strong>Recent era train 2000-2018, test 2019+</strong><span>0.896 RMSE</span><small>XGBoost Poisson goals | MAE 0.663</small>
 </div>
 </div>
 <div class="cell">
@@ -1100,121 +1184,337 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">All history random 80/20 split</td>
-<td style="text-align: left;">GBM Poisson goals</td>
+<td style="text-align: left;">XGBoost Poisson goals</td>
 <td style="text-align: left;">Gradient boosting</td>
-<td style="text-align: left;">9,000</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">1.034</td>
-<td style="text-align: left;">0.755</td>
-<td style="text-align: left;">1.467</td>
-<td style="text-align: left;">0.972</td>
-<td style="text-align: left;">Boosted tree count model on the richer feature population.</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">1.002</td>
+<td style="text-align: left;">0.739</td>
+<td style="text-align: left;">1.469</td>
+<td style="text-align: left;">0.946</td>
+<td style="text-align: left;">XGBoost count model using the richer rolling-form feature population.</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">All history random 80/20 split</td>
+<td style="text-align: left;">GBM Poisson goals</td>
+<td style="text-align: left;">Gradient boosting</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">1.014</td>
+<td style="text-align: left;">0.749</td>
+<td style="text-align: left;">1.473</td>
+<td style="text-align: left;">0.954</td>
+<td style="text-align: left;">Boosted tree count model on the richer feature population.</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">All history random 80/20 split</td>
 <td style="text-align: left;">Rich random forest goals</td>
 <td style="text-align: left;">Tree ensemble</td>
-<td style="text-align: left;">7,000</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">1.093</td>
-<td style="text-align: left;">0.813</td>
-<td style="text-align: left;">1.509</td>
-<td style="text-align: left;">1.012</td>
+<td style="text-align: left;">22,000</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">1.061</td>
+<td style="text-align: left;">0.785</td>
+<td style="text-align: left;">1.500</td>
+<td style="text-align: left;">0.981</td>
 <td style="text-align: left;">Random forest on expanded rolling-form and tournament features.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">All history random 80/20 split</td>
 <td style="text-align: left;">Rich Poisson goals</td>
 <td style="text-align: left;">Count model</td>
-<td style="text-align: left;">35,000</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">1.216</td>
-<td style="text-align: left;">0.872</td>
-<td style="text-align: left;">1.475</td>
+<td style="text-align: left;">79,246</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">1.231</td>
+<td style="text-align: left;">0.871</td>
+<td style="text-align: left;">1.477</td>
 <td style="text-align: left;">1.080</td>
 <td style="text-align: left;">Poisson model using expanded rolling-form features.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">All history random 80/20 split</td>
 <td style="text-align: left;">Rich negative binomial goals</td>
 <td style="text-align: left;">Overdispersion-aware count model</td>
-<td style="text-align: left;">35,000</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">1.216</td>
-<td style="text-align: left;">0.872</td>
-<td style="text-align: left;">1.475</td>
+<td style="text-align: left;">79,246</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">1.231</td>
+<td style="text-align: left;">0.871</td>
+<td style="text-align: left;">1.477</td>
 <td style="text-align: left;">1.080</td>
 <td style="text-align: left;">Count model allowing goal variance above the mean.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">All history random 80/20 split</td>
 <td style="text-align: left;">Linear SVR goals</td>
 <td style="text-align: left;">Support vector regression</td>
-<td style="text-align: left;">2,200</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">1.322</td>
-<td style="text-align: left;">0.951</td>
-<td style="text-align: left;">1.308</td>
-<td style="text-align: left;">2.298</td>
+<td style="text-align: left;">9,000</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">1.288</td>
+<td style="text-align: left;">0.941</td>
+<td style="text-align: left;">1.361</td>
+<td style="text-align: left;">2.278</td>
 <td style="text-align: left;">Linear support-vector regression on a capped training sample.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">All history random 80/20 split</td>
-<td style="text-align: left;">Rich GAM Poisson goals</td>
-<td style="text-align: left;">Smooth count model</td>
-<td style="text-align: left;">16,000</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">1.433</td>
-<td style="text-align: left;">1.021</td>
-<td style="text-align: left;">1.470</td>
-<td style="text-align: left;">1.317</td>
-<td style="text-align: left;">Smooth count model using Elo, expected result, and recent-form curves.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">All history random 80/20 split</td>
+<td style="text-align: left;">Rich GAM Poisson goals</td>
+<td style="text-align: left;">Smooth count model</td>
+<td style="text-align: left;">45,000</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">1.429</td>
+<td style="text-align: left;">1.021</td>
+<td style="text-align: left;">1.472</td>
+<td style="text-align: left;">1.315</td>
+<td style="text-align: left;">Smooth count model using Elo, expected result, and recent-form curves.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history random 80/20 split</td>
 <td style="text-align: left;">Rich empirical Bayes goals</td>
 <td style="text-align: left;">Shrinkage baseline</td>
-<td style="text-align: left;">79,245</td>
-<td style="text-align: left;">19,709</td>
+<td style="text-align: left;">79,246</td>
+<td style="text-align: left;">19,710</td>
 <td style="text-align: left;">1.537</td>
 <td style="text-align: left;">1.114</td>
 <td style="text-align: left;">1.551</td>
 <td style="text-align: left;">1.483</td>
 <td style="text-align: left;">Shrinks team attack and opponent defense toward the global scoring rate.</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">XGBoost Poisson goals</td>
+<td style="text-align: left;">Gradient boosting</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">0.897</td>
+<td style="text-align: left;">0.666</td>
+<td style="text-align: left;">1.372</td>
+<td style="text-align: left;">0.880</td>
+<td style="text-align: left;">XGBoost count model using the richer rolling-form feature population.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">GBM Poisson goals</td>
+<td style="text-align: left;">Gradient boosting</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">0.904</td>
+<td style="text-align: left;">0.675</td>
+<td style="text-align: left;">1.368</td>
+<td style="text-align: left;">0.890</td>
+<td style="text-align: left;">Boosted tree count model on the richer feature population.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Rich random forest goals</td>
+<td style="text-align: left;">Tree ensemble</td>
+<td style="text-align: left;">22,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">0.938</td>
+<td style="text-align: left;">0.714</td>
+<td style="text-align: left;">1.411</td>
+<td style="text-align: left;">0.914</td>
+<td style="text-align: left;">Random forest on expanded rolling-form and tournament features.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Rich negative binomial goals</td>
+<td style="text-align: left;">Overdispersion-aware count model</td>
+<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.030</td>
+<td style="text-align: left;">0.810</td>
+<td style="text-align: left;">1.279</td>
+<td style="text-align: left;">1.024</td>
+<td style="text-align: left;">Count model allowing goal variance above the mean.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Rich Poisson goals</td>
+<td style="text-align: left;">Count model</td>
+<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.030</td>
+<td style="text-align: left;">0.810</td>
+<td style="text-align: left;">1.279</td>
+<td style="text-align: left;">1.024</td>
+<td style="text-align: left;">Poisson model using expanded rolling-form features.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Linear SVR goals</td>
+<td style="text-align: left;">Support vector regression</td>
+<td style="text-align: left;">9,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.163</td>
+<td style="text-align: left;">0.873</td>
+<td style="text-align: left;">1.155</td>
+<td style="text-align: left;">3.049</td>
+<td style="text-align: left;">Linear support-vector regression on a capped training sample.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Rich GAM Poisson goals</td>
+<td style="text-align: left;">Smooth count model</td>
+<td style="text-align: left;">45,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.281</td>
+<td style="text-align: left;">0.963</td>
+<td style="text-align: left;">1.498</td>
+<td style="text-align: left;">1.202</td>
+<td style="text-align: left;">Smooth count model using Elo, expected result, and recent-form curves.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Rich empirical Bayes goals</td>
+<td style="text-align: left;">Shrinkage baseline</td>
+<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.396</td>
+<td style="text-align: left;">1.073</td>
+<td style="text-align: left;">1.540</td>
+<td style="text-align: left;">1.422</td>
+<td style="text-align: left;">Shrinks team attack and opponent defense toward the global scoring rate.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">XGBoost Poisson goals</td>
+<td style="text-align: left;">Gradient boosting</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">0.898</td>
+<td style="text-align: left;">0.664</td>
+<td style="text-align: left;">1.368</td>
+<td style="text-align: left;">0.880</td>
+<td style="text-align: left;">XGBoost count model using the richer rolling-form feature population.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">GBM Poisson goals</td>
+<td style="text-align: left;">Gradient boosting</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">0.905</td>
+<td style="text-align: left;">0.671</td>
+<td style="text-align: left;">1.375</td>
+<td style="text-align: left;">0.888</td>
+<td style="text-align: left;">Boosted tree count model on the richer feature population.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Rich random forest goals</td>
+<td style="text-align: left;">Tree ensemble</td>
+<td style="text-align: left;">22,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">0.937</td>
+<td style="text-align: left;">0.713</td>
+<td style="text-align: left;">1.427</td>
+<td style="text-align: left;">0.914</td>
+<td style="text-align: left;">Random forest on expanded rolling-form and tournament features.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Rich negative binomial goals</td>
+<td style="text-align: left;">Overdispersion-aware count model</td>
+<td style="text-align: left;">50,216</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.010</td>
+<td style="text-align: left;">0.802</td>
+<td style="text-align: left;">1.371</td>
+<td style="text-align: left;">1.017</td>
+<td style="text-align: left;">Count model allowing goal variance above the mean.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Rich Poisson goals</td>
+<td style="text-align: left;">Count model</td>
+<td style="text-align: left;">50,216</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.010</td>
+<td style="text-align: left;">0.802</td>
+<td style="text-align: left;">1.371</td>
+<td style="text-align: left;">1.017</td>
+<td style="text-align: left;">Poisson model using expanded rolling-form features.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Linear SVR goals</td>
+<td style="text-align: left;">Support vector regression</td>
+<td style="text-align: left;">9,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.155</td>
+<td style="text-align: left;">0.873</td>
+<td style="text-align: left;">1.199</td>
+<td style="text-align: left;">2.748</td>
+<td style="text-align: left;">Linear support-vector regression on a capped training sample.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Rich GAM Poisson goals</td>
+<td style="text-align: left;">Smooth count model</td>
+<td style="text-align: left;">45,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.270</td>
+<td style="text-align: left;">0.947</td>
+<td style="text-align: left;">1.424</td>
+<td style="text-align: left;">1.188</td>
+<td style="text-align: left;">Smooth count model using Elo, expected result, and recent-form curves.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Rich empirical Bayes goals</td>
+<td style="text-align: left;">Shrinkage baseline</td>
+<td style="text-align: left;">50,216</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.381</td>
+<td style="text-align: left;">1.043</td>
+<td style="text-align: left;">1.447</td>
+<td style="text-align: left;">1.388</td>
+<td style="text-align: left;">Shrinks team attack and opponent defense toward the global scoring rate.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
+<td style="text-align: left;">XGBoost Poisson goals</td>
+<td style="text-align: left;">Gradient boosting</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">0.896</td>
+<td style="text-align: left;">0.663</td>
+<td style="text-align: left;">1.363</td>
+<td style="text-align: left;">0.878</td>
+<td style="text-align: left;">XGBoost count model using the richer rolling-form feature population.</td>
+</tr>
 <tr class="even">
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">GBM Poisson goals</td>
 <td style="text-align: left;">Gradient boosting</td>
-<td style="text-align: left;">9,000</td>
-<td style="text-align: left;">14,502</td>
-<td style="text-align: left;">0.917</td>
-<td style="text-align: left;">0.693</td>
-<td style="text-align: left;">1.361</td>
-<td style="text-align: left;">0.904</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">0.905</td>
+<td style="text-align: left;">0.667</td>
+<td style="text-align: left;">1.342</td>
+<td style="text-align: left;">0.887</td>
 <td style="text-align: left;">Boosted tree count model on the richer feature population.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">Rich random forest goals</td>
 <td style="text-align: left;">Tree ensemble</td>
-<td style="text-align: left;">7,000</td>
-<td style="text-align: left;">14,502</td>
-<td style="text-align: left;">0.961</td>
-<td style="text-align: left;">0.739</td>
-<td style="text-align: left;">1.430</td>
-<td style="text-align: left;">0.938</td>
+<td style="text-align: left;">22,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">0.929</td>
+<td style="text-align: left;">0.706</td>
+<td style="text-align: left;">1.429</td>
+<td style="text-align: left;">0.910</td>
 <td style="text-align: left;">Random forest on expanded rolling-form and tournament features.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">Rich negative binomial goals</td>
 <td style="text-align: left;">Overdispersion-aware count model</td>
-<td style="text-align: left;">35,000</td>
-<td style="text-align: left;">14,502</td>
-<td style="text-align: left;">1.015</td>
-<td style="text-align: left;">0.805</td>
-<td style="text-align: left;">1.365</td>
+<td style="text-align: left;">36,328</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.014</td>
+<td style="text-align: left;">0.804</td>
+<td style="text-align: left;">1.362</td>
 <td style="text-align: left;">1.017</td>
 <td style="text-align: left;">Count model allowing goal variance above the mean.</td>
 </tr>
@@ -1222,11 +1522,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">Rich Poisson goals</td>
 <td style="text-align: left;">Count model</td>
-<td style="text-align: left;">35,000</td>
-<td style="text-align: left;">14,502</td>
-<td style="text-align: left;">1.015</td>
-<td style="text-align: left;">0.805</td>
-<td style="text-align: left;">1.365</td>
+<td style="text-align: left;">36,328</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.014</td>
+<td style="text-align: left;">0.804</td>
+<td style="text-align: left;">1.362</td>
 <td style="text-align: left;">1.017</td>
 <td style="text-align: left;">Poisson model using expanded rolling-form features.</td>
 </tr>
@@ -1234,24 +1534,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">Linear SVR goals</td>
 <td style="text-align: left;">Support vector regression</td>
-<td style="text-align: left;">2,200</td>
-<td style="text-align: left;">14,502</td>
-<td style="text-align: left;">1.168</td>
-<td style="text-align: left;">0.895</td>
-<td style="text-align: left;">1.316</td>
-<td style="text-align: left;">2.422</td>
+<td style="text-align: left;">9,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">1.152</td>
+<td style="text-align: left;">0.875</td>
+<td style="text-align: left;">1.264</td>
+<td style="text-align: left;">2.463</td>
 <td style="text-align: left;">Linear support-vector regression on a capped training sample.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">Rich GAM Poisson goals</td>
 <td style="text-align: left;">Smooth count model</td>
-<td style="text-align: left;">16,000</td>
-<td style="text-align: left;">14,502</td>
+<td style="text-align: left;">36,328</td>
+<td style="text-align: left;">14,504</td>
 <td style="text-align: left;">1.267</td>
-<td style="text-align: left;">0.942</td>
-<td style="text-align: left;">1.407</td>
-<td style="text-align: left;">1.185</td>
+<td style="text-align: left;">0.944</td>
+<td style="text-align: left;">1.414</td>
+<td style="text-align: left;">1.186</td>
 <td style="text-align: left;">Smooth count model using Elo, expected result, and recent-form curves.</td>
 </tr>
 <tr class="even">
@@ -1259,7 +1559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Rich empirical Bayes goals</td>
 <td style="text-align: left;">Shrinkage baseline</td>
 <td style="text-align: left;">36,328</td>
-<td style="text-align: left;">14,502</td>
+<td style="text-align: left;">14,504</td>
 <td style="text-align: left;">1.384</td>
 <td style="text-align: left;">1.043</td>
 <td style="text-align: left;">1.440</td>
@@ -1272,10 +1572,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="metric-strip">
 <div class="metric">
-<strong>All history random 80/20 split</strong><span>0.462 Brier</span><small>GBM multinomial result | accuracy 60.4%</small>
+<strong>All history random 80/20 split</strong><span>0.459 Brier</span><small>XGBoost multinomial result | accuracy 60.9%</small>
 </div>
 <div class="metric">
-<strong>Recent era train 2000-2018, test 2019+</strong><span>0.441 Brier</span><small>GBM multinomial result | accuracy 62.7%</small>
+<strong>All history train through 2018, test 2019+</strong><span>0.438 Brier</span><small>XGBoost multinomial result | accuracy 62.7%</small>
+</div>
+<div class="metric">
+<strong>Modern era train 1990-2018, test 2019+</strong><span>0.439 Brier</span><small>XGBoost multinomial result | accuracy 62.6%</small>
+</div>
+<div class="metric">
+<strong>Recent era train 2000-2018, test 2019+</strong><span>0.438 Brier</span><small>XGBoost multinomial result | accuracy 62.4%</small>
 </div>
 </div>
 <div class="cell">
@@ -1320,70 +1626,94 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">All history random 80/20 split</td>
-<td style="text-align: left;">GBM multinomial result</td>
+<td style="text-align: left;">XGBoost multinomial result</td>
 <td style="text-align: left;">Gradient boosting classifier</td>
-<td style="text-align: left;">9,000</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">60.4%</td>
-<td style="text-align: left;">0.757</td>
-<td style="text-align: left;">0.462</td>
-<td style="text-align: left;">39.2%</td>
-<td style="text-align: left;">Boosted tree classifier for win, draw, and loss probabilities.</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">60.9%</td>
+<td style="text-align: left;">0.748</td>
+<td style="text-align: left;">0.459</td>
+<td style="text-align: left;">39.0%</td>
+<td style="text-align: left;">XGBoost classifier for win, draw, and loss probabilities.</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">All history random 80/20 split</td>
+<td style="text-align: left;">GBM multinomial result</td>
+<td style="text-align: left;">Gradient boosting classifier</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">61.1%</td>
+<td style="text-align: left;">0.753</td>
+<td style="text-align: left;">0.461</td>
+<td style="text-align: left;">39.1%</td>
+<td style="text-align: left;">Boosted tree classifier for win, draw, and loss probabilities.</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">All history random 80/20 split</td>
 <td style="text-align: left;">Rich multinomial result</td>
 <td style="text-align: left;">Multinomial logistic</td>
-<td style="text-align: left;">30,000</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">60.4%</td>
-<td style="text-align: left;">0.764</td>
-<td style="text-align: left;">0.466</td>
-<td style="text-align: left;">39.1%</td>
+<td style="text-align: left;">79,246</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">60.7%</td>
+<td style="text-align: left;">0.763</td>
+<td style="text-align: left;">0.465</td>
+<td style="text-align: left;">38.7%</td>
 <td style="text-align: left;">Unordered win/draw/loss classifier using expanded features.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">All history random 80/20 split</td>
-<td style="text-align: left;">Rich regularized multinomial result</td>
-<td style="text-align: left;">Regularized classifier</td>
-<td style="text-align: left;">30,000</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">60.4%</td>
-<td style="text-align: left;">0.764</td>
-<td style="text-align: left;">0.466</td>
-<td style="text-align: left;">39.1%</td>
-<td style="text-align: left;">Small weight decay to reduce overfitting in the expanded classifier.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">All history random 80/20 split</td>
-<td style="text-align: left;">Rich random forest result</td>
-<td style="text-align: left;">Tree ensemble classifier</td>
-<td style="text-align: left;">7,000</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">58.9%</td>
-<td style="text-align: left;">0.807</td>
-<td style="text-align: left;">0.478</td>
+<td style="text-align: left;">Rich regularized multinomial result</td>
+<td style="text-align: left;">Regularized classifier</td>
+<td style="text-align: left;">79,246</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">60.7%</td>
+<td style="text-align: left;">0.763</td>
+<td style="text-align: left;">0.465</td>
 <td style="text-align: left;">38.7%</td>
-<td style="text-align: left;">Random forest classifier on richer rolling-form features.</td>
+<td style="text-align: left;">Small weight decay to reduce overfitting in the expanded classifier.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">All history random 80/20 split</td>
+<td style="text-align: left;">Rich random forest result</td>
+<td style="text-align: left;">Tree ensemble classifier</td>
+<td style="text-align: left;">22,000</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">59.7%</td>
+<td style="text-align: left;">0.773</td>
+<td style="text-align: left;">0.469</td>
+<td style="text-align: left;">38.9%</td>
+<td style="text-align: left;">Random forest classifier on richer rolling-form features.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history random 80/20 split</td>
 <td style="text-align: left;">Linear SVM result</td>
 <td style="text-align: left;">Support vector classifier</td>
-<td style="text-align: left;">2,200</td>
-<td style="text-align: left;">19,709</td>
-<td style="text-align: left;">59.5%</td>
-<td style="text-align: left;">0.793</td>
-<td style="text-align: left;">0.480</td>
-<td style="text-align: left;">39.4%</td>
+<td style="text-align: left;">9,000</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">60.0%</td>
+<td style="text-align: left;">0.779</td>
+<td style="text-align: left;">0.473</td>
+<td style="text-align: left;">39.3%</td>
 <td style="text-align: left;">Linear support-vector classifier on a capped training sample.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All history random 80/20 split</td>
+<td style="text-align: left;">Rich ordinal result</td>
+<td style="text-align: left;">Ordinal logistic</td>
+<td style="text-align: left;">79,246</td>
+<td style="text-align: left;">19,710</td>
+<td style="text-align: left;">58.2%</td>
+<td style="text-align: left;">0.905</td>
+<td style="text-align: left;">0.534</td>
+<td style="text-align: left;">38.7%</td>
+<td style="text-align: left;">Stable proportional-odds model using team strength, tournament context, rest, and recent form.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">All history random 80/20 split</td>
 <td style="text-align: left;">Population class-share baseline</td>
 <td style="text-align: left;">Naive probability baseline</td>
-<td style="text-align: left;">79,245</td>
-<td style="text-align: left;">19,709</td>
+<td style="text-align: left;">79,246</td>
+<td style="text-align: left;">19,710</td>
 <td style="text-align: left;">38.4%</td>
 <td style="text-align: left;">1.074</td>
 <td style="text-align: left;">0.651</td>
@@ -1391,71 +1721,287 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Always predicts the train-set loss/draw/win class mix.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">XGBoost multinomial result</td>
+<td style="text-align: left;">Gradient boosting classifier</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.7%</td>
+<td style="text-align: left;">0.719</td>
+<td style="text-align: left;">0.438</td>
+<td style="text-align: left;">38.7%</td>
+<td style="text-align: left;">XGBoost classifier for win, draw, and loss probabilities.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
 <td style="text-align: left;">GBM multinomial result</td>
 <td style="text-align: left;">Gradient boosting classifier</td>
-<td style="text-align: left;">9,000</td>
-<td style="text-align: left;">14,502</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
 <td style="text-align: left;">62.7%</td>
-<td style="text-align: left;">0.729</td>
-<td style="text-align: left;">0.441</td>
+<td style="text-align: left;">0.723</td>
+<td style="text-align: left;">0.439</td>
+<td style="text-align: left;">38.9%</td>
+<td style="text-align: left;">Boosted tree classifier for win, draw, and loss probabilities.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Rich regularized multinomial result</td>
+<td style="text-align: left;">Regularized classifier</td>
+<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.8%</td>
+<td style="text-align: left;">0.733</td>
+<td style="text-align: left;">0.442</td>
+<td style="text-align: left;">38.6%</td>
+<td style="text-align: left;">Small weight decay to reduce overfitting in the expanded classifier.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Rich multinomial result</td>
+<td style="text-align: left;">Multinomial logistic</td>
+<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.8%</td>
+<td style="text-align: left;">0.733</td>
+<td style="text-align: left;">0.442</td>
+<td style="text-align: left;">38.6%</td>
+<td style="text-align: left;">Unordered win/draw/loss classifier using expanded features.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Rich random forest result</td>
+<td style="text-align: left;">Tree ensemble classifier</td>
+<td style="text-align: left;">22,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">61.5%</td>
+<td style="text-align: left;">0.745</td>
+<td style="text-align: left;">0.447</td>
+<td style="text-align: left;">38.8%</td>
+<td style="text-align: left;">Random forest classifier on richer rolling-form features.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Linear SVM result</td>
+<td style="text-align: left;">Support vector classifier</td>
+<td style="text-align: left;">9,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">61.6%</td>
+<td style="text-align: left;">0.751</td>
+<td style="text-align: left;">0.451</td>
+<td style="text-align: left;">39.2%</td>
+<td style="text-align: left;">Linear support-vector classifier on a capped training sample.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Rich ordinal result</td>
+<td style="text-align: left;">Ordinal logistic</td>
+<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">60.5%</td>
+<td style="text-align: left;">0.865</td>
+<td style="text-align: left;">0.507</td>
+<td style="text-align: left;">38.6%</td>
+<td style="text-align: left;">Stable proportional-odds model using team strength, tournament context, rest, and recent form.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All history train through 2018, test 2019+</td>
+<td style="text-align: left;">Population class-share baseline</td>
+<td style="text-align: left;">Naive probability baseline</td>
+<td style="text-align: left;">84,452</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">38.6%</td>
+<td style="text-align: left;">1.072</td>
+<td style="text-align: left;">0.650</td>
+<td style="text-align: left;">38.6%</td>
+<td style="text-align: left;">Always predicts the train-set loss/draw/win class mix.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">XGBoost multinomial result</td>
+<td style="text-align: left;">Gradient boosting classifier</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.6%</td>
+<td style="text-align: left;">0.720</td>
+<td style="text-align: left;">0.439</td>
+<td style="text-align: left;">38.2%</td>
+<td style="text-align: left;">XGBoost classifier for win, draw, and loss probabilities.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">GBM multinomial result</td>
+<td style="text-align: left;">Gradient boosting classifier</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.4%</td>
+<td style="text-align: left;">0.723</td>
+<td style="text-align: left;">0.439</td>
 <td style="text-align: left;">38.4%</td>
 <td style="text-align: left;">Boosted tree classifier for win, draw, and loss probabilities.</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Rich regularized multinomial result</td>
+<td style="text-align: left;">Regularized classifier</td>
+<td style="text-align: left;">50,216</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.6%</td>
+<td style="text-align: left;">0.732</td>
+<td style="text-align: left;">0.442</td>
+<td style="text-align: left;">38.1%</td>
+<td style="text-align: left;">Small weight decay to reduce overfitting in the expanded classifier.</td>
+</tr>
 <tr class="even">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Rich multinomial result</td>
+<td style="text-align: left;">Multinomial logistic</td>
+<td style="text-align: left;">50,216</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.6%</td>
+<td style="text-align: left;">0.732</td>
+<td style="text-align: left;">0.443</td>
+<td style="text-align: left;">38.1%</td>
+<td style="text-align: left;">Unordered win/draw/loss classifier using expanded features.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Rich random forest result</td>
+<td style="text-align: left;">Tree ensemble classifier</td>
+<td style="text-align: left;">22,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">61.8%</td>
+<td style="text-align: left;">0.746</td>
+<td style="text-align: left;">0.448</td>
+<td style="text-align: left;">38.2%</td>
+<td style="text-align: left;">Random forest classifier on richer rolling-form features.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Linear SVM result</td>
+<td style="text-align: left;">Support vector classifier</td>
+<td style="text-align: left;">9,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.1%</td>
+<td style="text-align: left;">0.760</td>
+<td style="text-align: left;">0.457</td>
+<td style="text-align: left;">38.4%</td>
+<td style="text-align: left;">Linear support-vector classifier on a capped training sample.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Rich ordinal result</td>
+<td style="text-align: left;">Ordinal logistic</td>
+<td style="text-align: left;">50,216</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">60.6%</td>
+<td style="text-align: left;">0.862</td>
+<td style="text-align: left;">0.506</td>
+<td style="text-align: left;">38.1%</td>
+<td style="text-align: left;">Stable proportional-odds model using team strength, tournament context, rest, and recent form.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Modern era train 1990-2018, test 2019+</td>
+<td style="text-align: left;">Population class-share baseline</td>
+<td style="text-align: left;">Naive probability baseline</td>
+<td style="text-align: left;">50,216</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">38.6%</td>
+<td style="text-align: left;">1.072</td>
+<td style="text-align: left;">0.650</td>
+<td style="text-align: left;">38.1%</td>
+<td style="text-align: left;">Always predicts the train-set loss/draw/win class mix.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
+<td style="text-align: left;">XGBoost multinomial result</td>
+<td style="text-align: left;">Gradient boosting classifier</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.4%</td>
+<td style="text-align: left;">0.719</td>
+<td style="text-align: left;">0.438</td>
+<td style="text-align: left;">38.3%</td>
+<td style="text-align: left;">XGBoost classifier for win, draw, and loss probabilities.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
+<td style="text-align: left;">GBM multinomial result</td>
+<td style="text-align: left;">Gradient boosting classifier</td>
+<td style="text-align: left;">30,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.5%</td>
+<td style="text-align: left;">0.722</td>
+<td style="text-align: left;">0.439</td>
+<td style="text-align: left;">38.3%</td>
+<td style="text-align: left;">Boosted tree classifier for win, draw, and loss probabilities.</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">Rich regularized multinomial result</td>
 <td style="text-align: left;">Regularized classifier</td>
-<td style="text-align: left;">30,000</td>
-<td style="text-align: left;">14,502</td>
-<td style="text-align: left;">62.7%</td>
+<td style="text-align: left;">36,328</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.6%</td>
 <td style="text-align: left;">0.732</td>
 <td style="text-align: left;">0.442</td>
 <td style="text-align: left;">38.3%</td>
 <td style="text-align: left;">Small weight decay to reduce overfitting in the expanded classifier.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">Rich multinomial result</td>
 <td style="text-align: left;">Multinomial logistic</td>
-<td style="text-align: left;">30,000</td>
-<td style="text-align: left;">14,502</td>
+<td style="text-align: left;">36,328</td>
+<td style="text-align: left;">14,504</td>
 <td style="text-align: left;">62.7%</td>
 <td style="text-align: left;">0.732</td>
 <td style="text-align: left;">0.442</td>
 <td style="text-align: left;">38.3%</td>
 <td style="text-align: left;">Unordered win/draw/loss classifier using expanded features.</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
-<td style="text-align: left;">Linear SVM result</td>
-<td style="text-align: left;">Support vector classifier</td>
-<td style="text-align: left;">2,200</td>
-<td style="text-align: left;">14,502</td>
-<td style="text-align: left;">62.0%</td>
-<td style="text-align: left;">0.762</td>
-<td style="text-align: left;">0.454</td>
-<td style="text-align: left;">38.8%</td>
-<td style="text-align: left;">Linear support-vector classifier on a capped training sample.</td>
-</tr>
 <tr class="odd">
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">Rich random forest result</td>
 <td style="text-align: left;">Tree ensemble classifier</td>
-<td style="text-align: left;">7,000</td>
-<td style="text-align: left;">14,502</td>
-<td style="text-align: left;">61.2%</td>
-<td style="text-align: left;">0.768</td>
-<td style="text-align: left;">0.457</td>
-<td style="text-align: left;">39.1%</td>
+<td style="text-align: left;">22,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">61.6%</td>
+<td style="text-align: left;">0.745</td>
+<td style="text-align: left;">0.448</td>
+<td style="text-align: left;">38.5%</td>
 <td style="text-align: left;">Random forest classifier on richer rolling-form features.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
+<td style="text-align: left;">Linear SVM result</td>
+<td style="text-align: left;">Support vector classifier</td>
+<td style="text-align: left;">9,000</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">62.3%</td>
+<td style="text-align: left;">0.751</td>
+<td style="text-align: left;">0.449</td>
+<td style="text-align: left;">38.2%</td>
+<td style="text-align: left;">Linear support-vector classifier on a capped training sample.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
+<td style="text-align: left;">Rich ordinal result</td>
+<td style="text-align: left;">Ordinal logistic</td>
+<td style="text-align: left;">36,328</td>
+<td style="text-align: left;">14,504</td>
+<td style="text-align: left;">60.6%</td>
+<td style="text-align: left;">0.861</td>
+<td style="text-align: left;">0.505</td>
+<td style="text-align: left;">38.3%</td>
+<td style="text-align: left;">Stable proportional-odds model using team strength, tournament context, rest, and recent form.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Recent era train 2000-2018, test 2019+</td>
 <td style="text-align: left;">Population class-share baseline</td>
 <td style="text-align: left;">Naive probability baseline</td>
 <td style="text-align: left;">36,328</td>
-<td style="text-align: left;">14,502</td>
+<td style="text-align: left;">14,504</td>
 <td style="text-align: left;">38.6%</td>
 <td style="text-align: left;">1.072</td>
 <td style="text-align: left;">0.650</td>
@@ -1673,6 +2219,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">0.002</td>
 <td style="text-align: left;">0.0%</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">XGBoost goals</td>
+<td style="text-align: left;">pre_match_expected_result</td>
+<td style="text-align: left;">0.602</td>
+<td style="text-align: left;">100.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">XGBoost goals</td>
+<td style="text-align: left;">match_year</td>
+<td style="text-align: left;">0.118</td>
+<td style="text-align: left;">19.6%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">XGBoost goals</td>
+<td style="text-align: left;">elo_diff</td>
+<td style="text-align: left;">0.106</td>
+<td style="text-align: left;">17.5%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">XGBoost goals</td>
+<td style="text-align: left;">opponent_pre_elo</td>
+<td style="text-align: left;">0.074</td>
+<td style="text-align: left;">12.3%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">XGBoost goals</td>
+<td style="text-align: left;">pre_elo</td>
+<td style="text-align: left;">0.047</td>
+<td style="text-align: left;">7.8%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">XGBoost goals</td>
+<td style="text-align: left;">listed_homeTRUE</td>
+<td style="text-align: left;">0.033</td>
+<td style="text-align: left;">5.5%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">XGBoost goals</td>
+<td style="text-align: left;">k_factor</td>
+<td style="text-align: left;">0.014</td>
+<td style="text-align: left;">2.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">XGBoost goals</td>
+<td style="text-align: left;">neutralTRUE</td>
+<td style="text-align: left;">0.004</td>
+<td style="text-align: left;">0.7%</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1703,8 +2297,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">xgboost</td>
-<td style="text-align: left;">not_installed</td>
-<td style="text-align: left;">Install the R xgboost package to fit the gradient-boosted challenger.</td>
+<td style="text-align: left;">available</td>
+<td style="text-align: left;">XGBoost challenger was fit.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">randomForest</td>
@@ -1763,7 +2357,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td style="text-align: left;">xgboost</td>
-<td style="text-align: left;">missing</td>
+<td style="text-align: left;">available</td>
 <td style="text-align: left;">Not required for this suite; used by the separate tree challenger script when installed.</td>
 </tr>
 </tbody>
@@ -1794,7 +2388,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">expanded_population</td>
 <td style="text-align: left;">available</td>
-<td style="text-align: left;">Using 98954 team-match rows and 33 challenger features.</td>
+<td style="text-align: left;">Using 98956 team-match rows and 33 challenger features.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">MASS</td>
@@ -1817,11 +2411,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Fits gradient-boosted goal and result challengers.</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">xgboost</td>
+<td style="text-align: left;">available</td>
+<td style="text-align: left;">Fits XGBoost goal and result challengers.</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">randomForest</td>
 <td style="text-align: left;">available</td>
 <td style="text-align: left;">Fits random-forest goal and result challengers.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">e1071</td>
 <td style="text-align: left;">available</td>
 <td style="text-align: left;">Fits support-vector goal and result challengers.</td>

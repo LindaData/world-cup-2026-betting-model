@@ -164,7 +164,7 @@ if (requireNamespace("xgboost", quietly = TRUE)) {
     ),
     data = dtrain,
     nrounds = 180,
-    watchlist = list(train = dtrain, test = dtest),
+    evals = list(train = dtrain, test = dtest),
     verbose = 0
   )
   xgb_pred <- pmax(0, as.numeric(stats::predict(xgb_fit, dtest)))
@@ -198,7 +198,7 @@ if (requireNamespace("xgboost", quietly = TRUE)) {
     residual = tree_test$y_goals_for - xgb_pred,
     stringsAsFactors = FALSE
   )
-  xgboost::xgb.save(xgb_fit, file.path(model_dir, "goals_xgboost_model_fit.xgb"))
+  xgboost::xgb.save(xgb_fit, file.path(model_dir, "goals_xgboost_model_fit.ubj"))
   status_rows[[length(status_rows) + 1]] <- data.frame(
     component = "xgboost",
     status = "available",
@@ -233,7 +233,7 @@ if (requireNamespace("randomForest", quietly = TRUE)) {
     nrow(tree_test),
     tree_test$y_goals_for,
     rf_pred,
-    "Free local tree challenger used while xgboost is not installed."
+    "Additional free local tree-ensemble benchmark."
   )
   rf_importance <- randomForest::importance(rf_fit)
   if (nrow(rf_importance) > 0) {

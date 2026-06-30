@@ -234,6 +234,25 @@ empirical_bayes_goal_pred <- function(train, test, prior_n = 12) {
 
 goal_formula <- stats::as.formula(paste("goals_for ~", paste(rich_feature_cols, collapse = " + ")))
 result_formula <- stats::as.formula(paste("y_result_ordered ~", paste(rich_feature_cols, collapse = " + ")))
+ordinal_feature_cols <- c(
+  "elo_diff",
+  "expected_result",
+  "listed_home",
+  "neutral",
+  "is_world_cup",
+  "is_world_cup_qualifier",
+  "is_friendly",
+  "is_major_tournament",
+  "form_points_diff_l5",
+  "form_goal_diff_l5",
+  "attack_vs_defense_l5",
+  "defense_vs_attack_l5",
+  "team_days_since_match_capped",
+  "opp_days_since_match_capped",
+  "experience_diff_log"
+)
+ordinal_feature_cols <- ordinal_feature_cols[ordinal_feature_cols %in% rich_feature_cols]
+ordinal_result_formula <- stats::as.formula(paste("y_result_ordered ~", paste(ordinal_feature_cols, collapse = " + ")))
 gam_formula <- stats::as.formula(
   paste(
     "goals_for ~ s(elo_diff, k = 8) + s(expected_result, k = 8) +",
@@ -309,6 +328,34 @@ for (split_name in names(splits)) {
     goal_metric("GBM Poisson goals", "Gradient boosting", split_name, gbm_train, test, pred, "Boosted tree count model on the richer feature population.")
   })
 
+  goal_metrics[[length(goal_metrics) + 1]] <- safe_model("XGBoost Poisson goals", {
+    if (!requireNamespace("xgboost", quietly = TRUE)) {
+      stop("The xgboost package is not installed.")
+    }
+    xgb_train <- sample_rows(train, ifelse(full_sweep, 30000, 9000), seed_offset = 55)
+    x_train <- stats::model.matrix(goal_formula, data = xgb_train)[, -1, drop = FALSE]
+    x_test <- stats::model.matrix(goal_formula, data = test)[, -1, drop = FALSE]
+    dtrain <- xgboost::xgb.DMatrix(data = x_train, label = xgb_train$goals_for)
+    dtest <- xgboost::xgb.DMatrix(data = x_test)
+    set.seed(20260629)
+    fit <- xgboost::xgb.train(
+      params = list(
+        objective = "count:poisson",
+        eval_metric = "rmse",
+        max_depth = 4,
+        eta = 0.05,
+        subsample = 0.85,
+        colsample_bytree = 0.85,
+        min_child_weight = 8
+      ),
+      data = dtrain,
+      nrounds = ifelse(full_sweep, 260, 120),
+      verbose = 0
+    )
+    pred <- stats::predict(fit, dtest)
+    goal_metric("XGBoost Poisson goals", "Gradient boosting", split_name, xgb_train, test, pred, "XGBoost count model using the richer rolling-form feature population.")
+  })
+
   goal_metrics[[length(goal_metrics) + 1]] <- safe_model("Rich random forest goals", {
     if (!requireNamespace("randomForest", quietly = TRUE)) {
       stop("The randomForest package is not installed.")
@@ -356,9 +403,17 @@ for (split_name in names(splits)) {
   )
 
   result_metrics[[length(result_metrics) + 1]] <- safe_model("Rich ordinal result", {
-    fit <- MASS::polr(result_formula, data = class_train, method = "logistic", Hess = FALSE)
+    fit <- MASS::polr(ordinal_result_formula, data = class_train, method = "logistic", Hess = FALSE)
     prob <- stats::predict(fit, newdata = test, type = "probs")
-    result_metric("Rich ordinal result", "Ordinal logistic", split_name, class_train, test, prob, "Ordered win/draw/loss model using expanded features.")
+    result_metric(
+      "Rich ordinal result",
+      "Ordinal logistic",
+      split_name,
+      class_train,
+      test,
+      prob,
+      "Stable proportional-odds model using team strength, tournament context, rest, and recent form."
+    )
   })
 
   result_metrics[[length(result_metrics) + 1]] <- safe_model("Rich multinomial result", {
@@ -391,6 +446,45 @@ for (split_name in names(splits)) {
     )
     prob <- stats::predict(fit, newdata = test, n.trees = ifelse(full_sweep, 450, 160), type = "response")
     result_metric("GBM multinomial result", "Gradient boosting classifier", split_name, gbm_train, test, prob, "Boosted tree classifier for win, draw, and loss probabilities.")
+  })
+
+  result_metrics[[length(result_metrics) + 1]] <- safe_model("XGBoost multinomial result", {
+    if (!requireNamespace("xgboost", quietly = TRUE)) {
+      stop("The xgboost package is not installed.")
+    }
+    levels_out <- c("loss", "draw", "win")
+    xgb_train <- sample_rows(train, ifelse(full_sweep, 30000, 9000), seed_offset = 85)
+    x_train <- stats::model.matrix(result_formula, data = xgb_train)[, -1, drop = FALSE]
+    x_test <- stats::model.matrix(result_formula, data = test)[, -1, drop = FALSE]
+    dtrain <- xgboost::xgb.DMatrix(
+      data = x_train,
+      label = as.integer(xgb_train$y_result_ordered) - 1
+    )
+    dtest <- xgboost::xgb.DMatrix(data = x_test)
+    set.seed(20260629)
+    fit <- xgboost::xgb.train(
+      params = list(
+        objective = "multi:softprob",
+        eval_metric = "mlogloss",
+        num_class = length(levels_out),
+        max_depth = 4,
+        eta = 0.05,
+        subsample = 0.85,
+        colsample_bytree = 0.85,
+        min_child_weight = 8
+      ),
+      data = dtrain,
+      nrounds = ifelse(full_sweep, 260, 120),
+      verbose = 0
+    )
+    raw_prob <- stats::predict(fit, dtest)
+    if (is.null(dim(raw_prob))) {
+      prob <- matrix(raw_prob, ncol = length(levels_out), byrow = TRUE)
+    } else {
+      prob <- as.matrix(raw_prob)
+    }
+    colnames(prob) <- levels_out
+    result_metric("XGBoost multinomial result", "Gradient boosting classifier", split_name, xgb_train, test, prob, "XGBoost classifier for win, draw, and loss probabilities.")
   })
 
   result_metrics[[length(result_metrics) + 1]] <- safe_model("Rich random forest result", {
@@ -436,13 +530,14 @@ goal_metric_table <- dplyr::bind_rows(goal_metrics)
 result_metric_table <- dplyr::bind_rows(result_metrics)
 
 status_table <- data.frame(
-  component = c("expanded_population", "MASS", "mgcv", "nnet", "gbm", "randomForest", "e1071"),
+  component = c("expanded_population", "MASS", "mgcv", "nnet", "gbm", "xgboost", "randomForest", "e1071"),
   status = c(
     "available",
     ifelse(requireNamespace("MASS", quietly = TRUE), "available", "missing"),
     ifelse(requireNamespace("mgcv", quietly = TRUE), "available", "missing"),
     ifelse(requireNamespace("nnet", quietly = TRUE), "available", "missing"),
     ifelse(requireNamespace("gbm", quietly = TRUE), "available", "missing"),
+    ifelse(requireNamespace("xgboost", quietly = TRUE), "available", "missing"),
     ifelse(requireNamespace("randomForest", quietly = TRUE), "available", "missing"),
     ifelse(requireNamespace("e1071", quietly = TRUE), "available", "missing")
   ),
@@ -452,6 +547,7 @@ status_table <- data.frame(
     "Fits smooth Poisson goal models.",
     "Fits multinomial result models.",
     "Fits gradient-boosted goal and result challengers.",
+    "Fits XGBoost goal and result challengers.",
     "Fits random-forest goal and result challengers.",
     "Fits support-vector goal and result challengers."
   ),

@@ -122,9 +122,13 @@ poisson_deviance <- function(actual, predicted) {
 }
 
 safe_model <- function(label, expr) {
+  cat("Fitting ", label, "...\n", sep = "")
+  flush.console()
   tryCatch(
     expr,
     error = function(e) {
+      cat("Candidate failed: ", label, " - ", conditionMessage(e), "\n", sep = "")
+      flush.console()
       data.frame(
         model = label,
         status = "failed",
@@ -248,16 +252,21 @@ for (split_name in names(goal_splits)) {
   split <- goal_splits[[split_name]]
   train <- split$train
   test <- split$test
+  split_index <- match(split_name, names(goal_splits))
+  goal_train <- sample_rows(train, 60000, seed_offset = 100 + split_index)
+  nb_train <- sample_rows(train, 35000, seed_offset = 200 + split_index)
+  gam_train <- sample_rows(train, 30000, seed_offset = 300 + split_index)
+  tree_train <- sample_rows(train, 60000, seed_offset = 400 + split_index)
 
   goal_metrics[[length(goal_metrics) + 1]] <- safe_model("Elo OLS goals", {
-    fit <- stats::lm(goal_elo_formula, data = train)
+    fit <- stats::lm(goal_elo_formula, data = goal_train)
     pred <- stats::predict(fit, newdata = test)
     goal_metric(
       "Elo OLS goals",
       "Linear benchmark",
       split_name,
       "fit",
-      train,
+      goal_train,
       test,
       pred,
       "Small transparent baseline using team strength and home/neutral context."
@@ -265,14 +274,14 @@ for (split_name in names(goal_splits)) {
   })
 
   goal_metrics[[length(goal_metrics) + 1]] <- safe_model("Poisson GLM goals", {
-    fit <- stats::glm(goal_full_formula, data = train, family = stats::poisson(link = "log"))
+    fit <- stats::glm(goal_full_formula, data = goal_train, family = stats::poisson(link = "log"))
     pred <- stats::predict(fit, newdata = test, type = "response")
     goal_metric(
       "Poisson GLM goals",
       "Count model",
       split_name,
       "fit",
-      train,
+      goal_train,
       test,
       pred,
       "Standard count model for goals."
@@ -280,14 +289,14 @@ for (split_name in names(goal_splits)) {
   })
 
   goal_metrics[[length(goal_metrics) + 1]] <- safe_model("Quasi-Poisson goals", {
-    fit <- stats::glm(goal_full_formula, data = train, family = stats::quasipoisson(link = "log"))
+    fit <- stats::glm(goal_full_formula, data = goal_train, family = stats::quasipoisson(link = "log"))
     pred <- stats::predict(fit, newdata = test, type = "response")
     goal_metric(
       "Quasi-Poisson goals",
       "Overdispersion-aware count model",
       split_name,
       "fit",
-      train,
+      goal_train,
       test,
       pred,
       "Uses the same mean structure as Poisson while allowing extra variance."
@@ -295,14 +304,14 @@ for (split_name in names(goal_splits)) {
   })
 
   goal_metrics[[length(goal_metrics) + 1]] <- safe_model("Negative binomial goals", {
-    fit <- MASS::glm.nb(goal_full_formula, data = train)
+    fit <- MASS::glm.nb(goal_full_formula, data = nb_train, control = stats::glm.control(maxit = 35))
     pred <- stats::predict(fit, newdata = test, type = "response")
     goal_metric(
       "Negative binomial goals",
       "Overdispersion-aware count model",
       split_name,
       "fit",
-      train,
+      nb_train,
       test,
       pred,
       "Count model designed for variance above the mean."
@@ -310,15 +319,14 @@ for (split_name in names(goal_splits)) {
   })
 
   goal_metrics[[length(goal_metrics) + 1]] <- safe_model("GAM Poisson goals", {
-    train_cap <- sample_rows(train, 50000, seed_offset = 10)
-    fit <- mgcv::gam(goal_gam_formula, data = train_cap, family = stats::poisson(link = "log"), method = "REML")
+    fit <- mgcv::gam(goal_gam_formula, data = gam_train, family = stats::poisson(link = "log"), method = "REML")
     pred <- stats::predict(fit, newdata = test, type = "response")
     goal_metric(
       "GAM Poisson goals",
       "Smooth count model",
       split_name,
       "fit",
-      train_cap,
+      gam_train,
       test,
       pred,
       "Allows curved relationships for Elo and expected result."
@@ -326,7 +334,7 @@ for (split_name in names(goal_splits)) {
   })
 
   goal_metrics[[length(goal_metrics) + 1]] <- safe_model("Two-stage zero-aware goals", {
-    train_zero <- train
+    train_zero <- goal_train
     train_zero$scored_any <- as.integer(train_zero$y_goals_for > 0)
     scored_formula <- stats::as.formula(paste("scored_any ~", paste(goal_model_cols, collapse = " + ")))
     fit_scored <- stats::glm(scored_formula, data = train_zero, family = stats::binomial(link = "logit"))
@@ -339,7 +347,7 @@ for (split_name in names(goal_splits)) {
       "Two-stage count model",
       split_name,
       "fit",
-      train,
+      train_zero,
       test,
       pred,
       "Separates the chance of scoring at all from expected goals after a team scores."
@@ -347,14 +355,14 @@ for (split_name in names(goal_splits)) {
   })
 
   goal_metrics[[length(goal_metrics) + 1]] <- safe_model("Regression tree goals", {
-    fit <- rpart::rpart(goal_full_formula, data = train, method = "anova", control = rpart::rpart.control(cp = 0.001, minbucket = 80))
+    fit <- rpart::rpart(goal_full_formula, data = tree_train, method = "anova", control = rpart::rpart.control(cp = 0.001, minbucket = 80))
     pred <- stats::predict(fit, newdata = test)
     goal_metric(
       "Regression tree goals",
       "Single tree",
       split_name,
       "fit",
-      train,
+      tree_train,
       test,
       pred,
       "Interpretable nonlinear tree benchmark."
@@ -396,6 +404,9 @@ for (split_name in names(result_splits)) {
   split <- result_splits[[split_name]]
   train <- split$train
   test <- split$test
+  split_index <- match(split_name, names(result_splits))
+  class_train <- sample_rows(train, 50000, seed_offset = 500 + split_index)
+  tree_train <- sample_rows(train, 60000, seed_offset = 600 + split_index)
 
   majority <- prop.table(table(train$y_result_ordered))
   majority_prob <- data.frame(
@@ -415,14 +426,14 @@ for (split_name in names(result_splits)) {
   )
 
   result_metrics[[length(result_metrics) + 1]] <- safe_model("Elo ordinal result", {
-    fit <- MASS::polr(result_elo_formula, data = train, method = "logistic", Hess = FALSE)
+    fit <- MASS::polr(result_elo_formula, data = class_train, method = "logistic", Hess = FALSE)
     prob <- normalize_probabilities(stats::predict(fit, newdata = test, type = "probs"))
     result_metric(
       "Elo ordinal result",
       "Ordinal logistic",
       split_name,
       "fit",
-      train,
+      class_train,
       test,
       prob,
       "Transparent ordered model using strength and site context."
@@ -430,14 +441,14 @@ for (split_name in names(result_splits)) {
   })
 
   result_metrics[[length(result_metrics) + 1]] <- safe_model("Full ordinal result", {
-    fit <- MASS::polr(result_full_formula, data = train, method = "logistic", Hess = FALSE)
+    fit <- MASS::polr(result_full_formula, data = class_train, method = "logistic", Hess = FALSE)
     prob <- normalize_probabilities(stats::predict(fit, newdata = test, type = "probs"))
     result_metric(
       "Full ordinal result",
       "Ordinal logistic",
       split_name,
       "fit",
-      train,
+      class_train,
       test,
       prob,
       "Ordered win/draw/loss probability model with the expanded feature set."
@@ -445,14 +456,14 @@ for (split_name in names(result_splits)) {
   })
 
   result_metrics[[length(result_metrics) + 1]] <- safe_model("Multinomial result", {
-    fit <- nnet::multinom(result_full_formula, data = train, trace = FALSE, MaxNWts = 10000)
+    fit <- nnet::multinom(result_full_formula, data = class_train, trace = FALSE, MaxNWts = 10000)
     prob <- normalize_probabilities(stats::predict(fit, newdata = test, type = "probs"))
     result_metric(
       "Multinomial result",
       "Multinomial logistic",
       split_name,
       "fit",
-      train,
+      class_train,
       test,
       prob,
       "Does not force loss, draw, and win into a proportional-odds structure."
@@ -460,14 +471,14 @@ for (split_name in names(result_splits)) {
   })
 
   result_metrics[[length(result_metrics) + 1]] <- safe_model("Regularized multinomial result", {
-    fit <- nnet::multinom(result_full_formula, data = train, trace = FALSE, decay = 0.001, MaxNWts = 10000)
+    fit <- nnet::multinom(result_full_formula, data = class_train, trace = FALSE, decay = 0.001, MaxNWts = 10000)
     prob <- normalize_probabilities(stats::predict(fit, newdata = test, type = "probs"))
     result_metric(
       "Regularized multinomial result",
       "Regularized classifier",
       split_name,
       "fit",
-      train,
+      class_train,
       test,
       prob,
       "Adds a small penalty to reduce overfitting while estimating win, draw, and loss probabilities."
@@ -475,14 +486,14 @@ for (split_name in names(result_splits)) {
   })
 
   result_metrics[[length(result_metrics) + 1]] <- safe_model("Classification tree result", {
-    fit <- rpart::rpart(result_full_formula, data = train, method = "class", control = rpart::rpart.control(cp = 0.001, minbucket = 100))
+    fit <- rpart::rpart(result_full_formula, data = tree_train, method = "class", control = rpart::rpart.control(cp = 0.001, minbucket = 100))
     prob <- normalize_probabilities(stats::predict(fit, newdata = test, type = "prob"))
     result_metric(
       "Classification tree result",
       "Single tree",
       split_name,
       "fit",
-      train,
+      tree_train,
       test,
       prob,
       "Interpretable nonlinear tree benchmark for win/draw/loss."

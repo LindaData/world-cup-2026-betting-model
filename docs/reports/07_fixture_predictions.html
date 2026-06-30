@@ -108,69 +108,133 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 <meta name="author" content="Sergio Mora">
+
 <meta name="robots" content="index, follow, max-image-preview:large">
+
 <meta name="theme-color" content="#102a43">
+
 <meta property="og:type" content="website">
+
 <meta property="og:locale" content="en_US">
+
 <link rel="author" href="https://github.com/LindaData">
+
 <link rel="manifest" href="https://lindadata.github.io/world-cup-2026-betting-model/assets/site.webmanifest">
+
 <script type="application/ld+json">
+
 {
+
   "@context": "https://schema.org",
+
   "@graph": [
+
     {
+
       "@type": "WebSite",
+
       "@id": "https://lindadata.github.io/world-cup-2026-betting-model/#website",
+
       "name": "World Cup 2026 Forecasting Model",
+
       "alternateName": "WC 2026 Forecasts",
+
       "url": "https://lindadata.github.io/world-cup-2026-betting-model/",
+
       "description": "Match probabilities, projected scores, champion probabilities, tournament paths, and post-match model evaluation for the 2026 World Cup.",
+
       "inLanguage": "en-US",
+
       "creator": {
+
         "@type": "Person",
+
         "name": "Sergio Mora",
+
         "url": "https://github.com/LindaData"
+
       },
+
       "publisher": {
+
         "@type": "Organization",
+
         "name": "LindaData",
+
         "url": "https://github.com/LindaData"
+
       }
+
     },
+
     {
+
       "@type": "SoftwareSourceCode",
+
       "@id": "https://github.com/LindaData/world-cup-2026-betting-model#source",
+
       "name": "World Cup 2026 Forecasting Model",
+
       "codeRepository": "https://github.com/LindaData/world-cup-2026-betting-model",
+
       "programmingLanguage": ["R", "Python", "SQL"],
+
       "runtimePlatform": "Quarto, GitHub Pages",
+
       "applicationCategory": "Sports forecasting",
+
       "isAccessibleForFree": true,
+
       "license": "https://github.com/LindaData/world-cup-2026-betting-model"
+
     },
+
     {
+
       "@type": "Dataset",
+
       "@id": "https://lindadata.github.io/world-cup-2026-betting-model/reports/00_data_overview.html#coverage",
+
       "name": "World Cup 2026 Forecasting Model Public Summary Data",
+
       "description": "Public metadata summaries and model-output samples used to explain match forecasts, model performance, and data coverage. Raw datasets and credentials are not published.",
+
       "url": "https://lindadata.github.io/world-cup-2026-betting-model/reports/00_data_overview.html",
+
       "creator": {
+
         "@type": "Person",
+
         "name": "Sergio Mora"
+
       },
+
       "isAccessibleForFree": true,
+
       "keywords": [
+
         "World Cup 2026",
+
         "soccer forecasting",
+
         "match probabilities",
+
         "sports analytics",
+
         "R",
+
         "Quarto"
+
       ]
+
     }
+
   ]
+
 }
+
 </script>
+
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -371,12 +435,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td style="text-align: left;">Fixtures with final scores</td>
-<td style="text-align: left;">72.000</td>
+<td style="text-align: left;">73.000</td>
 <td style="text-align: left;">Matches available for early score checking.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Fixtures with weather context</td>
-<td style="text-align: left;">72.000</td>
+<td style="text-align: left;">79.000</td>
 <td style="text-align: left;">Matches with joined weather summaries.</td>
 </tr>
 <tr class="even">
@@ -396,27 +460,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td style="text-align: left;">OLS RMSE on completed fixtures</td>
-<td style="text-align: left;">1.208</td>
+<td style="text-align: left;">1.205</td>
 <td style="text-align: left;">Typical OLS goal miss on completed 2026 team rows.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">OLS MAE on completed fixtures</td>
-<td style="text-align: left;">0.893</td>
+<td style="text-align: left;">0.894</td>
 <td style="text-align: left;">Average OLS absolute goal miss on completed 2026 team rows.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Poisson RMSE on completed fixtures</td>
-<td style="text-align: left;">1.199</td>
+<td style="text-align: left;">1.195</td>
 <td style="text-align: left;">Typical Poisson goal miss on completed 2026 team rows.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Poisson MAE on completed fixtures</td>
-<td style="text-align: left;">0.893</td>
+<td style="text-align: left;">0.894</td>
 <td style="text-align: left;">Average Poisson absolute goal miss on completed 2026 team rows.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ordinal accuracy on completed fixtures</td>
-<td style="text-align: left;">65.3%</td>
+<td style="text-align: left;">64.4%</td>
 <td style="text-align: left;">Share of completed matches where the top predicted outcome matched the result.</td>
 </tr>
 </tbody>
@@ -539,11 +603,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Mexico</td>
 <td style="text-align: left;">South Africa</td>
 <td style="text-align: left;">2-0</td>
-<td style="text-align: left;">2.41 - 0.55</td>
-<td style="text-align: left;">2.33 - 0.21</td>
-<td style="text-align: left;">78.4%</td>
-<td style="text-align: left;">Draw 14.0%</td>
-<td style="text-align: left;">7.6%</td>
+<td style="text-align: left;">2.49 - 0.54</td>
+<td style="text-align: left;">2.37 - 0.17</td>
+<td style="text-align: left;">79.4%</td>
+<td style="text-align: left;">Draw 13.4%</td>
+<td style="text-align: left;">7.2%</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">home win</td>
@@ -573,11 +637,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Canada</td>
 <td style="text-align: left;">Bosnia and Herzegovina</td>
 <td style="text-align: left;">1-1</td>
-<td style="text-align: left;">2.13 - 0.67</td>
-<td style="text-align: left;">2.13 - 0.53</td>
-<td style="text-align: left;">70.8%</td>
-<td style="text-align: left;">Draw 18.2%</td>
-<td style="text-align: left;">11.0%</td>
+<td style="text-align: left;">2.19 - 0.65</td>
+<td style="text-align: left;">2.17 - 0.47</td>
+<td style="text-align: left;">72.3%</td>
+<td style="text-align: left;">Draw 17.4%</td>
+<td style="text-align: left;">10.3%</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">home win</td>
@@ -1018,8 +1082,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">2-0</td>
 <td style="text-align: left;">home win</td>
 <td style="text-align: left;">home win</td>
-<td style="text-align: left;">2.41 - 0.55</td>
-<td style="text-align: left;">Mexico 78.4% / level 14.0% / South Africa 7.6%</td>
+<td style="text-align: left;">2.49 - 0.54</td>
+<td style="text-align: left;">Mexico 79.4% / level 13.4% / South Africa 7.2%</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2026-06-11</td>
@@ -1038,8 +1102,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">1-1</td>
 <td style="text-align: left;">draw</td>
 <td style="text-align: left;">home win</td>
-<td style="text-align: left;">2.13 - 0.67</td>
-<td style="text-align: left;">Canada 70.8% / level 18.2% / Bosnia and Herzegovina 11.0%</td>
+<td style="text-align: left;">2.19 - 0.65</td>
+<td style="text-align: left;">Canada 72.3% / level 17.4% / Bosnia and Herzegovina 10.3%</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2026-06-12</td>
