@@ -21,7 +21,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -237,70 +237,70 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../reports/08_matchday_predictions.html" aria-current="page">
+    <a class="nav-link active" href="../reports/08_matchday_predictions.html" aria-current="page"> 
 <span class="menu-text">Predictions</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket">
+    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket"> 
 <span class="menu-text">Bracket</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../reports/00_data_overview.html">
+    <a class="nav-link" href="../reports/00_data_overview.html"> 
 <span class="menu-text">Coverage</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Methodology</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">    
         <li>
     <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-review">
  <span class="dropdown-text">Model Review</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/07_fixture_predictions.html">
  <span class="dropdown-text">Model Overview</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/05_poisson_goals_model.html">
  <span class="dropdown-text">Goals Forecast</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/02_ordinal_result_model.html">
  <span class="dropdown-text">Win / Draw / Loss Model</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/04_knn_similarity_model.html">
  <span class="dropdown-text">Similar Match Model</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/10_model_challengers.html">
  <span class="dropdown-text">Model Challengers</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/03_distribution_review.html">
  <span class="dropdown-text">Distribution Checks</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/06_regression_diagnostics.html">
  <span class="dropdown-text">Diagnostics</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/09_multisport_expansion.html">
  <span class="dropdown-text">Multi-Sport Roadmap</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model">
+    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model"> 
 <span class="menu-text">GitHub</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -312,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -331,11 +331,11 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -343,9 +343,9 @@ ul.task-list li input[type="checkbox"] {
 
 <section class="page-intro prediction-intro">
 <span class="section-kicker">Matchday</span>
-<h1>
+<h2 class="anchored">
 Prediction Board
-</h1>
+</h2>
 <p>
 Today's matches, next kickoff, bracket view, and model review in one place.
 </p>
@@ -2821,9 +2821,7 @@ The public pick remains the stable production ensemble. The model lab now runs a
 <strong>Forecast freshness:</strong> Forecasts refresh from the prepared model outputs and publish to this page for quick review. <span class="section-note">Last generated: 2026-06-30 02:31:57 EDT.</span>
 </div>
 </section>
-<section id="bracket" class="level2">
-<h2 class="anchored" data-anchor-id="bracket">Tournament Bracket</h2>
-<section class="model-bracket-shell">
+<section class="model-bracket-shell" id="bracket">
 <div class="model-bracket-header">
 <div>
 <div class="section-kicker">
@@ -2833,7 +2831,7 @@ Bracket
 Projected Tournament Bracket
 </h2>
 <p>
-Seeded from current group projections. Tap a team to advance it. Model picks, manual picks, and official results use separate labels.
+Seeded from current group projections. Tap a team to advance it. Model picks, manual picks, and official results use separate labels, and completed knockout results lock automatically.
 </p>
 </div>
 <div class="model-bracket-controls">
@@ -2889,7 +2887,7 @@ Best Third Watch
 <div id="model-bracket-champion" class="bracket-champion-card" aria-live="polite">
 
 </div>
-<script type="application/json" id="wc-bracket-data">{"round32":[{"match":1,"slotA":"A2","slotB":"B2","teamA":{"name":"South Africa","group":"A","seed":"A2","position":2,"points":4,"gd":-2,"gf":2,"elo":1695},"teamB":{"name":"Canada","group":"B","seed":"B2","position":2,"points":4,"gd":5,"gf":8,"elo":1873}},{"match":2,"slotA":"F1","slotB":"C2","teamA":{"name":"Netherlands","group":"F","seed":"F1","position":1,"points":8.63,"gd":6.34,"gf":11.32,"elo":2045},"teamB":{"name":"Morocco","group":"C","seed":"C2","position":2,"points":7,"gd":3,"gf":6,"elo":2026}},{"match":3,"slotA":"E1","slotB":"ABCDF3","teamA":{"name":"Germany","group":"E","seed":"E1","position":1,"points":7.91,"gd":6.77,"gf":11.62,"elo":1996},"teamB":{"name":"Sweden","group":"F","seed":"F3","position":3,"points":4,"gd":0,"gf":7,"elo":1804}},{"match":4,"slotA":"I1","slotB":"CDFGH3","teamA":{"name":"France","group":"I","seed":"I1","position":1,"points":11.58,"gd":10.15,"gf":12.66,"elo":2187},"teamB":{"name":"Paraguay","group":"D","seed":"D3","position":3,"points":4,"gd":-2,"gf":2,"elo":1900}},{"match":5,"slotA":"K2","slotB":"L2","teamA":{"name":"Portugal","group":"K","seed":"K2","position":2,"points":6.89,"gd":5.72,"gf":7.56,"elo":2054},"teamB":{"name":"Croatia","group":"L","seed":"L2","position":2,"points":6,"gd":0,"gf":5,"elo":1964}},{"match":6,"slotA":"H1","slotB":"J2","teamA":{"name":"Spain","group":"H","seed":"H1","position":1,"points":9.45,"gd":6.74,"gf":7.29,"elo":2208},"teamB":{"name":"Austria","group":"J","seed":"J2","position":2,"points":4,"gd":0,"gf":6,"elo":1906}},{"match":7,"slotA":"D1","slotB":"BEFIJ3","teamA":{"name":"United States","group":"D","seed":"D1","position":1,"points":8.35,"gd":5.55,"gf":10.2,"elo":1875},"teamB":{"name":"Ecuador","group":"E","seed":"E3","position":3,"points":4,"gd":0,"gf":2,"elo":1991}},{"match":8,"slotA":"G1","slotB":"AEHIJ3","teamA":{"name":"Belgium","group":"G","seed":"G1","position":1,"points":6.78,"gd":4.57,"gf":7.5,"elo":1964},"teamB":{"name":"Algeria","group":"J","seed":"J3","position":3,"points":4,"gd":-2,"gf":5,"elo":1893}},{"match":9,"slotA":"C1","slotB":"F2","teamA":{"name":"Brazil","group":"C","seed":"C1","position":1,"points":8.94,"gd":6.77,"gf":8.58,"elo":2094},"teamB":{"name":"Japan","group":"F","seed":"F2","position":2,"points":5,"gd":4,"gf":7,"elo":1992}},{"match":10,"slotA":"E2","slotB":"I2","teamA":{"name":"Ivory Coast","group":"E","seed":"E2","position":2,"points":7.09,"gd":1.62,"gf":5.02,"elo":1860},"teamB":{"name":"Norway","group":"I","seed":"I2","position":2,"points":6,"gd":1,"gf":8,"elo":1982}},{"match":11,"slotA":"A1","slotB":"CEFHI3","teamA":{"name":"Mexico","group":"A","seed":"A1","position":1,"points":10.81,"gd":6.55,"gf":7.4,"elo":1997},"teamB":{"name":"Senegal","group":"I","seed":"I3","position":3,"points":3,"gd":2,"gf":8,"elo":1905}},{"match":12,"slotA":"L1","slotB":"EHIJK3","teamA":{"name":"England","group":"L","seed":"L1","position":1,"points":9.43,"gd":5.73,"gf":8.32,"elo":2107},"teamB":{"name":"DR Congo","group":"K","seed":"K3","position":3,"points":4,"gd":1,"gf":4,"elo":1820}},{"match":13,"slotA":"J1","slotB":"H2","teamA":{"name":"Argentina","group":"J","seed":"J1","position":1,"points":11.72,"gd":9.83,"gf":11.25,"elo":2224},"teamB":{"name":"Cape Verde","group":"H","seed":"H2","position":2,"points":3,"gd":0,"gf":2,"elo":1692}},{"match":14,"slotA":"D2","slotB":"G2","teamA":{"name":"Australia","group":"D","seed":"D2","position":2,"points":5.75,"gd":0.54,"gf":3.51,"elo":1911},"teamB":{"name":"Egypt","group":"G","seed":"G2","position":2,"points":5,"gd":2,"gf":5,"elo":1860}},{"match":15,"slotA":"B1","slotB":"EFGIJ3","teamA":{"name":"Switzerland","group":"B","seed":"B1","position":1,"points":8.87,"gd":4.71,"gf":8.59,"elo":1977},"teamB":{}},{"match":16,"slotA":"K1","slotB":"DEIJL3","teamA":{"name":"Colombia","group":"K","seed":"K1","position":1,"points":9.61,"gd":5.38,"gf":6.89,"elo":2085},"teamB":{"name":"Ghana","group":"L","seed":"L3","position":3,"points":4,"gd":0,"gf":2,"elo":1674}}],"groupSeeds":[{"group":"A","seed":"A1","team":"Mexico","position":1,"points":10.81,"gd":6.55,"gf":7.4,"elo":1997},{"group":"A","seed":"A2","team":"South Africa","position":2,"points":4,"gd":-2,"gf":2,"elo":1695},{"group":"A","seed":"A3","team":"Canada","position":3,"points":3,"gd":1,"gf":1,"elo":1873},{"group":"B","seed":"B1","team":"Switzerland","position":1,"points":8.87,"gd":4.71,"gf":8.59,"elo":1977},{"group":"B","seed":"B2","team":"Canada","position":2,"points":4,"gd":5,"gf":8,"elo":1873},{"group":"B","seed":"B3","team":"Bosnia and Herzegovina","position":3,"points":4,"gd":-1,"gf":5,"elo":1676},{"group":"C","seed":"C1","team":"Brazil","position":1,"points":8.94,"gd":6.77,"gf":8.58,"elo":2094},{"group":"C","seed":"C2","team":"Morocco","position":2,"points":7,"gd":3,"gf":6,"elo":2026},{"group":"C","seed":"C3","team":"Scotland","position":3,"points":3,"gd":-3,"gf":1,"elo":1823},{"group":"D","seed":"D1","team":"United States","position":1,"points":8.35,"gd":5.55,"gf":10.2,"elo":1875},{"group":"D","seed":"D2","team":"Australia","position":2,"points":5.75,"gd":0.54,"gf":3.51,"elo":1911},{"group":"D","seed":"D3","team":"Paraguay","position":3,"points":4,"gd":-2,"gf":2,"elo":1900},{"group":"E","seed":"E1","team":"Germany","position":1,"points":7.91,"gd":6.77,"gf":11.62,"elo":1996},{"group":"E","seed":"E2","team":"Ivory Coast","position":2,"points":7.09,"gd":1.62,"gf":5.02,"elo":1860},{"group":"E","seed":"E3","team":"Ecuador","position":3,"points":4,"gd":0,"gf":2,"elo":1991},{"group":"F","seed":"F1","team":"Netherlands","position":1,"points":8.63,"gd":6.34,"gf":11.32,"elo":2045},{"group":"F","seed":"F2","team":"Japan","position":2,"points":5,"gd":4,"gf":7,"elo":1992},{"group":"F","seed":"F3","team":"Sweden","position":3,"points":4,"gd":0,"gf":7,"elo":1804},{"group":"G","seed":"G1","team":"Belgium","position":1,"points":6.78,"gd":4.57,"gf":7.5,"elo":1964},{"group":"G","seed":"G2","team":"Egypt","position":2,"points":5,"gd":2,"gf":5,"elo":1860},{"group":"G","seed":"G3","team":"Iran","position":3,"points":3,"gd":0,"gf":3,"elo":1886},{"group":"H","seed":"H1","team":"Spain","position":1,"points":9.45,"gd":6.74,"gf":7.29,"elo":2208},{"group":"H","seed":"H2","team":"Cape Verde","position":2,"points":3,"gd":0,"gf":2,"elo":1692},{"group":"H","seed":"H3","team":"Uruguay","position":3,"points":2,"gd":-1,"gf":3,"elo":1922},{"group":"I","seed":"I1","team":"France","position":1,"points":11.58,"gd":10.15,"gf":12.66,"elo":2187},{"group":"I","seed":"I2","team":"Norway","position":2,"points":6,"gd":1,"gf":8,"elo":1982},{"group":"I","seed":"I3","team":"Senegal","position":3,"points":3,"gd":2,"gf":8,"elo":1905},{"group":"J","seed":"J1","team":"Argentina","position":1,"points":11.72,"gd":9.83,"gf":11.25,"elo":2224},{"group":"J","seed":"J2","team":"Austria","position":2,"points":4,"gd":0,"gf":6,"elo":1906},{"group":"J","seed":"J3","team":"Algeria","position":3,"points":4,"gd":-2,"gf":5,"elo":1893},{"group":"K","seed":"K1","team":"Colombia","position":1,"points":9.61,"gd":5.38,"gf":6.89,"elo":2085},{"group":"K","seed":"K2","team":"Portugal","position":2,"points":6.89,"gd":5.72,"gf":7.56,"elo":2054},{"group":"K","seed":"K3","team":"DR Congo","position":3,"points":4,"gd":1,"gf":4,"elo":1820},{"group":"L","seed":"L1","team":"England","position":1,"points":9.43,"gd":5.73,"gf":8.32,"elo":2107},{"group":"L","seed":"L2","team":"Croatia","position":2,"points":6,"gd":0,"gf":5,"elo":1964},{"group":"L","seed":"L3","team":"Ghana","position":3,"points":4,"gd":0,"gf":2,"elo":1674}],"thirdWatch":[{"third_rank":1,"qualifies":true,"group":"K","seed":"K3","team":"DR Congo","points":4,"gd":1,"gf":4,"elo":1820},{"third_rank":2,"qualifies":true,"group":"F","seed":"F3","team":"Sweden","points":4,"gd":0,"gf":7,"elo":1804},{"third_rank":3,"qualifies":true,"group":"E","seed":"E3","team":"Ecuador","points":4,"gd":0,"gf":2,"elo":1991},{"third_rank":4,"qualifies":true,"group":"L","seed":"L3","team":"Ghana","points":4,"gd":0,"gf":2,"elo":1674},{"third_rank":5,"qualifies":true,"group":"B","seed":"B3","team":"Bosnia and Herzegovina","points":4,"gd":-1,"gf":5,"elo":1676},{"third_rank":6,"qualifies":true,"group":"J","seed":"J3","team":"Algeria","points":4,"gd":-2,"gf":5,"elo":1893},{"third_rank":7,"qualifies":true,"group":"D","seed":"D3","team":"Paraguay","points":4,"gd":-2,"gf":2,"elo":1900},{"third_rank":8,"qualifies":true,"group":"I","seed":"I3","team":"Senegal","points":3,"gd":2,"gf":8,"elo":1905},{"third_rank":9,"qualifies":false,"group":"A","seed":"A3","team":"Canada","points":3,"gd":1,"gf":1,"elo":1873},{"third_rank":10,"qualifies":false,"group":"G","seed":"G3","team":"Iran","points":3,"gd":0,"gf":3,"elo":1886},{"third_rank":11,"qualifies":false,"group":"C","seed":"C3","team":"Scotland","points":3,"gd":-3,"gf":1,"elo":1823},{"third_rank":12,"qualifies":false,"group":"H","seed":"H3","team":"Uruguay","points":2,"gd":-1,"gf":3,"elo":1922}],"notes":{"seeding":"Projected group tables combine completed results with model expected points for remaining matches.","knockout":"Knockout advancement uses the current Elo-style strength signal until knockout match-specific data exists."}}</script>
+<script type="application/json" id="wc-bracket-data">{"round32":[{"match":1,"slotA":"A2","slotB":"B2","teamA":{"name":"South Africa","group":"A","seed":"A2","position":2,"points":4,"gd":-2,"gf":2,"elo":1695},"teamB":{"name":"Canada","group":"B","seed":"B2","position":2,"points":4,"gd":5,"gf":8,"elo":1873},"fixture":{"label":"South Africa vs Canada","timing":"Completed","homeTeam":"South Africa","awayTeam":"Canada","modelWinner":"Canada","modelOutcome":"away advances","officialWinner":"Canada","officialOutcome":"away win","actualScore":"0-1","finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.285,"teamBAdvanceProb":0.715,"regulationDrawProb":0.2541,"predictionConfidence":0.715}},{"match":2,"slotA":"F1","slotB":"C2","teamA":{"name":"Netherlands","group":"F","seed":"F1","position":1,"points":8.63,"gd":6.34,"gf":11.32,"elo":2045},"teamB":{"name":"Morocco","group":"C","seed":"C2","position":2,"points":7,"gd":3,"gf":6,"elo":2026},"fixture":{"label":"Netherlands vs Morocco","timing":"Pending score","homeTeam":"Netherlands","awayTeam":"Morocco","modelWinner":"Netherlands","modelOutcome":"home advances","officialWinner":{},"officialOutcome":{},"actualScore":{},"finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.5946,"teamBAdvanceProb":0.4054,"regulationDrawProb":0.2803,"predictionConfidence":0.5946}},{"match":3,"slotA":"E1","slotB":"ABCDF3","teamA":{"name":"Germany","group":"E","seed":"E1","position":1,"points":7.91,"gd":6.77,"gf":11.62,"elo":1996},"teamB":{"name":"Sweden","group":"F","seed":"F3","position":3,"points":4,"gd":0,"gf":7,"elo":1804},"fixture":{}},{"match":4,"slotA":"I1","slotB":"CDFGH3","teamA":{"name":"France","group":"I","seed":"I1","position":1,"points":11.58,"gd":10.15,"gf":12.66,"elo":2187},"teamB":{"name":"Paraguay","group":"D","seed":"D3","position":3,"points":4,"gd":-2,"gf":2,"elo":1900},"fixture":{}},{"match":5,"slotA":"K2","slotB":"L2","teamA":{"name":"Portugal","group":"K","seed":"K2","position":2,"points":6.89,"gd":5.72,"gf":7.56,"elo":2054},"teamB":{"name":"Croatia","group":"L","seed":"L2","position":2,"points":6,"gd":0,"gf":5,"elo":1964},"fixture":{"label":"Portugal vs Croatia","timing":"Upcoming","homeTeam":"Portugal","awayTeam":"Croatia","modelWinner":"Portugal","modelOutcome":"home advances","officialWinner":{},"officialOutcome":{},"actualScore":{},"finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.7041,"teamBAdvanceProb":0.2959,"regulationDrawProb":0.2543,"predictionConfidence":0.7041}},{"match":6,"slotA":"H1","slotB":"J2","teamA":{"name":"Spain","group":"H","seed":"H1","position":1,"points":9.45,"gd":6.74,"gf":7.29,"elo":2208},"teamB":{"name":"Austria","group":"J","seed":"J2","position":2,"points":4,"gd":0,"gf":6,"elo":1906},"fixture":{"label":"Spain vs Austria","timing":"Upcoming","homeTeam":"Spain","awayTeam":"Austria","modelWinner":"Spain","modelOutcome":"home advances","officialWinner":{},"officialOutcome":{},"actualScore":{},"finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.8988,"teamBAdvanceProb":0.1012,"regulationDrawProb":0.1539,"predictionConfidence":0.8988}},{"match":7,"slotA":"D1","slotB":"BEFIJ3","teamA":{"name":"United States","group":"D","seed":"D1","position":1,"points":8.35,"gd":5.55,"gf":10.2,"elo":1875},"teamB":{"name":"Ecuador","group":"E","seed":"E3","position":3,"points":4,"gd":0,"gf":2,"elo":1991},"fixture":{}},{"match":8,"slotA":"G1","slotB":"AEHIJ3","teamA":{"name":"Belgium","group":"G","seed":"G1","position":1,"points":6.78,"gd":4.57,"gf":7.5,"elo":1964},"teamB":{"name":"Algeria","group":"J","seed":"J3","position":3,"points":4,"gd":-2,"gf":5,"elo":1893},"fixture":{}},{"match":9,"slotA":"C1","slotB":"F2","teamA":{"name":"Brazil","group":"C","seed":"C1","position":1,"points":8.94,"gd":6.77,"gf":8.58,"elo":2094},"teamB":{"name":"Japan","group":"F","seed":"F2","position":2,"points":5,"gd":4,"gf":7,"elo":1992},"fixture":{"label":"Brazil vs Japan","timing":"Pending score","homeTeam":"Brazil","awayTeam":"Japan","modelWinner":"Brazil","modelOutcome":"home advances","officialWinner":{},"officialOutcome":{},"actualScore":{},"finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.7202,"teamBAdvanceProb":0.2798,"regulationDrawProb":0.2502,"predictionConfidence":0.7202}},{"match":10,"slotA":"E2","slotB":"I2","teamA":{"name":"Ivory Coast","group":"E","seed":"E2","position":2,"points":7.09,"gd":1.62,"gf":5.02,"elo":1860},"teamB":{"name":"Norway","group":"I","seed":"I2","position":2,"points":6,"gd":1,"gf":8,"elo":1982},"fixture":{"label":"Ivory Coast vs Norway","timing":"Today","homeTeam":"Ivory Coast","awayTeam":"Norway","modelWinner":"Norway","modelOutcome":"away advances","officialWinner":{},"officialOutcome":{},"actualScore":{},"finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.3632,"teamBAdvanceProb":0.6368,"regulationDrawProb":0.2759,"predictionConfidence":0.6368}},{"match":11,"slotA":"A1","slotB":"CEFHI3","teamA":{"name":"Mexico","group":"A","seed":"A1","position":1,"points":10.81,"gd":6.55,"gf":7.4,"elo":1997},"teamB":{"name":"Senegal","group":"I","seed":"I3","position":3,"points":3,"gd":2,"gf":8,"elo":1905},"fixture":{}},{"match":12,"slotA":"L1","slotB":"EHIJK3","teamA":{"name":"England","group":"L","seed":"L1","position":1,"points":9.43,"gd":5.73,"gf":8.32,"elo":2107},"teamB":{"name":"DR Congo","group":"K","seed":"K3","position":3,"points":4,"gd":1,"gf":4,"elo":1820},"fixture":{"label":"England vs DR Congo","timing":"Upcoming","homeTeam":"England","awayTeam":"DR Congo","modelWinner":"England","modelOutcome":"home advances","officialWinner":{},"officialOutcome":{},"actualScore":{},"finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.8922,"teamBAdvanceProb":0.1078,"regulationDrawProb":0.1568,"predictionConfidence":0.8922}},{"match":13,"slotA":"J1","slotB":"H2","teamA":{"name":"Argentina","group":"J","seed":"J1","position":1,"points":11.72,"gd":9.83,"gf":11.25,"elo":2224},"teamB":{"name":"Cape Verde","group":"H","seed":"H2","position":2,"points":3,"gd":0,"gf":2,"elo":1692},"fixture":{"label":"Argentina vs Cape Verde","timing":"Upcoming","homeTeam":"Argentina","awayTeam":"Cape Verde","modelWinner":"Argentina","modelOutcome":"home advances","officialWinner":{},"officialOutcome":{},"actualScore":{},"finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.9646,"teamBAdvanceProb":0.0354,"regulationDrawProb":0.078,"predictionConfidence":0.9646}},{"match":14,"slotA":"D2","slotB":"G2","teamA":{"name":"Australia","group":"D","seed":"D2","position":2,"points":5.75,"gd":0.54,"gf":3.51,"elo":1911},"teamB":{"name":"Egypt","group":"G","seed":"G2","position":2,"points":5,"gd":2,"gf":5,"elo":1860},"fixture":{"label":"Australia vs Egypt","timing":"Upcoming","homeTeam":"Australia","awayTeam":"Egypt","modelWinner":"Australia","modelOutcome":"home advances","officialWinner":{},"officialOutcome":{},"actualScore":{},"finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.647,"teamBAdvanceProb":0.353,"regulationDrawProb":0.2655,"predictionConfidence":0.647}},{"match":15,"slotA":"B1","slotB":"EFGIJ3","teamA":{"name":"Switzerland","group":"B","seed":"B1","position":1,"points":8.87,"gd":4.71,"gf":8.59,"elo":1977},"teamB":{},"fixture":{}},{"match":16,"slotA":"K1","slotB":"DEIJL3","teamA":{"name":"Colombia","group":"K","seed":"K1","position":1,"points":9.61,"gd":5.38,"gf":6.89,"elo":2085},"teamB":{"name":"Ghana","group":"L","seed":"L3","position":3,"points":4,"gd":0,"gf":2,"elo":1674},"fixture":{"label":"Colombia vs Ghana","timing":"Upcoming","homeTeam":"Colombia","awayTeam":"Ghana","modelWinner":"Colombia","modelOutcome":"home advances","officialWinner":{},"officialOutcome":{},"actualScore":{},"finalResultMode":"Knockout: projected winner means advances after regulation, extra time, or penalties","teamAAdvanceProb":0.9418,"teamBAdvanceProb":0.0582,"regulationDrawProb":0.1073,"predictionConfidence":0.9418}}],"groupSeeds":[{"group":"A","seed":"A1","team":"Mexico","position":1,"points":10.81,"gd":6.55,"gf":7.4,"elo":1997},{"group":"A","seed":"A2","team":"South Africa","position":2,"points":4,"gd":-2,"gf":2,"elo":1695},{"group":"A","seed":"A3","team":"Canada","position":3,"points":3,"gd":1,"gf":1,"elo":1873},{"group":"B","seed":"B1","team":"Switzerland","position":1,"points":8.87,"gd":4.71,"gf":8.59,"elo":1977},{"group":"B","seed":"B2","team":"Canada","position":2,"points":4,"gd":5,"gf":8,"elo":1873},{"group":"B","seed":"B3","team":"Bosnia and Herzegovina","position":3,"points":4,"gd":-1,"gf":5,"elo":1676},{"group":"C","seed":"C1","team":"Brazil","position":1,"points":8.94,"gd":6.77,"gf":8.58,"elo":2094},{"group":"C","seed":"C2","team":"Morocco","position":2,"points":7,"gd":3,"gf":6,"elo":2026},{"group":"C","seed":"C3","team":"Scotland","position":3,"points":3,"gd":-3,"gf":1,"elo":1823},{"group":"D","seed":"D1","team":"United States","position":1,"points":8.35,"gd":5.55,"gf":10.2,"elo":1875},{"group":"D","seed":"D2","team":"Australia","position":2,"points":5.75,"gd":0.54,"gf":3.51,"elo":1911},{"group":"D","seed":"D3","team":"Paraguay","position":3,"points":4,"gd":-2,"gf":2,"elo":1900},{"group":"E","seed":"E1","team":"Germany","position":1,"points":7.91,"gd":6.77,"gf":11.62,"elo":1996},{"group":"E","seed":"E2","team":"Ivory Coast","position":2,"points":7.09,"gd":1.62,"gf":5.02,"elo":1860},{"group":"E","seed":"E3","team":"Ecuador","position":3,"points":4,"gd":0,"gf":2,"elo":1991},{"group":"F","seed":"F1","team":"Netherlands","position":1,"points":8.63,"gd":6.34,"gf":11.32,"elo":2045},{"group":"F","seed":"F2","team":"Japan","position":2,"points":5,"gd":4,"gf":7,"elo":1992},{"group":"F","seed":"F3","team":"Sweden","position":3,"points":4,"gd":0,"gf":7,"elo":1804},{"group":"G","seed":"G1","team":"Belgium","position":1,"points":6.78,"gd":4.57,"gf":7.5,"elo":1964},{"group":"G","seed":"G2","team":"Egypt","position":2,"points":5,"gd":2,"gf":5,"elo":1860},{"group":"G","seed":"G3","team":"Iran","position":3,"points":3,"gd":0,"gf":3,"elo":1886},{"group":"H","seed":"H1","team":"Spain","position":1,"points":9.45,"gd":6.74,"gf":7.29,"elo":2208},{"group":"H","seed":"H2","team":"Cape Verde","position":2,"points":3,"gd":0,"gf":2,"elo":1692},{"group":"H","seed":"H3","team":"Uruguay","position":3,"points":2,"gd":-1,"gf":3,"elo":1922},{"group":"I","seed":"I1","team":"France","position":1,"points":11.58,"gd":10.15,"gf":12.66,"elo":2187},{"group":"I","seed":"I2","team":"Norway","position":2,"points":6,"gd":1,"gf":8,"elo":1982},{"group":"I","seed":"I3","team":"Senegal","position":3,"points":3,"gd":2,"gf":8,"elo":1905},{"group":"J","seed":"J1","team":"Argentina","position":1,"points":11.72,"gd":9.83,"gf":11.25,"elo":2224},{"group":"J","seed":"J2","team":"Austria","position":2,"points":4,"gd":0,"gf":6,"elo":1906},{"group":"J","seed":"J3","team":"Algeria","position":3,"points":4,"gd":-2,"gf":5,"elo":1893},{"group":"K","seed":"K1","team":"Colombia","position":1,"points":9.61,"gd":5.38,"gf":6.89,"elo":2085},{"group":"K","seed":"K2","team":"Portugal","position":2,"points":6.89,"gd":5.72,"gf":7.56,"elo":2054},{"group":"K","seed":"K3","team":"DR Congo","position":3,"points":4,"gd":1,"gf":4,"elo":1820},{"group":"L","seed":"L1","team":"England","position":1,"points":9.43,"gd":5.73,"gf":8.32,"elo":2107},{"group":"L","seed":"L2","team":"Croatia","position":2,"points":6,"gd":0,"gf":5,"elo":1964},{"group":"L","seed":"L3","team":"Ghana","position":3,"points":4,"gd":0,"gf":2,"elo":1674}],"thirdWatch":[{"third_rank":1,"qualifies":true,"group":"K","seed":"K3","team":"DR Congo","points":4,"gd":1,"gf":4,"elo":1820},{"third_rank":2,"qualifies":true,"group":"F","seed":"F3","team":"Sweden","points":4,"gd":0,"gf":7,"elo":1804},{"third_rank":3,"qualifies":true,"group":"E","seed":"E3","team":"Ecuador","points":4,"gd":0,"gf":2,"elo":1991},{"third_rank":4,"qualifies":true,"group":"L","seed":"L3","team":"Ghana","points":4,"gd":0,"gf":2,"elo":1674},{"third_rank":5,"qualifies":true,"group":"B","seed":"B3","team":"Bosnia and Herzegovina","points":4,"gd":-1,"gf":5,"elo":1676},{"third_rank":6,"qualifies":true,"group":"J","seed":"J3","team":"Algeria","points":4,"gd":-2,"gf":5,"elo":1893},{"third_rank":7,"qualifies":true,"group":"D","seed":"D3","team":"Paraguay","points":4,"gd":-2,"gf":2,"elo":1900},{"third_rank":8,"qualifies":true,"group":"I","seed":"I3","team":"Senegal","points":3,"gd":2,"gf":8,"elo":1905},{"third_rank":9,"qualifies":false,"group":"A","seed":"A3","team":"Canada","points":3,"gd":1,"gf":1,"elo":1873},{"third_rank":10,"qualifies":false,"group":"G","seed":"G3","team":"Iran","points":3,"gd":0,"gf":3,"elo":1886},{"third_rank":11,"qualifies":false,"group":"C","seed":"C3","team":"Scotland","points":3,"gd":-3,"gf":1,"elo":1823},{"third_rank":12,"qualifies":false,"group":"H","seed":"H3","team":"Uruguay","points":2,"gd":-1,"gf":3,"elo":1922}],"notes":{"seeding":"Projected group tables combine completed results with model expected points for remaining matches.","knockout":"Completed knockout results lock into the bracket automatically. Unresolved knockout matches follow the current advance probabilities when they exist, then fall back to the strength signal."}}</script>
 </section>
 <section id="champion-outlook" class="page-section champion-section">
 <div class="section-heading">
@@ -5257,7 +5255,6 @@ Scaled importance is shown within each model, so the top feature for a model is 
 These challengers are not automatically promoted into the public pick. They need stable backtesting and calibration before replacing the current forecast ensemble.
 </p>
 </section>
-</section>
 <section id="methodology-details" class="level2">
 <h2 class="anchored" data-anchor-id="methodology-details">Methodology Details</h2>
 <section id="data-used" class="page-section">
@@ -6374,71 +6371,67 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
 
     function teamStrength(team) {
-
       var elo = team && Number(team.elo);
-
       return Number.isFinite(elo) ? elo : 1500;
-
     }
 
+    function officialWinner(match) {
+      if (!match || !match.fixture || !match.fixture.officialWinner) {
+        return null;
+      }
+      if (match.teamA && match.teamA.name === match.fixture.officialWinner) {
+        return match.teamA;
+      }
+      if (match.teamB && match.teamB.name === match.fixture.officialWinner) {
+        return match.teamB;
+      }
+      return null;
+    }
 
-
-    function advanceProbability(teamA, teamB) {
-
-      var diff = teamStrength(teamA) - teamStrength(teamB);
-
+    function teamAAdvanceProbability(match) {
+      if (match && match.fixture) {
+        var fixtureProb = Number(match.fixture.teamAAdvanceProb);
+        if (Number.isFinite(fixtureProb)) {
+          return fixtureProb;
+        }
+      }
+      var diff = teamStrength(match.teamA) - teamStrength(match.teamB);
       return 1 / (1 + Math.pow(10, -diff / 400));
-
     }
-
-
 
     function formatPct(value) {
-
       if (!Number.isFinite(value)) {
-
         return "";
 
       }
 
       return Math.round(value * 100) + "%";
-
     }
 
-
-
-    function modelWinner(match) {
-
+    function projectedWinner(match) {
       if (!match.teamA && !match.teamB) {
-
         return null;
-
       }
-
       if (match.teamA && !match.teamB) {
-
         return match.teamA;
-
       }
-
       if (!match.teamA && match.teamB) {
-
         return match.teamB;
-
       }
-
-      return advanceProbability(match.teamA, match.teamB) >= 0.5 ? match.teamA : match.teamB;
-
+      if (match.fixture && match.fixture.modelWinner) {
+        if (match.teamA && match.teamA.name === match.fixture.modelWinner) {
+          return match.teamA;
+        }
+        if (match.teamB && match.teamB.name === match.fixture.modelWinner) {
+          return match.teamB;
+        }
+      }
+      return teamAAdvanceProbability(match) >= 0.5 ? match.teamA : match.teamB;
     }
-
-
 
     function winnerProbability(match, winner) {
-
       if (!winner) {
-
         return null;
-
       }
 
       if (match.teamA && !match.teamB && winner.name === match.teamA.name) {
@@ -6454,17 +6447,11 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
       }
 
       if (!match.teamA || !match.teamB) {
-
         return null;
-
       }
-
-      var pA = advanceProbability(match.teamA, match.teamB);
-
+      var pA = teamAAdvanceProbability(match);
       return winner.name === match.teamA.name ? pA : 1 - pA;
-
     }
-
 
 
     function matchupText(match) {
@@ -6530,31 +6517,19 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
         currentRound.forEach(function (match, matchIndex) {
 
           var key = roundIndex + "-" + matchIndex;
-
           var validNames = [match.teamA && match.teamA.name, match.teamB && match.teamB.name].filter(Boolean);
-
           if (activePicks === picks && picks[key] && validNames.indexOf(picks[key]) === -1) {
-
             delete picks[key];
-
           }
-
           var pickedName = activePicks[key];
-
+          var official = officialWinner(match);
           var winner = pickedName
-
             ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
-
-            : modelWinner(match);
-
+            : (official || projectedWinner(match));
           var nextMatch = nextRound[Math.floor(matchIndex / 2)];
-
           if (matchIndex % 2 === 0) {
-
             nextMatch.teamA = cloneTeam(winner);
-
           } else {
-
             nextMatch.teamB = cloneTeam(winner);
 
           }
@@ -6605,66 +6580,63 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
       }
 
-
-
       var modelRounds = buildRounds({});
-
       var finalMatch = modelRounds[modelRounds.length - 1][0];
-
-      var champion = modelWinner(finalMatch);
-
+      var champion = officialWinner(finalMatch) || projectedWinner(finalMatch);
       var championProb = winnerProbability(finalMatch, champion);
+      var completedStats = { matches: 0, hits: 0, misses: 0 };
+      modelRounds.forEach(function (round) {
+        round.forEach(function (match) {
+          var official = officialWinner(match);
+          if (!official) {
+            return;
+          }
+          completedStats.matches += 1;
+          var projected = projectedWinner(match);
+          if (projected && projected.name === official.name) {
+            completedStats.hits += 1;
+          } else {
+            completedStats.misses += 1;
+          }
+        });
+      });
+
+      var summaryCopy = completedStats.matches > 0
+        ? completedStats.hits + " of " + completedStats.matches + " completed knockout calls still match the model path."
+        : "Completed knockout results will lock into this path as soon as they are official.";
 
       modelPathSummary.innerHTML = champion
-
-        ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>The path below follows the model pick in every unresolved matchup. Group seeds reflect completed results plus remaining-match forecasts; knockout picks update after each refresh.</p></div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
-
+        ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>" + escapeHtml(summaryCopy) + " Completed knockout results stay locked while unresolved matches continue on the current model path.</p></div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
         : "<div><span class='section-kicker'>Model path</span><h3>Model path is pending</h3><p>The bracket needs at least one projected finalist before a full path can be shown.</p></div>";
 
-
-
       modelPathRounds.innerHTML = modelRounds.map(function (round, roundIndex) {
-
         var rows = round.map(function (match) {
-
-          var winner = modelWinner(match);
-
+          var official = officialWinner(match);
+          var winner = official || projectedWinner(match);
+          var projected = projectedWinner(match);
           var probability = winnerProbability(match, winner);
-
-          var stateLabel = roundIndex === 0 ? "Current forecast" : "Projected";
-
+          var completedLabel = official
+            ? ((projected && projected.name === official.name) ? "Official | model held" : "Official | model miss")
+            : ((roundIndex === 0 ? "Current forecast" : "Projected"));
+          var detailLabel = official
+            ? ((match.fixture && match.fixture.actualScore ? match.fixture.actualScore + " | " : "") + (match.fixture && match.fixture.officialOutcome ? match.fixture.officialOutcome : "completed"))
+            : ("advance probability " + (formatPct(probability) || "pending"));
           return "<li>" +
-
             "<span class='model-path-match'>" + escapeHtml(matchupText(match)) + "</span>" +
-
             "<strong>" + escapeHtml(winner ? winner.name : "Pending seed") + "</strong>" +
-
-            "<small>" + stateLabel + " | advance probability " + (formatPct(probability) || "pending") + "</small>" +
-
+            "<small>" + escapeHtml(completedLabel) + " | " + escapeHtml(detailLabel) + "</small>" +
             "</li>";
-
         }).join("");
-
         return "<section class='model-path-round'><h4>" + escapeHtml(roundNames[roundIndex]) + "</h4><ol>" + rows + "</ol></section>";
-
       }).join("");
-
     }
 
-
-
-    function teamButton(team, slot, probability, selected, modelSelected, userSelected, roundIndex, matchIndex) {
-
+    function teamButton(team, slot, probability, selected, modelSelected, userSelected, officialSelected, roundIndex, matchIndex, locked) {
       var button = document.createElement("button");
-
       button.type = "button";
-
       button.className = "bracket-team";
 
-
-
       if (selected) {
-
         button.classList.add("selected");
 
       }
@@ -6674,129 +6646,103 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
         button.classList.add("model-selected");
 
       }
-
       if (userSelected) {
-
         button.classList.add("user-selected");
-
       }
-
+      if (officialSelected) {
+        button.classList.add("official-selected");
+      }
       if (!team) {
-
         button.classList.add("empty");
-
         button.disabled = true;
-
         button.innerHTML = "<span class='team-name'>" + escapeHtml(slot) + "</span><small>Seed unresolved</small>";
-
         return button;
-
       }
 
-
-
-      var label = userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender");
-
+      var label = locked ? (officialSelected ? "Official result" : "Eliminated") : (userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender"));
       button.innerHTML =
-
         "<span class='team-name'>" + escapeHtml(team.name) + "</span>" +
-
         "<span class='team-meta'>" + escapeHtml(team.seed || "Seed") + " | " + formatPct(probability) + "</span>" +
-
         "<small class='pick-label'>" + escapeHtml(label) + "</small>";
-
-      button.setAttribute("aria-label", "Advance " + team.name + " from " + roundNames[roundIndex]);
-
-      button.addEventListener("click", function () {
-
-        picks[roundIndex + "-" + matchIndex] = team.name;
-
-        clearLaterPicks(roundIndex);
-
-        announce(team.name + " advanced from " + roundNames[roundIndex] + ".");
-
-        render();
-
-      });
-
+      button.setAttribute("aria-label", (locked ? "Official result for " : "Advance ") + team.name + " from " + roundNames[roundIndex]);
+      if (locked) {
+        button.disabled = true;
+      } else {
+        button.addEventListener("click", function () {
+          picks[roundIndex + "-" + matchIndex] = team.name;
+          clearLaterPicks(roundIndex);
+          announce(team.name + " advanced from " + roundNames[roundIndex] + ".");
+          render();
+        });
+      }
       return button;
-
     }
 
-
-
     function matchCard(match, roundIndex, matchIndex) {
-
       var card = document.createElement("article");
-
       card.className = "bracket-match-card";
-
-      var pA = match.teamA && match.teamB ? advanceProbability(match.teamA, match.teamB) : null;
-
+      var pA = match.teamA && match.teamB ? teamAAdvanceProbability(match) : null;
       var pB = Number.isFinite(pA) ? 1 - pA : null;
-
-      var winner = modelWinner(match);
-
+      var projected = projectedWinner(match);
+      var official = officialWinner(match);
       var pickedName = picks[roundIndex + "-" + matchIndex];
-
-      var selectedName = pickedName || (winner && winner.name);
-
-
+      var selectedName = pickedName || (official ? official.name : (projected && projected.name));
+      var locked = Boolean(official);
 
       var label = document.createElement("div");
-
       label.className = "bracket-match-label";
-
       label.textContent = "Match " + (matchIndex + 1);
-
       card.appendChild(label);
-
       card.appendChild(teamButton(
 
         match.teamA,
-
         match.slotA,
-
         pA,
-
         match.teamA && match.teamA.name === selectedName,
-
-        !pickedName && winner && match.teamA && match.teamA.name === winner.name,
-
+        !pickedName && !locked && projected && match.teamA && match.teamA.name === projected.name,
         pickedName && match.teamA && match.teamA.name === pickedName,
-
+        official && match.teamA && match.teamA.name === official.name,
         roundIndex,
-
-        matchIndex
-
+        matchIndex,
+        locked
       ));
-
       card.appendChild(teamButton(
-
         match.teamB,
-
         match.slotB,
-
         pB,
-
         match.teamB && match.teamB.name === selectedName,
-
-        !pickedName && winner && match.teamB && match.teamB.name === winner.name,
-
+        !pickedName && !locked && projected && match.teamB && match.teamB.name === projected.name,
         pickedName && match.teamB && match.teamB.name === pickedName,
-
+        official && match.teamB && match.teamB.name === official.name,
         roundIndex,
-
-        matchIndex
-
+        matchIndex,
+        locked
       ));
 
-
+      if (match.fixture) {
+        var note = document.createElement("div");
+        note.className = "bracket-match-note";
+        if (official) {
+          var modelMiss = projected && projected.name !== official.name;
+          note.classList.add(modelMiss ? "is-miss" : "is-hit");
+          note.innerHTML = "<strong>Official:</strong> " +
+            escapeHtml(official.name) +
+            (match.fixture.actualScore ? " " + escapeHtml(match.fixture.actualScore) : "") +
+            (match.fixture.officialOutcome ? " | " + escapeHtml(match.fixture.officialOutcome) : "") +
+            "<span>" + (modelMiss ? "Model miss" : "Model held") + "</span>";
+        } else {
+          var pick = projected ? projected.name : "Pending";
+          var levelText = Number.isFinite(Number(match.fixture.regulationDrawProb)) ? formatPct(Number(match.fixture.regulationDrawProb)) : "pending";
+          note.classList.add("is-live");
+          note.innerHTML = "<strong>" + escapeHtml(match.fixture.timing || "Forecast") + ":</strong> " +
+            escapeHtml(pick) + " " + (formatPct(winnerProbability(match, projected)) || "") +
+            " <span>Level after 90: " + escapeHtml(levelText) + "</span>";
+        }
+        card.appendChild(note);
+      }
 
       return card;
-
     }
-
 
 
     function renderSeeds() {
@@ -6940,19 +6886,12 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
 
       var finalMatch = rounds[rounds.length - 1][0];
-
       var champion = picks["4-0"]
-
         ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
-
-        : modelWinner(finalMatch);
-
+        : (officialWinner(finalMatch) || projectedWinner(finalMatch));
       championNode.innerHTML = champion
-
         ? "<span>Projected Champion</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
-
         : "";
-
       renderTabs();
 
       renderModelPathPanel();
@@ -7068,7 +7007,7 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7088,11 +7027,11 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7174,7 +7113,7 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7249,7 +7188,7 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7277,7 +7216,7 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7301,7 +7240,7 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7341,7 +7280,7 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7467,7 +7406,7 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>LindaData World Cup 2026 forecasting model.</p>
-</div>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>

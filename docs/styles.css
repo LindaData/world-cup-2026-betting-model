@@ -1813,7 +1813,8 @@ pre code {
   padding: clamp(0.85rem, 2vw, 1.05rem);
 }
 
-.page-intro h1 {
+.page-intro h1,
+.page-intro h2 {
   margin: var(--space-2) 0 var(--space-2);
   color: var(--color-navy);
   font-size: clamp(2rem, 4vw, 3.4rem);
@@ -1826,7 +1827,8 @@ pre code {
   font-size: 1.06rem;
 }
 
-.prediction-intro h1 {
+.prediction-intro h1,
+.prediction-intro h2 {
   font-size: clamp(1.85rem, 3.2vw, 2.7rem);
 }
 
@@ -3785,7 +3787,6 @@ pre code {
 .bracket-tabs {
   display: none;
   gap: var(--space-2);
-  overflow-x: auto;
   padding: var(--space-3) var(--space-4) 0;
 }
 
@@ -3830,6 +3831,16 @@ pre code {
   color: var(--color-teal-dark);
 }
 
+.bracket-team.official-selected {
+  border-color: #6b4b00;
+  background: #fff8e1;
+}
+
+.bracket-team.official-selected .pick-label {
+  background: #ffffff;
+  color: #6b4b00;
+}
+
 .bracket-team.user-selected {
   border-color: var(--color-gold);
   background: #fff8e1;
@@ -3838,6 +3849,47 @@ pre code {
 .bracket-team.user-selected .pick-label {
   background: #ffffff;
   color: #6b4b00;
+}
+
+.bracket-match-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  align-items: center;
+  margin-top: 0.55rem;
+  border-top: 1px solid #edf1f5;
+  padding-top: 0.55rem;
+  color: #52616b;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.bracket-match-note strong,
+.bracket-match-note span {
+  font-weight: 800;
+}
+
+.bracket-match-note span {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.08rem 0.42rem;
+  background: #f4f7f9;
+}
+
+.bracket-match-note.is-hit span {
+  background: #edf8f1;
+  color: #0f6b3f;
+}
+
+.bracket-match-note.is-miss span {
+  background: #fff0ee;
+  color: #b42318;
+}
+
+.bracket-match-note.is-live span {
+  background: #edf8f7;
+  color: var(--color-teal-dark);
 }
 
 .performance-table td,
@@ -4149,7 +4201,9 @@ pre code {
 
 @media (max-width: 700px) {
   .bracket-tabs {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    overflow: visible;
   }
 
   .interactive-bracket-grid[data-view="round"] {
@@ -4168,6 +4222,14 @@ pre code {
 
   .interactive-bracket-grid[data-view="round"] .bracket-round-list {
     grid-template-columns: 1fr;
+  }
+
+  .bracket-tab {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 0.3rem;
+    font-size: 0.78rem;
+    text-align: center;
   }
 }
 
@@ -4588,11 +4650,15 @@ pre code {
   }
 
   .model-bracket-controls {
+    display: grid;
+    grid-template-columns: 1fr;
     justify-content: stretch;
   }
 
   .bracket-control {
-    flex: 1 1 calc(50% - 0.45rem);
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.9rem;
   }
 
   .bracket-overview-grid {

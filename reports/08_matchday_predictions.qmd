@@ -24,7 +24,7 @@ summary <- bundle$summary
 
 <section class="page-intro prediction-intro">
   <span class="section-kicker">Matchday</span>
-  <h1>Prediction Board</h1>
+  <h2>Prediction Board</h2>
   <p>Today&apos;s matches, next kickoff, bracket view, and model review in one place.</p>
 </section>
 
@@ -79,10 +79,8 @@ cat(render_model_suite_strip(bundle, compact = TRUE, base_path = "10_model_chall
 cat(render_static_api_note(summary, compact = TRUE))
 ```
 
-## Tournament Bracket {#bracket}
-
 ```{r bracket, results="asis"}
-cat(render_bracket(root))
+cat(render_bracket(root, section_id = "bracket"))
 ```
 
 ```{r champion-outlook, results="asis"}

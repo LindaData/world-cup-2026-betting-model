@@ -1075,6 +1075,12 @@ team_key <- function(x) {
   tolower(gsub("[^a-z0-9]", "", x))
 }
 
+unordered_match_key <- function(a, b) {
+  a <- as.character(a)
+  b <- as.character(b)
+  ifelse(a < b, paste(a, b, sep = "|"), paste(b, a, sep = "|"))
+}
+
 as_plain_record <- function(row) {
   if (nrow(row) == 0) {
     return(NULL)
@@ -1093,6 +1099,7 @@ as_plain_record <- function(row) {
 
 build_projected_bracket <- function(root) {
   predictions <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "world_cup_2026_fixture_predictions.csv"))
+  board <- read_csv_if_exists(file.path(root, "data", "processed", "modeling", "matchday_prediction_board.csv"))
   squads <- read_csv_if_exists(file.path(root, "data", "processed", "public_csv", "dim_2026_world_cup_squad_players.csv"))
 
   if (nrow(predictions) == 0 || nrow(squads) == 0) {
@@ -1182,6 +1189,47 @@ build_projected_bracket <- function(root) {
     dplyr::arrange(dplyr::desc(points), dplyr::desc(gd), dplyr::desc(gf), dplyr::desc(elo), team) |>
     dplyr::mutate(third_rank = dplyr::row_number(), qualifies = third_rank <= 8)
 
+  knockout_lookup <- data.frame()
+  if (nrow(board) > 0) {
+    knockout_lookup <- board |>
+      dplyr::mutate(
+        knockout_flag = tolower(as.character(.data$is_knockout_match)) %in% c("true", "t", "1", "yes"),
+        home_join_key = team_key(.data$home_team),
+        away_join_key = team_key(.data$away_team)
+      ) |>
+      dplyr::filter(.data$knockout_flag) |>
+      dplyr::mutate(
+        fixture_key = unordered_match_key(.data$home_join_key, .data$away_join_key),
+        official_winner = dplyr::case_when(
+          !is.na(.data$actual_advancing_team) & nzchar(as.character(.data$actual_advancing_team)) ~ as.character(.data$actual_advancing_team),
+          .data$match_timing == "Completed" & tolower(as.character(.data$actual_result)) %in% c("home win", "home advances") ~ as.character(.data$home_team),
+          .data$match_timing == "Completed" & tolower(as.character(.data$actual_result)) %in% c("away win", "away advances") ~ as.character(.data$away_team),
+          TRUE ~ NA_character_
+        ),
+        official_outcome = as.character(.data$actual_result)
+      ) |>
+      dplyr::arrange(dplyr::desc(.data$match_timing == "Completed"), .data$date, .data$match_label) |>
+      dplyr::distinct(.data$fixture_key, .keep_all = TRUE) |>
+      dplyr::select(
+        "fixture_key",
+        "match_label",
+        "match_timing",
+        "home_team",
+        "away_team",
+        "predicted_winner",
+        "predicted_outcome",
+        "official_winner",
+        "official_outcome",
+        "score_state",
+        "final_result_mode",
+        "home_advance_prob",
+        "away_advance_prob",
+        "regulation_draw_prob",
+        "prediction_confidence"
+      ) |>
+      as.data.frame()
+  }
+
   slot_pairs <- data.frame(
     match_id = seq_len(16),
     slot_a = c("A2", "F1", "E1", "I1", "K2", "H1", "D1", "G1", "C1", "E2", "A1", "L1", "J1", "D2", "B1", "K1"),
@@ -1214,12 +1262,44 @@ build_projected_bracket <- function(root) {
 
   round32 <- lapply(seq_len(nrow(slot_pairs)), function(i) {
     row <- slot_pairs[i, ]
+    team_a <- resolve_slot(as.character(row$slot_a))
+    team_b <- resolve_slot(as.character(row$slot_b))
+
+    fixture <- NULL
+    if (nrow(knockout_lookup) > 0 && !is.null(team_a) && !is.null(team_b)) {
+      fixture_key <- unordered_match_key(team_key(team_a$name), team_key(team_b$name))
+      fixture_row <- knockout_lookup[knockout_lookup$fixture_key == fixture_key, , drop = FALSE]
+      if (nrow(fixture_row) > 0) {
+        fixture_row <- fixture_row[1, , drop = FALSE]
+        team_a_is_home <- identical(team_key(fixture_row$home_team[[1]]), team_key(team_a$name))
+        team_a_prob <- if (team_a_is_home) fixture_row$home_advance_prob[[1]] else fixture_row$away_advance_prob[[1]]
+        team_b_prob <- if (team_a_is_home) fixture_row$away_advance_prob[[1]] else fixture_row$home_advance_prob[[1]]
+        fixture <- list(
+          label = as.character(fixture_row$match_label[[1]]),
+          timing = as.character(fixture_row$match_timing[[1]]),
+          homeTeam = as.character(fixture_row$home_team[[1]]),
+          awayTeam = as.character(fixture_row$away_team[[1]]),
+          modelWinner = as.character(fixture_row$predicted_winner[[1]]),
+          modelOutcome = as.character(fixture_row$predicted_outcome[[1]]),
+          officialWinner = if (!is.na(fixture_row$official_winner[[1]]) && nzchar(as.character(fixture_row$official_winner[[1]]))) as.character(fixture_row$official_winner[[1]]) else NULL,
+          officialOutcome = if (!is.na(fixture_row$official_outcome[[1]]) && nzchar(as.character(fixture_row$official_outcome[[1]]))) as.character(fixture_row$official_outcome[[1]]) else NULL,
+          actualScore = if (!is.na(fixture_row$score_state[[1]]) && nzchar(as.character(fixture_row$score_state[[1]]))) as.character(fixture_row$score_state[[1]]) else NULL,
+          finalResultMode = if (!is.na(fixture_row$final_result_mode[[1]]) && nzchar(as.character(fixture_row$final_result_mode[[1]]))) as.character(fixture_row$final_result_mode[[1]]) else NULL,
+          teamAAdvanceProb = suppressWarnings(as.numeric(team_a_prob)),
+          teamBAdvanceProb = suppressWarnings(as.numeric(team_b_prob)),
+          regulationDrawProb = suppressWarnings(as.numeric(fixture_row$regulation_draw_prob[[1]])),
+          predictionConfidence = suppressWarnings(as.numeric(fixture_row$prediction_confidence[[1]]))
+        )
+      }
+    }
+
     list(
       match = as.integer(row$match_id),
       slotA = as.character(row$slot_a),
       slotB = as.character(row$slot_b),
-      teamA = resolve_slot(as.character(row$slot_a)),
-      teamB = resolve_slot(as.character(row$slot_b))
+      teamA = team_a,
+      teamB = team_b,
+      fixture = fixture
     )
   })
 
@@ -1252,12 +1332,12 @@ build_projected_bracket <- function(root) {
     thirdWatch = third_summary,
     notes = list(
       seeding = "Projected group tables combine completed results with model expected points for remaining matches.",
-      knockout = "Knockout advancement uses the current Elo-style strength signal until knockout match-specific data exists."
+      knockout = "Completed knockout results lock into the bracket automatically. Unresolved knockout matches follow the current advance probabilities when they exist, then fall back to the strength signal."
     )
   )
 }
 
-render_bracket <- function(root, preview = FALSE) {
+render_bracket <- function(root, preview = FALSE, section_id = NULL) {
   bracket_data <- build_projected_bracket(root)
   if (is.null(bracket_data)) {
     return('<div class="empty-state"><strong>The bracket is available after fixture predictions and squad group metadata are refreshed.</strong></div>')
@@ -1265,13 +1345,14 @@ render_bracket <- function(root, preview = FALSE) {
   bracket_json <- jsonlite::toJSON(bracket_data, auto_unbox = TRUE, na = "null", dataframe = "rows")
   bracket_json <- gsub("<", "\\\\u003c", bracket_json, fixed = TRUE)
   shell_class <- if (preview) "model-bracket-shell bracket-preview" else "model-bracket-shell"
+  section_attr <- if (!is.null(section_id) && nzchar(section_id)) paste0(' id="', section_id, '"') else ""
   paste0(
-    '<section class="', shell_class, '">',
+    '<section class="', shell_class, '"', section_attr, '>',
     '<div class="model-bracket-header">',
     '<div>',
     '<div class="section-kicker">Bracket</div>',
     '<h2>Projected Tournament Bracket</h2>',
-    '<p>Seeded from current group projections. Tap a team to advance it. Model picks, manual picks, and official results use separate labels.</p>',
+    '<p>Seeded from current group projections. Tap a team to advance it. Model picks, manual picks, and official results use separate labels, and completed knockout results lock automatically.</p>',
     '</div>',
     '<div class="model-bracket-controls">',
     '<button type="button" class="bracket-control" data-bracket-action="model" aria-controls="model-path-panel" aria-expanded="false">Show model path</button>',
