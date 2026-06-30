@@ -3,7 +3,10 @@ project:
   output-dir: docs
   resources:
     - assets/favicon.svg
+    - assets/social-preview.png
     - assets/social-preview.svg
+    - assets/site.webmanifest
+    - robots.txt
   render:
     - index.qmd
     - reports/00_data_overview.qmd
@@ -67,6 +70,8 @@ format:
   html:
     theme: cosmo
     css: styles.css
+    canonical-url: true
+    include-in-header: assets/seo.html
     include-after-body: assets/site-after-body.html
     toc: true
     toc-depth: 3

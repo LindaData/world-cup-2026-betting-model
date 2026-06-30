@@ -1,0 +1,24 @@
+{
+  "name": "World Cup 2026 Forecasting Model",
+  "short_name": "WC 2026 Forecasts",
+  "description": "Match probabilities, projected scores, champion probabilities, tournament paths, and post-match model evaluation.",
+  "start_url": "https://lindadata.github.io/world-cup-2026-betting-model/",
+  "scope": "https://lindadata.github.io/world-cup-2026-betting-model/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#102a43",
+  "icons": [
+    {
+      "src": "https://lindadata.github.io/world-cup-2026-betting-model/assets/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "https://lindadata.github.io/world-cup-2026-betting-model/assets/social-preview.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
