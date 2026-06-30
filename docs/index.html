@@ -833,6 +833,69 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <strong>26</strong><span>upset checks</span><small>Actual outcome had less than 35% model probability.</small>
 </div>
 </div>
+<div class="review-pattern-section">
+<div class="review-pattern-title">
+<h3 class="anchored">
+Main miss types
+</h3>
+<p>
+These are the patterns doing the most damage in the graded sample right now.
+</p>
+</div>
+<div class="review-pattern-grid">
+<article class="review-pattern-card review-pattern-alert">
+<div class="review-pattern-head">
+<span>Draw underweight</span><strong>20 misses</strong>
+</div>
+<div class="review-pattern-metrics">
+<div>
+<small>Avg confidence</small><b>60.6%</b>
+</div>
+<div>
+<small>Avg score miss</small><b>1.69 goals</b>
+</div>
+</div>
+<p>
+Most misses still come from matches that finished level.
+</p>
+<small>Lift draw probability and compress winner edges in balanced matches.</small>
+</article>
+<article class="review-pattern-card review-pattern-watch">
+<div class="review-pattern-head">
+<span>Score too open</span><strong>4 misses</strong>
+</div>
+<div class="review-pattern-metrics">
+<div>
+<small>Avg confidence</small><b>45.4%</b>
+</div>
+<div>
+<small>Avg score miss</small><b>1.51 goals</b>
+</div>
+</div>
+<p>
+Projected totals are running hotter than the final scores in this bucket.
+</p>
+<small>Compress goal totals in slower matches and stronger-defence spots.</small>
+</article>
+<article class="review-pattern-card review-pattern-watch">
+<div class="review-pattern-head">
+<span>Score too low</span><strong>2 misses</strong>
+</div>
+<div class="review-pattern-metrics">
+<div>
+<small>Avg confidence</small><b>39.9%</b>
+</div>
+<div>
+<small>Avg score miss</small><b>1.74 goals</b>
+</div>
+</div>
+<p>
+Projected totals are coming in below the final scores in this bucket.
+</p>
+<small>Allow more attacking upside where the model is keeping totals too low.</small>
+</article>
+</div>
+</div>
 <div class="review-board" aria-label="Recent model grading board">
 <div class="review-board-head" aria-hidden="true">
 <span>Match</span><span>Actual</span><span>Model pick</span><span>Grade</span><span>Score miss</span>
@@ -851,7 +914,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-watch">Watch</span><strong>1.62 goals</strong>
+<span class="review-error-chip review-watch">Watch</span><strong>1.62 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -868,7 +931,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-good">Tight</span><strong>0.10 goals</strong>
+<span class="review-error-chip review-good">Tight</span><strong>0.10 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -885,7 +948,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-good">Tight</span><strong>0.75 goals</strong>
+<span class="review-error-chip review-good">Tight</span><strong>0.75 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -902,7 +965,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-watch">Watch</span><strong>1.35 goals</strong>
+<span class="review-error-chip review-watch">Watch</span><strong>1.35 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-miss">
@@ -916,10 +979,10 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span>Model pick</span><strong>Colombia</strong><small>Actual result probability 27.8%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-miss">Miss</span><small>Missed the level result. Draw probability needs review.</small>
+<span class="review-badge review-miss">Miss</span><small>Missed a match that finished level. The draw layer needs more weight.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-bad">Wide</span><strong>2.28 goals</strong>
+<span class="review-error-chip review-bad">Wide</span><strong>2.28 goals</strong><small>Draw underweight</small>
 </div>
 </article>
 </div>

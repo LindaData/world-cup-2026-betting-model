@@ -3847,6 +3847,69 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <strong>26</strong><span>upset checks</span><small>Actual outcome had less than 35% model probability.</small>
 </div>
 </div>
+<div class="review-pattern-section">
+<div class="review-pattern-title">
+<h3 class="anchored">
+Main miss types
+</h3>
+<p>
+These are the patterns doing the most damage in the graded sample right now.
+</p>
+</div>
+<div class="review-pattern-grid">
+<article class="review-pattern-card review-pattern-alert">
+<div class="review-pattern-head">
+<span>Draw underweight</span><strong>20 misses</strong>
+</div>
+<div class="review-pattern-metrics">
+<div>
+<small>Avg confidence</small><b>60.6%</b>
+</div>
+<div>
+<small>Avg score miss</small><b>1.69 goals</b>
+</div>
+</div>
+<p>
+Most misses still come from matches that finished level.
+</p>
+<small>Lift draw probability and compress winner edges in balanced matches.</small>
+</article>
+<article class="review-pattern-card review-pattern-watch">
+<div class="review-pattern-head">
+<span>Score too open</span><strong>4 misses</strong>
+</div>
+<div class="review-pattern-metrics">
+<div>
+<small>Avg confidence</small><b>45.4%</b>
+</div>
+<div>
+<small>Avg score miss</small><b>1.51 goals</b>
+</div>
+</div>
+<p>
+Projected totals are running hotter than the final scores in this bucket.
+</p>
+<small>Compress goal totals in slower matches and stronger-defence spots.</small>
+</article>
+<article class="review-pattern-card review-pattern-watch">
+<div class="review-pattern-head">
+<span>Score too low</span><strong>2 misses</strong>
+</div>
+<div class="review-pattern-metrics">
+<div>
+<small>Avg confidence</small><b>39.9%</b>
+</div>
+<div>
+<small>Avg score miss</small><b>1.74 goals</b>
+</div>
+</div>
+<p>
+Projected totals are coming in below the final scores in this bucket.
+</p>
+<small>Allow more attacking upside where the model is keeping totals too low.</small>
+</article>
+</div>
+</div>
 <div class="review-board" aria-label="Recent model grading board">
 <div class="review-board-head" aria-hidden="true">
 <span>Match</span><span>Actual</span><span>Model pick</span><span>Grade</span><span>Score miss</span>
@@ -3865,7 +3928,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-watch">Watch</span><strong>1.62 goals</strong>
+<span class="review-error-chip review-watch">Watch</span><strong>1.62 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -3882,7 +3945,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-good">Tight</span><strong>0.10 goals</strong>
+<span class="review-error-chip review-good">Tight</span><strong>0.10 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -3899,7 +3962,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-good">Tight</span><strong>0.75 goals</strong>
+<span class="review-error-chip review-good">Tight</span><strong>0.75 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -3916,7 +3979,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-watch">Watch</span><strong>1.35 goals</strong>
+<span class="review-error-chip review-watch">Watch</span><strong>1.35 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-miss">
@@ -3930,10 +3993,10 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span>Model pick</span><strong>Colombia</strong><small>Actual result probability 27.8%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-miss">Miss</span><small>Missed the level result. Draw probability needs review.</small>
+<span class="review-badge review-miss">Miss</span><small>Missed a match that finished level. The draw layer needs more weight.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-bad">Wide</span><strong>2.28 goals</strong>
+<span class="review-error-chip review-bad">Wide</span><strong>2.28 goals</strong><small>Draw underweight</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -3950,7 +4013,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-good">Tight</span><strong>0.94 goals</strong>
+<span class="review-error-chip review-good">Tight</span><strong>0.94 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-miss">
@@ -3964,10 +4027,10 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span>Model pick</span><strong>Algeria</strong><small>Actual result probability 28.2%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-miss">Miss</span><small>Missed the level result. Draw probability needs review.</small>
+<span class="review-badge review-miss">Miss</span><small>Missed a match that finished level. The draw layer needs more weight.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-bad">Wide</span><strong>3.59 goals</strong>
+<span class="review-error-chip review-bad">Wide</span><strong>3.59 goals</strong><small>Draw underweight</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -3984,7 +4047,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-bad">Wide</span><strong>2.04 goals</strong>
+<span class="review-error-chip review-bad">Wide</span><strong>2.04 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -4001,7 +4064,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-bad">Wide</span><strong>2.65 goals</strong>
+<span class="review-error-chip review-bad">Wide</span><strong>2.65 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -4018,7 +4081,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-watch">Watch</span><strong>1.50 goals</strong>
+<span class="review-error-chip review-watch">Watch</span><strong>1.50 goals</strong><small>Stable call</small>
 </div>
 </article>
 <article class="review-board-row review-miss">
@@ -4032,10 +4095,10 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span>Model pick</span><strong>Cape Verde</strong><small>Actual result probability 27.6%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-miss">Miss</span><small>Missed the level result. Draw probability needs review.</small>
+<span class="review-badge review-miss">Miss</span><small>Missed a match that finished level. The draw layer needs more weight.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-bad">Wide</span><strong>2.61 goals</strong>
+<span class="review-error-chip review-bad">Wide</span><strong>2.61 goals</strong><small>Draw underweight</small>
 </div>
 </article>
 <article class="review-board-row review-hit">
@@ -4052,7 +4115,7 @@ A post-match grading board that shows hits, misses, score error, and the next pl
 <span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
-<span class="review-error-chip review-bad">Wide</span><strong>3.24 goals</strong>
+<span class="review-error-chip review-bad">Wide</span><strong>3.24 goals</strong><small>Stable call</small>
 </div>
 </article>
 </div>
@@ -4173,7 +4236,7 @@ Actual hit rate is within 2.3 points of the stated confidence.
 </div>
 <article class="tuning-segment-row">
 <div class="tuning-segment-main">
-<strong>Group-stage matches</strong><small>Where the current grading sample is deepest.</small>
+<strong>Group-stage matches</strong><small>Where the current grading sample is deepest.</small><small class="tuning-segment-action"><span>Tune first:</span> Use this as the primary recalibration sample before reacting to small knockout noise.</small>
 </div>
 <div class="tuning-segment-metric">
 <span>Matches</span><strong>72</strong>
@@ -4187,7 +4250,7 @@ Actual hit rate is within 2.3 points of the stated confidence.
 </article>
 <article class="tuning-segment-row">
 <div class="tuning-segment-main">
-<strong>Knockout matches</strong><small>Sample is still small; treat this as directional.</small>
+<strong>Knockout matches</strong><small>Sample is still small; treat this as directional.</small><small class="tuning-segment-action"><span>Tune first:</span> Review the regulation-to-advancement handoff, but wait for more matches before retuning heavily.</small>
 </div>
 <div class="tuning-segment-metric">
 <span>Matches</span><strong>1</strong>
@@ -4201,7 +4264,7 @@ Actual hit rate is within 2.3 points of the stated confidence.
 </article>
 <article class="tuning-segment-row">
 <div class="tuning-segment-main">
-<strong>Strong picks</strong><small>High-probability spots from the public ensemble.</small>
+<strong>Strong picks</strong><small>High-probability spots from the public ensemble.</small><small class="tuning-segment-action"><span>Tune first:</span> Keep the decisive-result backbone steady and focus on tied outcomes that slipped through.</small>
 </div>
 <div class="tuning-segment-metric">
 <span>Matches</span><strong>43</strong>
@@ -4215,7 +4278,7 @@ Actual hit rate is within 2.3 points of the stated confidence.
 </article>
 <article class="tuning-segment-row">
 <div class="tuning-segment-main">
-<strong>Medium picks</strong><small>Competitive matches with some separation.</small>
+<strong>Medium picks</strong><small>Competitive matches with some separation.</small><small class="tuning-segment-action"><span>Tune first:</span> Check whether draw probability and venue effects need a lift in balanced matches.</small>
 </div>
 <div class="tuning-segment-metric">
 <span>Matches</span><strong>21</strong>
@@ -4229,7 +4292,7 @@ Actual hit rate is within 2.3 points of the stated confidence.
 </article>
 <article class="tuning-segment-row">
 <div class="tuning-segment-main">
-<strong>Lean picks</strong><small>Closest matches and lowest public conviction.</small>
+<strong>Lean picks</strong><small>Closest matches and lowest public conviction.</small><small class="tuning-segment-action"><span>Tune first:</span> Reduce confidence spread in close matches before making lean picks more aggressive.</small>
 </div>
 <div class="tuning-segment-metric">
 <span>Matches</span><strong>9</strong>
@@ -4243,7 +4306,7 @@ Actual hit rate is within 2.3 points of the stated confidence.
 </article>
 <article class="tuning-segment-row">
 <div class="tuning-segment-main">
-<strong>Actual draws / level finals</strong><small>The current blind spot in the graded sample.</small>
+<strong>Actual draws / level finals</strong><small>The current blind spot in the graded sample.</small><small class="tuning-segment-action"><span>Tune first:</span> Raise draw share and compress goal totals in the balanced-match layer first.</small>
 </div>
 <div class="tuning-segment-metric">
 <span>Matches</span><strong>20</strong>
@@ -4268,7 +4331,7 @@ These are the misses worth reviewing first because the model was willing to make
 <div class="tuning-miss-grid">
 <article class="tuning-miss-card">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 Spain vs Cape Verde
@@ -4290,10 +4353,13 @@ Spain vs Cape Verde
 <p>
 Actual result finished level.
 </p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
 </article>
 <article class="tuning-miss-card">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 England vs Ghana
@@ -4315,10 +4381,13 @@ England vs Ghana
 <p>
 Actual result finished level.
 </p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
 </article>
 <article class="tuning-miss-card">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 Ecuador vs Curaçao
@@ -4340,10 +4409,13 @@ Ecuador vs Curaçao
 <p>
 Actual result finished level.
 </p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
 </article>
 <article class="tuning-miss-card">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 Qatar vs Switzerland
@@ -4365,10 +4437,13 @@ Qatar vs Switzerland
 <p>
 Actual result finished level.
 </p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
 </article>
 <article class="tuning-miss-card">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 Canada vs Bosnia and Herzegovina
@@ -4390,10 +4465,13 @@ Canada vs Bosnia and Herzegovina
 <p>
 Actual result finished level.
 </p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
 </article>
 <article class="tuning-miss-card">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 Uruguay vs Cape Verde
@@ -4415,10 +4493,13 @@ Uruguay vs Cape Verde
 <p>
 Actual result finished level.
 </p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
 </article>
 <article class="tuning-miss-card">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 Portugal vs DR Congo
@@ -4440,10 +4521,13 @@ Portugal vs DR Congo
 <p>
 Actual result finished level.
 </p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
 </article>
 <article class="tuning-miss-card">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 Iran vs New Zealand
@@ -4464,6 +4548,9 @@ Iran vs New Zealand
 </div>
 <p>
 Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
 </div>

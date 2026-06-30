@@ -2727,6 +2727,111 @@ pre code {
   line-height: 1.35;
 }
 
+.review-pattern-section {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.review-pattern-title h3 {
+  margin: 0 0 0.25rem;
+  color: var(--color-navy);
+  font-size: 1.16rem;
+}
+
+.review-pattern-title p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.review-pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-2);
+}
+
+.review-pattern-card {
+  min-width: 0;
+  border: 1px solid rgba(16, 42, 67, 0.12);
+  border-left: 4px solid #c9d4df;
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  padding: var(--space-3);
+  box-shadow: 0 10px 24px rgba(16, 42, 67, 0.045);
+}
+
+.review-pattern-card.review-pattern-alert {
+  border-left-color: #b42318;
+}
+
+.review-pattern-card.review-pattern-watch {
+  border-left-color: #d9a441;
+}
+
+.review-pattern-card.review-pattern-neutral {
+  border-left-color: #7b8794;
+}
+
+.review-pattern-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.65rem;
+}
+
+.review-pattern-head span {
+  color: var(--color-navy);
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.review-pattern-head strong {
+  color: var(--color-navy);
+  font-size: 1rem;
+  line-height: 1.1;
+}
+
+.review-pattern-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.review-pattern-metrics div {
+  min-width: 0;
+  border: 1px solid #e7edf3;
+  border-radius: var(--radius-sm);
+  background: #fbfdff;
+  padding: 0.55rem 0.6rem;
+}
+
+.review-pattern-metrics small,
+.review-pattern-card > small {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.review-pattern-metrics b {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--color-navy);
+  font-size: 0.96rem;
+  line-height: 1.15;
+}
+
+.review-pattern-card p {
+  margin: 0 0 0.55rem;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
 .review-board {
   overflow: hidden;
   border: 1px solid rgba(16, 42, 67, 0.16);
@@ -2788,7 +2893,8 @@ pre code {
 
 .review-match-cell small,
 .review-result-cell small,
-.review-grade-cell small {
+.review-grade-cell small,
+.review-error-cell small {
   display: block;
   color: var(--color-muted);
   font-size: 0.8rem;
@@ -3130,6 +3236,17 @@ pre code {
   line-height: 1.35;
 }
 
+.tuning-segment-action {
+  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed #d6e0e8;
+}
+
+.tuning-segment-action span {
+  color: var(--color-teal-dark);
+  font-weight: 900;
+}
+
 .tuning-segment-metric strong {
   display: block;
   color: var(--color-navy);
@@ -3220,6 +3337,16 @@ pre code {
   color: var(--color-muted);
   font-size: 0.84rem;
   line-height: 1.35;
+}
+
+.tuning-miss-next {
+  margin-top: 0.65rem !important;
+  padding-top: 0.55rem;
+  border-top: 1px dashed #d6e0e8;
+}
+
+.tuning-miss-next strong {
+  color: var(--color-navy);
 }
 
 .tuning-watch-compact .tuning-miss-card:nth-of-type(n + 5) {

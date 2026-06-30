@@ -278,6 +278,112 @@ review_error_class <- function(value) {
   "review-bad"
 }
 
+review_issue_key <- function(row) {
+  actual_draw <- if ("actual_draw_flag" %in% names(row)) {
+    isTRUE(row$actual_draw_flag[[1]])
+  } else {
+    grepl("draw", tolower(safe_text(row$actual_result, "")))
+  }
+  phase <- safe_text(row$phase, "Group")
+  penalty_score <- safe_text(row$penalty_score, "")
+  extra_time_score <- safe_text(row$extra_time_score, "")
+  goal_bias <- safe_number(row$total_goal_bias_value)
+  confidence <- safe_number(row$prediction_confidence_value)
+
+  if (actual_draw) {
+    return("draw_underweight")
+  }
+  if (identical(phase, "Knockout") && (nzchar(penalty_score) || nzchar(extra_time_score))) {
+    return("knockout_path")
+  }
+  if (is.finite(goal_bias) && goal_bias >= 0.75) {
+    return("score_too_open")
+  }
+  if (is.finite(goal_bias) && goal_bias <= -0.75) {
+    return("score_too_low")
+  }
+  if (is.finite(confidence) && confidence >= 0.65) {
+    return("favorite_too_strong")
+  }
+  "team_strength_miss"
+}
+
+review_issue_label <- function(key) {
+  switch(
+    key,
+    draw_underweight = "Draw underweight",
+    knockout_path = "Knockout path swing",
+    score_too_open = "Score too open",
+    score_too_low = "Score too low",
+    favorite_too_strong = "Favorite too strong",
+    team_strength_miss = "Team-strength miss",
+    "Review needed"
+  )
+}
+
+review_issue_state <- function(key) {
+  switch(
+    key,
+    draw_underweight = "alert",
+    knockout_path = "watch",
+    score_too_open = "watch",
+    score_too_low = "watch",
+    favorite_too_strong = "alert",
+    team_strength_miss = "neutral",
+    "neutral"
+  )
+}
+
+review_issue_action <- function(key) {
+  switch(
+    key,
+    draw_underweight = "Lift draw probability and compress winner edges in balanced matches.",
+    knockout_path = "Review 90-minute draw handling before the tiebreak layer takes over.",
+    score_too_open = "Compress goal totals in slower matches and stronger-defence spots.",
+    score_too_low = "Allow more attacking upside where the model is keeping totals too low.",
+    favorite_too_strong = "Check team-strength, venue, and form weights before backing a heavy lean.",
+    team_strength_miss = "Recheck team-strength inputs, venue context, and stale form signals.",
+    "Review the contributing team-strength and score assumptions."
+  )
+}
+
+review_issue_note <- function(row, key = NULL) {
+  issue_key <- if (!is.null(key) && nzchar(key)) key else review_issue_key(row)
+  goal_bias <- safe_number(row$total_goal_bias_value)
+
+  switch(
+    issue_key,
+    draw_underweight = "Missed a match that finished level. The draw layer needs more weight.",
+    knockout_path = "The match stayed alive after regulation, so the advancement path needs a better tiebreak read.",
+    score_too_open = if (is.finite(goal_bias)) {
+      paste0("Expected total ran ", fmt_number(goal_bias, 2), " goals above reality.")
+    } else {
+      "Projected scoring ran too hot for what actually happened."
+    },
+    score_too_low = if (is.finite(goal_bias)) {
+      paste0("Expected total ran ", fmt_number(abs(goal_bias), 2), " goals below reality.")
+    } else {
+      "Projected scoring was too conservative for what actually happened."
+    },
+    favorite_too_strong = "A high-confidence side still missed. The edge was wider than the result justified.",
+    team_strength_miss = "The match moved against the side the ensemble preferred. Recheck strength and venue context.",
+    "Review the miss against the current weighting and score assumptions."
+  )
+}
+
+review_issue_summary_note <- function(key) {
+  switch(
+    key,
+    draw_underweight = "Most misses still come from matches that finished level.",
+    knockout_path = "The miss came from regulation staying level before the bracket path changed.",
+    score_too_open = "Projected totals are running hotter than the final scores in this bucket.",
+    score_too_low = "Projected totals are coming in below the final scores in this bucket.",
+    favorite_too_strong = "The model created a stronger edge than the result justified.",
+    team_strength_miss = "The ensemble side was wrong without a strong draw or score-bias signal.",
+    "Review the miss against the current weighting and score assumptions."
+  )
+}
+
 review_row_note <- function(row) {
   correct <- review_bool(row$ensemble_correct)
   goal_error <- safe_number(row$poisson_total_goal_error)
@@ -291,6 +397,12 @@ review_row_note <- function(row) {
   }
   if (correct) {
     return("Pick landed; review the score total before promotion.")
+  }
+  if ("issue_note" %in% names(row)) {
+    issue_note <- safe_text(row$issue_note, "")
+    if (nzchar(issue_note)) {
+      return(issue_note)
+    }
   }
   if (grepl("draw", actual_result)) {
     return("Missed the level result. Draw probability needs review.")
@@ -327,6 +439,11 @@ render_review_recent_row <- function(row) {
   } else {
     "Pending"
   }
+  issue_label <- if (correct) {
+    "Stable call"
+  } else {
+    safe_text(row$issue_label, "Review needed")
+  }
 
   paste0(
     '<article class="review-board-row ', escape_html(grade_class), '">',
@@ -351,7 +468,33 @@ render_review_recent_row <- function(row) {
     '<div class="review-error-cell">',
     '<span class="review-error-chip ', escape_html(error_class), '">', escape_html(error_label), '</span>',
     '<strong>', escape_html(goal_error_text), '</strong>',
+    '<small>', escape_html(issue_label), '</small>',
     '</div>',
+    '</article>'
+  )
+}
+
+render_review_pattern_card <- function(row) {
+  count_label <- paste0(fmt_integer(row$matches[[1]]), ifelse(row$matches[[1]] == 1, " miss", " misses"))
+  confidence_text <- display_percent(row$avg_confidence[[1]], 1)
+  goal_text <- if (is.finite(row$avg_goal_error[[1]])) {
+    paste0(fmt_number(row$avg_goal_error[[1]], 2), " goals")
+  } else {
+    "Pending"
+  }
+
+  paste0(
+    '<article class="review-pattern-card review-pattern-', escape_html(row$state[[1]]), '">',
+    '<div class="review-pattern-head">',
+    '<span>', escape_html(row$label[[1]]), '</span>',
+    '<strong>', escape_html(count_label), '</strong>',
+    '</div>',
+    '<div class="review-pattern-metrics">',
+    '<div><small>Avg confidence</small><b>', confidence_text, '</b></div>',
+    '<div><small>Avg score miss</small><b>', escape_html(goal_text), '</b></div>',
+    '</div>',
+    '<p>', escape_html(row$note[[1]]), '</p>',
+    '<small>', escape_html(row$action[[1]]), '</small>',
     '</article>'
   )
 }
@@ -359,8 +502,9 @@ render_review_recent_row <- function(row) {
 render_model_review_section <- function(bundle, compact = FALSE, limit = 8) {
   detail <- bundle$accuracy_detail
   accuracy <- bundle$accuracy
+  review <- review_analysis_frame(bundle)
 
-  if (is.null(detail) || nrow(detail) == 0) {
+  if (is.null(detail) || nrow(detail) == 0 || nrow(review) == 0) {
     return(
       paste0(
         '<section id="model-review" class="page-section model-review-section">',
@@ -370,20 +514,16 @@ render_model_review_section <- function(bundle, compact = FALSE, limit = 8) {
     )
   }
 
-  correct <- review_col_logical(detail, "ensemble_correct")
+  correct <- review$ensemble_correct_flag
   completed <- length(correct)
   hits <- sum(correct, na.rm = TRUE)
   misses <- completed - hits
   hit_rate <- if (completed > 0) hits / completed else NA_real_
-  goal_error <- review_col_number(detail, "poisson_total_goal_error")
-  team_goal_error <- review_col_number(detail, "poisson_team_goal_mae")
-  actual_probability <- review_col_number(detail, "ensemble_probability_actual")
+  goal_error <- review$poisson_total_goal_error_value
+  team_goal_error <- suppressWarnings(as.numeric(review$poisson_team_goal_mae))
+  actual_probability <- review$ensemble_probability_actual_value
   tight_scores <- sum(is.finite(goal_error) & goal_error <= 1, na.rm = TRUE)
-  draw_misses <- if ("actual_result" %in% names(detail)) {
-    sum(!correct & grepl("draw", tolower(as.character(detail$actual_result))), na.rm = TRUE)
-  } else {
-    0
-  }
+  draw_misses <- sum(!correct & review$actual_draw_flag, na.rm = TRUE)
   upset_checks <- sum(!correct & is.finite(actual_probability) & actual_probability < 0.35, na.rm = TRUE)
   avg_goal_error <- if (any(is.finite(goal_error))) mean(goal_error, na.rm = TRUE) else NA_real_
   avg_team_goal_error <- if (any(is.finite(team_goal_error))) mean(team_goal_error, na.rm = TRUE) else NA_real_
@@ -418,7 +558,30 @@ render_model_review_section <- function(bundle, compact = FALSE, limit = 8) {
     '<div><strong>', escape_html(fmt_integer(upset_checks)), '</strong><span>upset checks</span><small>Actual outcome had less than 35% model probability.</small></div>'
   )
 
-  recent <- detail |>
+  miss_patterns <- review |>
+    dplyr::filter(!.data$ensemble_correct_flag) |>
+    dplyr::group_by(issue_key, issue_label, issue_state, issue_action) |>
+    dplyr::summarise(
+      matches = dplyr::n(),
+      avg_confidence = mean(.data$prediction_confidence_value, na.rm = TRUE),
+      avg_goal_error = mean(.data$poisson_total_goal_error_value, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::arrange(dplyr::desc(.data$matches), dplyr::desc(.data$avg_confidence)) |>
+    dplyr::mutate(note = vapply(.data$issue_key, review_issue_summary_note, character(1))) |>
+    dplyr::rename(
+      label = issue_label,
+      state = issue_state,
+      action = issue_action
+    ) |>
+    dplyr::slice_head(n = 4)
+  pattern_html <- if (nrow(miss_patterns) > 0) {
+    paste(vapply(seq_len(nrow(miss_patterns)), function(i) render_review_pattern_card(miss_patterns[i, , drop = FALSE]), character(1)), collapse = "")
+  } else {
+    ""
+  }
+
+  recent <- review |>
     dplyr::arrange(dplyr::desc(as.Date(.data$date)), dplyr::desc(.data$source_match_id)) |>
     dplyr::slice_head(n = limit)
   recent_html <- paste(vapply(seq_len(nrow(recent)), function(i) render_review_recent_row(recent[i, ]), character(1)), collapse = "")
@@ -445,6 +608,12 @@ render_model_review_section <- function(bundle, compact = FALSE, limit = 8) {
     '</div>',
     '<div class="review-scoreboard">', score_cards, '</div>',
     '<div class="review-learning-strip" aria-label="Model tuning signals">', learning_cards, '</div>',
+    if (nzchar(pattern_html)) paste0(
+      '<div class="review-pattern-section">',
+      '<div class="review-pattern-title"><h3>Main miss types</h3><p>These are the patterns doing the most damage in the graded sample right now.</p></div>',
+      '<div class="review-pattern-grid">', pattern_html, '</div>',
+      '</div>'
+    ) else "",
     '<div class="review-board" aria-label="Recent model grading board">',
     '<div class="review-board-head" aria-hidden="true"><span>Match</span><span>Actual</span><span>Model pick</span><span>Grade</span><span>Score miss</span></div>',
     recent_html,
@@ -466,7 +635,7 @@ review_analysis_frame <- function(bundle) {
   review <- detail
   if (!is.null(board) && nrow(board) > 0 && "source_match_id" %in% names(detail) && "source_match_id" %in% names(board)) {
     board_fields <- intersect(
-      c("source_match_id", "is_knockout_match", "confidence_band", "prediction_confidence"),
+      c("source_match_id", "is_knockout_match", "confidence_band", "prediction_confidence", "expected_total_goals"),
       names(board)
     )
     board_lookup <- board |>
@@ -486,7 +655,7 @@ review_analysis_frame <- function(bundle) {
     review$prediction_confidence <- NA_real_
   }
 
-  review |>
+  review <- review |>
     dplyr::mutate(
       ensemble_correct_flag = tolower(as.character(.data$ensemble_correct)) %in% c("true", "t", "1", "yes"),
       actual_result_lower = tolower(as.character(.data$actual_result)),
@@ -498,11 +667,24 @@ review_analysis_frame <- function(bundle) {
       confidence_band_label = dplyr::coalesce(as.character(.data$confidence_band), "Not labeled"),
       prediction_confidence_value = suppressWarnings(as.numeric(.data$prediction_confidence)),
       poisson_total_goal_error_value = suppressWarnings(as.numeric(.data$poisson_total_goal_error)),
-      ensemble_probability_actual_value = suppressWarnings(as.numeric(.data$ensemble_probability_actual))
+      ensemble_probability_actual_value = suppressWarnings(as.numeric(.data$ensemble_probability_actual)),
+      expected_total_goals_value = suppressWarnings(as.numeric(.data$expected_total_goals)),
+      actual_total_goals_value = vapply(.data$actual_score, parse_score_total, numeric(1)),
+      total_goal_bias_value = .data$expected_total_goals_value - .data$actual_total_goals_value
     )
+
+  if (nrow(review) > 0) {
+    review$issue_key <- vapply(seq_len(nrow(review)), function(i) review_issue_key(review[i, , drop = FALSE]), character(1))
+    review$issue_label <- vapply(review$issue_key, review_issue_label, character(1))
+    review$issue_state <- vapply(review$issue_key, review_issue_state, character(1))
+    review$issue_action <- vapply(review$issue_key, review_issue_action, character(1))
+    review$issue_note <- vapply(seq_len(nrow(review)), function(i) review_issue_note(review[i, , drop = FALSE], review$issue_key[[i]]), character(1))
+  }
+
+  review
 }
 
-make_tuning_segment <- function(data, segment, note) {
+make_tuning_segment <- function(data, segment, note, action) {
   if (nrow(data) == 0) {
     return(NULL)
   }
@@ -521,6 +703,7 @@ make_tuning_segment <- function(data, segment, note) {
     accuracy = accuracy,
     goal_error = goal_error,
     note = note,
+    action = action,
     stringsAsFactors = FALSE
   )
 }
@@ -531,6 +714,7 @@ render_tuning_segment_row <- function(row) {
     '<div class="tuning-segment-main">',
     '<strong>', escape_html(row$segment[[1]]), '</strong>',
     '<small>', escape_html(row$note[[1]]), '</small>',
+    '<small class="tuning-segment-action"><span>Tune first:</span> ', escape_html(row$action[[1]]), '</small>',
     '</div>',
     '<div class="tuning-segment-metric"><span>Matches</span><strong>', escape_html(fmt_integer(row$matches[[1]])), '</strong></div>',
     '<div class="tuning-segment-metric"><span>Hit rate</span><strong>', display_percent(row$accuracy[[1]], 1), '</strong></div>',
@@ -559,6 +743,7 @@ render_tuning_miss_card <- function(row) {
     '<span class="review-badge review-miss">Miss</span>',
     '<span class="tuning-phase-tag">', escape_html(row$phase[[1]]), '</span>',
     '<span class="tuning-phase-tag">', escape_html(row$confidence_band_label[[1]]), '</span>',
+    '<span class="tuning-phase-tag">', escape_html(safe_text(row$issue_label, "Review needed")), '</span>',
     '</div>',
     '<h3>', escape_html(row$match_label[[1]]), '</h3>',
     '<div class="tuning-miss-grid">',
@@ -568,6 +753,7 @@ render_tuning_miss_card <- function(row) {
     '<div><span>Score miss</span><strong>', ifelse(is.finite(row$poisson_total_goal_error_value[[1]]), paste0(fmt_number(row$poisson_total_goal_error_value[[1]], 2), " goals"), "Pending"), '</strong></div>',
     '</div>',
     '<p>', escape_html(miss_note), '</p>',
+    '<p class="tuning-miss-next"><strong>Next check:</strong> ', escape_html(safe_text(row$issue_action, "Review the contributing weights and score assumptions.")), '</p>',
     '</article>'
   )
 }
@@ -652,12 +838,12 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
   }
 
   segments <- dplyr::bind_rows(
-    make_tuning_segment(review[review$phase == "Group", , drop = FALSE], "Group-stage matches", "Where the current grading sample is deepest."),
-    make_tuning_segment(review[review$phase == "Knockout", , drop = FALSE], "Knockout matches", "Sample is still small; treat this as directional."),
-    make_tuning_segment(review[review$confidence_band_label == "Strong", , drop = FALSE], "Strong picks", "High-probability spots from the public ensemble."),
-    make_tuning_segment(review[review$confidence_band_label == "Medium", , drop = FALSE], "Medium picks", "Competitive matches with some separation."),
-    make_tuning_segment(review[review$confidence_band_label == "Lean", , drop = FALSE], "Lean picks", "Closest matches and lowest public conviction."),
-    make_tuning_segment(review[review$actual_draw_flag, , drop = FALSE], "Actual draws / level finals", "The current blind spot in the graded sample.")
+    make_tuning_segment(review[review$phase == "Group", , drop = FALSE], "Group-stage matches", "Where the current grading sample is deepest.", "Use this as the primary recalibration sample before reacting to small knockout noise."),
+    make_tuning_segment(review[review$phase == "Knockout", , drop = FALSE], "Knockout matches", "Sample is still small; treat this as directional.", "Review the regulation-to-advancement handoff, but wait for more matches before retuning heavily."),
+    make_tuning_segment(review[review$confidence_band_label == "Strong", , drop = FALSE], "Strong picks", "High-probability spots from the public ensemble.", "Keep the decisive-result backbone steady and focus on tied outcomes that slipped through."),
+    make_tuning_segment(review[review$confidence_band_label == "Medium", , drop = FALSE], "Medium picks", "Competitive matches with some separation.", "Check whether draw probability and venue effects need a lift in balanced matches."),
+    make_tuning_segment(review[review$confidence_band_label == "Lean", , drop = FALSE], "Lean picks", "Closest matches and lowest public conviction.", "Reduce confidence spread in close matches before making lean picks more aggressive."),
+    make_tuning_segment(review[review$actual_draw_flag, , drop = FALSE], "Actual draws / level finals", "The current blind spot in the graded sample.", "Raise draw share and compress goal totals in the balanced-match layer first.")
   )
 
   draw_matches <- sum(review$actual_draw_flag, na.rm = TRUE)
@@ -788,20 +974,28 @@ adjustment_board_frame <- function(bundle) {
     return(data.frame())
   }
 
-  expected_lookup <- data.frame(source_match_id = character(), expected_total_goals = numeric(), stringsAsFactors = FALSE)
-  if (!is.null(board) && nrow(board) > 0 && "source_match_id" %in% names(board)) {
+  analysis <- review
+
+  if (!"expected_total_goals_value" %in% names(analysis)) {
+    analysis$expected_total_goals_value <- NA_real_
+  }
+  if (!"actual_total_goals_value" %in% names(analysis)) {
+    analysis$actual_total_goals_value <- vapply(analysis$actual_score, parse_score_total, numeric(1))
+  }
+  if (!"total_goal_bias_value" %in% names(analysis)) {
+    analysis$total_goal_bias_value <- analysis$expected_total_goals_value - analysis$actual_total_goals_value
+  }
+  if (all(!is.finite(analysis$expected_total_goals_value)) && !is.null(board) && nrow(board) > 0 && "source_match_id" %in% names(board)) {
     expected_lookup <- board |>
       dplyr::select("source_match_id", dplyr::any_of("expected_total_goals")) |>
       dplyr::distinct(.data$source_match_id, .keep_all = TRUE)
+    analysis <- analysis |>
+      dplyr::left_join(expected_lookup, by = "source_match_id") |>
+      dplyr::mutate(
+        expected_total_goals_value = dplyr::coalesce(.data$expected_total_goals_value, suppressWarnings(as.numeric(.data$expected_total_goals))),
+        total_goal_bias_value = dplyr::coalesce(.data$total_goal_bias_value, .data$expected_total_goals_value - .data$actual_total_goals_value)
+      )
   }
-
-  analysis <- review |>
-    dplyr::left_join(expected_lookup, by = "source_match_id") |>
-    dplyr::mutate(
-      actual_total_goals = vapply(.data$actual_score, parse_score_total, numeric(1)),
-      expected_total_goals_value = suppressWarnings(as.numeric(.data$expected_total_goals)),
-      total_goal_bias_value = .data$expected_total_goals_value - .data$actual_total_goals
-    )
 
   draw_rows <- analysis[analysis$actual_draw_flag, , drop = FALSE]
   low_rows <- analysis[is.finite(analysis$prediction_confidence_value) & analysis$prediction_confidence_value < 0.55, , drop = FALSE]
