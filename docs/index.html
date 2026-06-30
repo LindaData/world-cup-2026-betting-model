@@ -415,6 +415,32 @@ Brazil <span>vs</span> Japan
 <span>Model reliability</span><strong>64.4%</strong><small>Correct winner/result picks over 73 completed matches.</small><a href="reports/08_matchday_predictions.html#model-performance">Check accuracy</a>
 </div>
 </section>
+<section class="model-lab-strip model-lab-strip-compact" aria-label="Expanded model suite summary">
+<div class="model-lab-copy">
+<span class="section-kicker">Model lab</span>
+<h2 class="anchored">
+Expanded Forecast Bench
+</h2>
+<p>
+The public pick remains the stable production ensemble. The model lab now runs a larger challenger bench and uses backtesting to decide what earns promotion.
+</p>
+</div>
+<div class="model-lab-grid">
+<article class="model-lab-chip">
+<span>Model bench</span><strong>19 models</strong><small>OLS, Poisson, KNN, ordinal, multinomial, GAM, GBM, XGBoost, random forest, SVM</small>
+</article>
+<article class="model-lab-chip">
+<span>Best goals model</span><strong>XGBoost Poisson goals</strong><small>Recent time split RMSE 0.896</small>
+</article>
+<article class="model-lab-chip">
+<span>Best result model</span><strong>XGBoost multinomial result</strong><small>Recent time split Brier 0.438</small>
+</article>
+<article class="model-lab-chip">
+<span>Tree challenger</span><strong>XGBoost goals</strong><small>Held-out RMSE 1.364</small>
+</article>
+</div>
+<a class="button-secondary model-lab-link" href="reports/10_model_challengers.html">Open model comparison</a>
+</section>
 <section class="page-section static-note-section">
 <div class="freshness-note">
 <strong>Forecast freshness:</strong> Forecasts refresh from the prepared model outputs and publish here as a fast, shareable board. The public page shows results and documentation while keeping private feeds out of the site. <span class="section-note">Last generated: 2026-06-30 02:31:57 EDT.</span>
@@ -531,10 +557,16 @@ Lineups
 Lineups are not available yet.
 </dd>
 <dt>
-Model votes
+Production model votes
 </dt>
 <dd>
 OLS: Norway; Poisson: Norway; Result model: Norway
+</dd>
+<dt>
+Expanded model bench
+</dt>
+<dd>
+Challenger models are evaluated in the Model Lab before any promotion into the public pick.
 </dd>
 <dt>
 Venue
@@ -645,10 +677,16 @@ Lineups
 Lineups are not available yet.
 </dd>
 <dt>
-Model votes
+Production model votes
 </dt>
 <dd>
 OLS: France; Poisson: France; Result model: France
+</dd>
+<dt>
+Expanded model bench
+</dt>
+<dd>
+Challenger models are evaluated in the Model Lab before any promotion into the public pick.
 </dd>
 <dt>
 Venue
@@ -759,10 +797,16 @@ Lineups
 Lineups are not available yet.
 </dd>
 <dt>
-Model votes
+Production model votes
 </dt>
 <dd>
 OLS: Mexico; Poisson: Mexico; Result model: Mexico
+</dd>
+<dt>
+Expanded model bench
+</dt>
+<dd>
+Challenger models are evaluated in the Model Lab before any promotion into the public pick.
 </dd>
 <dt>
 Venue
@@ -886,10 +930,16 @@ Lineups
 Lineups are not available yet.
 </dd>
 <dt>
-Model votes
+Production model votes
 </dt>
 <dd>
 OLS: Brazil; Poisson: Brazil; Result model: Brazil
+</dd>
+<dt>
+Expanded model bench
+</dt>
+<dd>
+Challenger models are evaluated in the Model Lab before any promotion into the public pick.
 </dd>
 <dt>
 Venue
@@ -1013,10 +1063,16 @@ Lineups
 Lineups are not available yet.
 </dd>
 <dt>
-Model votes
+Production model votes
 </dt>
 <dd>
 OLS: Germany; Poisson: Germany; Result model: Germany
+</dd>
+<dt>
+Expanded model bench
+</dt>
+<dd>
+Challenger models are evaluated in the Model Lab before any promotion into the public pick.
 </dd>
 <dt>
 Venue
@@ -1127,10 +1183,16 @@ Lineups
 Lineups are not available yet.
 </dd>
 <dt>
-Model votes
+Production model votes
 </dt>
 <dd>
 OLS: Netherlands; Poisson: Netherlands; Result model: Netherlands
+</dd>
+<dt>
+Expanded model bench
+</dt>
+<dd>
+Challenger models are evaluated in the Model Lab before any promotion into the public pick.
 </dd>
 <dt>
 Venue
@@ -1241,10 +1303,16 @@ Lineups
 Lineups are not available yet.
 </dd>
 <dt>
-Model votes
+Production model votes
 </dt>
 <dd>
 OLS: England; Poisson: England; Result model: England
+</dd>
+<dt>
+Expanded model bench
+</dt>
+<dd>
+Challenger models are evaluated in the Model Lab before any promotion into the public pick.
 </dd>
 <dt>
 Venue
@@ -1656,6 +1724,9 @@ The site combines historical international results, team-strength features, rece
 </div>
 <div>
 <strong>Similarity check</strong><span>Compares fixtures with similar historical matches as a challenger model.</span>
+</div>
+<div>
+<strong>Expanded model bench</strong><span>Runs multinomial, negative-binomial, GAM, GBM, XGBoost, random-forest, SVM, and stepwise challengers before any promotion decision.</span>
 </div>
 </div>
 <p class="responsible-note">

@@ -1798,7 +1798,7 @@ pre code {
 
 .page-intro {
   max-width: none;
-  margin: var(--space-6) 0 var(--space-4);
+  margin: var(--space-5) 0 var(--space-4);
   border: 1px solid rgba(16, 42, 67, 0.1);
   border-radius: var(--radius-md);
   background:
@@ -1806,6 +1806,11 @@ pre code {
     #ffffff;
   padding: clamp(1rem, 3vw, 1.5rem);
   box-shadow: 0 14px 32px rgba(16, 42, 67, 0.06);
+}
+
+.prediction-intro {
+  margin-top: var(--space-4);
+  padding: clamp(0.85rem, 2vw, 1.05rem);
 }
 
 .page-intro h1 {
@@ -1819,6 +1824,18 @@ pre code {
   margin: 0;
   color: var(--color-muted);
   font-size: 1.06rem;
+}
+
+.prediction-intro h1 {
+  font-size: clamp(1.85rem, 3.2vw, 2.7rem);
+}
+
+.prediction-intro p {
+  font-size: 1rem;
+}
+
+.prediction-intro + .prediction-status-bar {
+  margin-bottom: var(--space-3);
 }
 
 .hero-copy {
@@ -2031,6 +2048,79 @@ pre code {
   border-color: var(--color-teal);
   background: var(--color-teal);
   color: #ffffff;
+}
+
+.model-lab-strip {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.6fr) auto;
+  gap: var(--space-4);
+  align-items: stretch;
+  margin: 0 0 var(--space-5);
+  border: 1px solid rgba(16, 42, 67, 0.1);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(135deg, rgba(16, 42, 67, 0.04), rgba(15, 107, 104, 0.08)),
+    #ffffff;
+  padding: var(--space-4);
+  box-shadow: 0 12px 28px rgba(16, 42, 67, 0.06);
+}
+
+.model-lab-copy {
+  min-width: 0;
+}
+
+.model-lab-copy h2 {
+  margin: var(--space-1) 0 var(--space-2);
+  color: var(--color-navy);
+  font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+  line-height: 1.08;
+}
+
+.model-lab-copy p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.94rem;
+}
+
+.model-lab-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.model-lab-chip {
+  min-width: 0;
+  display: grid;
+  gap: 0.12rem;
+  border: 1px solid #dfe8ee;
+  border-radius: var(--radius-sm);
+  background: #fbfdff;
+  padding: var(--space-3);
+}
+
+.model-lab-chip span {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.model-lab-chip strong {
+  color: var(--color-navy);
+  font-size: 1rem;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.model-lab-chip small {
+  color: var(--color-muted);
+  line-height: 1.25;
+}
+
+.model-lab-link {
+  align-self: center;
+  white-space: nowrap;
 }
 
 .hero-context {
@@ -2261,14 +2351,14 @@ pre code {
 
 .forecast-card {
   display: grid;
-  gap: var(--space-4);
-  border: 1px solid rgba(16, 42, 67, 0.1);
+  gap: var(--space-3);
+  border: 1px solid rgba(16, 42, 67, 0.12);
   border-radius: var(--radius-md);
   background:
-    linear-gradient(180deg, rgba(15, 107, 104, 0.045), rgba(255, 255, 255, 0) 34%),
+    linear-gradient(180deg, rgba(16, 42, 67, 0.035), rgba(255, 255, 255, 0) 34%),
     var(--surface);
-  padding: var(--space-4);
-  box-shadow: 0 10px 28px rgba(16, 42, 67, 0.06);
+  padding: var(--space-3);
+  box-shadow: 0 8px 22px rgba(16, 42, 67, 0.045);
 }
 
 .forecast-card-next {
@@ -2336,13 +2426,13 @@ pre code {
 
 .forecast-pick-panel {
   display: grid;
-  gap: var(--space-1);
-  border: 1px solid rgba(217, 164, 65, 0.42);
-  border-left: 5px solid var(--color-gold);
+  gap: 0.25rem;
+  border: 1px solid rgba(15, 107, 104, 0.24);
+  border-left: 5px solid var(--color-teal);
   border-radius: var(--radius-sm);
   background:
-    linear-gradient(90deg, rgba(217, 164, 65, 0.14), rgba(255, 250, 240, 0.62)),
-    #fffaf0;
+    linear-gradient(90deg, rgba(15, 107, 104, 0.1), rgba(255, 255, 255, 0.6)),
+    #f7fbfb;
   padding: var(--space-3);
 }
 
@@ -2377,22 +2467,29 @@ pre code {
 
 .forecast-probabilities {
   display: grid;
-  gap: var(--space-3);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
   border: 1px solid #e2ebf1;
   border-radius: var(--radius-sm);
-  background: #f8fbfd;
-  padding: var(--space-3);
+  background: #ffffff;
+  padding: var(--space-2);
 }
 
 .forecast-prob-row {
   display: grid;
+  align-content: space-between;
   gap: 0.22rem;
+  min-width: 0;
+  min-height: 6.25rem;
+  border: 1px solid #e5edf3;
+  border-radius: var(--radius-sm);
+  background: #fbfdff;
+  padding: var(--space-2);
 }
 
 .forecast-prob-label {
-  display: flex;
+  display: grid;
   gap: var(--space-2);
-  justify-content: space-between;
   color: var(--color-text);
 }
 
@@ -2402,6 +2499,9 @@ pre code {
 
 .forecast-prob-label strong {
   white-space: nowrap;
+  color: var(--color-navy);
+  font-size: 1.35rem;
+  line-height: 1;
 }
 
 .forecast-prob-track {
@@ -2432,14 +2532,14 @@ pre code {
 .forecast-stat-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .forecast-stat-grid div {
   border: 1px solid #e7edf3;
   border-radius: var(--radius-sm);
   background: #fbfdff;
-  padding: var(--space-3);
+  padding: var(--space-2);
 }
 
 .time-unavailable {
@@ -2855,6 +2955,18 @@ pre code {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .model-lab-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .model-lab-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .model-lab-link {
+    justify-self: start;
+  }
+
   .daily-view-header {
     grid-template-columns: 1fr 1fr;
   }
@@ -2954,12 +3066,83 @@ pre code {
 
   .hero-prob-list,
   .quick-read-section,
-  .decision-panel {
+  .decision-panel,
+  .model-lab-grid {
     grid-template-columns: 1fr;
+  }
+
+  .prediction-intro {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-2);
+    padding: 0.75rem;
+  }
+
+  .prediction-intro h1 {
+    margin-bottom: 0.25rem;
+    font-size: 1.7rem;
+  }
+
+  .prediction-intro p,
+  .forecast-section .section-heading p {
+    font-size: 0.92rem;
+    line-height: 1.35;
+  }
+
+  .forecast-section .section-heading {
+    margin-bottom: var(--space-2);
+  }
+
+  .forecast-probabilities {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
+    padding: 0.4rem;
+  }
+
+  .forecast-prob-row {
+    min-height: 5.4rem;
+    padding: 0.45rem;
+  }
+
+  .forecast-prob-label {
+    gap: 0.25rem;
+  }
+
+  .forecast-prob-label span {
+    font-size: 0.8rem;
+    line-height: 1.15;
+  }
+
+  .forecast-prob-label strong {
+    font-size: 1.05rem;
+  }
+
+  .decision-card,
+  .model-lab-chip {
+    padding: 0.8rem;
+  }
+
+  .decision-card strong {
+    font-size: 1.18rem;
+  }
+
+  .decision-card small {
+    font-size: 0.9rem;
   }
 
   .quick-read-section {
     margin-top: -0.5rem;
+  }
+
+  .model-lab-strip {
+    padding: 0.85rem;
+  }
+
+  .model-lab-link {
+    justify-self: stretch;
+  }
+
+  .forecast-prob-row {
+    min-height: 0;
   }
 
   .prediction-page-nav {
@@ -3115,15 +3298,24 @@ pre code {
   }
 
   .forecast-grid,
-  .forecast-stat-grid,
   .forecast-details dl,
   .model-score-card dl,
   .feature-importance-row {
     grid-template-columns: 1fr;
   }
 
+  .forecast-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  .forecast-stat-grid div {
+    padding: 0.55rem;
+  }
+
   .prediction-status-bar {
     align-items: stretch;
+    gap: 0.4rem;
   }
 
   .status-chip {
@@ -3131,7 +3323,15 @@ pre code {
   }
 
   .prediction-status-bar .status-chip {
-    width: 100%;
+    flex: 1 1 calc(50% - 0.4rem);
+    width: auto;
+    min-height: 30px;
+    padding-inline: 0.55rem;
+    text-align: center;
+  }
+
+  .prediction-status-bar .status-chip.muted {
+    flex-basis: 100%;
   }
 
   .status-row .status-chip {

@@ -61,12 +61,12 @@ Current challengers:
 - **Result classifiers:** ordinal logistic, multinomial logistic, regularized
   multinomial, classification tree, and random forest result models.
 - **Expanded population sweep:** rolling form, opponent form, head-to-head
-  history, rest, experience, tournament context, GBM, random forest, SVM, and
-  shrinkage baselines.
-- **XGBoost goals:** a gradient-boosted count model when the local `xgboost`
-  package is installed.
-- **Random forest goals:** a free local tree fallback while XGBoost is not
-  installed.
+  history, rest, experience, tournament context, GBM, XGBoost, random forest,
+  SVM, and shrinkage baselines.
+- **XGBoost goals and results:** gradient-boosted count and multinomial
+  classifiers evaluated against GBM and regression-family challengers.
+- **Random forest goals:** a free local tree-ensemble benchmark alongside
+  XGBoost, not a replacement for validation.
 
 How to read the tables:
 
@@ -525,7 +525,7 @@ if (nrow(predictions) > 0) {
 The challenger models are useful for two separate reasons:
 
 - Stepwise regression helps simplify the equation while staying interpretable.
-- Tree models can capture nonlinear interactions without hand-writing every term.
+- Tree models and boosted trees can capture nonlinear interactions without hand-writing every term.
 - Count models better match the fact that goals are non-negative integers.
 - Smooth models can improve accuracy when the relationship between team strength
   and goals is curved rather than straight.

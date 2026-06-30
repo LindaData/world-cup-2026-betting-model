@@ -24,23 +24,9 @@ summary <- bundle$summary
 
 <section class="page-intro prediction-intro">
   <span class="section-kicker">Forecast board</span>
-  <h1>Predictions</h1>
-  <p>Today, next match, bracket path, champion outlook, and model accuracy in one phone-friendly board.</p>
+  <h1>Today's Predictions</h1>
+  <p>Model pick, probabilities, expected score, and refresh timing for the current board.</p>
 </section>
-
-```{r command-center, results="asis"}
-cat(render_forecast_command_center(bundle, board, compact = FALSE))
-```
-
-<nav class="prediction-page-nav" aria-label="Prediction page sections">
-  <a href="#today">Today</a>
-  <a href="#next-match">Next match</a>
-  <a href="#upcoming">Upcoming</a>
-  <a href="#bracket">Bracket</a>
-  <a href="#champion-outlook">Champion outlook</a>
-  <a href="#model-performance">Accuracy</a>
-  <a href="#methodology-details">Methodology</a>
-</nav>
 
 ```{r status, results="asis"}
 cat('<section class="prediction-status-bar" aria-label="Prediction status">')
@@ -49,10 +35,6 @@ cat('<span class="status-chip">', escape_html(tournament_phase(summary)), '</spa
 cat('<span class="status-chip muted">Last updated ', escape_html(summary_value(summary, "last_refreshed_local")), '</span>', sep = "")
 cat('<span class="status-chip muted">Published forecast board</span>')
 cat('</section>')
-```
-
-```{r static-note, results="asis"}
-cat(render_static_api_note(summary, compact = TRUE))
 ```
 
 ```{r today, results="asis"}
@@ -65,6 +47,25 @@ cat(render_next_match_section(board))
 
 ```{r upcoming, results="asis"}
 cat(render_upcoming_section(board, limit = 12))
+```
+
+<nav class="prediction-page-nav" aria-label="Prediction page sections">
+  <a href="#today">Today</a>
+  <a href="#next-match">Next match</a>
+  <a href="#upcoming">Upcoming</a>
+  <a href="#bracket">Bracket</a>
+  <a href="#champion-outlook">Champion outlook</a>
+  <a href="#model-performance">Accuracy</a>
+  <a href="#methodology-details">Methodology</a>
+</nav>
+
+```{r command-center, results="asis"}
+cat(render_forecast_command_center(bundle, board, compact = TRUE))
+cat(render_model_suite_strip(bundle, compact = TRUE, base_path = "10_model_challengers.html"))
+```
+
+```{r static-note, results="asis"}
+cat(render_static_api_note(summary, compact = TRUE))
 ```
 
 ## Tournament Bracket {#bracket}

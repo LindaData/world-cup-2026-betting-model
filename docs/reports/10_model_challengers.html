@@ -403,9 +403,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Count models:</strong> Poisson, quasi-Poisson, negative binomial, and two-stage zero-aware goal models.</li>
 <li><strong>Smooth models:</strong> a GAM Poisson model that can learn curved relationships.</li>
 <li><strong>Result classifiers:</strong> ordinal logistic, multinomial logistic, regularized multinomial, classification tree, and random forest result models.</li>
-<li><strong>Expanded population sweep:</strong> rolling form, opponent form, head-to-head history, rest, experience, tournament context, GBM, random forest, SVM, and shrinkage baselines.</li>
-<li><strong>XGBoost goals:</strong> a gradient-boosted count model when the local <code>xgboost</code> package is installed.</li>
-<li><strong>Random forest goals:</strong> a free local tree fallback while XGBoost is not installed.</li>
+<li><strong>Expanded population sweep:</strong> rolling form, opponent form, head-to-head history, rest, experience, tournament context, GBM, XGBoost, random forest, SVM, and shrinkage baselines.</li>
+<li><strong>XGBoost goals and results:</strong> gradient-boosted count and multinomial classifiers evaluated against GBM and regression-family challengers.</li>
+<li><strong>Random forest goals:</strong> a free local tree-ensemble benchmark alongside XGBoost, not a replacement for validation.</li>
 </ul>
 <p>How to read the tables:</p>
 <ul>
@@ -2653,7 +2653,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The challenger models are useful for two separate reasons:</p>
 <ul>
 <li>Stepwise regression helps simplify the equation while staying interpretable.</li>
-<li>Tree models can capture nonlinear interactions without hand-writing every term.</li>
+<li>Tree models and boosted trees can capture nonlinear interactions without hand-writing every term.</li>
 <li>Count models better match the fact that goals are non-negative integers.</li>
 <li>Smooth models can improve accuracy when the relationship between team strength and goals is curved rather than straight.</li>
 <li>Multinomial and ordinal models give direct win, draw, and loss probabilities.</li>
@@ -4057,12 +4057,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Result classifiers:** ordinal logistic, multinomial logistic, regularized</span>
 <span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>  multinomial, classification tree, and random forest result models.</span>
 <span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Expanded population sweep:** rolling form, opponent form, head-to-head</span>
-<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>  history, rest, experience, tournament context, GBM, random forest, SVM, and</span>
-<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>  shrinkage baselines.</span>
-<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**XGBoost goals:** a gradient-boosted count model when the local <span class="in">`xgboost`</span></span>
-<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>  package is installed.</span>
-<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Random forest goals:** a free local tree fallback while XGBoost is not</span>
-<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>  installed.</span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>  history, rest, experience, tournament context, GBM, XGBoost, random forest,</span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>  SVM, and shrinkage baselines.</span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**XGBoost goals and results:** gradient-boosted count and multinomial</span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>  classifiers evaluated against GBM and regression-family challengers.</span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Random forest goals:** a free local tree-ensemble benchmark alongside</span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>  XGBoost, not a replacement for validation.</span>
 <span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>How to read the tables:</span>
 <span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a></span>
@@ -4521,7 +4521,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-525"><a href="#cb16-525" aria-hidden="true" tabindex="-1"></a>The challenger models are useful for two separate reasons:</span>
 <span id="cb16-526"><a href="#cb16-526" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-527"><a href="#cb16-527" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stepwise regression helps simplify the equation while staying interpretable.</span>
-<span id="cb16-528"><a href="#cb16-528" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tree models can capture nonlinear interactions without hand-writing every term.</span>
+<span id="cb16-528"><a href="#cb16-528" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tree models and boosted trees can capture nonlinear interactions without hand-writing every term.</span>
 <span id="cb16-529"><a href="#cb16-529" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Count models better match the fact that goals are non-negative integers.</span>
 <span id="cb16-530"><a href="#cb16-530" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Smooth models can improve accuracy when the relationship between team strength</span>
 <span id="cb16-531"><a href="#cb16-531" aria-hidden="true" tabindex="-1"></a>  and goals is curved rather than straight.</span>

@@ -189,6 +189,9 @@ load_matchday_bundle <- function(root) {
     challenger_metrics = read_csv_if_exists(file.path(model_dir, "model_challenger_metrics.csv")),
     challenger_importance = read_csv_if_exists(file.path(model_dir, "model_challenger_feature_importance.csv")),
     challenger_status = read_csv_if_exists(file.path(model_dir, "model_challenger_status.csv")),
+    expanded_goal_metrics = read_csv_if_exists(file.path(model_dir, "population_expansion_goal_metrics.csv")),
+    expanded_result_metrics = read_csv_if_exists(file.path(model_dir, "population_expansion_result_metrics.csv")),
+    expanded_population_status = read_csv_if_exists(file.path(model_dir, "population_expansion_status.csv")),
     champion_summary = read_csv_if_exists(file.path(model_dir, "world_cup_2026_champion_simulation_summary.csv")),
     champion_metadata = read_csv_if_exists(file.path(model_dir, "world_cup_2026_champion_simulation_metadata.csv"))
   )
@@ -256,6 +259,113 @@ model_agreement <- function(row) {
     return("Model agreement not available yet")
   }
   paste0(sum(votes[usable] == pick), " of ", sum(usable), " models")
+}
+
+model_suite_count <- function(bundle) {
+  names <- character()
+  if (!is.null(bundle$challenger_metrics) && nrow(bundle$challenger_metrics) > 0 && "model" %in% names(bundle$challenger_metrics)) {
+    names <- c(names, as.character(bundle$challenger_metrics$model))
+  }
+  if (!is.null(bundle$expanded_goal_metrics) && nrow(bundle$expanded_goal_metrics) > 0 && "model" %in% names(bundle$expanded_goal_metrics)) {
+    names <- c(names, as.character(bundle$expanded_goal_metrics$model))
+  }
+  if (!is.null(bundle$expanded_result_metrics) && nrow(bundle$expanded_result_metrics) > 0 && "model" %in% names(bundle$expanded_result_metrics)) {
+    names <- c(names, as.character(bundle$expanded_result_metrics$model))
+  }
+  length(unique(names[nzchar(names)]))
+}
+
+best_metric_row <- function(df, metric, validation = NULL) {
+  if (is.null(df) || nrow(df) == 0 || !all(c(metric, "status") %in% names(df))) {
+    return(data.frame())
+  }
+  rows <- df |> dplyr::filter(.data$status == "fit")
+  if (!is.null(validation) && "validation_type" %in% names(rows)) {
+    filtered <- rows |> dplyr::filter(.data$validation_type == validation)
+    if (nrow(filtered) > 0) {
+      rows <- filtered
+    }
+  }
+  if (nrow(rows) == 0) {
+    return(data.frame())
+  }
+  rows |>
+    dplyr::arrange(.data[[metric]]) |>
+    dplyr::slice_head(n = 1)
+}
+
+render_model_suite_strip <- function(bundle, compact = TRUE, base_path = "reports/10_model_challengers.html") {
+  goal_best <- best_metric_row(bundle$expanded_goal_metrics, "test_rmse", "recent_2000_time_2019_plus")
+  result_best <- best_metric_row(bundle$expanded_result_metrics, "test_multiclass_brier", "recent_2000_time_2019_plus")
+  small_best <- if (!is.null(bundle$challenger_metrics) && nrow(bundle$challenger_metrics) > 0) {
+    bundle$challenger_metrics |>
+      dplyr::filter(.data$status == "fit") |>
+      dplyr::arrange(.data$test_rmse) |>
+      dplyr::slice_head(n = 1)
+  } else {
+    data.frame()
+  }
+
+  suite_total <- model_suite_count(bundle)
+  cards <- list(
+    data.frame(
+      label = "Model bench",
+      value = ifelse(suite_total > 0, paste0(suite_total, " models"), "Pending"),
+      note = "OLS, Poisson, KNN, ordinal, multinomial, GAM, GBM, XGBoost, random forest, SVM",
+      stringsAsFactors = FALSE
+    )
+  )
+  if (nrow(goal_best) > 0) {
+    cards[[length(cards) + 1]] <- data.frame(
+      label = "Best goals model",
+      value = goal_best$model[[1]],
+      note = paste0("Recent time split RMSE ", fmt_number(goal_best$test_rmse[[1]], 3)),
+      stringsAsFactors = FALSE
+    )
+  }
+  if (nrow(result_best) > 0) {
+    cards[[length(cards) + 1]] <- data.frame(
+      label = "Best result model",
+      value = result_best$model[[1]],
+      note = paste0("Recent time split Brier ", fmt_number(result_best$test_multiclass_brier[[1]], 3)),
+      stringsAsFactors = FALSE
+    )
+  }
+  if (nrow(small_best) > 0) {
+    cards[[length(cards) + 1]] <- data.frame(
+      label = "Tree challenger",
+      value = small_best$model[[1]],
+      note = paste0("Held-out RMSE ", fmt_number(small_best$test_rmse[[1]], 3)),
+      stringsAsFactors = FALSE
+    )
+  }
+
+  cards <- dplyr::bind_rows(cards)
+  card_html <- vapply(seq_len(nrow(cards)), function(i) {
+    row <- cards[i, ]
+    paste0(
+      '<article class="model-lab-chip">',
+      '<span>', escape_html(row$label[[1]]), '</span>',
+      '<strong>', escape_html(row$value[[1]]), '</strong>',
+      '<small>', escape_html(row$note[[1]]), '</small>',
+      '</article>'
+    )
+  }, character(1))
+
+  class_name <- if (compact) "model-lab-strip model-lab-strip-compact" else "model-lab-strip"
+  paste0(
+    '<section class="', class_name, '" aria-label="Expanded model suite summary">',
+    '<div class="model-lab-copy">',
+    '<span class="section-kicker">Model lab</span>',
+    '<h2>Expanded Forecast Bench</h2>',
+    '<p>The public pick remains the stable production ensemble. The model lab now runs a larger challenger bench and uses backtesting to decide what earns promotion.</p>',
+    '</div>',
+    '<div class="model-lab-grid">',
+    paste(card_html, collapse = ""),
+    '</div>',
+    '<a class="button-secondary model-lab-link" href="', escape_html(base_path), '">Open model comparison</a>',
+    '</section>'
+  )
 }
 
 probability_edge <- function(row) {
@@ -400,9 +510,10 @@ render_forecast_card <- function(row, variant = "standard", initially_open = FAL
     '<dt>Both teams to score</dt><dd>', display_percent(row$both_teams_to_score_prob, 1), '<small>Chance both teams score at least once.</small></dd>',
     '<dt>Yellow cards</dt><dd>', escape_html(yellow_card_text(row)), '</dd>',
     '<dt>Lineups</dt><dd>', escape_html(lineup_text(row)), '</dd>',
-    '<dt>Model votes</dt><dd>OLS: ', escape_html(safe_text(row$ols_predicted_winner, "Not available yet")),
+    '<dt>Production model votes</dt><dd>OLS: ', escape_html(safe_text(row$ols_predicted_winner, "Not available yet")),
     '; Poisson: ', escape_html(safe_text(row$poisson_predicted_winner, "Not available yet")),
     '; Result model: ', escape_html(safe_text(row$ordinal_predicted_winner, "Not available yet")), '</dd>',
+    '<dt>Expanded model bench</dt><dd>Challenger models are evaluated in the Model Lab before any promotion into the public pick.</dd>',
     '<dt>Venue</dt><dd>', escape_html(venue), '</dd>',
     '</dl>',
     '</details>',
@@ -760,6 +871,7 @@ render_methodology_short <- function() {
     '<div><strong>Result probabilities</strong><span>Estimates regulation outcome probabilities from team strength and context, then converts knockout ties into advance probabilities.</span></div>',
     '<div><strong>Score forecast</strong><span>Uses a Poisson goals model to project expected goals and likely scorelines.</span></div>',
     '<div><strong>Similarity check</strong><span>Compares fixtures with similar historical matches as a challenger model.</span></div>',
+    '<div><strong>Expanded model bench</strong><span>Runs multinomial, negative-binomial, GAM, GBM, XGBoost, random-forest, SVM, and stepwise challengers before any promotion decision.</span></div>',
     '</div>',
     '<p class="responsible-note">This is a forecasting and research project. It does not guarantee accuracy, and it should not be treated as financial advice.</p>',
     '</section>'
