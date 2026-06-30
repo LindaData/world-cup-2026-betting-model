@@ -610,10 +610,123 @@
     });
   }
 
+  function initReviewBoard() {
+    document.querySelectorAll("[data-review-root='true']").forEach(function (root) {
+      var board = root.querySelector(".review-board");
+      var sortButtons = Array.from(root.querySelectorAll("[data-review-sort]"));
+      var filterButtons = Array.from(root.querySelectorAll("[data-review-filter]"));
+      var statusNode = root.querySelector("[data-review-status='true']");
+      var emptyNode = root.querySelector("[data-review-empty='true']");
+
+      if (!board || sortButtons.length === 0 || filterButtons.length === 0) {
+        return;
+      }
+
+      var currentMetric = root.getAttribute("data-review-default") || "date";
+      var currentFilter = root.getAttribute("data-review-default-filter") || "all";
+
+      function announce(text) {
+        if (statusNode) {
+          statusNode.textContent = text;
+        }
+      }
+
+      function metricValue(card, metric) {
+        var raw = Number(card.getAttribute("data-review-" + metric));
+        return Number.isFinite(raw) ? raw : -Infinity;
+      }
+
+      function setActiveMetric(metric) {
+        sortButtons.forEach(function (button) {
+          var active = button.getAttribute("data-review-sort") === metric;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function setActiveFilter(filter) {
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-review-filter") === filter;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function matchesFilter(card, filter) {
+        if (filter === "all") {
+          return true;
+        }
+        if (filter === "hit" || filter === "miss") {
+          return card.getAttribute("data-review-grade") === filter;
+        }
+        if (filter === "draw") {
+          return card.getAttribute("data-review-draw") === "true";
+        }
+        if (filter === "knockout") {
+          return card.getAttribute("data-review-knockout") === "true";
+        }
+        return true;
+      }
+
+      function applyReviewState() {
+        var cards = Array.from(board.querySelectorAll("[data-review-card='true']"));
+        cards.sort(function (a, b) {
+          var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
+          if (primary !== 0) {
+            return primary;
+          }
+          return metricValue(b, "date") - metricValue(a, "date");
+        });
+
+        var visibleCount = 0;
+        cards.forEach(function (card) {
+          var show = matchesFilter(card, currentFilter);
+          card.hidden = !show;
+          if (show) {
+            visibleCount += 1;
+          }
+          board.appendChild(card);
+        });
+
+        if (emptyNode) {
+          emptyNode.hidden = visibleCount !== 0;
+        }
+
+        setActiveMetric(currentMetric);
+        setActiveFilter(currentFilter);
+
+        var activeSortButton = sortButtons.find(function (button) {
+          return button.getAttribute("data-review-sort") === currentMetric;
+        });
+        var activeFilterButton = filterButtons.find(function (button) {
+          return button.getAttribute("data-review-filter") === currentFilter;
+        });
+        var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All graded";
+        var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Most recent";
+        announce(filterText + " filter, " + sortText + " order applied.");
+      }
+
+      sortButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentMetric = button.getAttribute("data-review-sort");
+          applyReviewState();
+        });
+      });
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentFilter = button.getAttribute("data-review-filter");
+          applyReviewState();
+        });
+      });
+
+      applyReviewState();
+    });
+  }
+
   ready(function () {
     formatLocalTimes();
     initBracket();
     initTuningLedger();
+    initReviewBoard();
   });
 })();
 </script>

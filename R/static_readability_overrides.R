@@ -422,8 +422,29 @@ render_review_recent_row <- function(row) {
   probability_actual <- safe_number(row$ensemble_probability_actual)
   grade_label <- review_grade_label(correct)
   grade_class <- review_grade_class(correct)
+  grade_key <- if (isTRUE(correct)) "hit" else "miss"
   error_label <- review_error_label(goal_error)
   error_class <- review_error_class(goal_error)
+  confidence <- safe_number(row$prediction_confidence_value)
+  upset_value <- if (is.finite(probability_actual)) 1 - probability_actual else -1
+  date_sort <- suppressWarnings(as.Date(row$date))
+  date_value <- if (is.na(date_sort)) -1 else as.numeric(format(date_sort, "%Y%m%d"))
+  tags <- c(
+    safe_text(row$phase, "Group"),
+    if (isTRUE(row$actual_draw_flag[[1]])) "Level result" else NULL,
+    if (!correct && is.finite(probability_actual) && probability_actual < 0.35) "Upset check" else NULL
+  )
+  tag_html <- if (length(tags) > 0) {
+    paste0(
+      '<div class="review-match-tags">',
+      paste(vapply(tags, function(tag) {
+        paste0('<span class="review-tag">', escape_html(tag), '</span>')
+      }, character(1)), collapse = ""),
+      '</div>'
+    )
+  } else {
+    ""
+  }
   actual <- paste0(
     safe_text(row$actual_winner, "Result pending"),
     " ",
@@ -439,6 +460,11 @@ render_review_recent_row <- function(row) {
   } else {
     "Pending"
   }
+  confidence_text <- if (is.finite(confidence)) {
+    paste0("Forecast confidence ", display_percent(confidence, 1))
+  } else {
+    "Forecast confidence not posted"
+  }
   issue_label <- if (correct) {
     "Stable call"
   } else {
@@ -446,10 +472,11 @@ render_review_recent_row <- function(row) {
   }
 
   paste0(
-    '<article class="review-board-row ', escape_html(grade_class), '">',
+    '<article class="review-board-row ', escape_html(grade_class), '" data-review-card="true" data-review-grade="', escape_html(grade_key), '" data-review-draw="', ifelse(isTRUE(row$actual_draw_flag[[1]]), "true", "false"), '" data-review-knockout="', ifelse(isTRUE(row$is_knockout_flag[[1]]), "true", "false"), '" data-review-date="', escape_html(as.character(date_value)), '" data-review-goalmiss="', escape_html(ifelse(is.finite(goal_error), fmt_number(goal_error, 4), "-1")), '" data-review-confidence="', escape_html(ifelse(is.finite(confidence), fmt_number(100 * confidence, 4), "-1")), '" data-review-upset="', escape_html(ifelse(is.finite(upset_value), fmt_number(100 * upset_value, 4), "-1")), '">',
     '<div class="review-match-cell">',
     '<strong>', escape_html(safe_text(row$match_label, "Match")), '</strong>',
     '<small>', escape_html(safe_text(row$date, "Date pending")), '</small>',
+    tag_html,
     '</div>',
     '<div class="review-result-cell">',
     '<span>Actual</span>',
@@ -463,6 +490,7 @@ render_review_recent_row <- function(row) {
     '</div>',
     '<div class="review-grade-cell">',
     '<span class="review-badge ', escape_html(grade_class), '">', escape_html(grade_label), '</span>',
+    '<small>', escape_html(confidence_text), '</small>',
     '<small>', escape_html(review_row_note(row)), '</small>',
     '</div>',
     '<div class="review-error-cell">',
@@ -582,9 +610,67 @@ render_model_review_section <- function(bundle, compact = FALSE, limit = 8) {
   }
 
   recent <- review |>
-    dplyr::arrange(dplyr::desc(as.Date(.data$date)), dplyr::desc(.data$source_match_id)) |>
-    dplyr::slice_head(n = limit)
-  recent_html <- paste(vapply(seq_len(nrow(recent)), function(i) render_review_recent_row(recent[i, ]), character(1)), collapse = "")
+    dplyr::arrange(dplyr::desc(as.Date(.data$date)), dplyr::desc(.data$source_match_id))
+  recent_limited <- if (compact) {
+    recent |>
+      dplyr::slice_head(n = limit)
+  } else {
+    recent
+  }
+  recent_html <- paste(vapply(seq_len(nrow(recent_limited)), function(i) render_review_recent_row(recent_limited[i, ]), character(1)), collapse = "")
+
+  filter_counts <- list(
+    all = completed,
+    hit = hits,
+    miss = misses,
+    draw = sum(review$actual_draw_flag, na.rm = TRUE),
+    knockout = sum(review$is_knockout_flag, na.rm = TRUE)
+  )
+  filter_buttons <- if (!compact) {
+    buttons <- c(
+      paste0('<button type="button" class="review-board-filter" data-review-filter="all" aria-pressed="true">All graded <span>', escape_html(fmt_integer(filter_counts$all)), '</span></button>'),
+      paste0('<button type="button" class="review-board-filter" data-review-filter="hit" aria-pressed="false">Hits <span>', escape_html(fmt_integer(filter_counts$hit)), '</span></button>'),
+      paste0('<button type="button" class="review-board-filter" data-review-filter="miss" aria-pressed="false">Misses <span>', escape_html(fmt_integer(filter_counts$miss)), '</span></button>'),
+      paste0('<button type="button" class="review-board-filter" data-review-filter="draw" aria-pressed="false">Level results <span>', escape_html(fmt_integer(filter_counts$draw)), '</span></button>')
+    )
+    if (filter_counts$knockout > 0) {
+      buttons <- c(
+        buttons,
+        paste0('<button type="button" class="review-board-filter" data-review-filter="knockout" aria-pressed="false">Knockout <span>', escape_html(fmt_integer(filter_counts$knockout)), '</span></button>')
+      )
+    }
+    paste(buttons, collapse = "")
+  } else {
+    ""
+  }
+
+  review_board_html <- if (compact) {
+    paste0(
+      '<div class="review-board" aria-label="Recent model grading board">',
+      '<div class="review-board-head" aria-hidden="true"><span>Match</span><span>Actual</span><span>Model pick</span><span>Grade</span><span>Score miss</span></div>',
+      recent_html,
+      '</div>'
+    )
+  } else {
+    paste0(
+      '<div class="review-board-shell" data-review-root="true" data-review-default="date" data-review-default-filter="all">',
+      '<div class="review-board-filter-row" role="group" aria-label="Filter graded matches">', filter_buttons, '</div>',
+      '<div class="review-board-controls" role="group" aria-label="Sort graded matches">',
+      '<button type="button" class="review-board-sort" data-review-sort="date" aria-pressed="true">Most recent</button>',
+      '<button type="button" class="review-board-sort" data-review-sort="goalmiss" aria-pressed="false">Biggest score miss</button>',
+      '<button type="button" class="review-board-sort" data-review-sort="confidence" aria-pressed="false">Highest confidence</button>',
+      '<button type="button" class="review-board-sort" data-review-sort="upset" aria-pressed="false">Biggest upset</button>',
+      '</div>',
+      '<p class="review-board-note">Filter completed matches by outcome type, then sort to isolate the misses that should drive the next weighting change.</p>',
+      '<div class="review-board" aria-label="Full model grading board">',
+      '<div class="review-board-head" aria-hidden="true"><span>Match</span><span>Actual</span><span>Model pick</span><span>Grade</span><span>Score miss</span></div>',
+      recent_html,
+      '</div>',
+      '<div class="empty-state review-board-empty" data-review-empty="true" hidden><strong>No graded matches match this filter yet.</strong></div>',
+      '<div class="visually-hidden" aria-live="polite" data-review-status="true"></div>',
+      '</div>'
+    )
+  }
 
   accuracy_note <- if (!is.null(accuracy) && nrow(accuracy) > 0) {
     models <- accuracy |>
@@ -614,10 +700,7 @@ render_model_review_section <- function(bundle, compact = FALSE, limit = 8) {
       '<div class="review-pattern-grid">', pattern_html, '</div>',
       '</div>'
     ) else "",
-    '<div class="review-board" aria-label="Recent model grading board">',
-    '<div class="review-board-head" aria-hidden="true"><span>Match</span><span>Actual</span><span>Model pick</span><span>Grade</span><span>Score miss</span></div>',
-    recent_html,
-    '</div>',
+    review_board_html,
     accuracy_note,
     '<p class="section-note">Reading this board: Hit/Miss grades the model pick. Score miss grades the projected score. A missed pick with a low actual-result probability is useful model feedback, not a failure of the site.</p>',
     '</section>'
@@ -1746,6 +1829,8 @@ render_forecast_dictionary_section <- function() {
       "Win probability",
       "Advance probability",
       "Level after regulation",
+      "Actual result probability",
+      "Upset check",
       "Expected goals",
       "Most likely score",
       "Prediction strength",
@@ -1759,6 +1844,8 @@ render_forecast_dictionary_section <- function() {
       "The model-estimated chance that a team wins the match when a regulation result can stand on its own.",
       "The chance that a team moves on in a knockout match after regulation, extra time, or penalties.",
       "For knockout matches, the chance the score is tied after 90 minutes. It is not treated as a final draw.",
+      "The probability the model assigned to what actually happened. Lower values show results the model did not expect well.",
+      "A plain-language flag for completed matches where the actual result had a low model probability and deserves extra review.",
       "The average score the model expects, not the exact score it promises.",
       "The single scoreline with the highest probability in the score grid.",
       "A plain-language label that groups the top outcome probability into lean, medium, or strong.",

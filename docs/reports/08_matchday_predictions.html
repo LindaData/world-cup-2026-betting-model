@@ -3910,13 +3910,51 @@ Projected totals are coming in below the final scores in this bucket.
 </article>
 </div>
 </div>
-<div class="review-board" aria-label="Recent model grading board">
+<div class="review-board-shell" data-review-root="true" data-review-default="date" data-review-default-filter="all">
+<div class="review-board-filter-row" role="group" aria-label="Filter graded matches">
+<button type="button" class="review-board-filter" data-review-filter="all" aria-pressed="true">
+All graded <span>73</span>
+</button>
+<button type="button" class="review-board-filter" data-review-filter="hit" aria-pressed="false">
+Hits <span>47</span>
+</button>
+<button type="button" class="review-board-filter" data-review-filter="miss" aria-pressed="false">
+Misses <span>26</span>
+</button>
+<button type="button" class="review-board-filter" data-review-filter="draw" aria-pressed="false">
+Level results <span>20</span>
+</button>
+<button type="button" class="review-board-filter" data-review-filter="knockout" aria-pressed="false">
+Knockout <span>1</span>
+</button>
+</div>
+<div class="review-board-controls" role="group" aria-label="Sort graded matches">
+<button type="button" class="review-board-sort" data-review-sort="date" aria-pressed="true">
+Most recent
+</button>
+<button type="button" class="review-board-sort" data-review-sort="goalmiss" aria-pressed="false">
+Biggest score miss
+</button>
+<button type="button" class="review-board-sort" data-review-sort="confidence" aria-pressed="false">
+Highest confidence
+</button>
+<button type="button" class="review-board-sort" data-review-sort="upset" aria-pressed="false">
+Biggest upset
+</button>
+</div>
+<p class="review-board-note">
+Filter completed matches by outcome type, then sort to isolate the misses that should drive the next weighting change.
+</p>
+<div class="review-board" aria-label="Full model grading board">
 <div class="review-board-head" aria-hidden="true">
 <span>Match</span><span>Actual</span><span>Model pick</span><span>Grade</span><span>Score miss</span>
 </div>
-<article class="review-board-row review-hit">
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="true" data-review-date="20260628" data-review-goalmiss="1.6153" data-review-confidence="71.5047" data-review-upset="28.4953">
 <div class="review-match-cell">
 <strong>South Africa vs Canada</strong><small>2026-06-28</small>
+<div class="review-match-tags">
+<span class="review-tag">Knockout</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>Canada 0-1</strong><small>away advances</small>
@@ -3925,15 +3963,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>Canada</strong><small>Actual result probability 71.5%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 71.5%</small><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-watch">Watch</span><strong>1.62 goals</strong><small>Stable call</small>
 </div>
 </article>
-<article class="review-board-row review-hit">
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260627" data-review-goalmiss="0.0997" data-review-confidence="77.0005" data-review-upset="22.9995">
 <div class="review-match-cell">
 <strong>Croatia vs Ghana</strong><small>2026-06-27</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>Croatia 2-1</strong><small>home win</small>
@@ -3942,15 +3983,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>Croatia</strong><small>Actual result probability 77.0%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 77.0%</small><small>Pick landed and the score forecast was close.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-good">Tight</span><strong>0.10 goals</strong><small>Stable call</small>
 </div>
 </article>
-<article class="review-board-row review-hit">
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260627" data-review-goalmiss="0.7518" data-review-confidence="69.4175" data-review-upset="30.5825">
 <div class="review-match-cell">
 <strong>Panama vs England</strong><small>2026-06-27</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>England 0-2</strong><small>away win</small>
@@ -3959,15 +4003,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>England</strong><small>Actual result probability 69.4%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 69.4%</small><small>Pick landed and the score forecast was close.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-good">Tight</span><strong>0.75 goals</strong><small>Stable call</small>
 </div>
 </article>
-<article class="review-board-row review-hit">
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260627" data-review-goalmiss="1.3525" data-review-confidence="55.2051" data-review-upset="44.7949">
 <div class="review-match-cell">
 <strong>DR Congo vs Uzbekistan</strong><small>2026-06-27</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>DR Congo 3-1</strong><small>home win</small>
@@ -3976,15 +4023,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>DR Congo</strong><small>Actual result probability 55.2%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 55.2%</small><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-watch">Watch</span><strong>1.35 goals</strong><small>Stable call</small>
 </div>
 </article>
-<article class="review-board-row review-miss">
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260627" data-review-goalmiss="2.2788" data-review-confidence="46.2130" data-review-upset="72.1708">
 <div class="review-match-cell">
 <strong>Colombia vs Portugal</strong><small>2026-06-27</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>Draw 0-0</strong><small>draw</small>
@@ -3993,15 +4043,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>Colombia</strong><small>Actual result probability 27.8%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-miss">Miss</span><small>Missed a match that finished level. The draw layer needs more weight.</small>
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 46.2%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-bad">Wide</span><strong>2.28 goals</strong><small>Draw underweight</small>
 </div>
 </article>
-<article class="review-board-row review-hit">
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260627" data-review-goalmiss="0.9400" data-review-confidence="79.6908" data-review-upset="20.3092">
 <div class="review-match-cell">
 <strong>Jordan vs Argentina</strong><small>2026-06-27</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>Argentina 1-3</strong><small>away win</small>
@@ -4010,15 +4063,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>Argentina</strong><small>Actual result probability 79.7%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 79.7%</small><small>Pick landed and the score forecast was close.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-good">Tight</span><strong>0.94 goals</strong><small>Stable call</small>
 </div>
 </article>
-<article class="review-board-row review-miss">
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260627" data-review-goalmiss="3.5886" data-review-confidence="40.5902" data-review-upset="71.8109">
 <div class="review-match-cell">
 <strong>Algeria vs Austria</strong><small>2026-06-27</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>Draw 3-3</strong><small>draw</small>
@@ -4027,15 +4083,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>Algeria</strong><small>Actual result probability 28.2%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-miss">Miss</span><small>Missed a match that finished level. The draw layer needs more weight.</small>
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 40.6%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-bad">Wide</span><strong>3.59 goals</strong><small>Draw underweight</small>
 </div>
 </article>
-<article class="review-board-row review-hit">
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260626" data-review-goalmiss="2.0374" data-review-confidence="71.9845" data-review-upset="28.0155">
 <div class="review-match-cell">
 <strong>Senegal vs Iraq</strong><small>2026-06-26</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>Senegal 5-0</strong><small>home win</small>
@@ -4044,15 +4103,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>Senegal</strong><small>Actual result probability 72.0%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 72.0%</small><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-bad">Wide</span><strong>2.04 goals</strong><small>Stable call</small>
 </div>
 </article>
-<article class="review-board-row review-hit">
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260626" data-review-goalmiss="2.6500" data-review-confidence="55.0607" data-review-upset="44.9393">
 <div class="review-match-cell">
 <strong>Norway vs France</strong><small>2026-06-26</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>France 1-4</strong><small>away win</small>
@@ -4061,15 +4123,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>France</strong><small>Actual result probability 55.1%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 55.1%</small><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-bad">Wide</span><strong>2.65 goals</strong><small>Stable call</small>
 </div>
 </article>
-<article class="review-board-row review-hit">
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260626" data-review-goalmiss="1.4986" data-review-confidence="63.6500" data-review-upset="36.3500">
 <div class="review-match-cell">
 <strong>Uruguay vs Spain</strong><small>2026-06-26</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>Spain 0-1</strong><small>away win</small>
@@ -4078,15 +4143,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>Spain</strong><small>Actual result probability 63.6%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 63.6%</small><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-watch">Watch</span><strong>1.50 goals</strong><small>Stable call</small>
 </div>
 </article>
-<article class="review-board-row review-miss">
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260626" data-review-goalmiss="2.6136" data-review-confidence="40.5109" data-review-upset="72.4097">
 <div class="review-match-cell">
 <strong>Cape Verde vs Saudi Arabia</strong><small>2026-06-26</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>Draw 0-0</strong><small>draw</small>
@@ -4095,15 +4163,18 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>Cape Verde</strong><small>Actual result probability 27.6%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-miss">Miss</span><small>Missed a match that finished level. The draw layer needs more weight.</small>
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 40.5%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-bad">Wide</span><strong>2.61 goals</strong><small>Draw underweight</small>
 </div>
 </article>
-<article class="review-board-row review-hit">
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260626" data-review-goalmiss="3.2438" data-review-confidence="64.5214" data-review-upset="35.4786">
 <div class="review-match-cell">
 <strong>New Zealand vs Belgium</strong><small>2026-06-26</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
 </div>
 <div class="review-result-cell">
 <span>Actual</span><strong>Belgium 1-5</strong><small>away win</small>
@@ -4112,12 +4183,1239 @@ Projected totals are coming in below the final scores in this bucket.
 <span>Model pick</span><strong>Belgium</strong><small>Actual result probability 64.5%</small>
 </div>
 <div class="review-grade-cell">
-<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 64.5%</small><small>Pick landed; review the score total before promotion.</small>
 </div>
 <div class="review-error-cell">
 <span class="review-error-chip review-bad">Wide</span><strong>3.24 goals</strong><small>Stable call</small>
 </div>
 </article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260626" data-review-goalmiss="0.4337" data-review-confidence="38.9770" data-review-upset="71.7601">
+<div class="review-match-cell">
+<strong>Egypt vs Iran</strong><small>2026-06-26</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 1-1</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Egypt</strong><small>Actual result probability 28.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 39.0%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.43 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260625" data-review-goalmiss="1.0517" data-review-confidence="73.2801" data-review-upset="26.7199">
+<div class="review-match-cell">
+<strong>Tunisia vs Netherlands</strong><small>2026-06-25</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Netherlands 1-3</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Netherlands</strong><small>Actual result probability 73.3%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 73.3%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.05 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260625" data-review-goalmiss="0.7261" data-review-confidence="67.1268" data-review-upset="79.8508">
+<div class="review-match-cell">
+<strong>Japan vs Sweden</strong><small>2026-06-25</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 1-1</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Japan</strong><small>Actual result probability 20.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 67.1%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.73 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260625" data-review-goalmiss="0.6752" data-review-confidence="41.4301" data-review-upset="58.5699">
+<div class="review-match-cell">
+<strong>Ecuador vs Germany</strong><small>2026-06-25</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Ecuador 2-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Ecuador</strong><small>Actual result probability 41.4%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 41.4%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.68 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260625" data-review-goalmiss="0.8069" data-review-confidence="62.1671" data-review-upset="37.8329">
+<div class="review-match-cell">
+<strong>Curaçao vs Ivory Coast</strong><small>2026-06-25</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Ivory Coast 0-2</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Ivory Coast</strong><small>Actual result probability 62.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 62.2%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.81 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260625" data-review-goalmiss="2.4072" data-review-confidence="41.0061" data-review-upset="71.8367">
+<div class="review-match-cell">
+<strong>Paraguay vs Australia</strong><small>2026-06-25</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 0-0</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Paraguay</strong><small>Actual result probability 28.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 41.0%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.41 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="false" data-review-knockout="false" data-review-date="20260625" data-review-goalmiss="2.7169" data-review-confidence="43.6576" data-review-upset="71.8959">
+<div class="review-match-cell">
+<strong>United States vs Turkey</strong><small>2026-06-25</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Turkey 2-3</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>United States</strong><small>Actual result probability 28.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 43.7%</small><small>Expected total ran 2.72 goals below reality.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.72 goals</strong><small>Score too low</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260624" data-review-goalmiss="2.7496" data-review-confidence="81.1784" data-review-upset="18.8216">
+<div class="review-match-cell">
+<strong>Morocco vs Haiti</strong><small>2026-06-24</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Morocco 4-2</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Morocco</strong><small>Actual result probability 81.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 81.2%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.75 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260624" data-review-goalmiss="0.4172" data-review-confidence="62.6664" data-review-upset="37.3336">
+<div class="review-match-cell">
+<strong>Scotland vs Brazil</strong><small>2026-06-24</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Brazil 0-3</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Brazil</strong><small>Actual result probability 62.7%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 62.7%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.42 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260624" data-review-goalmiss="1.0678" data-review-confidence="62.1141" data-review-upset="37.8859">
+<div class="review-match-cell">
+<strong>Bosnia and Herzegovina vs Qatar</strong><small>2026-06-24</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Bosnia and Herzegovina 3-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Bosnia and Herzegovina</strong><small>Actual result probability 62.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 62.1%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.07 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="false" data-review-knockout="false" data-review-date="20260624" data-review-goalmiss="0.7605" data-review-confidence="36.1666" data-review-upset="65.1933">
+<div class="review-match-cell">
+<strong>Canada vs Switzerland</strong><small>2026-06-24</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Switzerland 1-2</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Canada</strong><small>Actual result probability 34.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 36.2%</small><small>Expected total ran 0.76 goals below reality.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.76 goals</strong><small>Score too low</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="false" data-review-knockout="false" data-review-date="20260624" data-review-goalmiss="1.5915" data-review-confidence="48.4987" data-review-upset="74.9904">
+<div class="review-match-cell">
+<strong>South Africa vs South Korea</strong><small>2026-06-24</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>South Africa 1-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>South Korea</strong><small>Actual result probability 25.0%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 48.5%</small><small>Expected total ran 1.59 goals above reality.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.59 goals</strong><small>Score too open</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260624" data-review-goalmiss="0.1551" data-review-confidence="75.9245" data-review-upset="24.0755">
+<div class="review-match-cell">
+<strong>Mexico vs Czech Republic</strong><small>2026-06-24</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Mexico 3-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Mexico</strong><small>Actual result probability 75.9%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 75.9%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.16 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260623" data-review-goalmiss="1.5664" data-review-confidence="55.4281" data-review-upset="44.5719">
+<div class="review-match-cell">
+<strong>Panama vs Croatia</strong><small>2026-06-23</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Croatia 0-1</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Croatia</strong><small>Actual result probability 55.4%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 55.4%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.57 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260623" data-review-goalmiss="3.4522" data-review-confidence="85.3623" data-review-upset="89.8813">
+<div class="review-match-cell">
+<strong>England vs Ghana</strong><small>2026-06-23</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 0-0</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>England</strong><small>Actual result probability 10.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 85.4%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>3.45 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260623" data-review-goalmiss="1.8659" data-review-confidence="74.3409" data-review-upset="25.6591">
+<div class="review-match-cell">
+<strong>Colombia vs DR Congo</strong><small>2026-06-23</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Colombia 1-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Colombia</strong><small>Actual result probability 74.3%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 74.3%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.87 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260623" data-review-goalmiss="1.8930" data-review-confidence="79.1026" data-review-upset="20.8974">
+<div class="review-match-cell">
+<strong>Portugal vs Uzbekistan</strong><small>2026-06-23</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Portugal 5-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Portugal</strong><small>Actual result probability 79.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 79.1%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.89 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260622" data-review-goalmiss="0.4169" data-review-confidence="51.9794" data-review-upset="48.0206">
+<div class="review-match-cell">
+<strong>Jordan vs Algeria</strong><small>2026-06-22</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Algeria 1-2</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Algeria</strong><small>Actual result probability 52.0%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 52.0%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.42 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260622" data-review-goalmiss="0.8815" data-review-confidence="77.9232" data-review-upset="22.0768">
+<div class="review-match-cell">
+<strong>Argentina vs Austria</strong><small>2026-06-22</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Argentina 2-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Argentina</strong><small>Actual result probability 77.9%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 77.9%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.88 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260622" data-review-goalmiss="2.5469" data-review-confidence="52.8378" data-review-upset="47.1622">
+<div class="review-match-cell">
+<strong>Norway vs Senegal</strong><small>2026-06-22</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Norway 3-2</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Norway</strong><small>Actual result probability 52.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 52.8%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.55 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260622" data-review-goalmiss="0.6538" data-review-confidence="88.4478" data-review-upset="11.5522">
+<div class="review-match-cell">
+<strong>France vs Iraq</strong><small>2026-06-22</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>France 3-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>France</strong><small>Actual result probability 88.4%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 88.4%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.65 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260621" data-review-goalmiss="1.0605" data-review-confidence="71.8149" data-review-upset="82.2623">
+<div class="review-match-cell">
+<strong>Uruguay vs Cape Verde</strong><small>2026-06-21</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 2-2</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Uruguay</strong><small>Actual result probability 17.7%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 71.8%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.06 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260621" data-review-goalmiss="0.4313" data-review-confidence="87.8499" data-review-upset="12.1501">
+<div class="review-match-cell">
+<strong>Spain vs Saudi Arabia</strong><small>2026-06-21</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Spain 4-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Spain</strong><small>Actual result probability 87.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 87.8%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.43 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260621" data-review-goalmiss="1.3655" data-review-confidence="53.1644" data-review-upset="46.8356">
+<div class="review-match-cell">
+<strong>New Zealand vs Egypt</strong><small>2026-06-21</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Egypt 1-3</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Egypt</strong><small>Actual result probability 53.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 53.2%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.37 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260621" data-review-goalmiss="2.4752" data-review-confidence="53.2063" data-review-upset="74.3774">
+<div class="review-match-cell">
+<strong>Belgium vs Iran</strong><small>2026-06-21</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 0-0</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Belgium</strong><small>Actual result probability 25.6%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 53.2%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.48 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260620" data-review-goalmiss="1.1368" data-review-confidence="69.3040" data-review-upset="30.6960">
+<div class="review-match-cell">
+<strong>Tunisia vs Japan</strong><small>2026-06-20</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Japan 0-4</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Japan</strong><small>Actual result probability 69.3%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 69.3%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.14 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260620" data-review-goalmiss="3.1669" data-review-confidence="72.3341" data-review-upset="27.6659">
+<div class="review-match-cell">
+<strong>Netherlands vs Sweden</strong><small>2026-06-20</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Netherlands 5-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Netherlands</strong><small>Actual result probability 72.3%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 72.3%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>3.17 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260620" data-review-goalmiss="3.4439" data-review-confidence="83.5900" data-review-upset="88.8489">
+<div class="review-match-cell">
+<strong>Ecuador vs Curaçao</strong><small>2026-06-20</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 0-0</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Ecuador</strong><small>Actual result probability 11.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 83.6%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>3.44 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260620" data-review-goalmiss="0.4245" data-review-confidence="60.8475" data-review-upset="39.1525">
+<div class="review-match-cell">
+<strong>Germany vs Ivory Coast</strong><small>2026-06-20</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Germany 2-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Germany</strong><small>Actual result probability 60.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 60.8%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.42 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="false" data-review-knockout="false" data-review-date="20260619" data-review-goalmiss="1.4226" data-review-confidence="45.5259" data-review-upset="73.0296">
+<div class="review-match-cell">
+<strong>Turkey vs Paraguay</strong><small>2026-06-19</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Paraguay 0-1</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Turkey</strong><small>Actual result probability 27.0%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 45.5%</small><small>Expected total ran 1.42 goals above reality.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.42 goals</strong><small>Score too open</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260619" data-review-goalmiss="0.2983" data-review-confidence="45.3808" data-review-upset="54.6192">
+<div class="review-match-cell">
+<strong>United States vs Australia</strong><small>2026-06-19</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>United States 2-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>United States</strong><small>Actual result probability 45.4%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 45.4%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.30 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260619" data-review-goalmiss="0.4217" data-review-confidence="84.8085" data-review-upset="15.1915">
+<div class="review-match-cell">
+<strong>Brazil vs Haiti</strong><small>2026-06-19</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Brazil 3-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Brazil</strong><small>Actual result probability 84.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 84.8%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.42 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260619" data-review-goalmiss="1.5047" data-review-confidence="55.3133" data-review-upset="44.6867">
+<div class="review-match-cell">
+<strong>Scotland vs Morocco</strong><small>2026-06-19</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Morocco 0-1</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Morocco</strong><small>Actual result probability 55.3%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 55.3%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.50 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260618" data-review-goalmiss="2.7131" data-review-confidence="82.0981" data-review-upset="17.9019">
+<div class="review-match-cell">
+<strong>Canada vs Qatar</strong><small>2026-06-18</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Canada 6-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Canada</strong><small>Actual result probability 82.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 82.1%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.71 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260618" data-review-goalmiss="1.8752" data-review-confidence="77.8376" data-review-upset="22.1624">
+<div class="review-match-cell">
+<strong>Switzerland vs Bosnia and Herzegovina</strong><small>2026-06-18</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Switzerland 4-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Switzerland</strong><small>Actual result probability 77.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 77.8%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.88 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260618" data-review-goalmiss="1.5874" data-review-confidence="68.4103" data-review-upset="31.5897">
+<div class="review-match-cell">
+<strong>Mexico vs South Korea</strong><small>2026-06-18</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Mexico 1-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Mexico</strong><small>Actual result probability 68.4%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 68.4%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.59 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260618" data-review-goalmiss="0.6542" data-review-confidence="50.8194" data-review-upset="74.1996">
+<div class="review-match-cell">
+<strong>Czech Republic vs South Africa</strong><small>2026-06-18</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 1-1</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Czech Republic</strong><small>Actual result probability 25.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 50.8%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.65 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="false" data-review-knockout="false" data-review-date="20260617" data-review-goalmiss="1.5986" data-review-confidence="41.1393" data-review-upset="68.7260">
+<div class="review-match-cell">
+<strong>Ghana vs Panama</strong><small>2026-06-17</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Ghana 1-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Panama</strong><small>Actual result probability 31.3%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 41.1%</small><small>Expected total ran 1.60 goals above reality.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.60 goals</strong><small>Score too open</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260617" data-review-goalmiss="3.5230" data-review-confidence="61.1322" data-review-upset="38.8678">
+<div class="review-match-cell">
+<strong>England vs Croatia</strong><small>2026-06-17</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>England 4-2</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>England</strong><small>Actual result probability 61.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 61.1%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>3.52 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260617" data-review-goalmiss="1.1992" data-review-confidence="70.2859" data-review-upset="29.7141">
+<div class="review-match-cell">
+<strong>Uzbekistan vs Colombia</strong><small>2026-06-17</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Colombia 1-3</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Colombia</strong><small>Actual result probability 70.3%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 70.3%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.20 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260617" data-review-goalmiss="0.7989" data-review-confidence="71.5988" data-review-upset="81.9737">
+<div class="review-match-cell">
+<strong>Portugal vs DR Congo</strong><small>2026-06-17</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 1-1</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Portugal</strong><small>Actual result probability 18.0%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 71.6%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.80 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260616" data-review-goalmiss="1.1870" data-review-confidence="67.1571" data-review-upset="32.8429">
+<div class="review-match-cell">
+<strong>Austria vs Jordan</strong><small>2026-06-16</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Austria 3-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Austria</strong><small>Actual result probability 67.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 67.2%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.19 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260616" data-review-goalmiss="0.0733" data-review-confidence="78.8775" data-review-upset="21.1225">
+<div class="review-match-cell">
+<strong>Argentina vs Algeria</strong><small>2026-06-16</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Argentina 3-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Argentina</strong><small>Actual result probability 78.9%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 78.9%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.07 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260616" data-review-goalmiss="2.2064" data-review-confidence="66.6006" data-review-upset="33.3994">
+<div class="review-match-cell">
+<strong>Iraq vs Norway</strong><small>2026-06-16</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Norway 1-4</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Norway</strong><small>Actual result probability 66.6%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 66.6%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.21 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260616" data-review-goalmiss="1.1961" data-review-confidence="75.2886" data-review-upset="24.7114">
+<div class="review-match-cell">
+<strong>France vs Senegal</strong><small>2026-06-16</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>France 3-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>France</strong><small>Actual result probability 75.3%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 75.3%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.20 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260615" data-review-goalmiss="0.6332" data-review-confidence="56.8446" data-review-upset="75.8064">
+<div class="review-match-cell">
+<strong>Saudi Arabia vs Uruguay</strong><small>2026-06-15</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 1-1</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Uruguay</strong><small>Actual result probability 24.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 56.8%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.63 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260615" data-review-goalmiss="3.6366" data-review-confidence="88.4971" data-review-upset="91.8666">
+<div class="review-match-cell">
+<strong>Spain vs Cape Verde</strong><small>2026-06-15</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 0-0</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Spain</strong><small>Actual result probability 8.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 88.5%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>3.64 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260615" data-review-goalmiss="1.0958" data-review-confidence="69.5606" data-review-upset="81.1827">
+<div class="review-match-cell">
+<strong>Iran vs New Zealand</strong><small>2026-06-15</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 2-2</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Iran</strong><small>Actual result probability 18.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 69.6%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.10 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260615" data-review-goalmiss="0.5298" data-review-confidence="56.7099" data-review-upset="75.5569">
+<div class="review-match-cell">
+<strong>Belgium vs Egypt</strong><small>2026-06-15</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 1-1</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Belgium</strong><small>Actual result probability 24.4%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 56.7%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.53 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260614" data-review-goalmiss="3.1794" data-review-confidence="63.2249" data-review-upset="36.7751">
+<div class="review-match-cell">
+<strong>Sweden vs Tunisia</strong><small>2026-06-14</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Sweden 5-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Sweden</strong><small>Actual result probability 63.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 63.2%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>3.18 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260614" data-review-goalmiss="1.6510" data-review-confidence="49.3271" data-review-upset="73.0429">
+<div class="review-match-cell">
+<strong>Netherlands vs Japan</strong><small>2026-06-14</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 2-2</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Netherlands</strong><small>Actual result probability 27.0%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 49.3%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.65 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="false" data-review-knockout="false" data-review-date="20260614" data-review-goalmiss="1.4177" data-review-confidence="46.3847" data-review-upset="73.7650">
+<div class="review-match-cell">
+<strong>Ivory Coast vs Ecuador</strong><small>2026-06-14</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Ivory Coast 1-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Ecuador</strong><small>Actual result probability 26.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 46.4%</small><small>Expected total ran 1.42 goals above reality.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.42 goals</strong><small>Score too open</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260614" data-review-goalmiss="4.5422" data-review-confidence="83.8663" data-review-upset="16.1337">
+<div class="review-match-cell">
+<strong>Germany vs Curaçao</strong><small>2026-06-14</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Germany 7-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Germany</strong><small>Actual result probability 83.9%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 83.9%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>4.54 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260613" data-review-goalmiss="0.3949" data-review-confidence="40.6369" data-review-upset="59.3631">
+<div class="review-match-cell">
+<strong>Australia vs Turkey</strong><small>2026-06-13</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Australia 2-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Australia</strong><small>Actual result probability 40.6%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 40.6%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.39 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260613" data-review-goalmiss="1.6163" data-review-confidence="49.1253" data-review-upset="50.8747">
+<div class="review-match-cell">
+<strong>Haiti vs Scotland</strong><small>2026-06-13</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Scotland 0-1</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Scotland</strong><small>Actual result probability 49.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 49.1%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.62 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260613" data-review-goalmiss="0.3295" data-review-confidence="51.4040" data-review-upset="73.4955">
+<div class="review-match-cell">
+<strong>Brazil vs Morocco</strong><small>2026-06-13</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 1-1</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Brazil</strong><small>Actual result probability 26.5%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 51.4%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.33 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260613" data-review-goalmiss="1.1724" data-review-confidence="76.8465" data-review-upset="84.9695">
+<div class="review-match-cell">
+<strong>Qatar vs Switzerland</strong><small>2026-06-13</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 1-1</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Switzerland</strong><small>Actual result probability 15.0%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 76.8%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.17 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260612" data-review-goalmiss="2.6883" data-review-confidence="46.7613" data-review-upset="53.2387">
+<div class="review-match-cell">
+<strong>United States vs Paraguay</strong><small>2026-06-12</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>United States 4-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>United States</strong><small>Actual result probability 46.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 46.8%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.69 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-miss" data-review-card="true" data-review-grade="miss" data-review-draw="true" data-review-knockout="false" data-review-date="20260612" data-review-goalmiss="0.8377" data-review-confidence="72.5929" data-review-upset="82.5072">
+<div class="review-match-cell">
+<strong>Canada vs Bosnia and Herzegovina</strong><small>2026-06-12</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span><span class="review-tag">Level result</span><span class="review-tag">Upset check</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 1-1</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Canada</strong><small>Actual result probability 17.5%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Forecast confidence 72.6%</small><small>Missed a match that finished level. The draw layer needs more weight.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.84 goals</strong><small>Draw underweight</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260611" data-review-goalmiss="0.3750" data-review-confidence="55.0049" data-review-upset="44.9951">
+<div class="review-match-cell">
+<strong>South Korea vs Czech Republic</strong><small>2026-06-11</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>South Korea 2-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>South Korea</strong><small>Actual result probability 55.0%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 55.0%</small><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.38 goals</strong><small>Stable call</small>
+</div>
+</article>
+<article class="review-board-row review-hit" data-review-card="true" data-review-grade="hit" data-review-draw="false" data-review-knockout="false" data-review-date="20260611" data-review-goalmiss="1.0232" data-review-confidence="79.7272" data-review-upset="20.2728">
+<div class="review-match-cell">
+<strong>Mexico vs South Africa</strong><small>2026-06-11</small>
+<div class="review-match-tags">
+<span class="review-tag">Group</span>
+</div>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Mexico 2-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Mexico</strong><small>Actual result probability 79.7%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Forecast confidence 79.7%</small><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.02 goals</strong><small>Stable call</small>
+</div>
+</article>
+</div>
+<div class="empty-state review-board-empty" data-review-empty="true" hidden="">
+<strong>No graded matches match this filter yet.</strong>
+</div>
+<div class="visually-hidden" aria-live="polite" data-review-status="true">
+
+</div>
 </div>
 <p class="review-model-note">
 <strong>Model bench:</strong> Ensemble: 64.4% | OLS goals: 64.4% | Poisson score grid: 64.4% | Ordinal result: 64.4%.
@@ -7061,6 +8359,22 @@ For knockout matches, the chance the score is tied after 90 minutes. It is not t
 </article>
 <article class="dictionary-card">
 <h3 class="anchored">
+Actual result probability
+</h3>
+<p>
+The probability the model assigned to what actually happened. Lower values show results the model did not expect well.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
+Upset check
+</h3>
+<p>
+A plain-language flag for completed matches where the actual result had a low model probability and deserves extra review.
+</p>
+</article>
+<article class="dictionary-card">
+<h3 class="anchored">
 Expected goals
 </h3>
 <p>
@@ -8263,21 +9577,126 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
     });
   }
 
+  function initReviewBoard() {
+    document.querySelectorAll("[data-review-root='true']").forEach(function (root) {
+      var board = root.querySelector(".review-board");
+      var sortButtons = Array.from(root.querySelectorAll("[data-review-sort]"));
+      var filterButtons = Array.from(root.querySelectorAll("[data-review-filter]"));
+      var statusNode = root.querySelector("[data-review-status='true']");
+      var emptyNode = root.querySelector("[data-review-empty='true']");
+
+      if (!board || sortButtons.length === 0 || filterButtons.length === 0) {
+        return;
+      }
+
+      var currentMetric = root.getAttribute("data-review-default") || "date";
+      var currentFilter = root.getAttribute("data-review-default-filter") || "all";
+
+      function announce(text) {
+        if (statusNode) {
+          statusNode.textContent = text;
+        }
+      }
+
+      function metricValue(card, metric) {
+        var raw = Number(card.getAttribute("data-review-" + metric));
+        return Number.isFinite(raw) ? raw : -Infinity;
+      }
+
+      function setActiveMetric(metric) {
+        sortButtons.forEach(function (button) {
+          var active = button.getAttribute("data-review-sort") === metric;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function setActiveFilter(filter) {
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-review-filter") === filter;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function matchesFilter(card, filter) {
+        if (filter === "all") {
+          return true;
+        }
+        if (filter === "hit" || filter === "miss") {
+          return card.getAttribute("data-review-grade") === filter;
+        }
+        if (filter === "draw") {
+          return card.getAttribute("data-review-draw") === "true";
+        }
+        if (filter === "knockout") {
+          return card.getAttribute("data-review-knockout") === "true";
+        }
+        return true;
+      }
+
+      function applyReviewState() {
+        var cards = Array.from(board.querySelectorAll("[data-review-card='true']"));
+        cards.sort(function (a, b) {
+          var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
+          if (primary !== 0) {
+            return primary;
+          }
+          return metricValue(b, "date") - metricValue(a, "date");
+        });
+
+        var visibleCount = 0;
+        cards.forEach(function (card) {
+          var show = matchesFilter(card, currentFilter);
+          card.hidden = !show;
+          if (show) {
+            visibleCount += 1;
+          }
+          board.appendChild(card);
+        });
+
+        if (emptyNode) {
+          emptyNode.hidden = visibleCount !== 0;
+        }
+
+        setActiveMetric(currentMetric);
+        setActiveFilter(currentFilter);
+
+        var activeSortButton = sortButtons.find(function (button) {
+          return button.getAttribute("data-review-sort") === currentMetric;
+        });
+        var activeFilterButton = filterButtons.find(function (button) {
+          return button.getAttribute("data-review-filter") === currentFilter;
+        });
+        var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All graded";
+        var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Most recent";
+        announce(filterText + " filter, " + sortText + " order applied.");
+      }
+
+      sortButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentMetric = button.getAttribute("data-review-sort");
+          applyReviewState();
+        });
+      });
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentFilter = button.getAttribute("data-review-filter");
+          applyReviewState();
+        });
+      });
+
+      applyReviewState();
+    });
+  }
 
   ready(function () {
-
     formatLocalTimes();
-
     initBracket();
-
     initTuningLedger();
-
+    initReviewBoard();
   });
-
 })();
-
 </script>
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
