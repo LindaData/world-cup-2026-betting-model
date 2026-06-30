@@ -582,7 +582,7 @@ render_quick_status <- function(summary) {
   metric_cards(cards)
 }
 
-render_today_section <- function(board, summary, heading = "Today's Forecasts") {
+render_today_section <- function(board, summary, heading = "Current Forecasts") {
   today <- today_board(board)
   upcoming <- future_board(board)
   empty <- "No matches are scheduled today. The next available match is shown below."

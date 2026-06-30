@@ -24,7 +24,7 @@ summary <- bundle$summary
 
 <section class="page-intro prediction-intro">
   <span class="section-kicker">Forecast board</span>
-  <h1>Today's Predictions</h1>
+  <h1>Current Predictions</h1>
   <p>Model pick, probabilities, expected score, and refresh timing for the current board.</p>
 </section>
 
@@ -41,7 +41,7 @@ cat('</section>')
 cat(render_model_market_board(
   board,
   title = "Model Market Board",
-  subtitle = "A sportsbook-style scan of today's slate and the next available matches.",
+  subtitle = "A sportsbook-style scan of the current slate and the next available matches.",
   limit = 10,
   section_id = "model-board"
 ))
@@ -66,7 +66,7 @@ cat(render_upcoming_section(board, limit = 12))
   <a href="#upcoming">Upcoming</a>
   <a href="#bracket">Bracket</a>
   <a href="#champion-outlook">Champion outlook</a>
-  <a href="#model-performance">Accuracy</a>
+  <a href="#model-review">Model review</a>
   <a href="#methodology-details">Methodology</a>
 </nav>
 
@@ -90,6 +90,7 @@ cat(render_champion_section(bundle, compact = FALSE))
 ```
 
 ```{r accuracy, results="asis"}
+cat(render_model_review_section(bundle, compact = FALSE, limit = 12))
 cat(render_performance_section(bundle, compact = FALSE))
 cat(render_challenger_section(bundle, compact = FALSE))
 ```

@@ -258,8 +258,8 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">
         <li>
-    <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-performance">
- <span class="dropdown-text">Model Performance</span></a>
+    <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-review">
+ <span class="dropdown-text">Model Review</span></a>
   </li>
         <li>
     <a class="dropdown-item" href="../reports/07_fixture_predictions.html">
@@ -344,7 +344,7 @@ ul.task-list li input[type="checkbox"] {
 <section class="page-intro prediction-intro">
 <span class="section-kicker">Forecast board</span>
 <h1>
-Today’s Predictions
+Current Predictions
 </h1>
 <p>
 Model pick, probabilities, expected score, and refresh timing for the current board.
@@ -361,7 +361,7 @@ Model pick, probabilities, expected score, and refresh timing for the current bo
 Model Market Board
 </h2>
 <p>
-A sportsbook-style scan of today’s slate and the next available matches.
+A sportsbook-style scan of the current slate and the next available matches.
 </p>
 </div>
 <p class="market-board-note">
@@ -938,7 +938,7 @@ More
 <div class="section-heading">
 <span class="section-kicker">Today</span>
 <h2 class="anchored">
-Today’s Forecasts
+Current Forecasts
 </h2>
 <p>
 Start here for the current slate: model pick, probabilities, expected score, and refresh timing.
@@ -1314,7 +1314,7 @@ Mexico City, Mexico
 Next Match Forecast
 </h2>
 <p>
-The next match after today’s slate is expanded by default so the pick, probabilities, and details are immediately visible.
+The next match after the current slate is expanded by default so the pick, probabilities, and details are immediately visible.
 </p>
 </div>
 <div class="forecast-grid">
@@ -2774,7 +2774,7 @@ Kansas City, United States
 </div>
 </section>
 <nav class="prediction-page-nav" aria-label="Prediction page sections">
-<a href="#model-board">Board</a> <a href="#today">Today</a> <a href="#next-match">Next match</a> <a href="#upcoming">Upcoming</a> <a href="#bracket">Bracket</a> <a href="#champion-outlook">Champion outlook</a> <a href="#model-performance">Accuracy</a> <a href="#methodology-details">Methodology</a>
+<a href="#model-board">Board</a> <a href="#today">Today</a> <a href="#next-match">Next match</a> <a href="#upcoming">Upcoming</a> <a href="#bracket">Bracket</a> <a href="#champion-outlook">Champion outlook</a> <a href="#model-review">Model review</a> <a href="#methodology-details">Methodology</a>
 </nav>
 <section class="decision-panel decision-panel-compact" aria-label="Forecast command center">
 <div class="decision-card decision-card-primary">
@@ -2787,7 +2787,7 @@ Kansas City, United States
 <span>Tournament favorite</span><strong>Argentina</strong><small>27.2% champion probability across 50000 simulations.</small><a href="#champion-outlook">See champion outlook</a>
 </div>
 <div class="decision-card">
-<span>Model reliability</span><strong>64.4%</strong><small>Correct winner/result picks over 73 completed matches.</small><a href="#model-performance">Check accuracy</a>
+<span>Model review</span><strong>64.4%</strong><small>Correct winner/result picks over 73 completed matches.</small><a href="#model-review">Review record</a>
 </div>
 </section>
 <section class="model-lab-strip model-lab-strip-compact" aria-label="Expanded model suite summary">
@@ -3812,6 +3812,257 @@ Simulation method: vectorized static group knockout.
 </p>
 <p class="section-note">
 Later-round fallback: Elo-style strength probability when exact fixture-pair forecasts are not available.
+</p>
+</section>
+<section id="model-review" class="page-section model-review-section">
+<div class="section-heading">
+<span class="section-kicker">Model review</span>
+<h2 class="anchored">
+Where The Model Is Winning And Missing
+</h2>
+<p>
+A post-match grading board that shows hits, misses, score error, and the next places to tune the model. These results are calculated from scored matches only.
+</p>
+</div>
+<div class="review-scoreboard">
+<div class="review-score-card review-score-card-primary">
+<span>Model record</span><strong>47-26</strong><small>64.4% hit rate across 73 graded matches.</small>
+</div>
+<div class="review-score-card">
+<span>Avg score miss</span><strong>1.54 goals</strong><small>Total-goal distance from the final score.</small>
+</div>
+<div class="review-score-card">
+<span>Avg team-goal miss</span><strong>0.89 goals</strong><small>Average absolute miss per team.</small>
+</div>
+<div class="review-score-card">
+<span>Actual result probability</span><strong>51.3%</strong><small>Average probability assigned to what happened.</small>
+</div>
+</div>
+<div class="review-learning-strip" aria-label="Model tuning signals">
+<div>
+<strong>26</strong><span>close score reads</span><small>Final score within one total goal.</small>
+</div>
+<div>
+<strong>20</strong><span>draw or level misses</span><small>Signals where tie probability needs attention.</small>
+</div>
+<div>
+<strong>26</strong><span>upset checks</span><small>Actual outcome had less than 35% model probability.</small>
+</div>
+</div>
+<div class="review-board" aria-label="Recent model grading board">
+<div class="review-board-head" aria-hidden="true">
+<span>Match</span><span>Actual</span><span>Model pick</span><span>Grade</span><span>Score miss</span>
+</div>
+<article class="review-board-row review-hit">
+<div class="review-match-cell">
+<strong>South Africa vs Canada</strong><small>2026-06-28</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Canada 0-1</strong><small>away advances</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Canada</strong><small>Actual result probability 71.5%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.62 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-hit">
+<div class="review-match-cell">
+<strong>Croatia vs Ghana</strong><small>2026-06-27</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Croatia 2-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Croatia</strong><small>Actual result probability 77.0%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.10 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-hit">
+<div class="review-match-cell">
+<strong>Panama vs England</strong><small>2026-06-27</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>England 0-2</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>England</strong><small>Actual result probability 69.4%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.75 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-hit">
+<div class="review-match-cell">
+<strong>DR Congo vs Uzbekistan</strong><small>2026-06-27</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>DR Congo 3-1</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>DR Congo</strong><small>Actual result probability 55.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.35 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-miss">
+<div class="review-match-cell">
+<strong>Colombia vs Portugal</strong><small>2026-06-27</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 0-0</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Colombia</strong><small>Actual result probability 27.8%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Missed the level result. Draw probability needs review.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.28 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-hit">
+<div class="review-match-cell">
+<strong>Jordan vs Argentina</strong><small>2026-06-27</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Argentina 1-3</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Argentina</strong><small>Actual result probability 79.7%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Pick landed and the score forecast was close.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-good">Tight</span><strong>0.94 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-miss">
+<div class="review-match-cell">
+<strong>Algeria vs Austria</strong><small>2026-06-27</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 3-3</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Algeria</strong><small>Actual result probability 28.2%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Missed the level result. Draw probability needs review.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>3.59 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-hit">
+<div class="review-match-cell">
+<strong>Senegal vs Iraq</strong><small>2026-06-26</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Senegal 5-0</strong><small>home win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Senegal</strong><small>Actual result probability 72.0%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.04 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-hit">
+<div class="review-match-cell">
+<strong>Norway vs France</strong><small>2026-06-26</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>France 1-4</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>France</strong><small>Actual result probability 55.1%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.65 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-hit">
+<div class="review-match-cell">
+<strong>Uruguay vs Spain</strong><small>2026-06-26</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Spain 0-1</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Spain</strong><small>Actual result probability 63.6%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-watch">Watch</span><strong>1.50 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-miss">
+<div class="review-match-cell">
+<strong>Cape Verde vs Saudi Arabia</strong><small>2026-06-26</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Draw 0-0</strong><small>draw</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Cape Verde</strong><small>Actual result probability 27.6%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-miss">Miss</span><small>Missed the level result. Draw probability needs review.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>2.61 goals</strong>
+</div>
+</article>
+<article class="review-board-row review-hit">
+<div class="review-match-cell">
+<strong>New Zealand vs Belgium</strong><small>2026-06-26</small>
+</div>
+<div class="review-result-cell">
+<span>Actual</span><strong>Belgium 1-5</strong><small>away win</small>
+</div>
+<div class="review-result-cell">
+<span>Model pick</span><strong>Belgium</strong><small>Actual result probability 64.5%</small>
+</div>
+<div class="review-grade-cell">
+<span class="review-badge review-hit">Hit</span><small>Pick landed; review the score total before promotion.</small>
+</div>
+<div class="review-error-cell">
+<span class="review-error-chip review-bad">Wide</span><strong>3.24 goals</strong>
+</div>
+</article>
+</div>
+<p class="review-model-note">
+<strong>Model bench:</strong> Ensemble: 64.4% | OLS goals: 64.4% | Poisson score grid: 64.4% | Ordinal result: 64.4%.
+</p>
+<p class="section-note">
+Reading this board: Hit/Miss grades the model pick. Score miss grades the projected score. A missed pick with a low actual-result probability is useful model feedback, not a failure of the site.
 </p>
 </section>
 <section id="model-performance" class="page-section performance-section">

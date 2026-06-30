@@ -218,6 +218,243 @@ render_model_market_board <- function(board, title = "Model Board", subtitle = N
   )
 }
 
+review_bool <- function(x) {
+  if (length(x) == 0 || is.null(x)) {
+    return(FALSE)
+  }
+  value <- x[[1]]
+  if (is.logical(value)) {
+    isTRUE(value)
+  } else {
+    tolower(as.character(value)) %in% c("true", "t", "1", "yes", "right", "hit")
+  }
+}
+
+review_col_number <- function(data, column) {
+  if (nrow(data) == 0 || !column %in% names(data)) {
+    return(rep(NA_real_, nrow(data)))
+  }
+  suppressWarnings(as.numeric(data[[column]]))
+}
+
+review_col_logical <- function(data, column) {
+  if (nrow(data) == 0 || !column %in% names(data)) {
+    return(rep(FALSE, nrow(data)))
+  }
+  vapply(seq_len(nrow(data)), function(i) review_bool(data[[column]][i]), logical(1))
+}
+
+review_grade_class <- function(correct) {
+  if (isTRUE(correct)) "review-hit" else "review-miss"
+}
+
+review_grade_label <- function(correct) {
+  if (isTRUE(correct)) "Hit" else "Miss"
+}
+
+review_error_label <- function(value) {
+  if (!is.finite(value)) {
+    return("Pending")
+  }
+  if (value <= 1) {
+    return("Tight")
+  }
+  if (value <= 2) {
+    return("Watch")
+  }
+  "Wide"
+}
+
+review_error_class <- function(value) {
+  if (!is.finite(value)) {
+    return("review-neutral")
+  }
+  if (value <= 1) {
+    return("review-good")
+  }
+  if (value <= 2) {
+    return("review-watch")
+  }
+  "review-bad"
+}
+
+review_row_note <- function(row) {
+  correct <- review_bool(row$ensemble_correct)
+  goal_error <- safe_number(row$poisson_total_goal_error)
+  probability_actual <- safe_number(row$ensemble_probability_actual)
+  actual_result <- tolower(safe_text(row$actual_result, ""))
+  penalty_score <- safe_text(row$penalty_score, "")
+  extra_time_score <- safe_text(row$extra_time_score, "")
+
+  if (correct && is.finite(goal_error) && goal_error <= 1) {
+    return("Pick landed and the score forecast was close.")
+  }
+  if (correct) {
+    return("Pick landed; review the score total before promotion.")
+  }
+  if (grepl("draw", actual_result)) {
+    return("Missed the level result. Draw probability needs review.")
+  }
+  if (nzchar(penalty_score) || nzchar(extra_time_score)) {
+    return("Knockout path changed after regulation.")
+  }
+  if (is.finite(probability_actual) && probability_actual < 0.35) {
+    return("Low-probability result. Treat as an upset check.")
+  }
+  "Pick missed. Review team strength, form, and venue features."
+}
+
+render_review_recent_row <- function(row) {
+  correct <- review_bool(row$ensemble_correct)
+  goal_error <- safe_number(row$poisson_total_goal_error)
+  probability_actual <- safe_number(row$ensemble_probability_actual)
+  grade_label <- review_grade_label(correct)
+  grade_class <- review_grade_class(correct)
+  error_label <- review_error_label(goal_error)
+  error_class <- review_error_class(goal_error)
+  actual <- paste0(
+    safe_text(row$actual_winner, "Result pending"),
+    " ",
+    safe_text(row$actual_score, "")
+  )
+  probability_text <- if (is.finite(probability_actual)) {
+    display_percent(probability_actual, 1)
+  } else {
+    "Not posted"
+  }
+  goal_error_text <- if (is.finite(goal_error)) {
+    paste0(display_number(goal_error, 2), " goals")
+  } else {
+    "Pending"
+  }
+
+  paste0(
+    '<article class="review-board-row ', escape_html(grade_class), '">',
+    '<div class="review-match-cell">',
+    '<strong>', escape_html(safe_text(row$match_label, "Match")), '</strong>',
+    '<small>', escape_html(safe_text(row$date, "Date pending")), '</small>',
+    '</div>',
+    '<div class="review-result-cell">',
+    '<span>Actual</span>',
+    '<strong>', escape_html(actual), '</strong>',
+    '<small>', escape_html(safe_text(row$actual_public_outcome, safe_text(row$actual_result, "Result pending"))), '</small>',
+    '</div>',
+    '<div class="review-result-cell">',
+    '<span>Model pick</span>',
+    '<strong>', escape_html(safe_text(row$ensemble_pick, "Pick pending")), '</strong>',
+    '<small>Actual result probability ', probability_text, '</small>',
+    '</div>',
+    '<div class="review-grade-cell">',
+    '<span class="review-badge ', escape_html(grade_class), '">', escape_html(grade_label), '</span>',
+    '<small>', escape_html(review_row_note(row)), '</small>',
+    '</div>',
+    '<div class="review-error-cell">',
+    '<span class="review-error-chip ', escape_html(error_class), '">', escape_html(error_label), '</span>',
+    '<strong>', escape_html(goal_error_text), '</strong>',
+    '</div>',
+    '</article>'
+  )
+}
+
+render_model_review_section <- function(bundle, compact = FALSE, limit = 8) {
+  detail <- bundle$accuracy_detail
+  accuracy <- bundle$accuracy
+
+  if (is.null(detail) || nrow(detail) == 0) {
+    return(
+      paste0(
+        '<section id="model-review" class="page-section model-review-section">',
+        '<div class="empty-state"><strong>Post-match model review will appear after completed matches are scored.</strong></div>',
+        '</section>'
+      )
+    )
+  }
+
+  correct <- review_col_logical(detail, "ensemble_correct")
+  completed <- length(correct)
+  hits <- sum(correct, na.rm = TRUE)
+  misses <- completed - hits
+  hit_rate <- if (completed > 0) hits / completed else NA_real_
+  goal_error <- review_col_number(detail, "poisson_total_goal_error")
+  team_goal_error <- review_col_number(detail, "poisson_team_goal_mae")
+  actual_probability <- review_col_number(detail, "ensemble_probability_actual")
+  tight_scores <- sum(is.finite(goal_error) & goal_error <= 1, na.rm = TRUE)
+  draw_misses <- if ("actual_result" %in% names(detail)) {
+    sum(!correct & grepl("draw", tolower(as.character(detail$actual_result))), na.rm = TRUE)
+  } else {
+    0
+  }
+  upset_checks <- sum(!correct & is.finite(actual_probability) & actual_probability < 0.35, na.rm = TRUE)
+  avg_goal_error <- if (any(is.finite(goal_error))) mean(goal_error, na.rm = TRUE) else NA_real_
+  avg_team_goal_error <- if (any(is.finite(team_goal_error))) mean(team_goal_error, na.rm = TRUE) else NA_real_
+  average_actual_probability <- if (any(is.finite(actual_probability))) mean(actual_probability, na.rm = TRUE) else NA_real_
+
+  score_cards <- paste0(
+    '<div class="review-score-card review-score-card-primary">',
+    '<span>Model record</span>',
+    '<strong>', escape_html(fmt_integer(hits)), '-', escape_html(fmt_integer(misses)), '</strong>',
+    '<small>', display_percent(hit_rate, 1), ' hit rate across ', escape_html(fmt_integer(completed)), ' graded matches.</small>',
+    '</div>',
+    '<div class="review-score-card">',
+    '<span>Avg score miss</span>',
+    '<strong>', ifelse(is.finite(avg_goal_error), paste0(fmt_number(avg_goal_error, 2), " goals"), "Pending"), '</strong>',
+    '<small>Total-goal distance from the final score.</small>',
+    '</div>',
+    '<div class="review-score-card">',
+    '<span>Avg team-goal miss</span>',
+    '<strong>', ifelse(is.finite(avg_team_goal_error), paste0(fmt_number(avg_team_goal_error, 2), " goals"), "Pending"), '</strong>',
+    '<small>Average absolute miss per team.</small>',
+    '</div>',
+    '<div class="review-score-card">',
+    '<span>Actual result probability</span>',
+    '<strong>', display_percent(average_actual_probability, 1), '</strong>',
+    '<small>Average probability assigned to what happened.</small>',
+    '</div>'
+  )
+
+  learning_cards <- paste0(
+    '<div><strong>', escape_html(fmt_integer(tight_scores)), '</strong><span>close score reads</span><small>Final score within one total goal.</small></div>',
+    '<div><strong>', escape_html(fmt_integer(draw_misses)), '</strong><span>draw or level misses</span><small>Signals where tie probability needs attention.</small></div>',
+    '<div><strong>', escape_html(fmt_integer(upset_checks)), '</strong><span>upset checks</span><small>Actual outcome had less than 35% model probability.</small></div>'
+  )
+
+  recent <- detail |>
+    dplyr::arrange(dplyr::desc(as.Date(.data$date)), dplyr::desc(.data$source_match_id)) |>
+    dplyr::slice_head(n = limit)
+  recent_html <- paste(vapply(seq_len(nrow(recent)), function(i) render_review_recent_row(recent[i, ]), character(1)), collapse = "")
+
+  accuracy_note <- if (!is.null(accuracy) && nrow(accuracy) > 0) {
+    models <- accuracy |>
+      dplyr::mutate(
+        label = paste0(.data$model, ": ", fmt_percent(.data$outcome_accuracy, 1))
+      ) |>
+      dplyr::pull(.data$label)
+    paste0('<p class="review-model-note"><strong>Model bench:</strong> ', escape_html(paste(models, collapse = " | ")), '.</p>')
+  } else {
+    ""
+  }
+
+  compact_class <- if (compact) " model-review-compact" else ""
+
+  paste0(
+    '<section id="model-review" class="page-section model-review-section', compact_class, '">',
+    '<div class="section-heading">',
+    '<span class="section-kicker">Model review</span>',
+    '<h2>Where The Model Is Winning And Missing</h2>',
+    '<p>A post-match grading board that shows hits, misses, score error, and the next places to tune the model. These results are calculated from scored matches only.</p>',
+    '</div>',
+    '<div class="review-scoreboard">', score_cards, '</div>',
+    '<div class="review-learning-strip" aria-label="Model tuning signals">', learning_cards, '</div>',
+    '<div class="review-board" aria-label="Recent model grading board">',
+    '<div class="review-board-head" aria-hidden="true"><span>Match</span><span>Actual</span><span>Model pick</span><span>Grade</span><span>Score miss</span></div>',
+    recent_html,
+    '</div>',
+    accuracy_note,
+    '<p class="section-note">Reading this board: Hit/Miss grades the model pick. Score miss grades the projected score. A missed pick with a low actual-result probability is useful model feedback, not a failure of the site.</p>',
+    '</section>'
+  )
+}
+
 render_forecast_card <- function(row, variant = "standard", initially_open = FALSE) {
   home <- safe_text(row$home_team, "Home team")
   away <- safe_text(row$away_team, "Away team")
@@ -350,7 +587,7 @@ render_home_hero <- function(summary, board) {
       '<div class="hero-pick">',
       '<span>', escape_html(pick_label), '</span>',
       '<strong>', escape_html(safe_text(row$predicted_winner, "No model pick yet")), '</strong>',
-      '<small>', escape_html(prediction_strength(row)), ' strength &middot; ', escape_html(probability_edge(row)), ' edge</small>',
+      '<small>', escape_html(prediction_strength(row)), ' strength / ', escape_html(probability_edge(row)), ' edge</small>',
       '</div>',
       '<div class="hero-prob-list">',
       '<div><span>', escape_html(home_label), '</span><strong>', display_percent(home_prob, 1), '</strong></div>',
@@ -463,12 +700,12 @@ render_forecast_command_center <- function(bundle, board, compact = FALSE, base_
       ensemble <- accuracy |> dplyr::slice_head(n = 1)
     }
     paste0(
-      '<span>Model reliability</span>',
+      '<span>Model review</span>',
       '<strong>', display_percent(ensemble$outcome_accuracy[[1]], 1), '</strong>',
       '<small>Correct winner/result picks over ', escape_html(ensemble$completed_matches[[1]]), ' completed matches.</small>'
     )
   } else {
-    '<span>Model reliability</span><strong>Pending results</strong><small>Accuracy appears after completed matches are scored.</small>'
+    '<span>Model review</span><strong>Pending results</strong><small>Accuracy appears after completed matches are scored.</small>'
   }
 
   today_label <- if (nrow(today) > 0) {
@@ -491,7 +728,7 @@ render_forecast_command_center <- function(bundle, board, compact = FALSE, base_
     '</div>',
     '<div class="decision-card">', next_match_html, '<a href="', escape_html(href("next-match")), '">Open next forecast</a></div>',
     '<div class="decision-card">', champion_html, '<a href="', escape_html(href("champion-outlook")), '">See champion outlook</a></div>',
-    '<div class="decision-card">', accuracy_html, '<a href="', escape_html(href("model-performance")), '">Check accuracy</a></div>',
+    '<div class="decision-card">', accuracy_html, '<a href="', escape_html(href("model-review")), '">Review record</a></div>',
     '</section>'
   )
 }
@@ -500,7 +737,7 @@ render_next_match_section <- function(board) {
   upcoming <- future_board_after_today(board)
   if (nrow(upcoming) == 0) {
     return(
-      '<section id="next-match" class="page-section"><div class="empty-state"><strong>No additional future matches are available after today\'s slate.</strong></div></section>'
+      '<section id="next-match" class="page-section"><div class="empty-state"><strong>No additional future matches are available after the current slate.</strong></div></section>'
     )
   }
 
@@ -509,7 +746,7 @@ render_next_match_section <- function(board) {
     '<div class="section-heading">',
     '<span class="section-kicker">Next match</span>',
     '<h2>Next Match Forecast</h2>',
-    '<p>The next match after today\'s slate is expanded by default so the pick, probabilities, and details are immediately visible.</p>',
+    '<p>The next match after the current slate is expanded by default so the pick, probabilities, and details are immediately visible.</p>',
     '</div>',
     render_forecast_list(upcoming |> dplyr::slice_head(n = 1), "No next match is available.", card_variant = "next"),
     '</section>'

@@ -41,8 +41,8 @@ website:
         text: Coverage
       - text: Methodology
         menu:
-          - href: reports/08_matchday_predictions.qmd#model-performance
-            text: Model Performance
+          - href: reports/08_matchday_predictions.qmd#model-review
+            text: Model Review
           - href: reports/07_fixture_predictions.qmd
             text: Model Overview
           - href: reports/05_poisson_goals_model.qmd

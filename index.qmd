@@ -27,13 +27,14 @@ cat(render_home_hero(summary, board))
 cat(render_quick_status(summary))
 cat(render_model_market_board(
   board,
-  title = "Today's Model Board",
+  title = "Current Model Board",
   subtitle = "A compact sportsbook-style view of the current slate and next available matches.",
   limit = 6,
   section_id = "model-board"
 ))
 cat(render_forecast_command_center(bundle, board, compact = TRUE, base_path = "reports/08_matchday_predictions.html"))
 cat(render_model_suite_strip(bundle, compact = TRUE, base_path = "reports/10_model_challengers.html"))
+cat(render_model_review_section(bundle, compact = TRUE, limit = 5))
 ```
 
 ```{r static-note, results="asis"}
