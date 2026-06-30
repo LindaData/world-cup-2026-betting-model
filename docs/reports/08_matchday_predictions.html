@@ -4322,21 +4322,36 @@ Actual hit rate is within 2.3 points of the stated confidence.
 <div class="tuning-miss-section">
 <div class="tuning-miss-title">
 <h3 class="anchored">
-High-Confidence Misses
+Tuning Ledger
 </h3>
 <p>
-These are the misses worth reviewing first because the model was willing to make a strong public call.
+Worst misses first. Sort the graded sample by severity, confidence, score miss, or recency to decide what to reweight next.
 </p>
 </div>
-<div class="tuning-miss-grid">
-<article class="tuning-miss-card">
+<div class="tuning-ledger-shell" data-ledger-root="true" data-ledger-default="severity">
+<div class="tuning-ledger-controls" role="group" aria-label="Sort tuning ledger">
+<button type="button" class="tuning-ledger-sort" data-ledger-sort="severity" aria-pressed="true">
+Highest priority
+</button>
+<button type="button" class="tuning-ledger-sort" data-ledger-sort="confidence" aria-pressed="false">
+Highest confidence
+</button>
+<button type="button" class="tuning-ledger-sort" data-ledger-sort="goalmiss" aria-pressed="false">
+Biggest score miss
+</button>
+<button type="button" class="tuning-ledger-sort" data-ledger-sort="date" aria-pressed="false">
+Most recent
+</button>
+</div>
+<div class="tuning-miss-grid tuning-ledger-grid" data-ledger-grid="true">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="134.1819" data-ledger-confidence="88.4971" data-ledger-goalmiss="3.6366" data-ledger-date="20260615">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 Spain vs Cape Verde
 </h3>
-<div class="tuning-miss-grid">
+<div class="tuning-miss-grid tuning-ledger-metrics">
 <div>
 <span>Model pick</span><strong>Spain</strong>
 </div>
@@ -4344,10 +4359,22 @@ Spain vs Cape Verde
 <span>Actual</span><strong>Draw 0-0</strong>
 </div>
 <div>
-<span>Top probability</span><strong>88.5%</strong>
+<span>Model confidence</span><strong>88.5%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>8.1%</strong>
 </div>
 <div>
 <span>Score miss</span><strong>3.64 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+3.64 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>1.82 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-15</strong>
 </div>
 </div>
 <p>
@@ -4357,14 +4384,14 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="131.6409" data-ledger-confidence="85.3623" data-ledger-goalmiss="3.4522" data-ledger-date="20260623">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 England vs Ghana
 </h3>
-<div class="tuning-miss-grid">
+<div class="tuning-miss-grid tuning-ledger-metrics">
 <div>
 <span>Model pick</span><strong>England</strong>
 </div>
@@ -4372,10 +4399,22 @@ England vs Ghana
 <span>Actual</span><strong>Draw 0-0</strong>
 </div>
 <div>
-<span>Top probability</span><strong>85.4%</strong>
+<span>Model confidence</span><strong>85.4%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>10.1%</strong>
 </div>
 <div>
 <span>Score miss</span><strong>3.45 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+3.45 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>1.73 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-23</strong>
 </div>
 </div>
 <p>
@@ -4385,14 +4424,14 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="130.9719" data-ledger-confidence="83.5900" data-ledger-goalmiss="3.4439" data-ledger-date="20260620">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
 Ecuador vs Curaçao
 </h3>
-<div class="tuning-miss-grid">
+<div class="tuning-miss-grid tuning-ledger-metrics">
 <div>
 <span>Model pick</span><strong>Ecuador</strong>
 </div>
@@ -4400,11 +4439,23 @@ Ecuador vs Curaçao
 <span>Actual</span><strong>Draw 0-0</strong>
 </div>
 <div>
-<span>Top probability</span><strong>83.6%</strong>
+<span>Model confidence</span><strong>83.6%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>11.2%</strong>
 </div>
 <div>
 <span>Score miss</span><strong>3.44 goals</strong>
 </div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+3.44 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>1.72 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-20</strong>
+</div>
 </div>
 <p>
 Actual result finished level.
@@ -4413,25 +4464,37 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="117.5096" data-ledger-confidence="40.5902" data-ledger-goalmiss="3.5886" data-ledger-date="20260627">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
-Qatar vs Switzerland
+Algeria vs Austria
 </h3>
-<div class="tuning-miss-grid">
+<div class="tuning-miss-grid tuning-ledger-metrics">
 <div>
-<span>Model pick</span><strong>Switzerland</strong>
+<span>Model pick</span><strong>Algeria</strong>
 </div>
 <div>
-<span>Actual</span><strong>Draw 1-1</strong>
+<span>Actual</span><strong>Draw 3-3</strong>
 </div>
 <div>
-<span>Top probability</span><strong>76.8%</strong>
+<span>Model confidence</span><strong>40.6%</strong>
 </div>
 <div>
-<span>Score miss</span><strong>1.17 goals</strong>
+<span>Actual-result prob</span><strong>28.2%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>3.59 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta negative">-3.59 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>1.79 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-27</strong>
 </div>
 </div>
 <p>
@@ -4441,25 +4504,37 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="110.2673" data-ledger-confidence="53.2063" data-ledger-goalmiss="2.4752" data-ledger-date="20260621">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
-Canada vs Bosnia and Herzegovina
+Belgium vs Iran
 </h3>
-<div class="tuning-miss-grid">
+<div class="tuning-miss-grid tuning-ledger-metrics">
 <div>
-<span>Model pick</span><strong>Canada</strong>
+<span>Model pick</span><strong>Belgium</strong>
 </div>
 <div>
-<span>Actual</span><strong>Draw 1-1</strong>
+<span>Actual</span><strong>Draw 0-0</strong>
 </div>
 <div>
-<span>Top probability</span><strong>72.6%</strong>
+<span>Model confidence</span><strong>53.2%</strong>
 </div>
 <div>
-<span>Score miss</span><strong>0.84 goals</strong>
+<span>Actual-result prob</span><strong>25.6%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>2.48 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+2.48 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>1.24 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-21</strong>
 </div>
 </div>
 <p>
@@ -4469,25 +4544,37 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="107.7505" data-ledger-confidence="40.5109" data-ledger-goalmiss="2.6136" data-ledger-date="20260626">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
-Uruguay vs Cape Verde
+Cape Verde vs Saudi Arabia
 </h3>
-<div class="tuning-miss-grid">
+<div class="tuning-miss-grid tuning-ledger-metrics">
 <div>
-<span>Model pick</span><strong>Uruguay</strong>
+<span>Model pick</span><strong>Cape Verde</strong>
 </div>
 <div>
-<span>Actual</span><strong>Draw 2-2</strong>
+<span>Actual</span><strong>Draw 0-0</strong>
 </div>
 <div>
-<span>Top probability</span><strong>71.8%</strong>
+<span>Model confidence</span><strong>40.5%</strong>
 </div>
 <div>
-<span>Score miss</span><strong>1.06 goals</strong>
+<span>Actual-result prob</span><strong>27.6%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>2.61 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+2.61 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>1.31 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-26</strong>
 </div>
 </div>
 <p>
@@ -4497,25 +4584,37 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="105.3362" data-ledger-confidence="46.2130" data-ledger-goalmiss="2.2788" data-ledger-date="20260627">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
-Portugal vs DR Congo
+Colombia vs Portugal
 </h3>
-<div class="tuning-miss-grid">
+<div class="tuning-miss-grid tuning-ledger-metrics">
 <div>
-<span>Model pick</span><strong>Portugal</strong>
+<span>Model pick</span><strong>Colombia</strong>
 </div>
 <div>
-<span>Actual</span><strong>Draw 1-1</strong>
+<span>Actual</span><strong>Draw 0-0</strong>
 </div>
 <div>
-<span>Top probability</span><strong>71.6%</strong>
+<span>Model confidence</span><strong>46.2%</strong>
 </div>
 <div>
-<span>Score miss</span><strong>0.80 goals</strong>
+<span>Actual-result prob</span><strong>27.8%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>2.28 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+2.28 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>1.14 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-27</strong>
 </div>
 </div>
 <p>
@@ -4525,25 +4624,37 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="105.2352" data-ledger-confidence="41.0061" data-ledger-goalmiss="2.4072" data-ledger-date="20260625">
 <div class="tuning-miss-head">
-<span class="review-badge review-miss">Miss</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
 <h3 class="anchored">
-Iran vs New Zealand
+Paraguay vs Australia
 </h3>
-<div class="tuning-miss-grid">
+<div class="tuning-miss-grid tuning-ledger-metrics">
 <div>
-<span>Model pick</span><strong>Iran</strong>
+<span>Model pick</span><strong>Paraguay</strong>
 </div>
 <div>
-<span>Actual</span><strong>Draw 2-2</strong>
+<span>Actual</span><strong>Draw 0-0</strong>
 </div>
 <div>
-<span>Top probability</span><strong>69.6%</strong>
+<span>Model confidence</span><strong>41.0%</strong>
 </div>
 <div>
-<span>Score miss</span><strong>1.10 goals</strong>
+<span>Actual-result prob</span><strong>28.2%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>2.41 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+2.41 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>1.20 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-25</strong>
 </div>
 </div>
 <p>
@@ -4553,6 +4664,10 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
+</div>
+<div class="screen-reader-only" data-ledger-status="true" aria-live="polite">
+
+</div>
 </div>
 </div>
 <p class="section-note">
@@ -6354,7 +6469,6 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
 
   function initBracket() {
-
     var dataNode = document.getElementById("wc-bracket-data");
 
     var root = document.getElementById("model-bracket-root");
@@ -7064,25 +7178,77 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
 
     renderSeeds();
-
     render();
-
   }
 
+  function initTuningLedger() {
+    document.querySelectorAll("[data-ledger-root='true']").forEach(function (root) {
+      var grid = root.querySelector("[data-ledger-grid='true']");
+      var buttons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var statusNode = root.querySelector("[data-ledger-status='true']");
 
+      if (!grid || buttons.length === 0) {
+        return;
+      }
+
+      function announce(text) {
+        if (statusNode) {
+          statusNode.textContent = text;
+        }
+      }
+
+      function metricValue(card, metric) {
+        var raw = Number(card.getAttribute("data-ledger-" + metric));
+        return Number.isFinite(raw) ? raw : -Infinity;
+      }
+
+      function setActive(metric) {
+        buttons.forEach(function (button) {
+          var active = button.getAttribute("data-ledger-sort") === metric;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function sortCards(metric) {
+        var cards = Array.from(grid.querySelectorAll("[data-ledger-card='true']"));
+        cards.sort(function (a, b) {
+          var primary = metricValue(b, metric) - metricValue(a, metric);
+          if (primary !== 0) {
+            return primary;
+          }
+          var secondary = metricValue(b, "severity") - metricValue(a, "severity");
+          if (secondary !== 0) {
+            return secondary;
+          }
+          return metricValue(b, "date") - metricValue(a, "date");
+        });
+        cards.forEach(function (card) {
+          grid.appendChild(card);
+        });
+        setActive(metric);
+        var activeButton = buttons.find(function (button) {
+          return button.getAttribute("data-ledger-sort") === metric;
+        });
+        announce((activeButton ? activeButton.textContent.trim() : "Ledger") + " order applied.");
+      }
+
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          sortCards(button.getAttribute("data-ledger-sort"));
+        });
+      });
+
+      sortCards(root.getAttribute("data-ledger-default") || "severity");
+    });
+  }
 
   ready(function () {
-
     formatLocalTimes();
-
     initBracket();
-
+    initTuningLedger();
   });
-
 })();
-
 </script>
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

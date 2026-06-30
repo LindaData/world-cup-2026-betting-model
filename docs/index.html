@@ -2369,7 +2369,6 @@ Responsible use: this site presents statistical forecasts for education and rese
 
 
   function initBracket() {
-
     var dataNode = document.getElementById("wc-bracket-data");
 
     var root = document.getElementById("model-bracket-root");
@@ -3079,25 +3078,77 @@ Responsible use: this site presents statistical forecasts for education and rese
 
 
     renderSeeds();
-
     render();
-
   }
 
+  function initTuningLedger() {
+    document.querySelectorAll("[data-ledger-root='true']").forEach(function (root) {
+      var grid = root.querySelector("[data-ledger-grid='true']");
+      var buttons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var statusNode = root.querySelector("[data-ledger-status='true']");
 
+      if (!grid || buttons.length === 0) {
+        return;
+      }
+
+      function announce(text) {
+        if (statusNode) {
+          statusNode.textContent = text;
+        }
+      }
+
+      function metricValue(card, metric) {
+        var raw = Number(card.getAttribute("data-ledger-" + metric));
+        return Number.isFinite(raw) ? raw : -Infinity;
+      }
+
+      function setActive(metric) {
+        buttons.forEach(function (button) {
+          var active = button.getAttribute("data-ledger-sort") === metric;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function sortCards(metric) {
+        var cards = Array.from(grid.querySelectorAll("[data-ledger-card='true']"));
+        cards.sort(function (a, b) {
+          var primary = metricValue(b, metric) - metricValue(a, metric);
+          if (primary !== 0) {
+            return primary;
+          }
+          var secondary = metricValue(b, "severity") - metricValue(a, "severity");
+          if (secondary !== 0) {
+            return secondary;
+          }
+          return metricValue(b, "date") - metricValue(a, "date");
+        });
+        cards.forEach(function (card) {
+          grid.appendChild(card);
+        });
+        setActive(metric);
+        var activeButton = buttons.find(function (button) {
+          return button.getAttribute("data-ledger-sort") === metric;
+        });
+        announce((activeButton ? activeButton.textContent.trim() : "Ledger") + " order applied.");
+      }
+
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          sortCards(button.getAttribute("data-ledger-sort"));
+        });
+      });
+
+      sortCards(root.getAttribute("data-ledger-default") || "severity");
+    });
+  }
 
   ready(function () {
-
     formatLocalTimes();
-
     initBracket();
-
+    initTuningLedger();
   });
-
 })();
-
 </script>
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

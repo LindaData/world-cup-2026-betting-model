@@ -3269,6 +3269,42 @@ pre code {
   color: var(--color-muted);
 }
 
+.tuning-ledger-shell {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tuning-ledger-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.tuning-ledger-sort {
+  min-height: 44px;
+  border: 1px solid rgba(16, 42, 67, 0.16);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--color-teal-dark);
+  padding: 0.32rem 0.8rem;
+  font-size: 0.84rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.tuning-ledger-sort[aria-pressed="true"] {
+  border-color: var(--color-teal);
+  background: #edf8f7;
+  color: var(--color-teal-dark);
+}
+
+.tuning-ledger-sort:hover,
+.tuning-ledger-sort:focus-visible {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(15, 107, 104, 0.12);
+  outline: none;
+}
+
 .tuning-miss-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -3278,6 +3314,7 @@ pre code {
 .tuning-miss-card {
   min-width: 0;
   border: 1px solid rgba(16, 42, 67, 0.13);
+  border-top: 4px solid #d7e2ea;
   border-radius: var(--radius-sm);
   background:
     linear-gradient(180deg, rgba(16, 42, 67, 0.03), rgba(255, 255, 255, 0) 34%),
@@ -3286,12 +3323,63 @@ pre code {
   box-shadow: 0 10px 22px rgba(16, 42, 67, 0.045);
 }
 
+.tuning-ledger-card.is-critical {
+  border-top-color: #b42318;
+}
+
+.tuning-ledger-card.is-high {
+  border-top-color: #d97706;
+}
+
+.tuning-ledger-card.is-medium {
+  border-top-color: #0f6b68;
+}
+
+.tuning-ledger-card.is-watch {
+  border-top-color: #7b8794;
+}
+
 .tuning-miss-head {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
   align-items: center;
   margin-bottom: 0.6rem;
+}
+
+.tuning-ledger-priority {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.74rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tuning-ledger-priority.is-critical {
+  border: 1px solid #f1b6ad;
+  background: #fff0ee;
+  color: #b42318;
+}
+
+.tuning-ledger-priority.is-high {
+  border: 1px solid #efd58f;
+  background: #fff8e1;
+  color: #8a5b00;
+}
+
+.tuning-ledger-priority.is-medium {
+  border: 1px solid #bde3df;
+  background: #edf8f7;
+  color: #0f6b68;
+}
+
+.tuning-ledger-priority.is-watch {
+  border: 1px solid #d3dbe4;
+  background: #f4f7fa;
+  color: #52616b;
 }
 
 .tuning-phase-tag {
@@ -3324,12 +3412,24 @@ pre code {
   margin-bottom: 0.7rem;
 }
 
+.tuning-ledger-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
 .tuning-miss-grid strong {
   display: block;
   color: var(--color-navy);
   font-size: 0.98rem;
   line-height: 1.15;
   overflow-wrap: anywhere;
+}
+
+.tuning-ledger-delta.positive {
+  color: #b42318;
+}
+
+.tuning-ledger-delta.negative {
+  color: #0f6b68;
 }
 
 .tuning-miss-card p {
@@ -4546,6 +4646,11 @@ pre code {
 
   .tuning-miss-card .tuning-miss-grid {
     grid-template-columns: 1fr;
+  }
+
+  .tuning-ledger-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .model-disagreement-row {

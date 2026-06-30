@@ -723,6 +723,63 @@ render_tuning_segment_row <- function(row) {
   )
 }
 
+tuning_ledger_severity_score <- function(row) {
+  issue_key <- safe_text(row$issue_key, "")
+  confidence <- safe_number(row$prediction_confidence_value)
+  goal_error <- safe_number(row$poisson_total_goal_error_value)
+  goal_bias <- safe_number(row$total_goal_bias_value)
+
+  issue_points <- switch(
+    issue_key,
+    draw_underweight = 60,
+    favorite_too_strong = 48,
+    knockout_path = 42,
+    score_too_open = 36,
+    score_too_low = 32,
+    team_strength_miss = 26,
+    22
+  )
+  confidence_points <- if (is.finite(confidence)) confidence * 34 else 0
+  goal_points <- if (is.finite(goal_error)) pmin(goal_error, 4) * 8 else 0
+  bias_points <- if (is.finite(goal_bias)) pmin(abs(goal_bias), 3) * 5 else 0
+
+  issue_points + confidence_points + goal_points + bias_points
+}
+
+tuning_ledger_priority_label <- function(score) {
+  if (!is.finite(score)) {
+    return("Review")
+  }
+  if (score >= 95) {
+    return("Critical")
+  }
+  if (score >= 75) {
+    return("High")
+  }
+  if (score >= 55) {
+    return("Medium")
+  }
+  "Watch"
+}
+
+tuning_ledger_priority_state <- function(score) {
+  label <- tuning_ledger_priority_label(score)
+  switch(
+    label,
+    Critical = "critical",
+    High = "high",
+    Medium = "medium",
+    "watch"
+  )
+}
+
+signed_goal_delta_text <- function(value, fallback = "Pending") {
+  if (!is.finite(value)) {
+    return(fallback)
+  }
+  paste0(ifelse(value > 0, "+", ""), fmt_number(value, 2), " goals")
+}
+
 render_tuning_miss_card <- function(row) {
   actual_label <- paste0(
     safe_text(row$actual_winner, "Result pending"),
@@ -736,21 +793,36 @@ render_tuning_miss_card <- function(row) {
   } else {
     "Winner call missed."
   }
+  confidence <- safe_number(row$prediction_confidence_value)
+  actual_prob <- safe_number(row$ensemble_probability_actual_value)
+  goal_error <- safe_number(row$poisson_total_goal_error_value)
+  goal_bias <- safe_number(row$total_goal_bias_value)
+  team_goal_error <- suppressWarnings(as.numeric(row$poisson_team_goal_mae[[1]]))
+  severity_score <- tuning_ledger_severity_score(row)
+  priority_label <- tuning_ledger_priority_label(severity_score)
+  priority_state <- tuning_ledger_priority_state(severity_score)
+  date_value <- suppressWarnings(as.Date(row$date[[1]]))
+  date_sort <- if (!is.na(date_value)) as.integer(format(date_value, "%Y%m%d")) else 0L
 
   paste0(
-    '<article class="tuning-miss-card">',
+    '<article class="tuning-miss-card tuning-ledger-card is-', escape_html(priority_state), '" data-ledger-card="true" data-ledger-severity="', escape_html(fmt_number(severity_score, 4)), '" data-ledger-confidence="', escape_html(ifelse(is.finite(confidence), fmt_number(100 * confidence, 4), "-1")), '" data-ledger-goalmiss="', escape_html(ifelse(is.finite(goal_error), fmt_number(goal_error, 4), "-1")), '" data-ledger-date="', escape_html(as.character(date_sort)), '">',
     '<div class="tuning-miss-head">',
     '<span class="review-badge review-miss">Miss</span>',
+    '<span class="tuning-ledger-priority is-', escape_html(priority_state), '">', escape_html(priority_label), '</span>',
     '<span class="tuning-phase-tag">', escape_html(row$phase[[1]]), '</span>',
     '<span class="tuning-phase-tag">', escape_html(row$confidence_band_label[[1]]), '</span>',
     '<span class="tuning-phase-tag">', escape_html(safe_text(row$issue_label, "Review needed")), '</span>',
     '</div>',
     '<h3>', escape_html(row$match_label[[1]]), '</h3>',
-    '<div class="tuning-miss-grid">',
+    '<div class="tuning-miss-grid tuning-ledger-metrics">',
     '<div><span>Model pick</span><strong>', escape_html(safe_text(row$ensemble_pick, "Pick pending")), '</strong></div>',
     '<div><span>Actual</span><strong>', escape_html(actual_label), '</strong></div>',
-    '<div><span>Top probability</span><strong>', display_percent(row$prediction_confidence_value[[1]], 1), '</strong></div>',
-    '<div><span>Score miss</span><strong>', ifelse(is.finite(row$poisson_total_goal_error_value[[1]]), paste0(fmt_number(row$poisson_total_goal_error_value[[1]], 2), " goals"), "Pending"), '</strong></div>',
+    '<div><span>Model confidence</span><strong>', display_percent(confidence, 1), '</strong></div>',
+    '<div><span>Actual-result prob</span><strong>', display_percent(actual_prob, 1), '</strong></div>',
+    '<div><span>Score miss</span><strong>', ifelse(is.finite(goal_error), paste0(fmt_number(goal_error, 2), " goals"), "Pending"), '</strong></div>',
+    '<div><span>Goal-total bias</span><strong class="tuning-ledger-delta', ifelse(is.finite(goal_bias) && goal_bias > 0, ' positive', ifelse(is.finite(goal_bias) && goal_bias < 0, ' negative', '')), '">', escape_html(signed_goal_delta_text(goal_bias)), '</strong></div>',
+    '<div><span>Team-goal miss</span><strong>', ifelse(is.finite(team_goal_error), paste0(fmt_number(team_goal_error, 2), " goals"), "Pending"), '</strong></div>',
+    '<div><span>Date</span><strong>', escape_html(safe_text(row$date, "Date pending")), '</strong></div>',
     '</div>',
     '<p>', escape_html(miss_note), '</p>',
     '<p class="tuning-miss-next"><strong>Next check:</strong> ', escape_html(safe_text(row$issue_action, "Review the contributing weights and score assumptions.")), '</p>',
@@ -914,9 +986,13 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
   segment_rows <- paste(vapply(seq_len(nrow(segments)), function(i) render_tuning_segment_row(segments[i, , drop = FALSE]), character(1)), collapse = "")
 
   misses <- review |>
-    dplyr::filter(!.data$ensemble_correct_flag) |>
-    dplyr::arrange(dplyr::desc(.data$prediction_confidence_value), dplyr::desc(.data$date)) |>
-    dplyr::slice_head(n = limit)
+    dplyr::filter(!.data$ensemble_correct_flag)
+  if (nrow(misses) > 0) {
+    misses$tuning_severity_score <- vapply(seq_len(nrow(misses)), function(i) tuning_ledger_severity_score(misses[i, , drop = FALSE]), numeric(1))
+    misses <- misses |>
+      dplyr::arrange(dplyr::desc(.data$tuning_severity_score), dplyr::desc(.data$prediction_confidence_value), dplyr::desc(.data$date)) |>
+      dplyr::slice_head(n = limit)
+  }
   miss_cards <- if (nrow(misses) > 0) {
     paste(vapply(seq_len(nrow(misses)), function(i) render_tuning_miss_card(misses[i, , drop = FALSE]), character(1)), collapse = "")
   } else {
@@ -946,10 +1022,19 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
     '</div>',
     '<div class="tuning-miss-section">',
     '<div class="tuning-miss-title">',
-    '<h3>High-Confidence Misses</h3>',
-    '<p>These are the misses worth reviewing first because the model was willing to make a strong public call.</p>',
+    '<h3>Tuning Ledger</h3>',
+    '<p>Worst misses first. Sort the graded sample by severity, confidence, score miss, or recency to decide what to reweight next.</p>',
     '</div>',
-    '<div class="tuning-miss-grid">', miss_cards, '</div>',
+    '<div class="tuning-ledger-shell" data-ledger-root="true" data-ledger-default="severity">',
+    '<div class="tuning-ledger-controls" role="group" aria-label="Sort tuning ledger">',
+    '<button type="button" class="tuning-ledger-sort" data-ledger-sort="severity" aria-pressed="true">Highest priority</button>',
+    '<button type="button" class="tuning-ledger-sort" data-ledger-sort="confidence" aria-pressed="false">Highest confidence</button>',
+    '<button type="button" class="tuning-ledger-sort" data-ledger-sort="goalmiss" aria-pressed="false">Biggest score miss</button>',
+    '<button type="button" class="tuning-ledger-sort" data-ledger-sort="date" aria-pressed="false">Most recent</button>',
+    '</div>',
+    '<div class="tuning-miss-grid tuning-ledger-grid" data-ledger-grid="true">', miss_cards, '</div>',
+    '<div class="screen-reader-only" data-ledger-status="true" aria-live="polite"></div>',
+    '</div>',
     '</div>',
     '<p class="section-note">Current read: the ensemble behaves like a winner-seeking model. Draws are the biggest blind spot in the graded sample, while strong favorite spots are generally solid outside of tied matches.</p>',
     '</section>'
