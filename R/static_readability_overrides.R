@@ -805,7 +805,7 @@ render_tuning_miss_card <- function(row) {
   date_sort <- if (!is.na(date_value)) as.integer(format(date_value, "%Y%m%d")) else 0L
 
   paste0(
-    '<article class="tuning-miss-card tuning-ledger-card is-', escape_html(priority_state), '" data-ledger-card="true" data-ledger-severity="', escape_html(fmt_number(severity_score, 4)), '" data-ledger-confidence="', escape_html(ifelse(is.finite(confidence), fmt_number(100 * confidence, 4), "-1")), '" data-ledger-goalmiss="', escape_html(ifelse(is.finite(goal_error), fmt_number(goal_error, 4), "-1")), '" data-ledger-date="', escape_html(as.character(date_sort)), '">',
+    '<article class="tuning-miss-card tuning-ledger-card is-', escape_html(priority_state), '" data-ledger-card="true" data-ledger-issue="', escape_html(safe_text(row$issue_key, "unknown")), '" data-ledger-severity="', escape_html(fmt_number(severity_score, 4)), '" data-ledger-confidence="', escape_html(ifelse(is.finite(confidence), fmt_number(100 * confidence, 4), "-1")), '" data-ledger-goalmiss="', escape_html(ifelse(is.finite(goal_error), fmt_number(goal_error, 4), "-1")), '" data-ledger-date="', escape_html(as.character(date_sort)), '">',
     '<div class="tuning-miss-head">',
     '<span class="review-badge review-miss">Miss</span>',
     '<span class="tuning-ledger-priority is-', escape_html(priority_state), '">', escape_html(priority_label), '</span>',
@@ -990,13 +990,34 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
   if (nrow(misses) > 0) {
     misses$tuning_severity_score <- vapply(seq_len(nrow(misses)), function(i) tuning_ledger_severity_score(misses[i, , drop = FALSE]), numeric(1))
     misses <- misses |>
-      dplyr::arrange(dplyr::desc(.data$tuning_severity_score), dplyr::desc(.data$prediction_confidence_value), dplyr::desc(.data$date)) |>
-      dplyr::slice_head(n = limit)
+      dplyr::arrange(dplyr::desc(.data$tuning_severity_score), dplyr::desc(.data$prediction_confidence_value), dplyr::desc(.data$date))
   }
   miss_cards <- if (nrow(misses) > 0) {
     paste(vapply(seq_len(nrow(misses)), function(i) render_tuning_miss_card(misses[i, , drop = FALSE]), character(1)), collapse = "")
   } else {
     '<div class="empty-state"><strong>No missed predictions are available yet.</strong></div>'
+  }
+  issue_filters <- if (nrow(misses) > 0) {
+    misses |>
+      dplyr::count(issue_key, issue_label, sort = TRUE)
+  } else {
+    data.frame()
+  }
+  filter_buttons <- if (nrow(issue_filters) > 0) {
+    paste0(
+      '<button type="button" class="tuning-ledger-filter" data-ledger-filter="all" aria-pressed="true">All misses <span>', escape_html(fmt_integer(nrow(misses))), '</span></button>',
+      paste(vapply(seq_len(nrow(issue_filters)), function(i) {
+        row <- issue_filters[i, , drop = FALSE]
+        paste0(
+          '<button type="button" class="tuning-ledger-filter" data-ledger-filter="', escape_html(row$issue_key[[1]]), '" aria-pressed="false">',
+          escape_html(row$issue_label[[1]]),
+          ' <span>', escape_html(fmt_integer(row$n[[1]])), '</span>',
+          '</button>'
+        )
+      }, character(1)), collapse = "")
+    )
+  } else {
+    ""
   }
 
   compact_class <- if (compact) " tuning-watch-compact" else ""
@@ -1023,9 +1044,10 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
     '<div class="tuning-miss-section">',
     '<div class="tuning-miss-title">',
     '<h3>Tuning Ledger</h3>',
-    '<p>Worst misses first. Sort the graded sample by severity, confidence, score miss, or recency to decide what to reweight next.</p>',
+    '<p>Filter by failure mode, then sort the graded sample by severity, confidence, score miss, or recency to decide what to reweight next.</p>',
     '</div>',
-    '<div class="tuning-ledger-shell" data-ledger-root="true" data-ledger-default="severity">',
+    '<div class="tuning-ledger-shell" data-ledger-root="true" data-ledger-default="severity" data-ledger-default-filter="all">',
+    '<div class="tuning-ledger-filter-row" role="group" aria-label="Filter tuning ledger">', filter_buttons, '</div>',
     '<div class="tuning-ledger-controls" role="group" aria-label="Sort tuning ledger">',
     '<button type="button" class="tuning-ledger-sort" data-ledger-sort="severity" aria-pressed="true">Highest priority</button>',
     '<button type="button" class="tuning-ledger-sort" data-ledger-sort="confidence" aria-pressed="false">Highest confidence</button>',
@@ -1033,6 +1055,7 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
     '<button type="button" class="tuning-ledger-sort" data-ledger-sort="date" aria-pressed="false">Most recent</button>',
     '</div>',
     '<div class="tuning-miss-grid tuning-ledger-grid" data-ledger-grid="true">', miss_cards, '</div>',
+    '<div class="empty-state tuning-ledger-empty" data-ledger-empty="true" hidden><strong>No graded misses match this filter yet.</strong></div>',
     '<div class="screen-reader-only" data-ledger-status="true" aria-live="polite"></div>',
     '</div>',
     '</div>',

@@ -516,12 +516,17 @@
   function initTuningLedger() {
     document.querySelectorAll("[data-ledger-root='true']").forEach(function (root) {
       var grid = root.querySelector("[data-ledger-grid='true']");
-      var buttons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var sortButtons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var filterButtons = Array.from(root.querySelectorAll("[data-ledger-filter]"));
       var statusNode = root.querySelector("[data-ledger-status='true']");
+      var emptyNode = root.querySelector("[data-ledger-empty='true']");
 
-      if (!grid || buttons.length === 0) {
+      if (!grid || sortButtons.length === 0) {
         return;
       }
+
+      var currentMetric = root.getAttribute("data-ledger-default") || "severity";
+      var currentFilter = root.getAttribute("data-ledger-default-filter") || "all";
 
       function announce(text) {
         if (statusNode) {
@@ -534,17 +539,24 @@
         return Number.isFinite(raw) ? raw : -Infinity;
       }
 
-      function setActive(metric) {
-        buttons.forEach(function (button) {
+      function setActiveMetric(metric) {
+        sortButtons.forEach(function (button) {
           var active = button.getAttribute("data-ledger-sort") === metric;
           button.setAttribute("aria-pressed", String(active));
         });
       }
 
-      function sortCards(metric) {
+      function setActiveFilter(filter) {
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-ledger-filter") === filter;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function applyLedgerState() {
         var cards = Array.from(grid.querySelectorAll("[data-ledger-card='true']"));
         cards.sort(function (a, b) {
-          var primary = metricValue(b, metric) - metricValue(a, metric);
+          var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
           if (primary !== 0) {
             return primary;
           }
@@ -554,23 +566,47 @@
           }
           return metricValue(b, "date") - metricValue(a, "date");
         });
+        var visibleCount = 0;
         cards.forEach(function (card) {
+          var issue = card.getAttribute("data-ledger-issue") || "";
+          var show = currentFilter === "all" || issue === currentFilter;
+          card.hidden = !show;
+          if (show) {
+            visibleCount += 1;
+          }
           grid.appendChild(card);
         });
-        setActive(metric);
-        var activeButton = buttons.find(function (button) {
-          return button.getAttribute("data-ledger-sort") === metric;
+        if (emptyNode) {
+          emptyNode.hidden = visibleCount !== 0;
+        }
+        setActiveMetric(currentMetric);
+        setActiveFilter(currentFilter);
+        var activeSortButton = sortButtons.find(function (button) {
+          return button.getAttribute("data-ledger-sort") === currentMetric;
         });
-        announce((activeButton ? activeButton.textContent.trim() : "Ledger") + " order applied.");
+        var activeFilterButton = filterButtons.find(function (button) {
+          return button.getAttribute("data-ledger-filter") === currentFilter;
+        });
+        var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All misses";
+        var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Highest priority";
+        announce(filterText + " filter, " + sortText + " order applied.");
       }
 
-      buttons.forEach(function (button) {
+      sortButtons.forEach(function (button) {
         button.addEventListener("click", function () {
-          sortCards(button.getAttribute("data-ledger-sort"));
+          currentMetric = button.getAttribute("data-ledger-sort");
+          applyLedgerState();
         });
       });
 
-      sortCards(root.getAttribute("data-ledger-default") || "severity");
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentFilter = button.getAttribute("data-ledger-filter");
+          applyLedgerState();
+        });
+      });
+
+      applyLedgerState();
     });
   }
 

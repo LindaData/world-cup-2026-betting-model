@@ -2369,6 +2369,7 @@ Responsible use: this site presents statistical forecasts for education and rese
 
 
   function initBracket() {
+
     var dataNode = document.getElementById("wc-bracket-data");
 
     var root = document.getElementById("model-bracket-root");
@@ -2472,67 +2473,125 @@ Responsible use: this site presents statistical forecasts for education and rese
 
 
     function teamStrength(team) {
+
       var elo = team && Number(team.elo);
+
       return Number.isFinite(elo) ? elo : 1500;
+
     }
+
+
 
     function officialWinner(match) {
+
       if (!match || !match.fixture || !match.fixture.officialWinner) {
+
         return null;
+
       }
+
       if (match.teamA && match.teamA.name === match.fixture.officialWinner) {
+
         return match.teamA;
+
       }
+
       if (match.teamB && match.teamB.name === match.fixture.officialWinner) {
+
         return match.teamB;
+
       }
+
       return null;
+
     }
+
+
 
     function teamAAdvanceProbability(match) {
+
       if (match && match.fixture) {
+
         var fixtureProb = Number(match.fixture.teamAAdvanceProb);
+
         if (Number.isFinite(fixtureProb)) {
+
           return fixtureProb;
+
         }
+
       }
+
       var diff = teamStrength(match.teamA) - teamStrength(match.teamB);
+
       return 1 / (1 + Math.pow(10, -diff / 400));
+
     }
 
+
+
     function formatPct(value) {
+
       if (!Number.isFinite(value)) {
+
         return "";
 
       }
 
       return Math.round(value * 100) + "%";
+
     }
+
+
 
     function projectedWinner(match) {
+
       if (!match.teamA && !match.teamB) {
+
         return null;
+
       }
+
       if (match.teamA && !match.teamB) {
+
         return match.teamA;
+
       }
+
       if (!match.teamA && match.teamB) {
+
         return match.teamB;
+
       }
+
       if (match.fixture && match.fixture.modelWinner) {
+
         if (match.teamA && match.teamA.name === match.fixture.modelWinner) {
+
           return match.teamA;
+
         }
+
         if (match.teamB && match.teamB.name === match.fixture.modelWinner) {
+
           return match.teamB;
+
         }
+
       }
+
       return teamAAdvanceProbability(match) >= 0.5 ? match.teamA : match.teamB;
+
     }
 
+
+
     function winnerProbability(match, winner) {
+
       if (!winner) {
+
         return null;
+
       }
 
       if (match.teamA && !match.teamB && winner.name === match.teamA.name) {
@@ -2548,11 +2607,17 @@ Responsible use: this site presents statistical forecasts for education and rese
       }
 
       if (!match.teamA || !match.teamB) {
+
         return null;
+
       }
+
       var pA = teamAAdvanceProbability(match);
+
       return winner.name === match.teamA.name ? pA : 1 - pA;
+
     }
+
 
 
     function matchupText(match) {
@@ -2618,19 +2683,33 @@ Responsible use: this site presents statistical forecasts for education and rese
         currentRound.forEach(function (match, matchIndex) {
 
           var key = roundIndex + "-" + matchIndex;
+
           var validNames = [match.teamA && match.teamA.name, match.teamB && match.teamB.name].filter(Boolean);
+
           if (activePicks === picks && picks[key] && validNames.indexOf(picks[key]) === -1) {
+
             delete picks[key];
+
           }
+
           var pickedName = activePicks[key];
+
           var official = officialWinner(match);
+
           var winner = pickedName
+
             ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
+
             : (official || projectedWinner(match));
+
           var nextMatch = nextRound[Math.floor(matchIndex / 2)];
+
           if (matchIndex % 2 === 0) {
+
             nextMatch.teamA = cloneTeam(winner);
+
           } else {
+
             nextMatch.teamB = cloneTeam(winner);
 
           }
@@ -2681,63 +2760,122 @@ Responsible use: this site presents statistical forecasts for education and rese
 
       }
 
+
+
       var modelRounds = buildRounds({});
+
       var finalMatch = modelRounds[modelRounds.length - 1][0];
+
       var champion = officialWinner(finalMatch) || projectedWinner(finalMatch);
+
       var championProb = winnerProbability(finalMatch, champion);
+
       var completedStats = { matches: 0, hits: 0, misses: 0 };
+
       modelRounds.forEach(function (round) {
+
         round.forEach(function (match) {
+
           var official = officialWinner(match);
+
           if (!official) {
+
             return;
+
           }
+
           completedStats.matches += 1;
+
           var projected = projectedWinner(match);
+
           if (projected && projected.name === official.name) {
+
             completedStats.hits += 1;
+
           } else {
+
             completedStats.misses += 1;
+
           }
+
         });
+
       });
 
+
+
       var summaryCopy = completedStats.matches > 0
+
         ? completedStats.hits + " of " + completedStats.matches + " completed knockout calls still match the model path."
+
         : "Completed knockout results will lock into this path as soon as they are official.";
 
+
+
       modelPathSummary.innerHTML = champion
+
         ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>" + escapeHtml(summaryCopy) + " Completed knockout results stay locked while unresolved matches continue on the current model path.</p></div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
+
         : "<div><span class='section-kicker'>Model path</span><h3>Model path is pending</h3><p>The bracket needs at least one projected finalist before a full path can be shown.</p></div>";
 
+
+
       modelPathRounds.innerHTML = modelRounds.map(function (round, roundIndex) {
+
         var rows = round.map(function (match) {
+
           var official = officialWinner(match);
+
           var winner = official || projectedWinner(match);
+
           var projected = projectedWinner(match);
+
           var probability = winnerProbability(match, winner);
+
           var completedLabel = official
+
             ? ((projected && projected.name === official.name) ? "Official | model held" : "Official | model miss")
+
             : ((roundIndex === 0 ? "Current forecast" : "Projected"));
+
           var detailLabel = official
+
             ? ((match.fixture && match.fixture.actualScore ? match.fixture.actualScore + " | " : "") + (match.fixture && match.fixture.officialOutcome ? match.fixture.officialOutcome : "completed"))
+
             : ("advance probability " + (formatPct(probability) || "pending"));
+
           return "<li>" +
+
             "<span class='model-path-match'>" + escapeHtml(matchupText(match)) + "</span>" +
+
             "<strong>" + escapeHtml(winner ? winner.name : "Pending seed") + "</strong>" +
+
             "<small>" + escapeHtml(completedLabel) + " | " + escapeHtml(detailLabel) + "</small>" +
+
             "</li>";
+
         }).join("");
+
         return "<section class='model-path-round'><h4>" + escapeHtml(roundNames[roundIndex]) + "</h4><ol>" + rows + "</ol></section>";
+
       }).join("");
+
     }
 
+
+
     function teamButton(team, slot, probability, selected, modelSelected, userSelected, officialSelected, roundIndex, matchIndex, locked) {
+
       var button = document.createElement("button");
+
       button.type = "button";
+
       button.className = "bracket-team";
 
+
+
       if (selected) {
+
         button.classList.add("selected");
 
       }
@@ -2747,103 +2885,199 @@ Responsible use: this site presents statistical forecasts for education and rese
         button.classList.add("model-selected");
 
       }
+
       if (userSelected) {
+
         button.classList.add("user-selected");
+
       }
+
       if (officialSelected) {
+
         button.classList.add("official-selected");
+
       }
+
       if (!team) {
+
         button.classList.add("empty");
+
         button.disabled = true;
+
         button.innerHTML = "<span class='team-name'>" + escapeHtml(slot) + "</span><small>Seed unresolved</small>";
+
         return button;
+
       }
+
+
 
       var label = locked ? (officialSelected ? "Official result" : "Eliminated") : (userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender"));
+
       button.innerHTML =
+
         "<span class='team-name'>" + escapeHtml(team.name) + "</span>" +
+
         "<span class='team-meta'>" + escapeHtml(team.seed || "Seed") + " | " + formatPct(probability) + "</span>" +
+
         "<small class='pick-label'>" + escapeHtml(label) + "</small>";
+
       button.setAttribute("aria-label", (locked ? "Official result for " : "Advance ") + team.name + " from " + roundNames[roundIndex]);
+
       if (locked) {
+
         button.disabled = true;
+
       } else {
+
         button.addEventListener("click", function () {
+
           picks[roundIndex + "-" + matchIndex] = team.name;
+
           clearLaterPicks(roundIndex);
+
           announce(team.name + " advanced from " + roundNames[roundIndex] + ".");
+
           render();
+
         });
+
       }
+
       return button;
+
     }
 
+
+
     function matchCard(match, roundIndex, matchIndex) {
+
       var card = document.createElement("article");
+
       card.className = "bracket-match-card";
+
       var pA = match.teamA && match.teamB ? teamAAdvanceProbability(match) : null;
+
       var pB = Number.isFinite(pA) ? 1 - pA : null;
+
       var projected = projectedWinner(match);
+
       var official = officialWinner(match);
+
       var pickedName = picks[roundIndex + "-" + matchIndex];
+
       var selectedName = pickedName || (official ? official.name : (projected && projected.name));
+
       var locked = Boolean(official);
 
+
+
       var label = document.createElement("div");
+
       label.className = "bracket-match-label";
+
       label.textContent = "Match " + (matchIndex + 1);
+
       card.appendChild(label);
+
       card.appendChild(teamButton(
 
         match.teamA,
+
         match.slotA,
+
         pA,
+
         match.teamA && match.teamA.name === selectedName,
+
         !pickedName && !locked && projected && match.teamA && match.teamA.name === projected.name,
+
         pickedName && match.teamA && match.teamA.name === pickedName,
+
         official && match.teamA && match.teamA.name === official.name,
+
         roundIndex,
+
         matchIndex,
+
         locked
+
       ));
+
       card.appendChild(teamButton(
+
         match.teamB,
+
         match.slotB,
+
         pB,
+
         match.teamB && match.teamB.name === selectedName,
+
         !pickedName && !locked && projected && match.teamB && match.teamB.name === projected.name,
+
         pickedName && match.teamB && match.teamB.name === pickedName,
+
         official && match.teamB && match.teamB.name === official.name,
+
         roundIndex,
+
         matchIndex,
+
         locked
+
       ));
+
+
 
       if (match.fixture) {
+
         var note = document.createElement("div");
+
         note.className = "bracket-match-note";
+
         if (official) {
+
           var modelMiss = projected && projected.name !== official.name;
+
           note.classList.add(modelMiss ? "is-miss" : "is-hit");
+
           note.innerHTML = "<strong>Official:</strong> " +
+
             escapeHtml(official.name) +
+
             (match.fixture.actualScore ? " " + escapeHtml(match.fixture.actualScore) : "") +
+
             (match.fixture.officialOutcome ? " | " + escapeHtml(match.fixture.officialOutcome) : "") +
+
             "<span>" + (modelMiss ? "Model miss" : "Model held") + "</span>";
+
         } else {
+
           var pick = projected ? projected.name : "Pending";
+
           var levelText = Number.isFinite(Number(match.fixture.regulationDrawProb)) ? formatPct(Number(match.fixture.regulationDrawProb)) : "pending";
+
           note.classList.add("is-live");
+
           note.innerHTML = "<strong>" + escapeHtml(match.fixture.timing || "Forecast") + ":</strong> " +
+
             escapeHtml(pick) + " " + (formatPct(winnerProbability(match, projected)) || "") +
+
             " <span>Level after 90: " + escapeHtml(levelText) + "</span>";
+
         }
+
         card.appendChild(note);
+
       }
 
+
+
       return card;
+
     }
+
 
 
     function renderSeeds() {
@@ -2987,12 +3221,19 @@ Responsible use: this site presents statistical forecasts for education and rese
 
 
       var finalMatch = rounds[rounds.length - 1][0];
+
       var champion = picks["4-0"]
+
         ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
+
         : (officialWinner(finalMatch) || projectedWinner(finalMatch));
+
       championNode.innerHTML = champion
+
         ? "<span>Projected Champion</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
+
         : "";
+
       renderTabs();
 
       renderModelPathPanel();
@@ -3078,18 +3319,27 @@ Responsible use: this site presents statistical forecasts for education and rese
 
 
     renderSeeds();
+
     render();
+
   }
+
+
 
   function initTuningLedger() {
     document.querySelectorAll("[data-ledger-root='true']").forEach(function (root) {
       var grid = root.querySelector("[data-ledger-grid='true']");
-      var buttons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var sortButtons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var filterButtons = Array.from(root.querySelectorAll("[data-ledger-filter]"));
       var statusNode = root.querySelector("[data-ledger-status='true']");
+      var emptyNode = root.querySelector("[data-ledger-empty='true']");
 
-      if (!grid || buttons.length === 0) {
+      if (!grid || sortButtons.length === 0) {
         return;
       }
+
+      var currentMetric = root.getAttribute("data-ledger-default") || "severity";
+      var currentFilter = root.getAttribute("data-ledger-default-filter") || "all";
 
       function announce(text) {
         if (statusNode) {
@@ -3097,22 +3347,32 @@ Responsible use: this site presents statistical forecasts for education and rese
         }
       }
 
+
+
       function metricValue(card, metric) {
+
         var raw = Number(card.getAttribute("data-ledger-" + metric));
         return Number.isFinite(raw) ? raw : -Infinity;
       }
 
-      function setActive(metric) {
-        buttons.forEach(function (button) {
+      function setActiveMetric(metric) {
+        sortButtons.forEach(function (button) {
           var active = button.getAttribute("data-ledger-sort") === metric;
           button.setAttribute("aria-pressed", String(active));
         });
       }
 
-      function sortCards(metric) {
+      function setActiveFilter(filter) {
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-ledger-filter") === filter;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function applyLedgerState() {
         var cards = Array.from(grid.querySelectorAll("[data-ledger-card='true']"));
         cards.sort(function (a, b) {
-          var primary = metricValue(b, metric) - metricValue(a, metric);
+          var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
           if (primary !== 0) {
             return primary;
           }
@@ -3122,33 +3382,65 @@ Responsible use: this site presents statistical forecasts for education and rese
           }
           return metricValue(b, "date") - metricValue(a, "date");
         });
+        var visibleCount = 0;
         cards.forEach(function (card) {
+          var issue = card.getAttribute("data-ledger-issue") || "";
+          var show = currentFilter === "all" || issue === currentFilter;
+          card.hidden = !show;
+          if (show) {
+            visibleCount += 1;
+          }
           grid.appendChild(card);
         });
-        setActive(metric);
-        var activeButton = buttons.find(function (button) {
-          return button.getAttribute("data-ledger-sort") === metric;
+        if (emptyNode) {
+          emptyNode.hidden = visibleCount !== 0;
+        }
+        setActiveMetric(currentMetric);
+        setActiveFilter(currentFilter);
+        var activeSortButton = sortButtons.find(function (button) {
+          return button.getAttribute("data-ledger-sort") === currentMetric;
         });
-        announce((activeButton ? activeButton.textContent.trim() : "Ledger") + " order applied.");
+        var activeFilterButton = filterButtons.find(function (button) {
+          return button.getAttribute("data-ledger-filter") === currentFilter;
+        });
+        var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All misses";
+        var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Highest priority";
+        announce(filterText + " filter, " + sortText + " order applied.");
       }
 
-      buttons.forEach(function (button) {
+      sortButtons.forEach(function (button) {
         button.addEventListener("click", function () {
-          sortCards(button.getAttribute("data-ledger-sort"));
+          currentMetric = button.getAttribute("data-ledger-sort");
+          applyLedgerState();
         });
       });
 
-      sortCards(root.getAttribute("data-ledger-default") || "severity");
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentFilter = button.getAttribute("data-ledger-filter");
+          applyLedgerState();
+        });
+      });
+
+      applyLedgerState();
     });
   }
 
+
   ready(function () {
+
     formatLocalTimes();
+
     initBracket();
+
     initTuningLedger();
+
   });
+
 })();
+
 </script>
+
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

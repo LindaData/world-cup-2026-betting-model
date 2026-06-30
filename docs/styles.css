@@ -3274,12 +3274,14 @@ pre code {
   gap: var(--space-2);
 }
 
+.tuning-ledger-filter-row,
 .tuning-ledger-controls {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
 }
 
+.tuning-ledger-filter,
 .tuning-ledger-sort {
   min-height: 44px;
   border: 1px solid rgba(16, 42, 67, 0.16);
@@ -3289,7 +3291,34 @@ pre code {
   padding: 0.32rem 0.8rem;
   font-size: 0.84rem;
   font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
   cursor: pointer;
+}
+
+.tuning-ledger-filter span {
+  display: inline-block;
+  min-width: 1.35rem;
+  border-radius: 999px;
+  background: #f4f7fa;
+  color: var(--color-muted);
+  padding: 0.02rem 0.38rem;
+  font-size: 0.74rem;
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+.tuning-ledger-filter[aria-pressed="true"] {
+  border-color: rgba(217, 164, 65, 0.6);
+  background: #fff8e1;
+  color: #7a5600;
+}
+
+.tuning-ledger-filter[aria-pressed="true"] span {
+  background: #ffffff;
+  color: #7a5600;
 }
 
 .tuning-ledger-sort[aria-pressed="true"] {
@@ -3298,6 +3327,8 @@ pre code {
   color: var(--color-teal-dark);
 }
 
+.tuning-ledger-filter:hover,
+.tuning-ledger-filter:focus-visible,
 .tuning-ledger-sort:hover,
 .tuning-ledger-sort:focus-visible {
   border-color: var(--color-teal);
@@ -3430,6 +3461,10 @@ pre code {
 
 .tuning-ledger-delta.negative {
   color: #0f6b68;
+}
+
+.tuning-ledger-empty {
+  margin-top: 0;
 }
 
 .tuning-miss-card p {
@@ -4648,6 +4683,7 @@ pre code {
     grid-template-columns: 1fr;
   }
 
+  .tuning-ledger-filter-row,
   .tuning-ledger-controls {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

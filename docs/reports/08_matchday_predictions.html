@@ -4325,10 +4325,24 @@ Actual hit rate is within 2.3 points of the stated confidence.
 Tuning Ledger
 </h3>
 <p>
-Worst misses first. Sort the graded sample by severity, confidence, score miss, or recency to decide what to reweight next.
+Filter by failure mode, then sort the graded sample by severity, confidence, score miss, or recency to decide what to reweight next.
 </p>
 </div>
-<div class="tuning-ledger-shell" data-ledger-root="true" data-ledger-default="severity">
+<div class="tuning-ledger-shell" data-ledger-root="true" data-ledger-default="severity" data-ledger-default-filter="all">
+<div class="tuning-ledger-filter-row" role="group" aria-label="Filter tuning ledger">
+<button type="button" class="tuning-ledger-filter" data-ledger-filter="all" aria-pressed="true">
+All misses <span>26</span>
+</button>
+<button type="button" class="tuning-ledger-filter" data-ledger-filter="draw_underweight" aria-pressed="false">
+Draw underweight <span>20</span>
+</button>
+<button type="button" class="tuning-ledger-filter" data-ledger-filter="score_too_open" aria-pressed="false">
+Score too open <span>4</span>
+</button>
+<button type="button" class="tuning-ledger-filter" data-ledger-filter="score_too_low" aria-pressed="false">
+Score too low <span>2</span>
+</button>
+</div>
 <div class="tuning-ledger-controls" role="group" aria-label="Sort tuning ledger">
 <button type="button" class="tuning-ledger-sort" data-ledger-sort="severity" aria-pressed="true">
 Highest priority
@@ -4344,7 +4358,7 @@ Most recent
 </button>
 </div>
 <div class="tuning-miss-grid tuning-ledger-grid" data-ledger-grid="true">
-<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="134.1819" data-ledger-confidence="88.4971" data-ledger-goalmiss="3.6366" data-ledger-date="20260615">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="134.1819" data-ledger-confidence="88.4971" data-ledger-goalmiss="3.6366" data-ledger-date="20260615">
 <div class="tuning-miss-head">
 <span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
@@ -4384,7 +4398,7 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="131.6409" data-ledger-confidence="85.3623" data-ledger-goalmiss="3.4522" data-ledger-date="20260623">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="131.6409" data-ledger-confidence="85.3623" data-ledger-goalmiss="3.4522" data-ledger-date="20260623">
 <div class="tuning-miss-head">
 <span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
@@ -4424,7 +4438,7 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="130.9719" data-ledger-confidence="83.5900" data-ledger-goalmiss="3.4439" data-ledger-date="20260620">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="130.9719" data-ledger-confidence="83.5900" data-ledger-goalmiss="3.4439" data-ledger-date="20260620">
 <div class="tuning-miss-head">
 <span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
@@ -4464,7 +4478,7 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="117.5096" data-ledger-confidence="40.5902" data-ledger-goalmiss="3.5886" data-ledger-date="20260627">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="117.5096" data-ledger-confidence="40.5902" data-ledger-goalmiss="3.5886" data-ledger-date="20260627">
 <div class="tuning-miss-head">
 <span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
@@ -4504,7 +4518,7 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="110.2673" data-ledger-confidence="53.2063" data-ledger-goalmiss="2.4752" data-ledger-date="20260621">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="110.2673" data-ledger-confidence="53.2063" data-ledger-goalmiss="2.4752" data-ledger-date="20260621">
 <div class="tuning-miss-head">
 <span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
@@ -4544,7 +4558,7 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="107.7505" data-ledger-confidence="40.5109" data-ledger-goalmiss="2.6136" data-ledger-date="20260626">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="107.7505" data-ledger-confidence="40.5109" data-ledger-goalmiss="2.6136" data-ledger-date="20260626">
 <div class="tuning-miss-head">
 <span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
@@ -4584,7 +4598,7 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="105.3362" data-ledger-confidence="46.2130" data-ledger-goalmiss="2.2788" data-ledger-date="20260627">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="105.3362" data-ledger-confidence="46.2130" data-ledger-goalmiss="2.2788" data-ledger-date="20260627">
 <div class="tuning-miss-head">
 <span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
@@ -4624,7 +4638,7 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
-<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-severity="105.2352" data-ledger-confidence="41.0061" data-ledger-goalmiss="2.4072" data-ledger-date="20260625">
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="105.2352" data-ledger-confidence="41.0061" data-ledger-goalmiss="2.4072" data-ledger-date="20260625">
 <div class="tuning-miss-head">
 <span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Draw underweight</span>
 </div>
@@ -4664,6 +4678,729 @@ Actual result finished level.
 <strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
 </p>
 </article>
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="101.3694" data-ledger-confidence="76.8465" data-ledger-goalmiss="1.1724" data-ledger-date="20260613">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Qatar vs Switzerland
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Switzerland</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>76.8%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>15.0%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.17 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+1.17 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.95 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-13</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="98.2339" data-ledger-confidence="49.3271" data-ledger-goalmiss="1.6510" data-ledger-date="20260614">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Netherlands vs Japan
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Netherlands</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 2-2</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>49.3%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>27.0%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.65 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta negative">-1.65 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.83 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-14</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="98.2030" data-ledger-confidence="71.8149" data-ledger-goalmiss="1.0605" data-ledger-date="20260621">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Uruguay vs Cape Verde
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Uruguay</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 2-2</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>71.8%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>17.7%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.06 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta negative">-1.06 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.78 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-21</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="97.8961" data-ledger-confidence="69.5606" data-ledger-goalmiss="1.0958" data-ledger-date="20260615">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Iran vs New Zealand
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Iran</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 2-2</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>69.6%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>18.8%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.10 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta negative">-1.10 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.72 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-15</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-critical" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="95.5712" data-ledger-confidence="72.5929" data-ledger-goalmiss="0.8377" data-ledger-date="20260612">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-critical">Critical</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Canada vs Bosnia and Herzegovina
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Canada</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>72.6%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>17.5%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.84 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+0.84 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.77 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-12</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-high" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="94.7287" data-ledger-confidence="71.5988" data-ledger-goalmiss="0.7989" data-ledger-date="20260617">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-high">High</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Portugal vs DR Congo
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Portugal</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>71.6%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>18.0%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.80 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+0.80 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.75 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-17</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-high" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="92.2626" data-ledger-confidence="67.1268" data-ledger-goalmiss="0.7261" data-ledger-date="20260625">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-high">High</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Strong</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Japan vs Sweden
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Japan</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>67.1%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>20.1%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.73 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+0.73 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.64 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-25</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-high" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="87.5583" data-ledger-confidence="56.8446" data-ledger-goalmiss="0.6332" data-ledger-date="20260615">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-high">High</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Saudi Arabia vs Uruguay
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Uruguay</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>56.8%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>24.2%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.63 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+0.63 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.43 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-15</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-high" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="86.1693" data-ledger-confidence="56.7099" data-ledger-goalmiss="0.5298" data-ledger-date="20260615">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-high">High</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Belgium vs Egypt
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Belgium</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>56.7%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>24.4%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.53 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+0.53 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.41 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-15</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-high" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="85.7829" data-ledger-confidence="50.8194" data-ledger-goalmiss="0.6542" data-ledger-date="20260618">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-high">High</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Czech Republic vs South Africa
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Czech Republic</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>50.8%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>25.8%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.65 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+0.65 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.33 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-18</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-high" data-ledger-card="true" data-ledger-issue="score_too_low" data-ledger-severity="82.1631" data-ledger-confidence="43.6576" data-ledger-goalmiss="2.7169" data-ledger-date="20260625">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-high">High</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Score too low</span>
+</div>
+<h3 class="anchored">
+United States vs Turkey
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>United States</strong>
+</div>
+<div>
+<span>Actual</span><strong>Turkey 2-3</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>43.7%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>28.1%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>2.72 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta negative">-2.72 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>1.36 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-25</strong>
+</div>
+</div>
+<p>
+Winner call missed.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Allow more attacking upside where the model is keeping totals too low.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-high" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="81.7605" data-ledger-confidence="51.4040" data-ledger-goalmiss="0.3295" data-ledger-date="20260613">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-high">High</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Brazil vs Morocco
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Brazil</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>51.4%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>26.5%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.33 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+0.33 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.30 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-13</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-high" data-ledger-card="true" data-ledger-issue="draw_underweight" data-ledger-severity="78.8909" data-ledger-confidence="38.9770" data-ledger-goalmiss="0.4337" data-ledger-date="20260626">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-high">High</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Draw underweight</span>
+</div>
+<h3 class="anchored">
+Egypt vs Iran
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Egypt</strong>
+</div>
+<div>
+<span>Actual</span><strong>Draw 1-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>39.0%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>28.2%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.43 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+0.43 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.22 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-26</strong>
+</div>
+</div>
+<p>
+Actual result finished level.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Lift draw probability and compress winner edges in balanced matches.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-medium" data-ledger-card="true" data-ledger-issue="score_too_open" data-ledger-severity="73.1792" data-ledger-confidence="48.4987" data-ledger-goalmiss="1.5915" data-ledger-date="20260624">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-medium">Medium</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Score too open</span>
+</div>
+<h3 class="anchored">
+South Africa vs South Korea
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>South Korea</strong>
+</div>
+<div>
+<span>Actual</span><strong>South Africa 1-0</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>48.5%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>25.0%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.59 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+1.59 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.80 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-24</strong>
+</div>
+</div>
+<p>
+Winner call missed.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Compress goal totals in slower matches and stronger-defence spots.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-medium" data-ledger-card="true" data-ledger-issue="score_too_open" data-ledger-severity="70.7686" data-ledger-confidence="41.1393" data-ledger-goalmiss="1.5986" data-ledger-date="20260617">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-medium">Medium</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Score too open</span>
+</div>
+<h3 class="anchored">
+Ghana vs Panama
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Panama</strong>
+</div>
+<div>
+<span>Actual</span><strong>Ghana 1-0</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>41.1%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>31.3%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.60 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+1.60 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.80 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-17</strong>
+</div>
+</div>
+<p>
+Winner call missed.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Compress goal totals in slower matches and stronger-defence spots.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-medium" data-ledger-card="true" data-ledger-issue="score_too_open" data-ledger-severity="70.2011" data-ledger-confidence="46.3847" data-ledger-goalmiss="1.4177" data-ledger-date="20260614">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-medium">Medium</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Score too open</span>
+</div>
+<h3 class="anchored">
+Ivory Coast vs Ecuador
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Ecuador</strong>
+</div>
+<div>
+<span>Actual</span><strong>Ivory Coast 1-0</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>46.4%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>26.2%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.42 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+1.42 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.71 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-14</strong>
+</div>
+</div>
+<p>
+Winner call missed.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Compress goal totals in slower matches and stronger-defence spots.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-medium" data-ledger-card="true" data-ledger-issue="score_too_open" data-ledger-severity="69.9723" data-ledger-confidence="45.5259" data-ledger-goalmiss="1.4226" data-ledger-date="20260619">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-medium">Medium</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Medium</span><span class="tuning-phase-tag">Score too open</span>
+</div>
+<h3 class="anchored">
+Turkey vs Paraguay
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Turkey</strong>
+</div>
+<div>
+<span>Actual</span><strong>Paraguay 0-1</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>45.5%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>27.0%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>1.42 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta positive">+1.42 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.71 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-19</strong>
+</div>
+</div>
+<p>
+Winner call missed.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Compress goal totals in slower matches and stronger-defence spots.
+</p>
+</article>
+<article class="tuning-miss-card tuning-ledger-card is-watch" data-ledger-card="true" data-ledger-issue="score_too_low" data-ledger-severity="54.1832" data-ledger-confidence="36.1666" data-ledger-goalmiss="0.7605" data-ledger-date="20260624">
+<div class="tuning-miss-head">
+<span class="review-badge review-miss">Miss</span><span class="tuning-ledger-priority is-watch">Watch</span><span class="tuning-phase-tag">Group</span><span class="tuning-phase-tag">Lean</span><span class="tuning-phase-tag">Score too low</span>
+</div>
+<h3 class="anchored">
+Canada vs Switzerland
+</h3>
+<div class="tuning-miss-grid tuning-ledger-metrics">
+<div>
+<span>Model pick</span><strong>Canada</strong>
+</div>
+<div>
+<span>Actual</span><strong>Switzerland 1-2</strong>
+</div>
+<div>
+<span>Model confidence</span><strong>36.2%</strong>
+</div>
+<div>
+<span>Actual-result prob</span><strong>34.8%</strong>
+</div>
+<div>
+<span>Score miss</span><strong>0.76 goals</strong>
+</div>
+<div>
+<span>Goal-total bias</span><strong class="tuning-ledger-delta negative">-0.76 goals</strong>
+</div>
+<div>
+<span>Team-goal miss</span><strong>0.51 goals</strong>
+</div>
+<div>
+<span>Date</span><strong>2026-06-24</strong>
+</div>
+</div>
+<p>
+Winner call missed.
+</p>
+<p class="tuning-miss-next">
+<strong>Next check:</strong> Allow more attacking upside where the model is keeping totals too low.
+</p>
+</article>
+</div>
+<div class="empty-state tuning-ledger-empty" data-ledger-empty="true" hidden="">
+<strong>No graded misses match this filter yet.</strong>
 </div>
 <div class="screen-reader-only" data-ledger-status="true" aria-live="polite">
 
@@ -6469,6 +7206,7 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
 
   function initBracket() {
+
     var dataNode = document.getElementById("wc-bracket-data");
 
     var root = document.getElementById("model-bracket-root");
@@ -6572,67 +7310,125 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
 
     function teamStrength(team) {
+
       var elo = team && Number(team.elo);
+
       return Number.isFinite(elo) ? elo : 1500;
+
     }
+
+
 
     function officialWinner(match) {
+
       if (!match || !match.fixture || !match.fixture.officialWinner) {
+
         return null;
+
       }
+
       if (match.teamA && match.teamA.name === match.fixture.officialWinner) {
+
         return match.teamA;
+
       }
+
       if (match.teamB && match.teamB.name === match.fixture.officialWinner) {
+
         return match.teamB;
+
       }
+
       return null;
+
     }
+
+
 
     function teamAAdvanceProbability(match) {
+
       if (match && match.fixture) {
+
         var fixtureProb = Number(match.fixture.teamAAdvanceProb);
+
         if (Number.isFinite(fixtureProb)) {
+
           return fixtureProb;
+
         }
+
       }
+
       var diff = teamStrength(match.teamA) - teamStrength(match.teamB);
+
       return 1 / (1 + Math.pow(10, -diff / 400));
+
     }
 
+
+
     function formatPct(value) {
+
       if (!Number.isFinite(value)) {
+
         return "";
 
       }
 
       return Math.round(value * 100) + "%";
+
     }
+
+
 
     function projectedWinner(match) {
+
       if (!match.teamA && !match.teamB) {
+
         return null;
+
       }
+
       if (match.teamA && !match.teamB) {
+
         return match.teamA;
+
       }
+
       if (!match.teamA && match.teamB) {
+
         return match.teamB;
+
       }
+
       if (match.fixture && match.fixture.modelWinner) {
+
         if (match.teamA && match.teamA.name === match.fixture.modelWinner) {
+
           return match.teamA;
+
         }
+
         if (match.teamB && match.teamB.name === match.fixture.modelWinner) {
+
           return match.teamB;
+
         }
+
       }
+
       return teamAAdvanceProbability(match) >= 0.5 ? match.teamA : match.teamB;
+
     }
 
+
+
     function winnerProbability(match, winner) {
+
       if (!winner) {
+
         return null;
+
       }
 
       if (match.teamA && !match.teamB && winner.name === match.teamA.name) {
@@ -6648,11 +7444,17 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
       }
 
       if (!match.teamA || !match.teamB) {
+
         return null;
+
       }
+
       var pA = teamAAdvanceProbability(match);
+
       return winner.name === match.teamA.name ? pA : 1 - pA;
+
     }
+
 
 
     function matchupText(match) {
@@ -6718,19 +7520,33 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
         currentRound.forEach(function (match, matchIndex) {
 
           var key = roundIndex + "-" + matchIndex;
+
           var validNames = [match.teamA && match.teamA.name, match.teamB && match.teamB.name].filter(Boolean);
+
           if (activePicks === picks && picks[key] && validNames.indexOf(picks[key]) === -1) {
+
             delete picks[key];
+
           }
+
           var pickedName = activePicks[key];
+
           var official = officialWinner(match);
+
           var winner = pickedName
+
             ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
+
             : (official || projectedWinner(match));
+
           var nextMatch = nextRound[Math.floor(matchIndex / 2)];
+
           if (matchIndex % 2 === 0) {
+
             nextMatch.teamA = cloneTeam(winner);
+
           } else {
+
             nextMatch.teamB = cloneTeam(winner);
 
           }
@@ -6781,63 +7597,122 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
       }
 
+
+
       var modelRounds = buildRounds({});
+
       var finalMatch = modelRounds[modelRounds.length - 1][0];
+
       var champion = officialWinner(finalMatch) || projectedWinner(finalMatch);
+
       var championProb = winnerProbability(finalMatch, champion);
+
       var completedStats = { matches: 0, hits: 0, misses: 0 };
+
       modelRounds.forEach(function (round) {
+
         round.forEach(function (match) {
+
           var official = officialWinner(match);
+
           if (!official) {
+
             return;
+
           }
+
           completedStats.matches += 1;
+
           var projected = projectedWinner(match);
+
           if (projected && projected.name === official.name) {
+
             completedStats.hits += 1;
+
           } else {
+
             completedStats.misses += 1;
+
           }
+
         });
+
       });
 
+
+
       var summaryCopy = completedStats.matches > 0
+
         ? completedStats.hits + " of " + completedStats.matches + " completed knockout calls still match the model path."
+
         : "Completed knockout results will lock into this path as soon as they are official.";
 
+
+
       modelPathSummary.innerHTML = champion
+
         ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>" + escapeHtml(summaryCopy) + " Completed knockout results stay locked while unresolved matches continue on the current model path.</p></div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
+
         : "<div><span class='section-kicker'>Model path</span><h3>Model path is pending</h3><p>The bracket needs at least one projected finalist before a full path can be shown.</p></div>";
 
+
+
       modelPathRounds.innerHTML = modelRounds.map(function (round, roundIndex) {
+
         var rows = round.map(function (match) {
+
           var official = officialWinner(match);
+
           var winner = official || projectedWinner(match);
+
           var projected = projectedWinner(match);
+
           var probability = winnerProbability(match, winner);
+
           var completedLabel = official
+
             ? ((projected && projected.name === official.name) ? "Official | model held" : "Official | model miss")
+
             : ((roundIndex === 0 ? "Current forecast" : "Projected"));
+
           var detailLabel = official
+
             ? ((match.fixture && match.fixture.actualScore ? match.fixture.actualScore + " | " : "") + (match.fixture && match.fixture.officialOutcome ? match.fixture.officialOutcome : "completed"))
+
             : ("advance probability " + (formatPct(probability) || "pending"));
+
           return "<li>" +
+
             "<span class='model-path-match'>" + escapeHtml(matchupText(match)) + "</span>" +
+
             "<strong>" + escapeHtml(winner ? winner.name : "Pending seed") + "</strong>" +
+
             "<small>" + escapeHtml(completedLabel) + " | " + escapeHtml(detailLabel) + "</small>" +
+
             "</li>";
+
         }).join("");
+
         return "<section class='model-path-round'><h4>" + escapeHtml(roundNames[roundIndex]) + "</h4><ol>" + rows + "</ol></section>";
+
       }).join("");
+
     }
 
+
+
     function teamButton(team, slot, probability, selected, modelSelected, userSelected, officialSelected, roundIndex, matchIndex, locked) {
+
       var button = document.createElement("button");
+
       button.type = "button";
+
       button.className = "bracket-team";
 
+
+
       if (selected) {
+
         button.classList.add("selected");
 
       }
@@ -6847,103 +7722,199 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
         button.classList.add("model-selected");
 
       }
+
       if (userSelected) {
+
         button.classList.add("user-selected");
+
       }
+
       if (officialSelected) {
+
         button.classList.add("official-selected");
+
       }
+
       if (!team) {
+
         button.classList.add("empty");
+
         button.disabled = true;
+
         button.innerHTML = "<span class='team-name'>" + escapeHtml(slot) + "</span><small>Seed unresolved</small>";
+
         return button;
+
       }
+
+
 
       var label = locked ? (officialSelected ? "Official result" : "Eliminated") : (userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender"));
+
       button.innerHTML =
+
         "<span class='team-name'>" + escapeHtml(team.name) + "</span>" +
+
         "<span class='team-meta'>" + escapeHtml(team.seed || "Seed") + " | " + formatPct(probability) + "</span>" +
+
         "<small class='pick-label'>" + escapeHtml(label) + "</small>";
+
       button.setAttribute("aria-label", (locked ? "Official result for " : "Advance ") + team.name + " from " + roundNames[roundIndex]);
+
       if (locked) {
+
         button.disabled = true;
+
       } else {
+
         button.addEventListener("click", function () {
+
           picks[roundIndex + "-" + matchIndex] = team.name;
+
           clearLaterPicks(roundIndex);
+
           announce(team.name + " advanced from " + roundNames[roundIndex] + ".");
+
           render();
+
         });
+
       }
+
       return button;
+
     }
 
+
+
     function matchCard(match, roundIndex, matchIndex) {
+
       var card = document.createElement("article");
+
       card.className = "bracket-match-card";
+
       var pA = match.teamA && match.teamB ? teamAAdvanceProbability(match) : null;
+
       var pB = Number.isFinite(pA) ? 1 - pA : null;
+
       var projected = projectedWinner(match);
+
       var official = officialWinner(match);
+
       var pickedName = picks[roundIndex + "-" + matchIndex];
+
       var selectedName = pickedName || (official ? official.name : (projected && projected.name));
+
       var locked = Boolean(official);
 
+
+
       var label = document.createElement("div");
+
       label.className = "bracket-match-label";
+
       label.textContent = "Match " + (matchIndex + 1);
+
       card.appendChild(label);
+
       card.appendChild(teamButton(
 
         match.teamA,
+
         match.slotA,
+
         pA,
+
         match.teamA && match.teamA.name === selectedName,
+
         !pickedName && !locked && projected && match.teamA && match.teamA.name === projected.name,
+
         pickedName && match.teamA && match.teamA.name === pickedName,
+
         official && match.teamA && match.teamA.name === official.name,
+
         roundIndex,
+
         matchIndex,
+
         locked
+
       ));
+
       card.appendChild(teamButton(
+
         match.teamB,
+
         match.slotB,
+
         pB,
+
         match.teamB && match.teamB.name === selectedName,
+
         !pickedName && !locked && projected && match.teamB && match.teamB.name === projected.name,
+
         pickedName && match.teamB && match.teamB.name === pickedName,
+
         official && match.teamB && match.teamB.name === official.name,
+
         roundIndex,
+
         matchIndex,
+
         locked
+
       ));
+
+
 
       if (match.fixture) {
+
         var note = document.createElement("div");
+
         note.className = "bracket-match-note";
+
         if (official) {
+
           var modelMiss = projected && projected.name !== official.name;
+
           note.classList.add(modelMiss ? "is-miss" : "is-hit");
+
           note.innerHTML = "<strong>Official:</strong> " +
+
             escapeHtml(official.name) +
+
             (match.fixture.actualScore ? " " + escapeHtml(match.fixture.actualScore) : "") +
+
             (match.fixture.officialOutcome ? " | " + escapeHtml(match.fixture.officialOutcome) : "") +
+
             "<span>" + (modelMiss ? "Model miss" : "Model held") + "</span>";
+
         } else {
+
           var pick = projected ? projected.name : "Pending";
+
           var levelText = Number.isFinite(Number(match.fixture.regulationDrawProb)) ? formatPct(Number(match.fixture.regulationDrawProb)) : "pending";
+
           note.classList.add("is-live");
+
           note.innerHTML = "<strong>" + escapeHtml(match.fixture.timing || "Forecast") + ":</strong> " +
+
             escapeHtml(pick) + " " + (formatPct(winnerProbability(match, projected)) || "") +
+
             " <span>Level after 90: " + escapeHtml(levelText) + "</span>";
+
         }
+
         card.appendChild(note);
+
       }
 
+
+
       return card;
+
     }
+
 
 
     function renderSeeds() {
@@ -7087,12 +8058,19 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
 
       var finalMatch = rounds[rounds.length - 1][0];
+
       var champion = picks["4-0"]
+
         ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
+
         : (officialWinner(finalMatch) || projectedWinner(finalMatch));
+
       championNode.innerHTML = champion
+
         ? "<span>Projected Champion</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
+
         : "";
+
       renderTabs();
 
       renderModelPathPanel();
@@ -7178,18 +8156,27 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
 
 
     renderSeeds();
+
     render();
+
   }
+
+
 
   function initTuningLedger() {
     document.querySelectorAll("[data-ledger-root='true']").forEach(function (root) {
       var grid = root.querySelector("[data-ledger-grid='true']");
-      var buttons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var sortButtons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var filterButtons = Array.from(root.querySelectorAll("[data-ledger-filter]"));
       var statusNode = root.querySelector("[data-ledger-status='true']");
+      var emptyNode = root.querySelector("[data-ledger-empty='true']");
 
-      if (!grid || buttons.length === 0) {
+      if (!grid || sortButtons.length === 0) {
         return;
       }
+
+      var currentMetric = root.getAttribute("data-ledger-default") || "severity";
+      var currentFilter = root.getAttribute("data-ledger-default-filter") || "all";
 
       function announce(text) {
         if (statusNode) {
@@ -7197,22 +8184,32 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
         }
       }
 
+
+
       function metricValue(card, metric) {
+
         var raw = Number(card.getAttribute("data-ledger-" + metric));
         return Number.isFinite(raw) ? raw : -Infinity;
       }
 
-      function setActive(metric) {
-        buttons.forEach(function (button) {
+      function setActiveMetric(metric) {
+        sortButtons.forEach(function (button) {
           var active = button.getAttribute("data-ledger-sort") === metric;
           button.setAttribute("aria-pressed", String(active));
         });
       }
 
-      function sortCards(metric) {
+      function setActiveFilter(filter) {
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-ledger-filter") === filter;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function applyLedgerState() {
         var cards = Array.from(grid.querySelectorAll("[data-ledger-card='true']"));
         cards.sort(function (a, b) {
-          var primary = metricValue(b, metric) - metricValue(a, metric);
+          var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
           if (primary !== 0) {
             return primary;
           }
@@ -7222,33 +8219,65 @@ Forecasts are probabilistic and should be used for research, discussion, and mod
           }
           return metricValue(b, "date") - metricValue(a, "date");
         });
+        var visibleCount = 0;
         cards.forEach(function (card) {
+          var issue = card.getAttribute("data-ledger-issue") || "";
+          var show = currentFilter === "all" || issue === currentFilter;
+          card.hidden = !show;
+          if (show) {
+            visibleCount += 1;
+          }
           grid.appendChild(card);
         });
-        setActive(metric);
-        var activeButton = buttons.find(function (button) {
-          return button.getAttribute("data-ledger-sort") === metric;
+        if (emptyNode) {
+          emptyNode.hidden = visibleCount !== 0;
+        }
+        setActiveMetric(currentMetric);
+        setActiveFilter(currentFilter);
+        var activeSortButton = sortButtons.find(function (button) {
+          return button.getAttribute("data-ledger-sort") === currentMetric;
         });
-        announce((activeButton ? activeButton.textContent.trim() : "Ledger") + " order applied.");
+        var activeFilterButton = filterButtons.find(function (button) {
+          return button.getAttribute("data-ledger-filter") === currentFilter;
+        });
+        var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All misses";
+        var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Highest priority";
+        announce(filterText + " filter, " + sortText + " order applied.");
       }
 
-      buttons.forEach(function (button) {
+      sortButtons.forEach(function (button) {
         button.addEventListener("click", function () {
-          sortCards(button.getAttribute("data-ledger-sort"));
+          currentMetric = button.getAttribute("data-ledger-sort");
+          applyLedgerState();
         });
       });
 
-      sortCards(root.getAttribute("data-ledger-default") || "severity");
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentFilter = button.getAttribute("data-ledger-filter");
+          applyLedgerState();
+        });
+      });
+
+      applyLedgerState();
     });
   }
 
+
   ready(function () {
+
     formatLocalTimes();
+
     initBracket();
+
     initTuningLedger();
+
   });
+
 })();
+
 </script>
+
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
