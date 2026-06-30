@@ -770,6 +770,164 @@ render_tuning_watch_section <- function(bundle, compact = FALSE, limit = 6) {
   )
 }
 
+parse_score_total <- function(score) {
+  value <- trimws(as.character(score))
+  if (length(value) == 0 || is.na(value) || !grepl("^[0-9]+-[0-9]+$", value)) {
+    return(NA_real_)
+  }
+  home <- suppressWarnings(as.numeric(sub("-.*$", "", value)))
+  away <- suppressWarnings(as.numeric(sub("^.*-", "", value)))
+  home + away
+}
+
+adjustment_board_frame <- function(bundle) {
+  review <- review_analysis_frame(bundle)
+  board <- bundle$board
+
+  if (nrow(review) == 0) {
+    return(data.frame())
+  }
+
+  expected_lookup <- data.frame(source_match_id = character(), expected_total_goals = numeric(), stringsAsFactors = FALSE)
+  if (!is.null(board) && nrow(board) > 0 && "source_match_id" %in% names(board)) {
+    expected_lookup <- board |>
+      dplyr::select("source_match_id", dplyr::any_of("expected_total_goals")) |>
+      dplyr::distinct(.data$source_match_id, .keep_all = TRUE)
+  }
+
+  analysis <- review |>
+    dplyr::left_join(expected_lookup, by = "source_match_id") |>
+    dplyr::mutate(
+      actual_total_goals = vapply(.data$actual_score, parse_score_total, numeric(1)),
+      expected_total_goals_value = suppressWarnings(as.numeric(.data$expected_total_goals)),
+      total_goal_bias_value = .data$expected_total_goals_value - .data$actual_total_goals
+    )
+
+  draw_rows <- analysis[analysis$actual_draw_flag, , drop = FALSE]
+  low_rows <- analysis[is.finite(analysis$prediction_confidence_value) & analysis$prediction_confidence_value < 0.55, , drop = FALSE]
+  miss_rows <- analysis[!analysis$ensemble_correct_flag, , drop = FALSE]
+  decisive_rows <- analysis[!analysis$actual_draw_flag, , drop = FALSE]
+
+  draw_note <- if (nrow(draw_rows) > 0) {
+    paste0(
+      display_percent(mean(draw_rows$ensemble_probability_actual_value, na.rm = TRUE), 1),
+      " average probability on the outcome that actually happened."
+    )
+  } else {
+    "Completed level results are not available yet."
+  }
+
+  low_gap <- if (nrow(low_rows) > 0) {
+    mean(low_rows$ensemble_correct_flag, na.rm = TRUE) - mean(low_rows$prediction_confidence_value, na.rm = TRUE)
+  } else {
+    NA_real_
+  }
+
+  bias_note <- if (nrow(miss_rows) > 0 && any(is.finite(miss_rows$total_goal_bias_value))) {
+    draw_bias <- mean(draw_rows$total_goal_bias_value, na.rm = TRUE)
+    if (is.finite(draw_bias)) {
+      paste0("Level results ran ", fmt_number(draw_bias, 2), " goals above reality on average.")
+    } else {
+      "Use this to decide whether the score layer should be compressed."
+    }
+  } else {
+    "Use this to decide whether the score layer should be compressed."
+  }
+
+  cards <- data.frame(
+    state = c("alert", "warning", "warning", "positive"),
+    label = c(
+      "Draw weight needs a lift",
+      "Closest matches are still too aggressive",
+      "Missed matches are running too open",
+      "Decisive winners are holding up"
+    ),
+    value = c(
+      if (nrow(draw_rows) > 0) paste0(display_percent(mean(draw_rows$ensemble_correct_flag, na.rm = TRUE), 1), " hit rate on ", fmt_integer(nrow(draw_rows)), " level results") else "Pending",
+      if (nrow(low_rows) > 0) paste0(display_percent(mean(low_rows$ensemble_correct_flag, na.rm = TRUE), 1), " landed vs ", display_percent(mean(low_rows$prediction_confidence_value, na.rm = TRUE), 1), " stated") else "Pending",
+      if (nrow(miss_rows) > 0 && any(is.finite(miss_rows$total_goal_bias_value))) paste0(fmt_number(mean(miss_rows$total_goal_bias_value, na.rm = TRUE), 2), " goals above reality on misses") else "Pending",
+      if (nrow(decisive_rows) > 0) paste0(display_percent(mean(decisive_rows$ensemble_correct_flag, na.rm = TRUE), 1), " hit rate when the match does not finish level") else "Pending"
+    ),
+    note = c(
+      draw_note,
+      if (is.finite(low_gap)) paste0("The under-55% band missed by ", fmt_number(abs(100 * low_gap), 1), " percentage points.") else "Low-confidence calibration will appear after more completed matches.",
+      bias_note,
+      "Keep this backbone steady while the draw and score layers are tuned."
+    ),
+    stringsAsFactors = FALSE
+  )
+
+  challenger_note <- NULL
+  challengers <- bundle$challenger_metrics
+  if (!is.null(challengers) && nrow(challengers) > 0) {
+    leader <- challengers |>
+      dplyr::filter(.data$status == "fit") |>
+      dplyr::arrange(.data$test_rmse) |>
+      dplyr::slice_head(n = 1)
+    if (nrow(leader) > 0) {
+      challenger_note <- paste0(
+        safe_text(leader$model[[1]], "Best local challenger"),
+        " leads the current local challenger board at ",
+        fmt_number(leader$test_rmse[[1]], 3),
+        " RMSE."
+      )
+    }
+  }
+
+  list(cards = cards, challenger_note = challenger_note)
+}
+
+render_adjustment_board_section <- function(bundle, compact = FALSE) {
+  board_data <- adjustment_board_frame(bundle)
+
+  if (!is.list(board_data) || nrow(board_data$cards) == 0) {
+    return(
+      paste0(
+        '<section id="adjustments" class="page-section adjustment-board-section">',
+        '<div class="empty-state"><strong>Adjustment board will appear after completed matches are graded.</strong></div>',
+        '</section>'
+      )
+    )
+  }
+
+  cards <- board_data$cards
+  card_html <- paste(vapply(seq_len(nrow(cards)), function(i) {
+    row <- cards[i, , drop = FALSE]
+    paste0(
+      '<article class="adjustment-card adjustment-card-', escape_html(row$state[[1]]), '">',
+      '<span>', escape_html(row$label[[1]]), '</span>',
+      '<strong>', escape_html(row$value[[1]]), '</strong>',
+      '<p>', escape_html(row$note[[1]]), '</p>',
+      '</article>'
+    )
+  }, character(1)), collapse = "")
+
+  challenger_html <- if (!is.null(board_data$challenger_note) && nzchar(board_data$challenger_note)) {
+    paste0(
+      '<div class="adjustment-promo-note">',
+      '<strong>Promotion watch:</strong> ',
+      escape_html(board_data$challenger_note),
+      ' Keep backtesting and calibration checks ahead of any public promotion.',
+      '</div>'
+    )
+  } else {
+    ""
+  }
+
+  paste0(
+    '<section id="adjustments" class="page-section adjustment-board-section">',
+    '<div class="section-heading">',
+    '<span class="section-kicker">Adjustment board</span>',
+    '<h2>What To Adjust Next</h2>',
+    '<p>This board turns the graded-match sample into concrete tuning directions so you can decide where to change weights, calibration, or score assumptions next.</p>',
+    '</div>',
+    '<div class="adjustment-grid">', card_html, '</div>',
+    challenger_html,
+    '<p class="section-note">Current read: keep the decisive-result backbone, but retune draw probability and score compression before making the public pick more aggressive.</p>',
+    '</section>'
+  )
+}
+
 model_signal_frame <- function(bundle) {
   detail <- bundle$accuracy_detail
   accuracy <- bundle$accuracy
@@ -1198,6 +1356,29 @@ render_forecast_command_center <- function(bundle, board, compact = FALSE, base_
     '<span>Model review</span><strong>Pending results</strong><small>Accuracy appears after completed matches are scored.</small>'
   }
 
+  adjustment_html <- if (!is.null(bundle$accuracy_detail) && nrow(bundle$accuracy_detail) > 0) {
+    review <- review_analysis_frame(bundle)
+    draw_rows <- review[review$actual_draw_flag, , drop = FALSE]
+    low_rows <- review[is.finite(review$prediction_confidence_value) & review$prediction_confidence_value < 0.55, , drop = FALSE]
+    if (nrow(draw_rows) > 0) {
+      paste0(
+        '<span>Tuning priority</span>',
+        '<strong>', display_percent(mean(draw_rows$ensemble_correct_flag, na.rm = TRUE), 1), ' draw hit rate</strong>',
+        '<small>', escape_html(fmt_integer(nrow(draw_rows))), ' level results graded; the draw layer is still the clearest gap.</small>'
+      )
+    } else if (nrow(low_rows) > 0) {
+      paste0(
+        '<span>Tuning priority</span>',
+        '<strong>', display_percent(mean(low_rows$ensemble_correct_flag, na.rm = TRUE), 1), ' landed below 55%</strong>',
+        '<small>Use the adjustment board to review the current low-confidence gap.</small>'
+      )
+    } else {
+      accuracy_html
+    }
+  } else {
+    accuracy_html
+  }
+
   today_label <- if (nrow(today) > 0) {
     paste0(nrow(today), " match", if (nrow(today) == 1) "" else "es", " today")
   } else {
@@ -1218,7 +1399,7 @@ render_forecast_command_center <- function(bundle, board, compact = FALSE, base_
     '</div>',
     '<div class="decision-card">', next_match_html, '<a href="', escape_html(href("next-match")), '">Open next forecast</a></div>',
     '<div class="decision-card">', champion_html, '<a href="', escape_html(href("champion-outlook")), '">See champion outlook</a></div>',
-    '<div class="decision-card">', accuracy_html, '<a href="', escape_html(href("model-review")), '">Review record</a></div>',
+    '<div class="decision-card">', adjustment_html, '<a href="', escape_html(href("adjustments")), '">Open adjustment board</a></div>',
     '</section>'
   )
 }

@@ -2774,7 +2774,7 @@ Kansas City, United States
 </div>
 </section>
 <nav class="prediction-page-nav" aria-label="Prediction page sections">
-<a href="#model-board">Board</a> <a href="#today">Today</a> <a href="#next-match">Next match</a> <a href="#bracket">Bracket</a> <a href="#model-review">Model review</a> <a href="#model-comparison">Model lab</a> <a href="#dictionary">Guide</a>
+<a href="#model-board">Board</a> <a href="#today">Today</a> <a href="#next-match">Next match</a> <a href="#bracket">Bracket</a> <a href="#model-review">Model review</a> <a href="#adjustments">Adjustments</a> <a href="#model-comparison">Model lab</a> <a href="#dictionary">Guide</a>
 </nav>
 <section class="decision-panel decision-panel-compact" aria-label="Forecast command center">
 <div class="decision-card decision-card-primary">
@@ -2787,7 +2787,7 @@ Kansas City, United States
 <span>Tournament favorite</span><strong>Argentina</strong><small>27.2% champion probability across 50000 simulations.</small><a href="#champion-outlook">See champion outlook</a>
 </div>
 <div class="decision-card">
-<span>Model review</span><strong>64.4%</strong><small>Correct winner/result picks over 73 completed matches.</small><a href="#model-review">Review record</a>
+<span>Tuning priority</span><strong>0.0% draw hit rate</strong><small>20 level results graded; the draw layer is still the clearest gap.</small><a href="#adjustments">Open adjustment board</a>
 </div>
 </section>
 <section class="model-lab-strip model-lab-strip-compact" aria-label="Expanded model suite summary">
@@ -4472,6 +4472,49 @@ Actual result finished level.
 </div>
 <p class="section-note">
 Current read: the ensemble behaves like a winner-seeking model. Draws are the biggest blind spot in the graded sample, while strong favorite spots are generally solid outside of tied matches.
+</p>
+</section>
+<section id="adjustments" class="page-section adjustment-board-section">
+<div class="section-heading">
+<span class="section-kicker">Adjustment board</span>
+<h2 class="anchored">
+What To Adjust Next
+</h2>
+<p>
+This board turns the graded-match sample into concrete tuning directions so you can decide where to change weights, calibration, or score assumptions next.
+</p>
+</div>
+<div class="adjustment-grid">
+<article class="adjustment-card adjustment-card-alert">
+<span>Draw weight needs a lift</span><strong>0.0% hit rate on 20 level results</strong>
+<p>
+21.5% average probability on the outcome that actually happened.
+</p>
+</article>
+<article class="adjustment-card adjustment-card-warning">
+<span>Closest matches are still too aggressive</span><strong>34.8% landed vs 45.9% stated</strong>
+<p>
+The under-55% band missed by 11.1 percentage points.
+</p>
+</article>
+<article class="adjustment-card adjustment-card-warning">
+<span>Missed matches are running too open</span><strong>0.83 goals above reality on misses</strong>
+<p>
+Level results ran 0.95 goals above reality on average.
+</p>
+</article>
+<article class="adjustment-card adjustment-card-positive">
+<span>Decisive winners are holding up</span><strong>88.7% hit rate when the match does not finish level</strong>
+<p>
+Keep this backbone steady while the draw and score layers are tuned.
+</p>
+</article>
+</div>
+<div class="adjustment-promo-note">
+<strong>Promotion watch:</strong> XGBoost goals leads the current local challenger board at 1.364 RMSE. Keep backtesting and calibration checks ahead of any public promotion.
+</div>
+<p class="section-note">
+Current read: keep the decisive-result backbone, but retune draw probability and score compression before making the public pick more aggressive.
 </p>
 </section>
 <section id="model-signals" class="page-section model-signal-section">
