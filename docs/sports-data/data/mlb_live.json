@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-01T03:57:08.161983Z",
+  "refreshed_at_utc": "2026-07-01T08:08:28.877877Z",
   "dates_requested": [
     "20260630",
     "20260701",
@@ -315,24 +315,24 @@
       "date_utc": "2026-07-01T01:40Z",
       "name": "Los Angeles Angels at Seattle Mariners",
       "short_name": "LAA @ SEA",
-      "status": "In Progress",
-      "status_short": "Top 7th",
-      "state": "in",
-      "period": 7,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Seattle Mariners",
       "away_team": "Los Angeles Angels",
-      "home_score": "5",
-      "away_score": "1",
-      "home_record": "43-43",
-      "away_record": "36-50",
+      "home_score": "8",
+      "away_score": "3",
+      "home_record": "44-43",
+      "away_record": "36-51",
       "venue": "T-Mobile Park",
       "broadcasts": [
         "MLB.TV",
         "Mariners.TV",
         "Angels.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815976"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815976/angels-mariners"
     },
     {
       "sport": "mlb",
@@ -340,17 +340,17 @@
       "date_utc": "2026-07-01T01:40Z",
       "name": "Los Angeles Dodgers at Athletics Athletics",
       "short_name": "LAD @ ATH",
-      "status": "In Progress",
-      "status_short": "Bot 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Athletics",
       "away_team": "Los Angeles Dodgers",
       "home_score": "3",
       "away_score": "9",
-      "home_record": "40-45",
-      "away_record": "55-30",
+      "home_record": "40-46",
+      "away_record": "56-30",
       "venue": "Sutter Health Park",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -358,7 +358,7 @@
         "Sportsnet LA",
         "NBC Sports CA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815977"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815977/dodgers-athletics"
     },
     {
       "sport": "mlb",
@@ -366,24 +366,24 @@
       "date_utc": "2026-07-01T01:40Z",
       "name": "San Francisco Giants at Arizona Diamondbacks",
       "short_name": "SF @ ARI",
-      "status": "In Progress",
-      "status_short": "Bot 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Arizona Diamondbacks",
       "away_team": "San Francisco Giants",
-      "home_score": "7",
+      "home_score": "8",
       "away_score": "2",
-      "home_record": "42-42",
-      "away_record": "35-49",
+      "home_record": "43-42",
+      "away_record": "35-50",
       "venue": "Chase Field",
       "broadcasts": [
         "MLB.TV",
         "NBC Sports BA",
         "DBACKS.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815978"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815978/giants-diamondbacks"
     },
     {
       "sport": "mlb",
@@ -699,8 +699,8 @@
       "away_team": "Los Angeles Dodgers",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "40-45",
-      "away_record": "55-30",
+      "home_record": "40-46",
+      "away_record": "56-30",
       "venue": "Sutter Health Park",
       "broadcasts": [
         "MLB.TV",
@@ -724,8 +724,8 @@
       "away_team": "San Francisco Giants",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "42-42",
-      "away_record": "35-49",
+      "home_record": "43-42",
+      "away_record": "35-50",
       "venue": "Chase Field",
       "broadcasts": [
         "MLB.TV",
@@ -924,8 +924,8 @@
       "away_team": "Los Angeles Angels",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "43-43",
-      "away_record": "36-50",
+      "home_record": "44-43",
+      "away_record": "36-51",
       "venue": "T-Mobile Park",
       "broadcasts": [
         "MLB.TV",
@@ -949,7 +949,7 @@
       "away_team": "San Diego Padres",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "55-30",
+      "home_record": "56-30",
       "away_record": "43-41",
       "venue": "Dodger Stadium",
       "broadcasts": [
