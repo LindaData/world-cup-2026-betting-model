@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-01T14:08:58.846159Z",
+  "refreshed_at_utc": "2026-07-01T16:42:52.350228Z",
   "dates_requested": [
     "20260630",
     "20260701",
@@ -391,15 +391,15 @@
       "date_utc": "2026-07-01T16:35Z",
       "name": "Chicago White Sox at Baltimore Orioles",
       "short_name": "CHW @ BAL",
-      "status": "Scheduled",
-      "status_short": "7/1 - 12:35 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Mid 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Baltimore Orioles",
       "away_team": "Chicago White Sox",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "1",
       "home_record": "39-48",
       "away_record": "45-39",
       "venue": "Oriole Park at Camden Yards",
@@ -408,7 +408,7 @@
         "MASN",
         "CHSN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815979/white-sox-orioles"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815979"
     },
     {
       "sport": "mlb",
