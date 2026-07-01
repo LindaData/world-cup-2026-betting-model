@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-01T20:45:38.008940Z",
+  "refreshed_at_utc": "2026-07-01T22:12:42.497591Z",
   "dates_requested": [
     "20260630",
     "20260701",
@@ -491,24 +491,24 @@
       "date_utc": "2026-07-01T18:20Z",
       "name": "San Diego Padres at Chicago Cubs",
       "short_name": "SD @ CHC",
-      "status": "In Progress",
-      "status_short": "Bot 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Chicago Cubs",
       "away_team": "San Diego Padres",
-      "home_score": "17",
+      "home_score": "23",
       "away_score": "3",
-      "home_record": "48-38",
-      "away_record": "43-41",
+      "home_record": "49-38",
+      "away_record": "43-42",
       "venue": "Wrigley Field",
       "broadcasts": [
         "MLB.TV",
         "Marquee Sports Net",
         "Padres.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815988"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815988/padres-cubs"
     },
     {
       "sport": "mlb",
@@ -516,17 +516,17 @@
       "date_utc": "2026-07-01T19:07Z",
       "name": "New York Mets at Toronto Blue Jays",
       "short_name": "NYM @ TOR",
-      "status": "In Progress",
-      "status_short": "Bot 4th",
-      "state": "in",
-      "period": 4,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Toronto Blue Jays",
       "away_team": "New York Mets",
-      "home_score": "5",
-      "away_score": "0",
-      "home_record": "40-46",
-      "away_record": "36-50",
+      "home_score": "9",
+      "away_score": "3",
+      "home_record": "41-46",
+      "away_record": "36-51",
       "venue": "Rogers Centre",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -534,7 +534,7 @@
         "SNY",
         "Sportsnet"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815981"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815981/mets-blue-jays"
     },
     {
       "sport": "mlb",
@@ -950,7 +950,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "56-30",
-      "away_record": "43-41",
+      "away_record": "43-42",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "MLB.TV",
