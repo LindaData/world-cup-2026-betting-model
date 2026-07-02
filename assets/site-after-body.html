@@ -45,6 +45,8 @@
     var modelPathPanel = document.getElementById("model-path-panel");
     var modelPathSummary = modelPathPanel ? modelPathPanel.querySelector(".model-path-summary") : null;
     var modelPathRounds = modelPathPanel ? modelPathPanel.querySelector(".model-path-rounds") : null;
+    var summaryNode = document.getElementById("bracket-summary-strip");
+    var modeNoteNode = document.getElementById("bracket-mode-note");
 
     if (!dataNode || !root || !championNode) {
       return;
@@ -175,6 +177,83 @@
       });
     }
 
+    function currentKnockoutStats() {
+      var stats = {
+        completed: 0,
+        open: 0,
+        holds: 0,
+        misses: 0,
+        manualSelections: Object.keys(picks).length
+      };
+
+      (data.round32 || []).forEach(function (match) {
+        if (!match || !match.fixture) {
+          return;
+        }
+        var official = officialWinner(match);
+        if (official) {
+          stats.completed += 1;
+          var projected = projectedWinner(match);
+          if (projected && projected.name === official.name) {
+            stats.holds += 1;
+          } else {
+            stats.misses += 1;
+          }
+        } else {
+          stats.open += 1;
+        }
+      });
+
+      return stats;
+    }
+
+    function summaryCard(label, value, note, tone) {
+      return "<article class='bracket-summary-card " + escapeHtml(tone || "is-neutral") + "'>" +
+        "<span>" + escapeHtml(label) + "</span>" +
+        "<strong>" + escapeHtml(value) + "</strong>" +
+        "<small>" + escapeHtml(note) + "</small>" +
+        "</article>";
+    }
+
+    function renderBracketSummary() {
+      if (!summaryNode && !modeNoteNode) {
+        return;
+      }
+
+      var stats = currentKnockoutStats();
+      var modeLabel = "Forecast bracket";
+      var modeCopy = "Unresolved knockout matches follow the current public forecast until you override them.";
+      var modeTone = "is-forecast";
+      var modeCard = summaryCard("Bracket mode", "Forecast", "public model path is active", "is-forecast");
+
+      if (modelPathOpen) {
+        modeLabel = "Model path";
+        modeCopy = "Official results stay locked. Future rounds continue on the current model path until completed matches replace them.";
+        modeTone = "is-model";
+        modeCard = summaryCard("Bracket mode", "Model", "future rounds follow the model path", "is-model");
+      } else if (stats.manualSelections > 0) {
+        modeLabel = "Scenario bracket";
+        modeCopy = "Your selections override unresolved matches from the round you touched onward. Reset picks to return to the public forecast.";
+        modeTone = "is-user";
+        modeCard = summaryCard("Manual picks", String(stats.manualSelections), "scenario selections active", "is-user");
+      }
+
+      if (summaryNode) {
+        summaryNode.innerHTML = [
+          summaryCard("Official results", String(stats.completed), "knockout outcomes already locked", "is-neutral"),
+          summaryCard("Open fixtures", String(stats.open), "knockout matches still unresolved", stats.open > 0 ? "is-model" : "is-neutral"),
+          summaryCard("Model holds", String(stats.holds), "completed calls still correct", stats.holds > 0 ? "is-positive" : "is-neutral"),
+          summaryCard("Model misses", String(stats.misses), "completed calls to revisit", stats.misses > 0 ? "is-alert" : "is-neutral"),
+          modeCard
+        ].join("");
+      }
+
+      if (modeNoteNode) {
+        modeNoteNode.className = "bracket-mode-note " + modeTone;
+        modeNoteNode.innerHTML = "<strong>" + escapeHtml(modeLabel) + ":</strong> " + escapeHtml(modeCopy);
+      }
+    }
+
     function buildRounds(sourcePicks) {
       var activePicks = sourcePicks || picks;
       var rounds = [data.round32.map(cloneMatch)];
@@ -255,9 +334,16 @@
       var summaryCopy = completedStats.matches > 0
         ? completedStats.hits + " of " + completedStats.matches + " completed knockout calls still match the model path."
         : "Completed knockout results will lock into this path as soon as they are official.";
+      var openFixtures = currentKnockoutStats().open;
+      var statGrid = "<div class='model-path-stat-grid'>" +
+        "<div><span>Official results</span><strong>" + escapeHtml(String(completedStats.matches)) + "</strong><small>locked knockout outcomes</small></div>" +
+        "<div><span>Model holds</span><strong>" + escapeHtml(String(completedStats.hits)) + "</strong><small>completed calls still correct</small></div>" +
+        "<div><span>Model misses</span><strong>" + escapeHtml(String(completedStats.misses)) + "</strong><small>completed calls to revisit</small></div>" +
+        "<div><span>Open fixtures</span><strong>" + escapeHtml(String(openFixtures)) + "</strong><small>knockout matches still unresolved</small></div>" +
+        "</div>";
 
       modelPathSummary.innerHTML = champion
-        ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>" + escapeHtml(summaryCopy) + " Completed knockout results stay locked while unresolved matches continue on the current model path.</p></div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
+        ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>" + escapeHtml(summaryCopy) + " Completed knockout results stay locked while unresolved matches continue on the current model path.</p>" + statGrid + "</div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
         : "<div><span class='section-kicker'>Model path</span><h3>Model path is pending</h3><p>The bracket needs at least one projected finalist before a full path can be shown.</p></div>";
 
       modelPathRounds.innerHTML = modelRounds.map(function (round, roundIndex) {
@@ -266,16 +352,20 @@
           var winner = official || projectedWinner(match);
           var projected = projectedWinner(match);
           var probability = winnerProbability(match, winner);
+          var stateClass = official
+            ? ((projected && projected.name === official.name) ? "held" : "miss")
+            : ((roundIndex === 0 ? "current" : "projected"));
           var completedLabel = official
             ? ((projected && projected.name === official.name) ? "Official | model held" : "Official | model miss")
-            : ((roundIndex === 0 ? "Current forecast" : "Projected"));
+            : ((roundIndex === 0 ? "Current forecast" : "Projected round"));
           var detailLabel = official
             ? ((match.fixture && match.fixture.actualScore ? match.fixture.actualScore + " | " : "") + (match.fixture && match.fixture.officialOutcome ? match.fixture.officialOutcome : "completed"))
             : ("advance probability " + (formatPct(probability) || "pending"));
-          return "<li>" +
+          return "<li class='model-path-item is-" + escapeHtml(stateClass) + "'>" +
+            "<span class='model-path-badge is-" + escapeHtml(stateClass) + "'>" + escapeHtml(completedLabel) + "</span>" +
             "<span class='model-path-match'>" + escapeHtml(matchupText(match)) + "</span>" +
             "<strong>" + escapeHtml(winner ? winner.name : "Pending seed") + "</strong>" +
-            "<small>" + escapeHtml(completedLabel) + " | " + escapeHtml(detailLabel) + "</small>" +
+            "<small>" + escapeHtml(detailLabel) + "</small>" +
             "</li>";
         }).join("");
         return "<section class='model-path-round'><h4>" + escapeHtml(roundNames[roundIndex]) + "</h4><ol>" + rows + "</ol></section>";
@@ -338,7 +428,9 @@
 
       var label = document.createElement("div");
       label.className = "bracket-match-label";
-      label.textContent = "Match " + (matchIndex + 1);
+      label.textContent = match.fixture && match.fixture.timing
+        ? match.fixture.timing
+        : (roundIndex === 0 ? "Current pairing" : "Projected match");
       card.appendChild(label);
       card.appendChild(teamButton(
         match.teamA,
@@ -427,6 +519,9 @@
         tab.className = "bracket-tab";
         tab.setAttribute("role", "tab");
         tab.setAttribute("aria-selected", String(index === activeRound));
+        tab.setAttribute("aria-label", name);
+        tab.setAttribute("aria-controls", "bracket-round-" + index);
+        tab.title = name;
         tab.textContent = shortRoundNames[index];
         tab.addEventListener("click", function () {
           activeRound = index;
@@ -445,6 +540,7 @@
       rounds.forEach(function (round, roundIndex) {
         var column = document.createElement("section");
         column.className = "bracket-round";
+        column.id = "bracket-round-" + roundIndex;
         if (!fullView && roundIndex === activeRound) {
           column.classList.add("is-active");
         }
@@ -461,12 +557,21 @@
       });
 
       var finalMatch = rounds[rounds.length - 1][0];
+      var officialChampion = officialWinner(finalMatch);
       var champion = picks["4-0"]
         ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
-        : (officialWinner(finalMatch) || projectedWinner(finalMatch));
+        : (officialChampion || projectedWinner(finalMatch));
+      var championLabel = officialChampion
+        ? "Official champion"
+        : (modelPathOpen ? "Model path champion" : (Object.keys(picks).length > 0 ? "Your bracket champion" : "Current forecast champion"));
+      var championState = officialChampion
+        ? "is-official"
+        : (modelPathOpen ? "is-model" : (Object.keys(picks).length > 0 ? "is-user" : "is-forecast"));
+      championNode.className = "bracket-champion-card " + championState;
       championNode.innerHTML = champion
-        ? "<span>Projected Champion</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
+        ? "<span>" + escapeHtml(championLabel) + "</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
         : "";
+      renderBracketSummary();
       renderTabs();
       renderModelPathPanel();
       document.querySelectorAll("[data-bracket-action='toggle-view']").forEach(function (button) {

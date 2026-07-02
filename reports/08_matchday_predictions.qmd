@@ -7,6 +7,7 @@ toc: false
 number-sections: false
 code-tools: false
 code-fold: false
+anchor-sections: false
 execute:
   echo: false
 ---
@@ -63,6 +64,7 @@ cat(render_upcoming_section(board, limit = 12))
   <a href="#model-board">Board</a>
   <a href="#today">Today</a>
   <a href="#next-match">Next match</a>
+  <a href="#game-archive">Archive</a>
   <a href="#bracket">Bracket</a>
   <a href="#model-review">Model review</a>
   <a href="#adjustments">Adjustments</a>
@@ -77,6 +79,10 @@ cat(render_model_suite_strip(bundle, compact = TRUE, base_path = "10_model_chall
 
 ```{r static-note, results="asis"}
 cat(render_static_api_note(summary, compact = TRUE))
+```
+
+```{r archive-preview, results="asis"}
+cat(render_game_archive_section(bundle, compact = TRUE, limit = 6))
 ```
 
 ```{r bracket, results="asis"}

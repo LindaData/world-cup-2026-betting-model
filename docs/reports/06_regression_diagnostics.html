@@ -20,7 +20,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
@@ -294,70 +294,74 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../reports/08_matchday_predictions.html">
+    <a class="nav-link" href="../reports/08_matchday_predictions.html"> 
 <span class="menu-text">Predictions</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket">
+    <a class="nav-link" href="../reports/11_game_archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket"> 
 <span class="menu-text">Bracket</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../reports/00_data_overview.html">
+    <a class="nav-link" href="../reports/00_data_overview.html"> 
 <span class="menu-text">Coverage</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Methodology</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">    
         <li>
-    <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-performance">
- <span class="dropdown-text">Model Performance</span></a>
-  </li>
+    <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-review">
+ <span class="dropdown-text">Model Review</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/07_fixture_predictions.html">
  <span class="dropdown-text">Model Overview</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/05_poisson_goals_model.html">
  <span class="dropdown-text">Goals Forecast</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/02_ordinal_result_model.html">
  <span class="dropdown-text">Win / Draw / Loss Model</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/04_knn_similarity_model.html">
  <span class="dropdown-text">Similar Match Model</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/10_model_challengers.html">
  <span class="dropdown-text">Model Challengers</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/03_distribution_review.html">
  <span class="dropdown-text">Distribution Checks</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/06_regression_diagnostics.html">
  <span class="dropdown-text">Diagnostics</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../reports/09_multisport_expansion.html">
  <span class="dropdown-text">Multi-Sport Roadmap</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model">
+    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model"> 
 <span class="menu-text">GitHub</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -372,7 +376,7 @@ window.Quarto = {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
-
+   
   <ul>
   <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">2</span> Summary</a></li>
@@ -398,11 +402,11 @@ window.Quarto = {
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -991,13 +995,11 @@ window.Quarto = {
     var statusNode = document.getElementById("model-bracket-status");
 
     var tabsNode = document.querySelector(".bracket-tabs");
-
     var modelPathPanel = document.getElementById("model-path-panel");
-
     var modelPathSummary = modelPathPanel ? modelPathPanel.querySelector(".model-path-summary") : null;
-
     var modelPathRounds = modelPathPanel ? modelPathPanel.querySelector(".model-path-rounds") : null;
-
+    var summaryNode = document.getElementById("bracket-summary-strip");
+    var modeNoteNode = document.getElementById("bracket-mode-note");
 
 
     if (!dataNode || !root || !championNode) {
@@ -1090,9 +1092,47 @@ window.Quarto = {
 
 
 
-    function advanceProbability(teamA, teamB) {
+    function officialWinner(match) {
 
-      var diff = teamStrength(teamA) - teamStrength(teamB);
+      if (!match || !match.fixture || !match.fixture.officialWinner) {
+
+        return null;
+
+      }
+
+      if (match.teamA && match.teamA.name === match.fixture.officialWinner) {
+
+        return match.teamA;
+
+      }
+
+      if (match.teamB && match.teamB.name === match.fixture.officialWinner) {
+
+        return match.teamB;
+
+      }
+
+      return null;
+
+    }
+
+
+
+    function teamAAdvanceProbability(match) {
+
+      if (match && match.fixture) {
+
+        var fixtureProb = Number(match.fixture.teamAAdvanceProb);
+
+        if (Number.isFinite(fixtureProb)) {
+
+          return fixtureProb;
+
+        }
+
+      }
+
+      var diff = teamStrength(match.teamA) - teamStrength(match.teamB);
 
       return 1 / (1 + Math.pow(10, -diff / 400));
 
@@ -1114,7 +1154,7 @@ window.Quarto = {
 
 
 
-    function modelWinner(match) {
+    function projectedWinner(match) {
 
       if (!match.teamA && !match.teamB) {
 
@@ -1134,7 +1174,23 @@ window.Quarto = {
 
       }
 
-      return advanceProbability(match.teamA, match.teamB) >= 0.5 ? match.teamA : match.teamB;
+      if (match.fixture && match.fixture.modelWinner) {
+
+        if (match.teamA && match.teamA.name === match.fixture.modelWinner) {
+
+          return match.teamA;
+
+        }
+
+        if (match.teamB && match.teamB.name === match.fixture.modelWinner) {
+
+          return match.teamB;
+
+        }
+
+      }
+
+      return teamAAdvanceProbability(match) >= 0.5 ? match.teamA : match.teamB;
 
     }
 
@@ -1166,7 +1222,7 @@ window.Quarto = {
 
       }
 
-      var pA = advanceProbability(match.teamA, match.teamB);
+      var pA = teamAAdvanceProbability(match);
 
       return winner.name === match.teamA.name ? pA : 1 - pA;
 
@@ -1187,21 +1243,90 @@ window.Quarto = {
 
 
     function clearLaterPicks(roundIndex) {
-
       Object.keys(picks).forEach(function (key) {
-
         var keyRound = Number(key.split("-")[0]);
-
         if (keyRound > roundIndex) {
-
           delete picks[key];
-
         }
-
       });
-
     }
 
+    function currentKnockoutStats() {
+      var stats = {
+        completed: 0,
+        open: 0,
+        holds: 0,
+        misses: 0,
+        manualSelections: Object.keys(picks).length
+      };
+
+      (data.round32 || []).forEach(function (match) {
+        if (!match || !match.fixture) {
+          return;
+        }
+        var official = officialWinner(match);
+        if (official) {
+          stats.completed += 1;
+          var projected = projectedWinner(match);
+          if (projected && projected.name === official.name) {
+            stats.holds += 1;
+          } else {
+            stats.misses += 1;
+          }
+        } else {
+          stats.open += 1;
+        }
+      });
+
+      return stats;
+    }
+
+    function summaryCard(label, value, note, tone) {
+      return "<article class='bracket-summary-card " + escapeHtml(tone || "is-neutral") + "'>" +
+        "<span>" + escapeHtml(label) + "</span>" +
+        "<strong>" + escapeHtml(value) + "</strong>" +
+        "<small>" + escapeHtml(note) + "</small>" +
+        "</article>";
+    }
+
+    function renderBracketSummary() {
+      if (!summaryNode && !modeNoteNode) {
+        return;
+      }
+
+      var stats = currentKnockoutStats();
+      var modeLabel = "Forecast bracket";
+      var modeCopy = "Unresolved knockout matches follow the current public forecast until you override them.";
+      var modeTone = "is-forecast";
+      var modeCard = summaryCard("Bracket mode", "Forecast", "public model path is active", "is-forecast");
+
+      if (modelPathOpen) {
+        modeLabel = "Model path";
+        modeCopy = "Official results stay locked. Future rounds continue on the current model path until completed matches replace them.";
+        modeTone = "is-model";
+        modeCard = summaryCard("Bracket mode", "Model", "future rounds follow the model path", "is-model");
+      } else if (stats.manualSelections > 0) {
+        modeLabel = "Scenario bracket";
+        modeCopy = "Your selections override unresolved matches from the round you touched onward. Reset picks to return to the public forecast.";
+        modeTone = "is-user";
+        modeCard = summaryCard("Manual picks", String(stats.manualSelections), "scenario selections active", "is-user");
+      }
+
+      if (summaryNode) {
+        summaryNode.innerHTML = [
+          summaryCard("Official results", String(stats.completed), "knockout outcomes already locked", "is-neutral"),
+          summaryCard("Open fixtures", String(stats.open), "knockout matches still unresolved", stats.open > 0 ? "is-model" : "is-neutral"),
+          summaryCard("Model holds", String(stats.holds), "completed calls still correct", stats.holds > 0 ? "is-positive" : "is-neutral"),
+          summaryCard("Model misses", String(stats.misses), "completed calls to revisit", stats.misses > 0 ? "is-alert" : "is-neutral"),
+          modeCard
+        ].join("");
+      }
+
+      if (modeNoteNode) {
+        modeNoteNode.className = "bracket-mode-note " + modeTone;
+        modeNoteNode.innerHTML = "<strong>" + escapeHtml(modeLabel) + ":</strong> " + escapeHtml(modeCopy);
+      }
+    }
 
 
     function buildRounds(sourcePicks) {
@@ -1248,11 +1373,13 @@ window.Quarto = {
 
           var pickedName = activePicks[key];
 
+          var official = officialWinner(match);
+
           var winner = pickedName
 
             ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
 
-            : modelWinner(match);
+            : (official || projectedWinner(match));
 
           var nextMatch = nextRound[Math.floor(matchIndex / 2)];
 
@@ -1318,49 +1445,88 @@ window.Quarto = {
 
       var finalMatch = modelRounds[modelRounds.length - 1][0];
 
-      var champion = modelWinner(finalMatch);
+      var champion = officialWinner(finalMatch) || projectedWinner(finalMatch);
 
       var championProb = winnerProbability(finalMatch, champion);
 
+      var completedStats = { matches: 0, hits: 0, misses: 0 };
+
+      modelRounds.forEach(function (round) {
+
+        round.forEach(function (match) {
+
+          var official = officialWinner(match);
+
+          if (!official) {
+
+            return;
+
+          }
+
+          completedStats.matches += 1;
+
+          var projected = projectedWinner(match);
+
+          if (projected && projected.name === official.name) {
+
+            completedStats.hits += 1;
+
+          } else {
+
+            completedStats.misses += 1;
+
+          }
+
+        });
+
+      });
+
+
+
+      var summaryCopy = completedStats.matches > 0
+        ? completedStats.hits + " of " + completedStats.matches + " completed knockout calls still match the model path."
+        : "Completed knockout results will lock into this path as soon as they are official.";
+      var openFixtures = currentKnockoutStats().open;
+      var statGrid = "<div class='model-path-stat-grid'>" +
+        "<div><span>Official results</span><strong>" + escapeHtml(String(completedStats.matches)) + "</strong><small>locked knockout outcomes</small></div>" +
+        "<div><span>Model holds</span><strong>" + escapeHtml(String(completedStats.hits)) + "</strong><small>completed calls still correct</small></div>" +
+        "<div><span>Model misses</span><strong>" + escapeHtml(String(completedStats.misses)) + "</strong><small>completed calls to revisit</small></div>" +
+        "<div><span>Open fixtures</span><strong>" + escapeHtml(String(openFixtures)) + "</strong><small>knockout matches still unresolved</small></div>" +
+        "</div>";
+
       modelPathSummary.innerHTML = champion
-
-        ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>The path below follows the model pick in every unresolved matchup. Group seeds reflect completed results plus remaining-match forecasts; knockout picks update after each refresh.</p></div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
-
+        ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>" + escapeHtml(summaryCopy) + " Completed knockout results stay locked while unresolved matches continue on the current model path.</p>" + statGrid + "</div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
         : "<div><span class='section-kicker'>Model path</span><h3>Model path is pending</h3><p>The bracket needs at least one projected finalist before a full path can be shown.</p></div>";
 
-
-
       modelPathRounds.innerHTML = modelRounds.map(function (round, roundIndex) {
-
         var rows = round.map(function (match) {
-
-          var winner = modelWinner(match);
-
+          var official = officialWinner(match);
+          var winner = official || projectedWinner(match);
+          var projected = projectedWinner(match);
           var probability = winnerProbability(match, winner);
-
-          var stateLabel = roundIndex === 0 ? "Current forecast" : "Projected";
-
-          return "<li>" +
-
+          var stateClass = official
+            ? ((projected && projected.name === official.name) ? "held" : "miss")
+            : ((roundIndex === 0 ? "current" : "projected"));
+          var completedLabel = official
+            ? ((projected && projected.name === official.name) ? "Official | model held" : "Official | model miss")
+            : ((roundIndex === 0 ? "Current forecast" : "Projected round"));
+          var detailLabel = official
+            ? ((match.fixture && match.fixture.actualScore ? match.fixture.actualScore + " | " : "") + (match.fixture && match.fixture.officialOutcome ? match.fixture.officialOutcome : "completed"))
+            : ("advance probability " + (formatPct(probability) || "pending"));
+          return "<li class='model-path-item is-" + escapeHtml(stateClass) + "'>" +
+            "<span class='model-path-badge is-" + escapeHtml(stateClass) + "'>" + escapeHtml(completedLabel) + "</span>" +
             "<span class='model-path-match'>" + escapeHtml(matchupText(match)) + "</span>" +
-
             "<strong>" + escapeHtml(winner ? winner.name : "Pending seed") + "</strong>" +
-
-            "<small>" + stateLabel + " | advance probability " + (formatPct(probability) || "pending") + "</small>" +
-
+            "<small>" + escapeHtml(detailLabel) + "</small>" +
             "</li>";
-
         }).join("");
-
         return "<section class='model-path-round'><h4>" + escapeHtml(roundNames[roundIndex]) + "</h4><ol>" + rows + "</ol></section>";
-
       }).join("");
-
     }
 
 
 
-    function teamButton(team, slot, probability, selected, modelSelected, userSelected, roundIndex, matchIndex) {
+    function teamButton(team, slot, probability, selected, modelSelected, userSelected, officialSelected, roundIndex, matchIndex, locked) {
 
       var button = document.createElement("button");
 
@@ -1388,6 +1554,12 @@ window.Quarto = {
 
       }
 
+      if (officialSelected) {
+
+        button.classList.add("official-selected");
+
+      }
+
       if (!team) {
 
         button.classList.add("empty");
@@ -1402,7 +1574,7 @@ window.Quarto = {
 
 
 
-      var label = userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender");
+      var label = locked ? (officialSelected ? "Official result" : "Eliminated") : (userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender"));
 
       button.innerHTML =
 
@@ -1412,19 +1584,27 @@ window.Quarto = {
 
         "<small class='pick-label'>" + escapeHtml(label) + "</small>";
 
-      button.setAttribute("aria-label", "Advance " + team.name + " from " + roundNames[roundIndex]);
+      button.setAttribute("aria-label", (locked ? "Official result for " : "Advance ") + team.name + " from " + roundNames[roundIndex]);
 
-      button.addEventListener("click", function () {
+      if (locked) {
 
-        picks[roundIndex + "-" + matchIndex] = team.name;
+        button.disabled = true;
 
-        clearLaterPicks(roundIndex);
+      } else {
 
-        announce(team.name + " advanced from " + roundNames[roundIndex] + ".");
+        button.addEventListener("click", function () {
 
-        render();
+          picks[roundIndex + "-" + matchIndex] = team.name;
 
-      });
+          clearLaterPicks(roundIndex);
+
+          announce(team.name + " advanced from " + roundNames[roundIndex] + ".");
+
+          render();
+
+        });
+
+      }
 
       return button;
 
@@ -1438,26 +1618,26 @@ window.Quarto = {
 
       card.className = "bracket-match-card";
 
-      var pA = match.teamA && match.teamB ? advanceProbability(match.teamA, match.teamB) : null;
+      var pA = match.teamA && match.teamB ? teamAAdvanceProbability(match) : null;
 
       var pB = Number.isFinite(pA) ? 1 - pA : null;
 
-      var winner = modelWinner(match);
+      var projected = projectedWinner(match);
+
+      var official = officialWinner(match);
 
       var pickedName = picks[roundIndex + "-" + matchIndex];
 
-      var selectedName = pickedName || (winner && winner.name);
+      var selectedName = pickedName || (official ? official.name : (projected && projected.name));
 
-
+      var locked = Boolean(official);
 
       var label = document.createElement("div");
-
       label.className = "bracket-match-label";
-
-      label.textContent = "Match " + (matchIndex + 1);
-
+      label.textContent = match.fixture && match.fixture.timing
+        ? match.fixture.timing
+        : (roundIndex === 0 ? "Current pairing" : "Projected match");
       card.appendChild(label);
-
       card.appendChild(teamButton(
 
         match.teamA,
@@ -1468,13 +1648,17 @@ window.Quarto = {
 
         match.teamA && match.teamA.name === selectedName,
 
-        !pickedName && winner && match.teamA && match.teamA.name === winner.name,
+        !pickedName && !locked && projected && match.teamA && match.teamA.name === projected.name,
 
         pickedName && match.teamA && match.teamA.name === pickedName,
 
+        official && match.teamA && match.teamA.name === official.name,
+
         roundIndex,
 
-        matchIndex
+        matchIndex,
+
+        locked
 
       ));
 
@@ -1488,15 +1672,63 @@ window.Quarto = {
 
         match.teamB && match.teamB.name === selectedName,
 
-        !pickedName && winner && match.teamB && match.teamB.name === winner.name,
+        !pickedName && !locked && projected && match.teamB && match.teamB.name === projected.name,
 
         pickedName && match.teamB && match.teamB.name === pickedName,
 
+        official && match.teamB && match.teamB.name === official.name,
+
         roundIndex,
 
-        matchIndex
+        matchIndex,
+
+        locked
 
       ));
+
+
+
+      if (match.fixture) {
+
+        var note = document.createElement("div");
+
+        note.className = "bracket-match-note";
+
+        if (official) {
+
+          var modelMiss = projected && projected.name !== official.name;
+
+          note.classList.add(modelMiss ? "is-miss" : "is-hit");
+
+          note.innerHTML = "<strong>Official:</strong> " +
+
+            escapeHtml(official.name) +
+
+            (match.fixture.actualScore ? " " + escapeHtml(match.fixture.actualScore) : "") +
+
+            (match.fixture.officialOutcome ? " | " + escapeHtml(match.fixture.officialOutcome) : "") +
+
+            "<span>" + (modelMiss ? "Model miss" : "Model held") + "</span>";
+
+        } else {
+
+          var pick = projected ? projected.name : "Pending";
+
+          var levelText = Number.isFinite(Number(match.fixture.regulationDrawProb)) ? formatPct(Number(match.fixture.regulationDrawProb)) : "pending";
+
+          note.classList.add("is-live");
+
+          note.innerHTML = "<strong>" + escapeHtml(match.fixture.timing || "Forecast") + ":</strong> " +
+
+            escapeHtml(pick) + " " + (formatPct(winnerProbability(match, projected)) || "") +
+
+            " <span>Level after 90: " + escapeHtml(levelText) + "</span>";
+
+        }
+
+        card.appendChild(note);
+
+      }
 
 
 
@@ -1569,27 +1801,19 @@ window.Quarto = {
       tabsNode.innerHTML = "";
 
       roundNames.forEach(function (name, index) {
-
         var tab = document.createElement("button");
-
         tab.type = "button";
-
         tab.className = "bracket-tab";
-
         tab.setAttribute("role", "tab");
-
         tab.setAttribute("aria-selected", String(index === activeRound));
-
+        tab.setAttribute("aria-label", name);
+        tab.setAttribute("aria-controls", "bracket-round-" + index);
+        tab.title = name;
         tab.textContent = shortRoundNames[index];
-
         tab.addEventListener("click", function () {
-
           activeRound = index;
-
           fullView = false;
-
           render();
-
         });
 
         tabsNode.appendChild(tab);
@@ -1611,21 +1835,14 @@ window.Quarto = {
 
 
       rounds.forEach(function (round, roundIndex) {
-
         var column = document.createElement("section");
-
         column.className = "bracket-round";
-
+        column.id = "bracket-round-" + roundIndex;
         if (!fullView && roundIndex === activeRound) {
-
           column.classList.add("is-active");
-
         }
-
         var heading = document.createElement("h3");
-
         heading.textContent = roundNames[roundIndex];
-
         column.appendChild(heading);
 
         var list = document.createElement("div");
@@ -1645,31 +1862,27 @@ window.Quarto = {
       });
 
 
-
       var finalMatch = rounds[rounds.length - 1][0];
-
+      var officialChampion = officialWinner(finalMatch);
       var champion = picks["4-0"]
-
         ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
-
-        : modelWinner(finalMatch);
-
+        : (officialChampion || projectedWinner(finalMatch));
+      var championLabel = officialChampion
+        ? "Official champion"
+        : (modelPathOpen ? "Model path champion" : (Object.keys(picks).length > 0 ? "Your bracket champion" : "Current forecast champion"));
+      var championState = officialChampion
+        ? "is-official"
+        : (modelPathOpen ? "is-model" : (Object.keys(picks).length > 0 ? "is-user" : "is-forecast"));
+      championNode.className = "bracket-champion-card " + championState;
       championNode.innerHTML = champion
-
-        ? "<span>Projected Champion</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
-
+        ? "<span>" + escapeHtml(championLabel) + "</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
         : "";
-
+      renderBracketSummary();
       renderTabs();
-
       renderModelPathPanel();
-
       document.querySelectorAll("[data-bracket-action='toggle-view']").forEach(function (button) {
-
         button.textContent = fullView ? "Round view" : "Full bracket";
-
         button.setAttribute("aria-pressed", String(fullView));
-
       });
 
     }
@@ -1752,18 +1965,226 @@ window.Quarto = {
 
 
 
+  function initTuningLedger() {
+    document.querySelectorAll("[data-ledger-root='true']").forEach(function (root) {
+      var grid = root.querySelector("[data-ledger-grid='true']");
+      var sortButtons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var filterButtons = Array.from(root.querySelectorAll("[data-ledger-filter]"));
+      var statusNode = root.querySelector("[data-ledger-status='true']");
+      var emptyNode = root.querySelector("[data-ledger-empty='true']");
+
+      if (!grid || sortButtons.length === 0) {
+        return;
+      }
+
+      var currentMetric = root.getAttribute("data-ledger-default") || "severity";
+      var currentFilter = root.getAttribute("data-ledger-default-filter") || "all";
+
+      function announce(text) {
+        if (statusNode) {
+          statusNode.textContent = text;
+        }
+      }
+
+
+
+      function metricValue(card, metric) {
+
+        var raw = Number(card.getAttribute("data-ledger-" + metric));
+        return Number.isFinite(raw) ? raw : -Infinity;
+      }
+
+      function setActiveMetric(metric) {
+        sortButtons.forEach(function (button) {
+          var active = button.getAttribute("data-ledger-sort") === metric;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function setActiveFilter(filter) {
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-ledger-filter") === filter;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function applyLedgerState() {
+        var cards = Array.from(grid.querySelectorAll("[data-ledger-card='true']"));
+        cards.sort(function (a, b) {
+          var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
+          if (primary !== 0) {
+            return primary;
+          }
+          var secondary = metricValue(b, "severity") - metricValue(a, "severity");
+          if (secondary !== 0) {
+            return secondary;
+          }
+          return metricValue(b, "date") - metricValue(a, "date");
+        });
+        var visibleCount = 0;
+        cards.forEach(function (card) {
+          var issue = card.getAttribute("data-ledger-issue") || "";
+          var show = currentFilter === "all" || issue === currentFilter;
+          card.hidden = !show;
+          if (show) {
+            visibleCount += 1;
+          }
+          grid.appendChild(card);
+        });
+        if (emptyNode) {
+          emptyNode.hidden = visibleCount !== 0;
+        }
+        setActiveMetric(currentMetric);
+        setActiveFilter(currentFilter);
+        var activeSortButton = sortButtons.find(function (button) {
+          return button.getAttribute("data-ledger-sort") === currentMetric;
+        });
+        var activeFilterButton = filterButtons.find(function (button) {
+          return button.getAttribute("data-ledger-filter") === currentFilter;
+        });
+        var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All misses";
+        var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Highest priority";
+        announce(filterText + " filter, " + sortText + " order applied.");
+      }
+
+      sortButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentMetric = button.getAttribute("data-ledger-sort");
+          applyLedgerState();
+        });
+      });
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentFilter = button.getAttribute("data-ledger-filter");
+          applyLedgerState();
+        });
+      });
+
+      applyLedgerState();
+    });
+  }
+
+  function initReviewBoard() {
+    document.querySelectorAll("[data-review-root='true']").forEach(function (root) {
+      var board = root.querySelector(".review-board");
+      var sortButtons = Array.from(root.querySelectorAll("[data-review-sort]"));
+      var filterButtons = Array.from(root.querySelectorAll("[data-review-filter]"));
+      var statusNode = root.querySelector("[data-review-status='true']");
+      var emptyNode = root.querySelector("[data-review-empty='true']");
+
+      if (!board || sortButtons.length === 0 || filterButtons.length === 0) {
+        return;
+      }
+
+      var currentMetric = root.getAttribute("data-review-default") || "date";
+      var currentFilter = root.getAttribute("data-review-default-filter") || "all";
+
+      function announce(text) {
+        if (statusNode) {
+          statusNode.textContent = text;
+        }
+      }
+
+      function metricValue(card, metric) {
+        var raw = Number(card.getAttribute("data-review-" + metric));
+        return Number.isFinite(raw) ? raw : -Infinity;
+      }
+
+      function setActiveMetric(metric) {
+        sortButtons.forEach(function (button) {
+          var active = button.getAttribute("data-review-sort") === metric;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function setActiveFilter(filter) {
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-review-filter") === filter;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function matchesFilter(card, filter) {
+        if (filter === "all") {
+          return true;
+        }
+        if (filter === "hit" || filter === "miss") {
+          return card.getAttribute("data-review-grade") === filter;
+        }
+        if (filter === "draw") {
+          return card.getAttribute("data-review-draw") === "true";
+        }
+        if (filter === "knockout") {
+          return card.getAttribute("data-review-knockout") === "true";
+        }
+        return true;
+      }
+
+      function applyReviewState() {
+        var cards = Array.from(board.querySelectorAll("[data-review-card='true']"));
+        cards.sort(function (a, b) {
+          var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
+          if (primary !== 0) {
+            return primary;
+          }
+          return metricValue(b, "date") - metricValue(a, "date");
+        });
+
+        var visibleCount = 0;
+        cards.forEach(function (card) {
+          var show = matchesFilter(card, currentFilter);
+          card.hidden = !show;
+          if (show) {
+            visibleCount += 1;
+          }
+          board.appendChild(card);
+        });
+
+        if (emptyNode) {
+          emptyNode.hidden = visibleCount !== 0;
+        }
+
+        setActiveMetric(currentMetric);
+        setActiveFilter(currentFilter);
+
+        var activeSortButton = sortButtons.find(function (button) {
+          return button.getAttribute("data-review-sort") === currentMetric;
+        });
+        var activeFilterButton = filterButtons.find(function (button) {
+          return button.getAttribute("data-review-filter") === currentFilter;
+        });
+        var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All graded";
+        var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Most recent";
+        announce(filterText + " filter, " + sortText + " order applied.");
+      }
+
+      sortButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentMetric = button.getAttribute("data-review-sort");
+          applyReviewState();
+        });
+      });
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentFilter = button.getAttribute("data-review-filter");
+          applyReviewState();
+        });
+      });
+
+      applyReviewState();
+    });
+  }
+
   ready(function () {
-
     formatLocalTimes();
-
     initBracket();
-
+    initTuningLedger();
+    initReviewBoard();
   });
-
 })();
-
 </script>
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1775,7 +2196,7 @@ window.Quarto = {
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -1795,11 +2216,11 @@ window.Quarto = {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -1873,7 +2294,7 @@ window.Quarto = {
           if (codeDiv.classList.contains(fromCls)) {
             codeDiv.classList.remove(fromCls);
             codeDiv.classList.add(toCls);
-          }
+          } 
         }
         return false;
       }
@@ -1932,7 +2353,7 @@ window.Quarto = {
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -2007,7 +2428,7 @@ window.Quarto = {
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -2035,7 +2456,7 @@ window.Quarto = {
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -2059,7 +2480,7 @@ window.Quarto = {
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -2099,7 +2520,7 @@ window.Quarto = {
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -2380,7 +2801,7 @@ window.Quarto = {
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>LindaData World Cup 2026 forecasting model.</p>
-</div>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>

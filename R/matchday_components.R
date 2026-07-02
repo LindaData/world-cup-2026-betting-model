@@ -193,7 +193,10 @@ load_matchday_bundle <- function(root) {
     expanded_result_metrics = read_csv_if_exists(file.path(model_dir, "population_expansion_result_metrics.csv")),
     expanded_population_status = read_csv_if_exists(file.path(model_dir, "population_expansion_status.csv")),
     champion_summary = read_csv_if_exists(file.path(model_dir, "world_cup_2026_champion_simulation_summary.csv")),
-    champion_metadata = read_csv_if_exists(file.path(model_dir, "world_cup_2026_champion_simulation_metadata.csv"))
+    champion_metadata = read_csv_if_exists(file.path(model_dir, "world_cup_2026_champion_simulation_metadata.csv")),
+    archive_watch_registry = read_csv_if_exists(file.path(model_dir, "game_archive_watch_registry.csv")),
+    archive_review_board = read_csv_if_exists(file.path(model_dir, "game_archive_review_board.csv")),
+    archive_summary = read_csv_if_exists(file.path(model_dir, "game_archive_summary.csv"))
   )
 }
 
@@ -1337,6 +1340,207 @@ build_projected_bracket <- function(root) {
   )
 }
 
+archive_summary_value <- function(summary, metric, fallback = NA_character_) {
+  if (is.null(summary) || nrow(summary) == 0 || !"metric" %in% names(summary) || !"value" %in% names(summary)) {
+    return(fallback)
+  }
+  value <- summary$value[summary$metric == metric]
+  if (length(value) == 0 || is.na(value[[1]]) || !nzchar(as.character(value[[1]]))) {
+    fallback
+  } else {
+    as.character(value[[1]])
+  }
+}
+
+archive_metric_card <- function(label, value, note = NULL) {
+  note_html <- if (!is.null(note) && nzchar(note)) paste0("<small>", escape_html(note), "</small>") else ""
+  paste0(
+    '<article class="archive-metric-card">',
+    '<span>', escape_html(label), '</span>',
+    '<strong>', escape_html(value), '</strong>',
+    note_html,
+    '</article>'
+  )
+}
+
+render_archive_cards <- function(rows, limit = 6, include_review = FALSE) {
+  if (is.null(rows) || nrow(rows) == 0) {
+    return('<div class="empty-state"><strong>No archive rows are available yet.</strong></div>')
+  }
+
+  rows <- rows |>
+    dplyr::slice_head(n = limit)
+
+  paste(vapply(seq_len(nrow(rows)), function(i) {
+    row <- rows[i, , drop = FALSE]
+    title <- safe_text(row$match_label, "Match")
+    venue <- safe_text(row$venue_label, "Venue not posted")
+    status <- if ("archive_status" %in% names(row)) safe_text(row$archive_status, safe_text(row$replay_status, "Tracked")) else safe_text(row$review_outcome, "Tracked")
+    kicker <- if ("match_phase" %in% names(row)) safe_text(row$match_phase, "Match") else "Match"
+    watch_line <- if ("official_watch_platform" %in% names(row)) {
+      paste0(
+        '<div class="archive-card-line"><span>Watch source</span><strong>',
+        escape_html(safe_text(row$official_watch_platform, "Official provider")),
+        '</strong></div>'
+      )
+    } else {
+      ""
+    }
+    detail_block <- if (include_review) {
+      paste0(
+        '<div class="archive-card-grid">',
+        '<div><span>Model result</span><strong>', escape_html(safe_text(row$review_outcome, "Pending")), '</strong></div>',
+        '<div><span>Actual result probability</span><strong>', display_percent(row$actual_result_probability, 1), '</strong></div>',
+        '<div><span>Total goal error</span><strong>', ifelse(is.na(safe_number(row$total_goal_error)), "Pending", paste0(display_number(row$total_goal_error, 2), " goals")), '</strong></div>',
+        '<div><span>Flag</span><strong>', escape_html(safe_text(row$upset_check, safe_text(row$score_error_band, "None"))), '</strong></div>',
+        '</div>',
+        '<p class="archive-card-note">Predicted ', escape_html(safe_text(row$predicted_score, "NA")), '; actual ', escape_html(safe_text(row$actual_score, "NA")), '.</p>'
+      )
+    } else {
+      paste0(
+        '<div class="archive-card-grid">',
+        '<div><span>Status</span><strong>', escape_html(status), '</strong></div>',
+        '<div><span>Replay</span><strong>', escape_html(safe_text(row$replay_status, "Check provider")), '</strong></div>',
+        '<div><span>Kickoff</span><strong>', match_time_display(row), '</strong></div>',
+        '<div><span>Lookup hint</span><strong>', escape_html(safe_text(row$replay_lookup_hint, "Use match label in Peacock search")), '</strong></div>',
+        '</div>'
+      )
+    }
+    action_html <- if ("official_watch_url" %in% names(row) && nzchar(safe_text(row$official_watch_url, ""))) {
+      paste0(
+        '<div class="archive-card-actions">',
+        '<a class="button-secondary" href="', escape_html(safe_text(row$official_watch_url, "")), '" target="_blank" rel="noopener">Open provider</a>',
+        '</div>'
+      )
+    } else {
+      ""
+    }
+
+    paste0(
+      '<article class="archive-card">',
+      '<div class="archive-card-head">',
+      '<span class="archive-card-kicker">', escape_html(kicker), '</span>',
+      '<span class="archive-card-status">', escape_html(status), '</span>',
+      '</div>',
+      '<h3>', escape_html(title), '</h3>',
+      '<p class="archive-card-venue">', escape_html(venue), '</p>',
+      watch_line,
+      detail_block,
+      action_html,
+      '</article>'
+    )
+  }, character(1)), collapse = "")
+}
+
+render_game_archive_section <- function(bundle, compact = TRUE, limit = 6) {
+  registry <- bundle$archive_watch_registry
+  review <- bundle$archive_review_board
+  summary <- bundle$archive_summary
+
+  metrics <- c(
+    archive_metric_card("Tracked matches", archive_summary_value(summary, "matches_tracked", "0"), "Every fixture on the board gets a watch-source row."),
+    archive_metric_card("Completed reviews", archive_summary_value(summary, "review_rows", "0"), "Completed matches tied back to model grading."),
+    archive_metric_card("Model hit rate", display_percent(archive_summary_value(summary, "model_hit_rate", NA), 1), "Share of completed matches where the public pick landed."),
+    archive_metric_card("Average goal error", ifelse(is.na(suppressWarnings(as.numeric(archive_summary_value(summary, "average_goal_error", NA)))), "Pending", paste0(display_number(archive_summary_value(summary, "average_goal_error", NA), 2), " goals")), "Average total-goals miss on graded matches.")
+  )
+
+  wrap_class <- if (compact) "page-section archive-section archive-section-compact" else "page-section archive-section"
+  review_rows <- if (nrow(review) > 0) review else data.frame()
+  registry_rows <- if (nrow(registry) > 0) registry |>
+    dplyr::arrange(
+      factor(.data$archive_status, levels = c("Today", "Upcoming", "Completed")),
+      .data$date,
+      .data$match_label
+    ) else data.frame()
+
+  paste0(
+    '<section id="game-archive" class="', wrap_class, '">',
+    '<div class="section-heading">',
+    '<span class="section-kicker">Archive</span>',
+    '<h2>Game Archive</h2>',
+    '<p>Official watch-source metadata, replay lookup guidance, and post-match review for each World Cup fixture. The site stores metadata and model-review fields, not broadcast video.</p>',
+    '</div>',
+    '<div class="archive-metric-grid">', paste(metrics, collapse = ""), '</div>',
+    '<div class="archive-grid">',
+    '<div class="archive-column">',
+    '<div class="archive-column-head"><h3>Watch and replay registry</h3><p>Where to look for the official live or replay listing.</p></div>',
+    '<div class="archive-card-stack">', render_archive_cards(registry_rows, limit = limit, include_review = FALSE), '</div>',
+    '</div>',
+    '<div class="archive-column">',
+    '<div class="archive-column-head"><h3>Completed match review</h3><p>How the public model call compared with the official result.</p></div>',
+    '<div class="archive-card-stack">', render_archive_cards(review_rows, limit = limit, include_review = TRUE), '</div>',
+    '</div>',
+    '</div>',
+    if (compact) '<p class="section-note"><a href="11_game_archive.html">Open the full archive page</a> for the full registry, review board, and workflow notes.</p>' else '',
+    '</section>'
+  )
+}
+
+render_game_archive_page <- function(bundle) {
+  registry <- bundle$archive_watch_registry
+  review <- bundle$archive_review_board
+  summary <- bundle$archive_summary
+
+  status_rows <- data.frame(
+    label = c("Tracked fixtures", "Completed reviews", "Upcoming fixtures", "Today fixtures"),
+    value = c(
+      archive_summary_value(summary, "matches_tracked", "0"),
+      archive_summary_value(summary, "review_rows", "0"),
+      archive_summary_value(summary, "upcoming_matches", "0"),
+      archive_summary_value(summary, "today_matches", "0")
+    ),
+    note = c(
+      "All fixtures currently carried on the match board.",
+      "Completed matches with model review fields attached.",
+      "Future matches already in the watch registry.",
+      "Matches currently marked as today."
+    ),
+    stringsAsFactors = FALSE
+  )
+
+  registry_table <- if (nrow(registry) > 0) {
+    display_table(
+      registry |>
+        dplyr::select(date, match_phase, archive_status, match_label, venue_label, official_watch_platform, replay_status, replay_lookup_hint),
+      caption = "Official watch-source registry."
+    )
+  } else {
+    display_table(empty_note("Watch-source registry will appear after the archive refresh."))
+  }
+
+  review_table <- if (nrow(review) > 0) {
+    display_table(
+      review |>
+        dplyr::select(date, match_phase, match_label, review_outcome, actual_result_probability, total_goal_error, score_error_band, upset_check),
+      caption = "Completed match review board."
+    )
+  } else {
+    display_table(empty_note("Completed-match review rows will appear after final scores are graded."))
+  }
+
+  paste0(
+    metric_cards(status_rows),
+    render_game_archive_section(bundle, compact = FALSE, limit = 8),
+    '<section class="page-section archive-explainer">',
+    '<div class="section-heading">',
+    '<span class="section-kicker">Workflow</span>',
+    '<h2>How To Use The Archive</h2>',
+    '<p>Use the registry before kickoff to find the official provider listing. After the match, use the review board to see whether the model call held, where the score projection missed, and which matches deserve tuning attention.</p>',
+    '</div>',
+    '<div class="method-grid">',
+    '<div><strong>Before kickoff</strong><span>Check the provider row, kickoff time, and replay lookup hint.</span></div>',
+    '<div><strong>After final whistle</strong><span>Review the completed-match card for actual-result probability and score miss.</span></div>',
+    '<div><strong>Model tuning</strong><span>Use upset checks and large score misses to decide what to recalibrate next.</span></div>',
+    '</div>',
+    '</section>',
+    '<section class="page-section">',
+    '<div class="section-heading"><span class="section-kicker">Registry</span><h2>Archive Tables</h2><p>These tables are reduced public summaries. Private notes and raw broadcast media are not stored on the public site.</p></div>',
+    registry_table,
+    review_table,
+    '</section>'
+  )
+}
+
 render_bracket <- function(root, preview = FALSE, section_id = NULL) {
   bracket_data <- build_projected_bracket(root)
   if (is.null(bracket_data)) {
@@ -1362,6 +1566,14 @@ render_bracket <- function(root, preview = FALSE, section_id = NULL) {
     '</div>',
     '<div class="bracket-tabs" role="tablist" aria-label="Bracket rounds"></div>',
     '<p class="bracket-instruction">Tap a team to advance it. Use the round tabs on small screens.</p>',
+    '<div id="bracket-summary-strip" class="bracket-summary-strip" aria-live="polite"></div>',
+    '<div id="bracket-mode-note" class="bracket-mode-note" aria-live="polite"></div>',
+    '<div class="bracket-legend" aria-label="Bracket legend">',
+    '<span class="bracket-legend-item"><i class="legend-swatch legend-model"></i>Model pick</span>',
+    '<span class="bracket-legend-item"><i class="legend-swatch legend-user"></i>Your pick</span>',
+    '<span class="bracket-legend-item"><i class="legend-swatch legend-official"></i>Official result</span>',
+    '<span class="bracket-legend-item"><i class="legend-swatch legend-pending"></i>Pending side</span>',
+    '</div>',
     '<div class="bracket-overview-grid">',
     '<div class="seed-watch-panel"><h3>Projected Group Seeds</h3><div id="group-seed-watch"></div></div>',
     '<div class="seed-watch-panel"><h3>Best Third Watch</h3><div id="third-place-watch"></div></div>',

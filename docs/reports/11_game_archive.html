@@ -1,0 +1,6880 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="World Cup 2026 game archive with official watch-source metadata, replay lookup guidance, and post-match model review.">
+
+<title>Archive – World Cup 2026 Forecasting Model</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f3818056407a927f82fd164097bc4fcb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="author" content="Sergio Mora">
+
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta name="theme-color" content="#102a43">
+
+<meta property="og:type" content="website">
+
+<meta property="og:locale" content="en_US">
+
+<link rel="author" href="https://github.com/LindaData">
+
+<link rel="manifest" href="https://lindadata.github.io/world-cup-2026-betting-model/assets/site.webmanifest">
+
+<script type="application/ld+json">
+
+{
+
+  "@context": "https://schema.org",
+
+  "@graph": [
+
+    {
+
+      "@type": "WebSite",
+
+      "@id": "https://lindadata.github.io/world-cup-2026-betting-model/#website",
+
+      "name": "World Cup 2026 Forecasting Model",
+
+      "alternateName": "WC 2026 Forecasts",
+
+      "url": "https://lindadata.github.io/world-cup-2026-betting-model/",
+
+      "description": "Match probabilities, projected scores, champion probabilities, tournament paths, and post-match model evaluation for the 2026 World Cup.",
+
+      "inLanguage": "en-US",
+
+      "creator": {
+
+        "@type": "Person",
+
+        "name": "Sergio Mora",
+
+        "url": "https://github.com/LindaData"
+
+      },
+
+      "publisher": {
+
+        "@type": "Organization",
+
+        "name": "LindaData",
+
+        "url": "https://github.com/LindaData"
+
+      }
+
+    },
+
+    {
+
+      "@type": "SoftwareSourceCode",
+
+      "@id": "https://github.com/LindaData/world-cup-2026-betting-model#source",
+
+      "name": "World Cup 2026 Forecasting Model",
+
+      "codeRepository": "https://github.com/LindaData/world-cup-2026-betting-model",
+
+      "programmingLanguage": ["R", "Python", "SQL"],
+
+      "runtimePlatform": "Quarto, GitHub Pages",
+
+      "applicationCategory": "Sports forecasting",
+
+      "isAccessibleForFree": true,
+
+      "license": "https://github.com/LindaData/world-cup-2026-betting-model"
+
+    },
+
+    {
+
+      "@type": "Dataset",
+
+      "@id": "https://lindadata.github.io/world-cup-2026-betting-model/reports/00_data_overview.html#coverage",
+
+      "name": "World Cup 2026 Forecasting Model Public Summary Data",
+
+      "description": "Public metadata summaries and model-output samples used to explain match forecasts, model performance, and data coverage. Raw datasets and credentials are not published.",
+
+      "url": "https://lindadata.github.io/world-cup-2026-betting-model/reports/00_data_overview.html",
+
+      "creator": {
+
+        "@type": "Person",
+
+        "name": "Sergio Mora"
+
+      },
+
+      "isAccessibleForFree": true,
+
+      "keywords": [
+
+        "World Cup 2026",
+
+        "soccer forecasting",
+
+        "match probabilities",
+
+        "sports analytics",
+
+        "R",
+
+        "Quarto"
+
+      ]
+
+    }
+
+  ]
+
+}
+
+</script>
+
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Archive – World Cup 2026 Forecasting Model">
+<meta property="og:description" content="World Cup 2026 game archive with official watch-source metadata, replay lookup guidance, and post-match model review.">
+<meta property="og:image" content="https://lindadata.github.io/world-cup-2026-betting-model/assets/social-preview.png">
+<meta property="og:site_name" content="World Cup 2026 Forecasting Model">
+<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:title" content="Archive – World Cup 2026 Forecasting Model">
+<meta name="twitter:description" content="World Cup 2026 game archive with official watch-source metadata, replay lookup guidance, and post-match model review.">
+<meta name="twitter:image" content="https://lindadata.github.io/world-cup-2026-betting-model/assets/social-preview.png">
+<meta name="twitter:image-height" content="630">
+<meta name="twitter:image-width" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://lindadata.github.io/world-cup-2026-betting-model/reports/11_game_archive.html">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">WC 2026 Forecasts</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/08_matchday_predictions.html"> 
+<span class="menu-text">Predictions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../reports/11_game_archive.html" aria-current="page"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/08_matchday_predictions.html#bracket"> 
+<span class="menu-text">Bracket</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reports/00_data_overview.html"> 
+<span class="menu-text">Coverage</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Methodology</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">    
+        <li>
+    <a class="dropdown-item" href="../reports/08_matchday_predictions.html#model-review">
+ <span class="dropdown-text">Model Review</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reports/07_fixture_predictions.html">
+ <span class="dropdown-text">Model Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reports/05_poisson_goals_model.html">
+ <span class="dropdown-text">Goals Forecast</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reports/02_ordinal_result_model.html">
+ <span class="dropdown-text">Win / Draw / Loss Model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reports/04_knn_similarity_model.html">
+ <span class="dropdown-text">Similar Match Model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reports/10_model_challengers.html">
+ <span class="dropdown-text">Model Challengers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reports/03_distribution_review.html">
+ <span class="dropdown-text">Distribution Checks</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reports/06_regression_diagnostics.html">
+ <span class="dropdown-text">Diagnostics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reports/09_multisport_expansion.html">
+ <span class="dropdown-text">Multi-Sport Roadmap</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/LindaData/world-cup-2026-betting-model"> 
+<span class="menu-text">GitHub</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Archive</h1>
+<p class="subtitle lead">Official watch-source registry, replay tracking, and post-match model review.</p>
+</div>
+
+<div>
+  <div class="description">
+    World Cup 2026 game archive with official watch-source metadata, replay lookup guidance, and post-match model review.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section class="page-intro prediction-intro">
+<span class="section-kicker">Archive</span>
+<h2>
+Game Archive
+</h2>
+<p>
+Official watch-source metadata, replay lookup guidance, and post-match review tied back to each World Cup fixture.
+</p>
+</section>
+<div class="metric-strip">
+<div class="metric">
+<strong>Tracked fixtures</strong><span>88</span><small>All fixtures currently carried on the match board.</small>
+</div>
+<div class="metric">
+<strong>Completed reviews</strong><span>73</span><small>Completed matches with model review fields attached.</small>
+</div>
+<div class="metric">
+<strong>Upcoming fixtures</strong><span>9</span><small>Future matches already in the watch registry.</small>
+</div>
+<div class="metric">
+<strong>Today fixtures</strong><span>3</span><small>Matches currently marked as today.</small>
+</div>
+</div>
+<section id="game-archive" class="page-section archive-section">
+<div class="section-heading">
+<span class="section-kicker">Archive</span>
+<h2>
+Game Archive
+</h2>
+<p>
+Official watch-source metadata, replay lookup guidance, and post-match review for each World Cup fixture. The site stores metadata and model-review fields, not broadcast video.
+</p>
+</div>
+<div class="archive-metric-grid">
+<article class="archive-metric-card">
+<span>Tracked matches</span><strong>88</strong><small>Every fixture on the board gets a watch-source row.</small>
+</article>
+<article class="archive-metric-card">
+<span>Completed reviews</span><strong>73</strong><small>Completed matches tied back to model grading.</small>
+</article>
+<article class="archive-metric-card">
+<span>Model hit rate</span><strong>64.4%</strong><small>Share of completed matches where the public pick landed.</small>
+</article>
+<article class="archive-metric-card">
+<span>Average goal error</span><strong>1.54 goals</strong><small>Average total-goals miss on graded matches.</small>
+</article>
+</div>
+<div class="archive-grid">
+<div class="archive-column">
+<div class="archive-column-head">
+<h3>
+Watch and replay registry
+</h3>
+<p>
+Where to look for the official live or replay listing.
+</p>
+</div>
+<div class="archive-card-stack">
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Knockout</span><span class="archive-card-status">Today</span>
+</div>
+<h3>
+France vs Sweden
+</h3>
+<p class="archive-card-venue">
+East Rutherford, United States
+</p>
+<div class="archive-card-line">
+<span>Watch source</span><strong>Peacock</strong>
+</div>
+<div class="archive-card-grid">
+<div>
+<span>Status</span><strong>Today</strong>
+</div>
+<div>
+<span>Replay</span><strong>Live window pending</strong>
+</div>
+<div>
+<span>Kickoff</span><strong><span class="time-unavailable">Tue, Jun 30 <small>Kickoff time not posted</small></span></strong>
+</div>
+<div>
+<span>Lookup hint</span><strong>France vs Sweden World Cup replay</strong>
+</div>
+</div>
+<div class="archive-card-actions">
+<a class="button-secondary" href="https://www.peacocktv.com/" target="_blank" rel="noopener">Open provider</a>
+</div>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Knockout</span><span class="archive-card-status">Today</span>
+</div>
+<h3>
+Ivory Coast vs Norway
+</h3>
+<p class="archive-card-venue">
+Arlington, United States
+</p>
+<div class="archive-card-line">
+<span>Watch source</span><strong>Peacock</strong>
+</div>
+<div class="archive-card-grid">
+<div>
+<span>Status</span><strong>Today</strong>
+</div>
+<div>
+<span>Replay</span><strong>Live window pending</strong>
+</div>
+<div>
+<span>Kickoff</span><strong><span class="time-unavailable">Tue, Jun 30 <small>Kickoff time not posted</small></span></strong>
+</div>
+<div>
+<span>Lookup hint</span><strong>Ivory Coast vs Norway World Cup replay</strong>
+</div>
+</div>
+<div class="archive-card-actions">
+<a class="button-secondary" href="https://www.peacocktv.com/" target="_blank" rel="noopener">Open provider</a>
+</div>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Knockout</span><span class="archive-card-status">Today</span>
+</div>
+<h3>
+Mexico vs Ecuador
+</h3>
+<p class="archive-card-venue">
+Mexico City, Mexico
+</p>
+<div class="archive-card-line">
+<span>Watch source</span><strong>Peacock</strong>
+</div>
+<div class="archive-card-grid">
+<div>
+<span>Status</span><strong>Today</strong>
+</div>
+<div>
+<span>Replay</span><strong>Live window pending</strong>
+</div>
+<div>
+<span>Kickoff</span><strong><span class="time-unavailable">Tue, Jun 30 <small>Kickoff time not posted</small></span></strong>
+</div>
+<div>
+<span>Lookup hint</span><strong>Mexico vs Ecuador World Cup replay</strong>
+</div>
+</div>
+<div class="archive-card-actions">
+<a class="button-secondary" href="https://www.peacocktv.com/" target="_blank" rel="noopener">Open provider</a>
+</div>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Knockout</span><span class="archive-card-status">Upcoming</span>
+</div>
+<h3>
+Belgium vs Senegal
+</h3>
+<p class="archive-card-venue">
+Seattle, United States
+</p>
+<div class="archive-card-line">
+<span>Watch source</span><strong>Peacock</strong>
+</div>
+<div class="archive-card-grid">
+<div>
+<span>Status</span><strong>Upcoming</strong>
+</div>
+<div>
+<span>Replay</span><strong>Live window pending</strong>
+</div>
+<div>
+<span>Kickoff</span><strong><span class="time-unavailable">Wed, Jul 01 <small>Kickoff time not posted</small></span></strong>
+</div>
+<div>
+<span>Lookup hint</span><strong>Belgium vs Senegal World Cup replay</strong>
+</div>
+</div>
+<div class="archive-card-actions">
+<a class="button-secondary" href="https://www.peacocktv.com/" target="_blank" rel="noopener">Open provider</a>
+</div>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Knockout</span><span class="archive-card-status">Upcoming</span>
+</div>
+<h3>
+England vs DR Congo
+</h3>
+<p class="archive-card-venue">
+Atlanta, United States
+</p>
+<div class="archive-card-line">
+<span>Watch source</span><strong>Peacock</strong>
+</div>
+<div class="archive-card-grid">
+<div>
+<span>Status</span><strong>Upcoming</strong>
+</div>
+<div>
+<span>Replay</span><strong>Live window pending</strong>
+</div>
+<div>
+<span>Kickoff</span><strong><span class="time-unavailable">Wed, Jul 01 <small>Kickoff time not posted</small></span></strong>
+</div>
+<div>
+<span>Lookup hint</span><strong>England vs DR Congo World Cup replay</strong>
+</div>
+</div>
+<div class="archive-card-actions">
+<a class="button-secondary" href="https://www.peacocktv.com/" target="_blank" rel="noopener">Open provider</a>
+</div>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Knockout</span><span class="archive-card-status">Upcoming</span>
+</div>
+<h3>
+United States vs Bosnia and Herzegovina
+</h3>
+<p class="archive-card-venue">
+Santa Clara, United States
+</p>
+<div class="archive-card-line">
+<span>Watch source</span><strong>Peacock</strong>
+</div>
+<div class="archive-card-grid">
+<div>
+<span>Status</span><strong>Upcoming</strong>
+</div>
+<div>
+<span>Replay</span><strong>Live window pending</strong>
+</div>
+<div>
+<span>Kickoff</span><strong><span class="time-unavailable">Wed, Jul 01 <small>Kickoff time not posted</small></span></strong>
+</div>
+<div>
+<span>Lookup hint</span><strong>United States vs Bosnia and Herzegovina World Cup replay</strong>
+</div>
+</div>
+<div class="archive-card-actions">
+<a class="button-secondary" href="https://www.peacocktv.com/" target="_blank" rel="noopener">Open provider</a>
+</div>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Knockout</span><span class="archive-card-status">Upcoming</span>
+</div>
+<h3>
+Portugal vs Croatia
+</h3>
+<p class="archive-card-venue">
+Toronto, Canada
+</p>
+<div class="archive-card-line">
+<span>Watch source</span><strong>Peacock</strong>
+</div>
+<div class="archive-card-grid">
+<div>
+<span>Status</span><strong>Upcoming</strong>
+</div>
+<div>
+<span>Replay</span><strong>Live window pending</strong>
+</div>
+<div>
+<span>Kickoff</span><strong><span class="time-unavailable">Thu, Jul 02 <small>Kickoff time not posted</small></span></strong>
+</div>
+<div>
+<span>Lookup hint</span><strong>Portugal vs Croatia World Cup replay</strong>
+</div>
+</div>
+<div class="archive-card-actions">
+<a class="button-secondary" href="https://www.peacocktv.com/" target="_blank" rel="noopener">Open provider</a>
+</div>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Knockout</span><span class="archive-card-status">Upcoming</span>
+</div>
+<h3>
+Spain vs Austria
+</h3>
+<p class="archive-card-venue">
+Inglewood, United States
+</p>
+<div class="archive-card-line">
+<span>Watch source</span><strong>Peacock</strong>
+</div>
+<div class="archive-card-grid">
+<div>
+<span>Status</span><strong>Upcoming</strong>
+</div>
+<div>
+<span>Replay</span><strong>Live window pending</strong>
+</div>
+<div>
+<span>Kickoff</span><strong><span class="time-unavailable">Thu, Jul 02 <small>Kickoff time not posted</small></span></strong>
+</div>
+<div>
+<span>Lookup hint</span><strong>Spain vs Austria World Cup replay</strong>
+</div>
+</div>
+<div class="archive-card-actions">
+<a class="button-secondary" href="https://www.peacocktv.com/" target="_blank" rel="noopener">Open provider</a>
+</div>
+</article>
+</div>
+</div>
+<div class="archive-column">
+<div class="archive-column-head">
+<h3>
+Completed match review
+</h3>
+<p>
+How the public model call compared with the official result.
+</p>
+</div>
+<div class="archive-card-stack">
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Knockout</span><span class="archive-card-status">Model hit</span>
+</div>
+<h3>
+South Africa vs Canada
+</h3>
+<p class="archive-card-venue">
+Inglewood, United States
+</p>
+<div class="archive-card-grid">
+<div>
+<span>Model result</span><strong>Model hit</strong>
+</div>
+<div>
+<span>Actual result probability</span><strong>71.5%</strong>
+</div>
+<div>
+<span>Total goal error</span><strong>1.62 goals</strong>
+</div>
+<div>
+<span>Flag</span><strong>Large score miss</strong>
+</div>
+</div>
+<p class="archive-card-note">
+Predicted 0-1; actual 0-1.
+</p>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Group</span><span class="archive-card-status">Model miss</span>
+</div>
+<h3>
+Algeria vs Austria
+</h3>
+<p class="archive-card-venue">
+Kansas City, United States
+</p>
+<div class="archive-card-grid">
+<div>
+<span>Model result</span><strong>Model miss</strong>
+</div>
+<div>
+<span>Actual result probability</span><strong>28.2%</strong>
+</div>
+<div>
+<span>Total goal error</span><strong>3.59 goals</strong>
+</div>
+<div>
+<span>Flag</span><strong>Upset check</strong>
+</div>
+</div>
+<p class="archive-card-note">
+Predicted 1-1; actual 3-3.
+</p>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Group</span><span class="archive-card-status">Model miss</span>
+</div>
+<h3>
+Colombia vs Portugal
+</h3>
+<p class="archive-card-venue">
+Miami Gardens, United States
+</p>
+<div class="archive-card-grid">
+<div>
+<span>Model result</span><strong>Model miss</strong>
+</div>
+<div>
+<span>Actual result probability</span><strong>27.8%</strong>
+</div>
+<div>
+<span>Total goal error</span><strong>2.28 goals</strong>
+</div>
+<div>
+<span>Flag</span><strong>Upset check</strong>
+</div>
+</div>
+<p class="archive-card-note">
+Predicted 1-0; actual 0-0.
+</p>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Group</span><span class="archive-card-status">Model hit</span>
+</div>
+<h3>
+Croatia vs Ghana
+</h3>
+<p class="archive-card-venue">
+Philadelphia, United States
+</p>
+<div class="archive-card-grid">
+<div>
+<span>Model result</span><strong>Model hit</strong>
+</div>
+<div>
+<span>Actual result probability</span><strong>77.0%</strong>
+</div>
+<div>
+<span>Total goal error</span><strong>0.10 goals</strong>
+</div>
+<div>
+<span>Flag</span><strong>Tight score read</strong>
+</div>
+</div>
+<p class="archive-card-note">
+Predicted 2-0; actual 2-1.
+</p>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Group</span><span class="archive-card-status">Model hit</span>
+</div>
+<h3>
+DR Congo vs Uzbekistan
+</h3>
+<p class="archive-card-venue">
+Atlanta, United States
+</p>
+<div class="archive-card-grid">
+<div>
+<span>Model result</span><strong>Model hit</strong>
+</div>
+<div>
+<span>Actual result probability</span><strong>55.2%</strong>
+</div>
+<div>
+<span>Total goal error</span><strong>1.35 goals</strong>
+</div>
+<div>
+<span>Flag</span><strong>Manageable score miss</strong>
+</div>
+</div>
+<p class="archive-card-note">
+Predicted 1-0; actual 3-1.
+</p>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Group</span><span class="archive-card-status">Model hit</span>
+</div>
+<h3>
+Jordan vs Argentina
+</h3>
+<p class="archive-card-venue">
+Arlington, United States
+</p>
+<div class="archive-card-grid">
+<div>
+<span>Model result</span><strong>Model hit</strong>
+</div>
+<div>
+<span>Actual result probability</span><strong>79.7%</strong>
+</div>
+<div>
+<span>Total goal error</span><strong>0.94 goals</strong>
+</div>
+<div>
+<span>Flag</span><strong>Manageable score miss</strong>
+</div>
+</div>
+<p class="archive-card-note">
+Predicted 0-2; actual 1-3.
+</p>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Group</span><span class="archive-card-status">Model hit</span>
+</div>
+<h3>
+Panama vs England
+</h3>
+<p class="archive-card-venue">
+East Rutherford, United States
+</p>
+<div class="archive-card-grid">
+<div>
+<span>Model result</span><strong>Model hit</strong>
+</div>
+<div>
+<span>Actual result probability</span><strong>69.4%</strong>
+</div>
+<div>
+<span>Total goal error</span><strong>0.75 goals</strong>
+</div>
+<div>
+<span>Flag</span><strong>Manageable score miss</strong>
+</div>
+</div>
+<p class="archive-card-note">
+Predicted 0-2; actual 0-2.
+</p>
+</article>
+<article class="archive-card">
+<div class="archive-card-head">
+<span class="archive-card-kicker">Group</span><span class="archive-card-status">Model miss</span>
+</div>
+<h3>
+Cape Verde vs Saudi Arabia
+</h3>
+<p class="archive-card-venue">
+Houston, United States
+</p>
+<div class="archive-card-grid">
+<div>
+<span>Model result</span><strong>Model miss</strong>
+</div>
+<div>
+<span>Actual result probability</span><strong>27.6%</strong>
+</div>
+<div>
+<span>Total goal error</span><strong>2.61 goals</strong>
+</div>
+<div>
+<span>Flag</span><strong>Upset check</strong>
+</div>
+</div>
+<p class="archive-card-note">
+Predicted 1-1; actual 0-0.
+</p>
+</article>
+</div>
+</div>
+</div>
+</section>
+<section class="page-section archive-explainer">
+<div class="section-heading">
+<span class="section-kicker">Workflow</span>
+<h2>
+How To Use The Archive
+</h2>
+<p>
+Use the registry before kickoff to find the official provider listing. After the match, use the review board to see whether the model call held, where the score projection missed, and which matches deserve tuning attention.
+</p>
+</div>
+<div class="method-grid">
+<div>
+<strong>Before kickoff</strong><span>Check the provider row, kickoff time, and replay lookup hint.</span>
+</div>
+<div>
+<strong>After final whistle</strong><span>Review the completed-match card for actual-result probability and score miss.</span>
+</div>
+<div>
+<strong>Model tuning</strong><span>Use upset checks and large score misses to decide what to recalibrate next.</span>
+</div>
+</div>
+</section>
+<section class="page-section">
+<div class="section-heading">
+<span class="section-kicker">Registry</span>
+<h2>
+Archive Tables
+</h2>
+<p>
+These tables are reduced public summaries. Private notes and raw broadcast media are not stored on the public site.
+</p>
+</div>
+<table class="clean-table">
+<caption>
+Official watch-source registry.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Match Phase
+</th>
+<th style="text-align:left;">
+Archive Status
+</th>
+<th style="text-align:left;">
+Match Label
+</th>
+<th style="text-align:left;">
+Venue Label
+</th>
+<th style="text-align:left;">
+Official Watch Platform
+</th>
+<th style="text-align:left;">
+Replay Status
+</th>
+<th style="text-align:left;">
+Replay Lookup Hint
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2026-06-11
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Mexico vs South Africa
+</td>
+<td style="text-align:left;">
+Mexico City, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Mexico vs South Africa World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-11
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+South Korea vs Czech Republic
+</td>
+<td style="text-align:left;">
+Zapopan, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+South Korea vs Czech Republic World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-12
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Canada vs Bosnia and Herzegovina
+</td>
+<td style="text-align:left;">
+Toronto, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Canada vs Bosnia and Herzegovina World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-12
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+United States vs Paraguay
+</td>
+<td style="text-align:left;">
+Inglewood, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+United States vs Paraguay World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-13
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Australia vs Turkey
+</td>
+<td style="text-align:left;">
+Vancouver, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Australia vs Turkey World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-13
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Brazil vs Morocco
+</td>
+<td style="text-align:left;">
+East Rutherford, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Brazil vs Morocco World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-13
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Haiti vs Scotland
+</td>
+<td style="text-align:left;">
+Foxborough, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Haiti vs Scotland World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-13
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Qatar vs Switzerland
+</td>
+<td style="text-align:left;">
+Santa Clara, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Qatar vs Switzerland World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-14
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Germany vs Curaçao
+</td>
+<td style="text-align:left;">
+Houston, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Germany vs Curaçao World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-14
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Ivory Coast vs Ecuador
+</td>
+<td style="text-align:left;">
+Philadelphia, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Ivory Coast vs Ecuador World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-14
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Netherlands vs Japan
+</td>
+<td style="text-align:left;">
+Arlington, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Netherlands vs Japan World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-14
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Sweden vs Tunisia
+</td>
+<td style="text-align:left;">
+Guadalupe, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Sweden vs Tunisia World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-15
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Belgium vs Egypt
+</td>
+<td style="text-align:left;">
+Seattle, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Belgium vs Egypt World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-15
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Iran vs New Zealand
+</td>
+<td style="text-align:left;">
+Inglewood, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Iran vs New Zealand World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-15
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Saudi Arabia vs Uruguay
+</td>
+<td style="text-align:left;">
+Miami Gardens, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Saudi Arabia vs Uruguay World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-15
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Spain vs Cape Verde
+</td>
+<td style="text-align:left;">
+Atlanta, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Spain vs Cape Verde World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-16
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Argentina vs Algeria
+</td>
+<td style="text-align:left;">
+Kansas City, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Argentina vs Algeria World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-16
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Austria vs Jordan
+</td>
+<td style="text-align:left;">
+Santa Clara, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Austria vs Jordan World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-16
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+France vs Senegal
+</td>
+<td style="text-align:left;">
+East Rutherford, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+France vs Senegal World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-16
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Iraq vs Norway
+</td>
+<td style="text-align:left;">
+Foxborough, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Iraq vs Norway World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-17
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+England vs Croatia
+</td>
+<td style="text-align:left;">
+Arlington, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+England vs Croatia World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-17
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Ghana vs Panama
+</td>
+<td style="text-align:left;">
+Toronto, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Ghana vs Panama World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-17
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Portugal vs DR Congo
+</td>
+<td style="text-align:left;">
+Houston, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Portugal vs DR Congo World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-17
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Uzbekistan vs Colombia
+</td>
+<td style="text-align:left;">
+Mexico City, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Uzbekistan vs Colombia World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-18
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Canada vs Qatar
+</td>
+<td style="text-align:left;">
+Vancouver, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Canada vs Qatar World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-18
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Czech Republic vs South Africa
+</td>
+<td style="text-align:left;">
+Atlanta, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Czech Republic vs South Africa World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-18
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Mexico vs South Korea
+</td>
+<td style="text-align:left;">
+Zapopan, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Mexico vs South Korea World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-18
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Switzerland vs Bosnia and Herzegovina
+</td>
+<td style="text-align:left;">
+Inglewood, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Switzerland vs Bosnia and Herzegovina World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-19
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Brazil vs Haiti
+</td>
+<td style="text-align:left;">
+Philadelphia, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Brazil vs Haiti World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-19
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Scotland vs Morocco
+</td>
+<td style="text-align:left;">
+Foxborough, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Scotland vs Morocco World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-19
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Turkey vs Paraguay
+</td>
+<td style="text-align:left;">
+Santa Clara, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Turkey vs Paraguay World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-19
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+United States vs Australia
+</td>
+<td style="text-align:left;">
+Seattle, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+United States vs Australia World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-20
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Ecuador vs Curaçao
+</td>
+<td style="text-align:left;">
+Kansas City, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Ecuador vs Curaçao World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-20
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Germany vs Ivory Coast
+</td>
+<td style="text-align:left;">
+Toronto, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Germany vs Ivory Coast World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-20
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Netherlands vs Sweden
+</td>
+<td style="text-align:left;">
+Houston, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Netherlands vs Sweden World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-20
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Tunisia vs Japan
+</td>
+<td style="text-align:left;">
+Guadalupe, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Tunisia vs Japan World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-21
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Belgium vs Iran
+</td>
+<td style="text-align:left;">
+Inglewood, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Belgium vs Iran World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-21
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+New Zealand vs Egypt
+</td>
+<td style="text-align:left;">
+Vancouver, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+New Zealand vs Egypt World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-21
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Spain vs Saudi Arabia
+</td>
+<td style="text-align:left;">
+Atlanta, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Spain vs Saudi Arabia World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-21
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Uruguay vs Cape Verde
+</td>
+<td style="text-align:left;">
+Miami Gardens, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Uruguay vs Cape Verde World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-22
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Argentina vs Austria
+</td>
+<td style="text-align:left;">
+Arlington, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Argentina vs Austria World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-22
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+France vs Iraq
+</td>
+<td style="text-align:left;">
+Philadelphia, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+France vs Iraq World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-22
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Jordan vs Algeria
+</td>
+<td style="text-align:left;">
+Santa Clara, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Jordan vs Algeria World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-22
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Norway vs Senegal
+</td>
+<td style="text-align:left;">
+East Rutherford, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Norway vs Senegal World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-23
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Colombia vs DR Congo
+</td>
+<td style="text-align:left;">
+Zapopan, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Colombia vs DR Congo World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-23
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+England vs Ghana
+</td>
+<td style="text-align:left;">
+Foxborough, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+England vs Ghana World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-23
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Panama vs Croatia
+</td>
+<td style="text-align:left;">
+Toronto, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Panama vs Croatia World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-23
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Portugal vs Uzbekistan
+</td>
+<td style="text-align:left;">
+Houston, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Portugal vs Uzbekistan World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Bosnia and Herzegovina vs Qatar
+</td>
+<td style="text-align:left;">
+Seattle, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Bosnia and Herzegovina vs Qatar World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Canada vs Switzerland
+</td>
+<td style="text-align:left;">
+Vancouver, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Canada vs Switzerland World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Mexico vs Czech Republic
+</td>
+<td style="text-align:left;">
+Mexico City, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Mexico vs Czech Republic World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Morocco vs Haiti
+</td>
+<td style="text-align:left;">
+Atlanta, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Morocco vs Haiti World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Scotland vs Brazil
+</td>
+<td style="text-align:left;">
+Miami Gardens, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Scotland vs Brazil World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+South Africa vs South Korea
+</td>
+<td style="text-align:left;">
+Guadalupe, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+South Africa vs South Korea World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Curaçao vs Ivory Coast
+</td>
+<td style="text-align:left;">
+Philadelphia, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Curaçao vs Ivory Coast World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Ecuador vs Germany
+</td>
+<td style="text-align:left;">
+East Rutherford, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Ecuador vs Germany World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Japan vs Sweden
+</td>
+<td style="text-align:left;">
+Arlington, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Japan vs Sweden World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Paraguay vs Australia
+</td>
+<td style="text-align:left;">
+Santa Clara, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Paraguay vs Australia World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Tunisia vs Netherlands
+</td>
+<td style="text-align:left;">
+Kansas City, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Tunisia vs Netherlands World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+United States vs Turkey
+</td>
+<td style="text-align:left;">
+Inglewood, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+United States vs Turkey World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Cape Verde vs Saudi Arabia
+</td>
+<td style="text-align:left;">
+Houston, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Cape Verde vs Saudi Arabia World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Egypt vs Iran
+</td>
+<td style="text-align:left;">
+Seattle, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Egypt vs Iran World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+New Zealand vs Belgium
+</td>
+<td style="text-align:left;">
+Vancouver, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+New Zealand vs Belgium World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Norway vs France
+</td>
+<td style="text-align:left;">
+Foxborough, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Norway vs France World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Senegal vs Iraq
+</td>
+<td style="text-align:left;">
+Toronto, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Senegal vs Iraq World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Uruguay vs Spain
+</td>
+<td style="text-align:left;">
+Zapopan, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Uruguay vs Spain World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Algeria vs Austria
+</td>
+<td style="text-align:left;">
+Kansas City, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Algeria vs Austria World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Colombia vs Portugal
+</td>
+<td style="text-align:left;">
+Miami Gardens, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Colombia vs Portugal World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Croatia vs Ghana
+</td>
+<td style="text-align:left;">
+Philadelphia, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Croatia vs Ghana World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+DR Congo vs Uzbekistan
+</td>
+<td style="text-align:left;">
+Atlanta, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+DR Congo vs Uzbekistan World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Jordan vs Argentina
+</td>
+<td style="text-align:left;">
+Arlington, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Jordan vs Argentina World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+Panama vs England
+</td>
+<td style="text-align:left;">
+East Rutherford, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+Panama vs England World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-28
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Completed
+</td>
+<td style="text-align:left;">
+South Africa vs Canada
+</td>
+<td style="text-align:left;">
+Inglewood, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Replay likely available on Peacock
+</td>
+<td style="text-align:left;">
+South Africa vs Canada World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-29
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Pending score
+</td>
+<td style="text-align:left;">
+Brazil vs Japan
+</td>
+<td style="text-align:left;">
+Houston, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Status pending update
+</td>
+<td style="text-align:left;">
+Brazil vs Japan World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-29
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Pending score
+</td>
+<td style="text-align:left;">
+Germany vs Paraguay
+</td>
+<td style="text-align:left;">
+Foxborough, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Status pending update
+</td>
+<td style="text-align:left;">
+Germany vs Paraguay World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-29
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Pending score
+</td>
+<td style="text-align:left;">
+Netherlands vs Morocco
+</td>
+<td style="text-align:left;">
+Guadalupe, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Status pending update
+</td>
+<td style="text-align:left;">
+Netherlands vs Morocco World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-30
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Today
+</td>
+<td style="text-align:left;">
+France vs Sweden
+</td>
+<td style="text-align:left;">
+East Rutherford, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+France vs Sweden World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-30
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Today
+</td>
+<td style="text-align:left;">
+Ivory Coast vs Norway
+</td>
+<td style="text-align:left;">
+Arlington, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+Ivory Coast vs Norway World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-30
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Today
+</td>
+<td style="text-align:left;">
+Mexico vs Ecuador
+</td>
+<td style="text-align:left;">
+Mexico City, Mexico
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+Mexico vs Ecuador World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-07-01
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Upcoming
+</td>
+<td style="text-align:left;">
+Belgium vs Senegal
+</td>
+<td style="text-align:left;">
+Seattle, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+Belgium vs Senegal World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-07-01
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Upcoming
+</td>
+<td style="text-align:left;">
+England vs DR Congo
+</td>
+<td style="text-align:left;">
+Atlanta, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+England vs DR Congo World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-07-01
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Upcoming
+</td>
+<td style="text-align:left;">
+United States vs Bosnia and Herzegovina
+</td>
+<td style="text-align:left;">
+Santa Clara, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+United States vs Bosnia and Herzegovina World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-07-02
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Upcoming
+</td>
+<td style="text-align:left;">
+Portugal vs Croatia
+</td>
+<td style="text-align:left;">
+Toronto, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+Portugal vs Croatia World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-07-02
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Upcoming
+</td>
+<td style="text-align:left;">
+Spain vs Austria
+</td>
+<td style="text-align:left;">
+Inglewood, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+Spain vs Austria World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-07-02
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Upcoming
+</td>
+<td style="text-align:left;">
+Switzerland vs Algeria
+</td>
+<td style="text-align:left;">
+Vancouver, Canada
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+Switzerland vs Algeria World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-07-03
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Upcoming
+</td>
+<td style="text-align:left;">
+Argentina vs Cape Verde
+</td>
+<td style="text-align:left;">
+Miami Gardens, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+Argentina vs Cape Verde World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-07-03
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Upcoming
+</td>
+<td style="text-align:left;">
+Australia vs Egypt
+</td>
+<td style="text-align:left;">
+Arlington, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+Australia vs Egypt World Cup replay
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-07-03
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+Upcoming
+</td>
+<td style="text-align:left;">
+Colombia vs Ghana
+</td>
+<td style="text-align:left;">
+Kansas City, United States
+</td>
+<td style="text-align:left;">
+Peacock
+</td>
+<td style="text-align:left;">
+Live window pending
+</td>
+<td style="text-align:left;">
+Colombia vs Ghana World Cup replay
+</td>
+</tr>
+</tbody>
+</table>
+<table class="clean-table">
+<caption>
+Completed match review board.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Match Phase
+</th>
+<th style="text-align:left;">
+Match Label
+</th>
+<th style="text-align:left;">
+Review Outcome
+</th>
+<th style="text-align:right;">
+Actual Result Probability
+</th>
+<th style="text-align:right;">
+Total Goal Error
+</th>
+<th style="text-align:left;">
+Score Error Band
+</th>
+<th style="text-align:left;">
+Upset Check
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2026-06-28
+</td>
+<td style="text-align:left;">
+Knockout
+</td>
+<td style="text-align:left;">
+South Africa vs Canada
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.715
+</td>
+<td style="text-align:right;">
+1.615
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Algeria vs Austria
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.282
+</td>
+<td style="text-align:right;">
+3.589
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Colombia vs Portugal
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.278
+</td>
+<td style="text-align:right;">
+2.279
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Croatia vs Ghana
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.770
+</td>
+<td style="text-align:right;">
+0.100
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+DR Congo vs Uzbekistan
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.552
+</td>
+<td style="text-align:right;">
+1.352
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Jordan vs Argentina
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.797
+</td>
+<td style="text-align:right;">
+0.940
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-27
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Panama vs England
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.694
+</td>
+<td style="text-align:right;">
+0.752
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Cape Verde vs Saudi Arabia
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.276
+</td>
+<td style="text-align:right;">
+2.614
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Egypt vs Iran
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.282
+</td>
+<td style="text-align:right;">
+0.434
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+New Zealand vs Belgium
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.645
+</td>
+<td style="text-align:right;">
+3.244
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Norway vs France
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.551
+</td>
+<td style="text-align:right;">
+2.650
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Senegal vs Iraq
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.720
+</td>
+<td style="text-align:right;">
+2.037
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-26
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Uruguay vs Spain
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.636
+</td>
+<td style="text-align:right;">
+1.499
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Curaçao vs Ivory Coast
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.622
+</td>
+<td style="text-align:right;">
+0.807
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Ecuador vs Germany
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.414
+</td>
+<td style="text-align:right;">
+0.675
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Japan vs Sweden
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.201
+</td>
+<td style="text-align:right;">
+0.726
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Paraguay vs Australia
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.282
+</td>
+<td style="text-align:right;">
+2.407
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Tunisia vs Netherlands
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.733
+</td>
+<td style="text-align:right;">
+1.052
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-25
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+United States vs Turkey
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.281
+</td>
+<td style="text-align:right;">
+2.717
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Bosnia and Herzegovina vs Qatar
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.621
+</td>
+<td style="text-align:right;">
+1.068
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Canada vs Switzerland
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.348
+</td>
+<td style="text-align:right;">
+0.761
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Mexico vs Czech Republic
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.759
+</td>
+<td style="text-align:right;">
+0.155
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Morocco vs Haiti
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.812
+</td>
+<td style="text-align:right;">
+2.750
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Scotland vs Brazil
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.627
+</td>
+<td style="text-align:right;">
+0.417
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-24
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+South Africa vs South Korea
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.250
+</td>
+<td style="text-align:right;">
+1.592
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-23
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Colombia vs DR Congo
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.743
+</td>
+<td style="text-align:right;">
+1.866
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-23
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+England vs Ghana
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.101
+</td>
+<td style="text-align:right;">
+3.452
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-23
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Panama vs Croatia
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.554
+</td>
+<td style="text-align:right;">
+1.566
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-23
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Portugal vs Uzbekistan
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.791
+</td>
+<td style="text-align:right;">
+1.893
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-22
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Argentina vs Austria
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.779
+</td>
+<td style="text-align:right;">
+0.881
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-22
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+France vs Iraq
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.884
+</td>
+<td style="text-align:right;">
+0.654
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-22
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Jordan vs Algeria
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.520
+</td>
+<td style="text-align:right;">
+0.417
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-22
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Norway vs Senegal
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.528
+</td>
+<td style="text-align:right;">
+2.547
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-21
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Belgium vs Iran
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.256
+</td>
+<td style="text-align:right;">
+2.475
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-21
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+New Zealand vs Egypt
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.532
+</td>
+<td style="text-align:right;">
+1.366
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-21
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Spain vs Saudi Arabia
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.878
+</td>
+<td style="text-align:right;">
+0.431
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-21
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Uruguay vs Cape Verde
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.177
+</td>
+<td style="text-align:right;">
+1.060
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-20
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Ecuador vs Curaçao
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.112
+</td>
+<td style="text-align:right;">
+3.444
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-20
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Germany vs Ivory Coast
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.608
+</td>
+<td style="text-align:right;">
+0.424
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-20
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Netherlands vs Sweden
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.723
+</td>
+<td style="text-align:right;">
+3.167
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-20
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Tunisia vs Japan
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.693
+</td>
+<td style="text-align:right;">
+1.137
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-19
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Brazil vs Haiti
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.848
+</td>
+<td style="text-align:right;">
+0.422
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-19
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Scotland vs Morocco
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.553
+</td>
+<td style="text-align:right;">
+1.505
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-19
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Turkey vs Paraguay
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.270
+</td>
+<td style="text-align:right;">
+1.423
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-19
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+United States vs Australia
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.454
+</td>
+<td style="text-align:right;">
+0.298
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-18
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Canada vs Qatar
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.821
+</td>
+<td style="text-align:right;">
+2.713
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-18
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Czech Republic vs South Africa
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.258
+</td>
+<td style="text-align:right;">
+0.654
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-18
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Mexico vs South Korea
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.684
+</td>
+<td style="text-align:right;">
+1.587
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-18
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Switzerland vs Bosnia and Herzegovina
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.778
+</td>
+<td style="text-align:right;">
+1.875
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-17
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+England vs Croatia
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.611
+</td>
+<td style="text-align:right;">
+3.523
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-17
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Ghana vs Panama
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.313
+</td>
+<td style="text-align:right;">
+1.599
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-17
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Portugal vs DR Congo
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.180
+</td>
+<td style="text-align:right;">
+0.799
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-17
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Uzbekistan vs Colombia
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.703
+</td>
+<td style="text-align:right;">
+1.199
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-16
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Argentina vs Algeria
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.789
+</td>
+<td style="text-align:right;">
+0.073
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-16
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Austria vs Jordan
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.672
+</td>
+<td style="text-align:right;">
+1.187
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-16
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+France vs Senegal
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.753
+</td>
+<td style="text-align:right;">
+1.196
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-16
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Iraq vs Norway
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.666
+</td>
+<td style="text-align:right;">
+2.206
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-15
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Belgium vs Egypt
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.244
+</td>
+<td style="text-align:right;">
+0.530
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-15
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Iran vs New Zealand
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.188
+</td>
+<td style="text-align:right;">
+1.096
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-15
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Saudi Arabia vs Uruguay
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.242
+</td>
+<td style="text-align:right;">
+0.633
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-15
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Spain vs Cape Verde
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.081
+</td>
+<td style="text-align:right;">
+3.637
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-14
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Germany vs Curaçao
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.839
+</td>
+<td style="text-align:right;">
+4.542
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-14
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Ivory Coast vs Ecuador
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.262
+</td>
+<td style="text-align:right;">
+1.418
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-14
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Netherlands vs Japan
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.270
+</td>
+<td style="text-align:right;">
+1.651
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-14
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Sweden vs Tunisia
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.632
+</td>
+<td style="text-align:right;">
+3.179
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-13
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Australia vs Turkey
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.406
+</td>
+<td style="text-align:right;">
+0.395
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-13
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Brazil vs Morocco
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.265
+</td>
+<td style="text-align:right;">
+0.329
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-13
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Haiti vs Scotland
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.491
+</td>
+<td style="text-align:right;">
+1.616
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-13
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Qatar vs Switzerland
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.150
+</td>
+<td style="text-align:right;">
+1.172
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-12
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Canada vs Bosnia and Herzegovina
+</td>
+<td style="text-align:left;">
+Model miss
+</td>
+<td style="text-align:right;">
+0.175
+</td>
+<td style="text-align:right;">
+0.838
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+Upset check
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-12
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+United States vs Paraguay
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.468
+</td>
+<td style="text-align:right;">
+2.688
+</td>
+<td style="text-align:left;">
+Large score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-11
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+Mexico vs South Africa
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.797
+</td>
+<td style="text-align:right;">
+1.023
+</td>
+<td style="text-align:left;">
+Manageable score miss
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2026-06-11
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:left;">
+South Korea vs Czech Republic
+</td>
+<td style="text-align:left;">
+Model hit
+</td>
+<td style="text-align:right;">
+0.550
+</td>
+<td style="text-align:right;">
+0.375
+</td>
+<td style="text-align:left;">
+Tight score read
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+
+</main> <!-- /main -->
+<script>
+
+(function () {
+
+  "use strict";
+
+
+
+  function ready(fn) {
+
+    if (document.readyState === "loading") {
+
+      document.addEventListener("DOMContentLoaded", fn);
+
+    } else {
+
+      fn();
+
+    }
+
+  }
+
+
+
+  function formatLocalTimes() {
+
+    var formatter = new Intl.DateTimeFormat(undefined, {
+
+      weekday: "short",
+
+      month: "short",
+
+      day: "numeric",
+
+      hour: "numeric",
+
+      minute: "2-digit",
+
+      timeZoneName: "short"
+
+    });
+
+
+
+    document.querySelectorAll("time.js-local-time[datetime]").forEach(function (node) {
+
+      var value = node.getAttribute("datetime");
+
+      if (!value) {
+
+        return;
+
+      }
+
+      var date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+
+        return;
+
+      }
+
+      node.textContent = formatter.format(date);
+
+      node.setAttribute("data-localized", "true");
+
+    });
+
+  }
+
+
+
+  function initBracket() {
+
+    var dataNode = document.getElementById("wc-bracket-data");
+
+    var root = document.getElementById("model-bracket-root");
+
+    var championNode = document.getElementById("model-bracket-champion");
+
+    var seedWatch = document.getElementById("group-seed-watch");
+
+    var thirdWatch = document.getElementById("third-place-watch");
+
+    var statusNode = document.getElementById("model-bracket-status");
+
+    var tabsNode = document.querySelector(".bracket-tabs");
+    var modelPathPanel = document.getElementById("model-path-panel");
+    var modelPathSummary = modelPathPanel ? modelPathPanel.querySelector(".model-path-summary") : null;
+    var modelPathRounds = modelPathPanel ? modelPathPanel.querySelector(".model-path-rounds") : null;
+    var summaryNode = document.getElementById("bracket-summary-strip");
+    var modeNoteNode = document.getElementById("bracket-mode-note");
+
+
+    if (!dataNode || !root || !championNode) {
+
+      return;
+
+    }
+
+
+
+    var data = JSON.parse(dataNode.textContent);
+
+    var roundNames = ["Round of 32", "Round of 16", "Quarterfinals", "Semifinals", "Final"];
+
+    var shortRoundNames = ["R32", "R16", "QF", "SF", "Final"];
+
+    var picks = {};
+
+    var activeRound = 0;
+
+    var fullView = !window.matchMedia("(max-width: 700px)").matches;
+
+    var modelPathOpen = false;
+
+
+
+    function escapeHtml(value) {
+
+      return String(value == null ? "" : value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#39;");
+
+    }
+
+
+
+    function announce(text) {
+
+      if (statusNode) {
+
+        statusNode.textContent = text;
+
+      }
+
+    }
+
+
+
+    function cloneTeam(team) {
+
+      return team ? Object.assign({}, team) : null;
+
+    }
+
+
+
+    function cloneMatch(match) {
+
+      return {
+
+        slotA: match.slotA,
+
+        slotB: match.slotB,
+
+        teamA: cloneTeam(match.teamA),
+
+        teamB: cloneTeam(match.teamB)
+
+      };
+
+    }
+
+
+
+    function teamStrength(team) {
+
+      var elo = team && Number(team.elo);
+
+      return Number.isFinite(elo) ? elo : 1500;
+
+    }
+
+
+
+    function officialWinner(match) {
+
+      if (!match || !match.fixture || !match.fixture.officialWinner) {
+
+        return null;
+
+      }
+
+      if (match.teamA && match.teamA.name === match.fixture.officialWinner) {
+
+        return match.teamA;
+
+      }
+
+      if (match.teamB && match.teamB.name === match.fixture.officialWinner) {
+
+        return match.teamB;
+
+      }
+
+      return null;
+
+    }
+
+
+
+    function teamAAdvanceProbability(match) {
+
+      if (match && match.fixture) {
+
+        var fixtureProb = Number(match.fixture.teamAAdvanceProb);
+
+        if (Number.isFinite(fixtureProb)) {
+
+          return fixtureProb;
+
+        }
+
+      }
+
+      var diff = teamStrength(match.teamA) - teamStrength(match.teamB);
+
+      return 1 / (1 + Math.pow(10, -diff / 400));
+
+    }
+
+
+
+    function formatPct(value) {
+
+      if (!Number.isFinite(value)) {
+
+        return "";
+
+      }
+
+      return Math.round(value * 100) + "%";
+
+    }
+
+
+
+    function projectedWinner(match) {
+
+      if (!match.teamA && !match.teamB) {
+
+        return null;
+
+      }
+
+      if (match.teamA && !match.teamB) {
+
+        return match.teamA;
+
+      }
+
+      if (!match.teamA && match.teamB) {
+
+        return match.teamB;
+
+      }
+
+      if (match.fixture && match.fixture.modelWinner) {
+
+        if (match.teamA && match.teamA.name === match.fixture.modelWinner) {
+
+          return match.teamA;
+
+        }
+
+        if (match.teamB && match.teamB.name === match.fixture.modelWinner) {
+
+          return match.teamB;
+
+        }
+
+      }
+
+      return teamAAdvanceProbability(match) >= 0.5 ? match.teamA : match.teamB;
+
+    }
+
+
+
+    function winnerProbability(match, winner) {
+
+      if (!winner) {
+
+        return null;
+
+      }
+
+      if (match.teamA && !match.teamB && winner.name === match.teamA.name) {
+
+        return 1;
+
+      }
+
+      if (!match.teamA && match.teamB && winner.name === match.teamB.name) {
+
+        return 1;
+
+      }
+
+      if (!match.teamA || !match.teamB) {
+
+        return null;
+
+      }
+
+      var pA = teamAAdvanceProbability(match);
+
+      return winner.name === match.teamA.name ? pA : 1 - pA;
+
+    }
+
+
+
+    function matchupText(match) {
+
+      var teamA = match.teamA ? match.teamA.name : match.slotA;
+
+      var teamB = match.teamB ? match.teamB.name : match.slotB;
+
+      return teamA + " vs " + teamB;
+
+    }
+
+
+
+    function clearLaterPicks(roundIndex) {
+      Object.keys(picks).forEach(function (key) {
+        var keyRound = Number(key.split("-")[0]);
+        if (keyRound > roundIndex) {
+          delete picks[key];
+        }
+      });
+    }
+
+    function currentKnockoutStats() {
+      var stats = {
+        completed: 0,
+        open: 0,
+        holds: 0,
+        misses: 0,
+        manualSelections: Object.keys(picks).length
+      };
+
+      (data.round32 || []).forEach(function (match) {
+        if (!match || !match.fixture) {
+          return;
+        }
+        var official = officialWinner(match);
+        if (official) {
+          stats.completed += 1;
+          var projected = projectedWinner(match);
+          if (projected && projected.name === official.name) {
+            stats.holds += 1;
+          } else {
+            stats.misses += 1;
+          }
+        } else {
+          stats.open += 1;
+        }
+      });
+
+      return stats;
+    }
+
+    function summaryCard(label, value, note, tone) {
+      return "<article class='bracket-summary-card " + escapeHtml(tone || "is-neutral") + "'>" +
+        "<span>" + escapeHtml(label) + "</span>" +
+        "<strong>" + escapeHtml(value) + "</strong>" +
+        "<small>" + escapeHtml(note) + "</small>" +
+        "</article>";
+    }
+
+    function renderBracketSummary() {
+      if (!summaryNode && !modeNoteNode) {
+        return;
+      }
+
+      var stats = currentKnockoutStats();
+      var modeLabel = "Forecast bracket";
+      var modeCopy = "Unresolved knockout matches follow the current public forecast until you override them.";
+      var modeTone = "is-forecast";
+      var modeCard = summaryCard("Bracket mode", "Forecast", "public model path is active", "is-forecast");
+
+      if (modelPathOpen) {
+        modeLabel = "Model path";
+        modeCopy = "Official results stay locked. Future rounds continue on the current model path until completed matches replace them.";
+        modeTone = "is-model";
+        modeCard = summaryCard("Bracket mode", "Model", "future rounds follow the model path", "is-model");
+      } else if (stats.manualSelections > 0) {
+        modeLabel = "Scenario bracket";
+        modeCopy = "Your selections override unresolved matches from the round you touched onward. Reset picks to return to the public forecast.";
+        modeTone = "is-user";
+        modeCard = summaryCard("Manual picks", String(stats.manualSelections), "scenario selections active", "is-user");
+      }
+
+      if (summaryNode) {
+        summaryNode.innerHTML = [
+          summaryCard("Official results", String(stats.completed), "knockout outcomes already locked", "is-neutral"),
+          summaryCard("Open fixtures", String(stats.open), "knockout matches still unresolved", stats.open > 0 ? "is-model" : "is-neutral"),
+          summaryCard("Model holds", String(stats.holds), "completed calls still correct", stats.holds > 0 ? "is-positive" : "is-neutral"),
+          summaryCard("Model misses", String(stats.misses), "completed calls to revisit", stats.misses > 0 ? "is-alert" : "is-neutral"),
+          modeCard
+        ].join("");
+      }
+
+      if (modeNoteNode) {
+        modeNoteNode.className = "bracket-mode-note " + modeTone;
+        modeNoteNode.innerHTML = "<strong>" + escapeHtml(modeLabel) + ":</strong> " + escapeHtml(modeCopy);
+      }
+    }
+
+
+    function buildRounds(sourcePicks) {
+
+      var activePicks = sourcePicks || picks;
+
+      var rounds = [data.round32.map(cloneMatch)];
+
+
+
+      for (var roundIndex = 0; roundIndex < 4; roundIndex += 1) {
+
+        var currentRound = rounds[roundIndex];
+
+        var nextRound = Array.from({ length: Math.ceil(currentRound.length / 2) }, function (_, index) {
+
+          return {
+
+            slotA: "W" + (roundIndex + 1) + "." + (2 * index + 1),
+
+            slotB: "W" + (roundIndex + 1) + "." + (2 * index + 2),
+
+            teamA: null,
+
+            teamB: null
+
+          };
+
+        });
+
+
+
+        currentRound.forEach(function (match, matchIndex) {
+
+          var key = roundIndex + "-" + matchIndex;
+
+          var validNames = [match.teamA && match.teamA.name, match.teamB && match.teamB.name].filter(Boolean);
+
+          if (activePicks === picks && picks[key] && validNames.indexOf(picks[key]) === -1) {
+
+            delete picks[key];
+
+          }
+
+          var pickedName = activePicks[key];
+
+          var official = officialWinner(match);
+
+          var winner = pickedName
+
+            ? (match.teamA && match.teamA.name === pickedName ? match.teamA : match.teamB)
+
+            : (official || projectedWinner(match));
+
+          var nextMatch = nextRound[Math.floor(matchIndex / 2)];
+
+          if (matchIndex % 2 === 0) {
+
+            nextMatch.teamA = cloneTeam(winner);
+
+          } else {
+
+            nextMatch.teamB = cloneTeam(winner);
+
+          }
+
+        });
+
+
+
+        rounds.push(nextRound);
+
+      }
+
+
+
+      return rounds;
+
+    }
+
+
+
+    function renderModelPathPanel() {
+
+      if (!modelPathPanel || !modelPathSummary || !modelPathRounds) {
+
+        return;
+
+      }
+
+
+
+      modelPathPanel.hidden = !modelPathOpen;
+
+      modelPathPanel.classList.toggle("is-visible", modelPathOpen);
+
+      document.querySelectorAll("[data-bracket-action='model']").forEach(function (button) {
+
+        button.textContent = modelPathOpen ? "Hide model path" : "Show model path";
+
+        button.setAttribute("aria-expanded", String(modelPathOpen));
+
+      });
+
+
+
+      if (!modelPathOpen) {
+
+        return;
+
+      }
+
+
+
+      var modelRounds = buildRounds({});
+
+      var finalMatch = modelRounds[modelRounds.length - 1][0];
+
+      var champion = officialWinner(finalMatch) || projectedWinner(finalMatch);
+
+      var championProb = winnerProbability(finalMatch, champion);
+
+      var completedStats = { matches: 0, hits: 0, misses: 0 };
+
+      modelRounds.forEach(function (round) {
+
+        round.forEach(function (match) {
+
+          var official = officialWinner(match);
+
+          if (!official) {
+
+            return;
+
+          }
+
+          completedStats.matches += 1;
+
+          var projected = projectedWinner(match);
+
+          if (projected && projected.name === official.name) {
+
+            completedStats.hits += 1;
+
+          } else {
+
+            completedStats.misses += 1;
+
+          }
+
+        });
+
+      });
+
+
+
+      var summaryCopy = completedStats.matches > 0
+        ? completedStats.hits + " of " + completedStats.matches + " completed knockout calls still match the model path."
+        : "Completed knockout results will lock into this path as soon as they are official.";
+      var openFixtures = currentKnockoutStats().open;
+      var statGrid = "<div class='model-path-stat-grid'>" +
+        "<div><span>Official results</span><strong>" + escapeHtml(String(completedStats.matches)) + "</strong><small>locked knockout outcomes</small></div>" +
+        "<div><span>Model holds</span><strong>" + escapeHtml(String(completedStats.hits)) + "</strong><small>completed calls still correct</small></div>" +
+        "<div><span>Model misses</span><strong>" + escapeHtml(String(completedStats.misses)) + "</strong><small>completed calls to revisit</small></div>" +
+        "<div><span>Open fixtures</span><strong>" + escapeHtml(String(openFixtures)) + "</strong><small>knockout matches still unresolved</small></div>" +
+        "</div>";
+
+      modelPathSummary.innerHTML = champion
+        ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>" + escapeHtml(summaryCopy) + " Completed knockout results stay locked while unresolved matches continue on the current model path.</p>" + statGrid + "</div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
+        : "<div><span class='section-kicker'>Model path</span><h3>Model path is pending</h3><p>The bracket needs at least one projected finalist before a full path can be shown.</p></div>";
+
+      modelPathRounds.innerHTML = modelRounds.map(function (round, roundIndex) {
+        var rows = round.map(function (match) {
+          var official = officialWinner(match);
+          var winner = official || projectedWinner(match);
+          var projected = projectedWinner(match);
+          var probability = winnerProbability(match, winner);
+          var stateClass = official
+            ? ((projected && projected.name === official.name) ? "held" : "miss")
+            : ((roundIndex === 0 ? "current" : "projected"));
+          var completedLabel = official
+            ? ((projected && projected.name === official.name) ? "Official | model held" : "Official | model miss")
+            : ((roundIndex === 0 ? "Current forecast" : "Projected round"));
+          var detailLabel = official
+            ? ((match.fixture && match.fixture.actualScore ? match.fixture.actualScore + " | " : "") + (match.fixture && match.fixture.officialOutcome ? match.fixture.officialOutcome : "completed"))
+            : ("advance probability " + (formatPct(probability) || "pending"));
+          return "<li class='model-path-item is-" + escapeHtml(stateClass) + "'>" +
+            "<span class='model-path-badge is-" + escapeHtml(stateClass) + "'>" + escapeHtml(completedLabel) + "</span>" +
+            "<span class='model-path-match'>" + escapeHtml(matchupText(match)) + "</span>" +
+            "<strong>" + escapeHtml(winner ? winner.name : "Pending seed") + "</strong>" +
+            "<small>" + escapeHtml(detailLabel) + "</small>" +
+            "</li>";
+        }).join("");
+        return "<section class='model-path-round'><h4>" + escapeHtml(roundNames[roundIndex]) + "</h4><ol>" + rows + "</ol></section>";
+      }).join("");
+    }
+
+
+
+    function teamButton(team, slot, probability, selected, modelSelected, userSelected, officialSelected, roundIndex, matchIndex, locked) {
+
+      var button = document.createElement("button");
+
+      button.type = "button";
+
+      button.className = "bracket-team";
+
+
+
+      if (selected) {
+
+        button.classList.add("selected");
+
+      }
+
+      if (modelSelected) {
+
+        button.classList.add("model-selected");
+
+      }
+
+      if (userSelected) {
+
+        button.classList.add("user-selected");
+
+      }
+
+      if (officialSelected) {
+
+        button.classList.add("official-selected");
+
+      }
+
+      if (!team) {
+
+        button.classList.add("empty");
+
+        button.disabled = true;
+
+        button.innerHTML = "<span class='team-name'>" + escapeHtml(slot) + "</span><small>Seed unresolved</small>";
+
+        return button;
+
+      }
+
+
+
+      var label = locked ? (officialSelected ? "Official result" : "Eliminated") : (userSelected ? "User pick" : (modelSelected ? "Model pick" : "Contender"));
+
+      button.innerHTML =
+
+        "<span class='team-name'>" + escapeHtml(team.name) + "</span>" +
+
+        "<span class='team-meta'>" + escapeHtml(team.seed || "Seed") + " | " + formatPct(probability) + "</span>" +
+
+        "<small class='pick-label'>" + escapeHtml(label) + "</small>";
+
+      button.setAttribute("aria-label", (locked ? "Official result for " : "Advance ") + team.name + " from " + roundNames[roundIndex]);
+
+      if (locked) {
+
+        button.disabled = true;
+
+      } else {
+
+        button.addEventListener("click", function () {
+
+          picks[roundIndex + "-" + matchIndex] = team.name;
+
+          clearLaterPicks(roundIndex);
+
+          announce(team.name + " advanced from " + roundNames[roundIndex] + ".");
+
+          render();
+
+        });
+
+      }
+
+      return button;
+
+    }
+
+
+
+    function matchCard(match, roundIndex, matchIndex) {
+
+      var card = document.createElement("article");
+
+      card.className = "bracket-match-card";
+
+      var pA = match.teamA && match.teamB ? teamAAdvanceProbability(match) : null;
+
+      var pB = Number.isFinite(pA) ? 1 - pA : null;
+
+      var projected = projectedWinner(match);
+
+      var official = officialWinner(match);
+
+      var pickedName = picks[roundIndex + "-" + matchIndex];
+
+      var selectedName = pickedName || (official ? official.name : (projected && projected.name));
+
+      var locked = Boolean(official);
+
+      var label = document.createElement("div");
+      label.className = "bracket-match-label";
+      label.textContent = match.fixture && match.fixture.timing
+        ? match.fixture.timing
+        : (roundIndex === 0 ? "Current pairing" : "Projected match");
+      card.appendChild(label);
+      card.appendChild(teamButton(
+
+        match.teamA,
+
+        match.slotA,
+
+        pA,
+
+        match.teamA && match.teamA.name === selectedName,
+
+        !pickedName && !locked && projected && match.teamA && match.teamA.name === projected.name,
+
+        pickedName && match.teamA && match.teamA.name === pickedName,
+
+        official && match.teamA && match.teamA.name === official.name,
+
+        roundIndex,
+
+        matchIndex,
+
+        locked
+
+      ));
+
+      card.appendChild(teamButton(
+
+        match.teamB,
+
+        match.slotB,
+
+        pB,
+
+        match.teamB && match.teamB.name === selectedName,
+
+        !pickedName && !locked && projected && match.teamB && match.teamB.name === projected.name,
+
+        pickedName && match.teamB && match.teamB.name === pickedName,
+
+        official && match.teamB && match.teamB.name === official.name,
+
+        roundIndex,
+
+        matchIndex,
+
+        locked
+
+      ));
+
+
+
+      if (match.fixture) {
+
+        var note = document.createElement("div");
+
+        note.className = "bracket-match-note";
+
+        if (official) {
+
+          var modelMiss = projected && projected.name !== official.name;
+
+          note.classList.add(modelMiss ? "is-miss" : "is-hit");
+
+          note.innerHTML = "<strong>Official:</strong> " +
+
+            escapeHtml(official.name) +
+
+            (match.fixture.actualScore ? " " + escapeHtml(match.fixture.actualScore) : "") +
+
+            (match.fixture.officialOutcome ? " | " + escapeHtml(match.fixture.officialOutcome) : "") +
+
+            "<span>" + (modelMiss ? "Model miss" : "Model held") + "</span>";
+
+        } else {
+
+          var pick = projected ? projected.name : "Pending";
+
+          var levelText = Number.isFinite(Number(match.fixture.regulationDrawProb)) ? formatPct(Number(match.fixture.regulationDrawProb)) : "pending";
+
+          note.classList.add("is-live");
+
+          note.innerHTML = "<strong>" + escapeHtml(match.fixture.timing || "Forecast") + ":</strong> " +
+
+            escapeHtml(pick) + " " + (formatPct(winnerProbability(match, projected)) || "") +
+
+            " <span>Level after 90: " + escapeHtml(levelText) + "</span>";
+
+        }
+
+        card.appendChild(note);
+
+      }
+
+
+
+      return card;
+
+    }
+
+
+
+    function renderSeeds() {
+
+      if (seedWatch && data.groupSeeds) {
+
+        var seedsByGroup = {};
+
+        data.groupSeeds.forEach(function (row) {
+
+          seedsByGroup[row.group] = seedsByGroup[row.group] || [];
+
+          seedsByGroup[row.group].push(row);
+
+        });
+
+        seedWatch.innerHTML = Object.keys(seedsByGroup).sort().map(function (group) {
+
+          var rows = seedsByGroup[group].slice(0, 2).map(function (row) {
+
+            return "<span><strong>" + escapeHtml(row.seed) + "</strong>" + escapeHtml(row.team) + "</span>";
+
+          }).join("");
+
+          return "<div class='seed-group'><b>Group " + escapeHtml(group) + "</b>" + rows + "</div>";
+
+        }).join("");
+
+      }
+
+
+
+      if (thirdWatch && data.thirdWatch) {
+
+        thirdWatch.innerHTML = data.thirdWatch.map(function (row) {
+
+          return "<div class='third-row" + (row.qualifies ? " qualifies" : "") + "'>" +
+
+            "<span>" + escapeHtml(row.third_rank) + ". " + escapeHtml(row.team) + "</span>" +
+
+            "<strong>" + escapeHtml(row.points) + " pts</strong>" +
+
+            "</div>" +
+
+            (row.third_rank === 8 ? "<div class='third-cut'>Cut line</div>" : "");
+
+        }).join("");
+
+      }
+
+    }
+
+
+
+    function renderTabs() {
+
+      if (!tabsNode) {
+
+        return;
+
+      }
+
+      tabsNode.innerHTML = "";
+
+      roundNames.forEach(function (name, index) {
+        var tab = document.createElement("button");
+        tab.type = "button";
+        tab.className = "bracket-tab";
+        tab.setAttribute("role", "tab");
+        tab.setAttribute("aria-selected", String(index === activeRound));
+        tab.setAttribute("aria-label", name);
+        tab.setAttribute("aria-controls", "bracket-round-" + index);
+        tab.title = name;
+        tab.textContent = shortRoundNames[index];
+        tab.addEventListener("click", function () {
+          activeRound = index;
+          fullView = false;
+          render();
+        });
+
+        tabsNode.appendChild(tab);
+
+      });
+
+    }
+
+
+
+    function render() {
+
+      var rounds = buildRounds();
+
+      root.innerHTML = "";
+
+      root.setAttribute("data-view", fullView ? "full" : "round");
+
+
+
+      rounds.forEach(function (round, roundIndex) {
+        var column = document.createElement("section");
+        column.className = "bracket-round";
+        column.id = "bracket-round-" + roundIndex;
+        if (!fullView && roundIndex === activeRound) {
+          column.classList.add("is-active");
+        }
+        var heading = document.createElement("h3");
+        heading.textContent = roundNames[roundIndex];
+        column.appendChild(heading);
+
+        var list = document.createElement("div");
+
+        list.className = "bracket-round-list";
+
+        round.forEach(function (match, matchIndex) {
+
+          list.appendChild(matchCard(match, roundIndex, matchIndex));
+
+        });
+
+        column.appendChild(list);
+
+        root.appendChild(column);
+
+      });
+
+
+      var finalMatch = rounds[rounds.length - 1][0];
+      var officialChampion = officialWinner(finalMatch);
+      var champion = picks["4-0"]
+        ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
+        : (officialChampion || projectedWinner(finalMatch));
+      var championLabel = officialChampion
+        ? "Official champion"
+        : (modelPathOpen ? "Model path champion" : (Object.keys(picks).length > 0 ? "Your bracket champion" : "Current forecast champion"));
+      var championState = officialChampion
+        ? "is-official"
+        : (modelPathOpen ? "is-model" : (Object.keys(picks).length > 0 ? "is-user" : "is-forecast"));
+      championNode.className = "bracket-champion-card " + championState;
+      championNode.innerHTML = champion
+        ? "<span>" + escapeHtml(championLabel) + "</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
+        : "";
+      renderBracketSummary();
+      renderTabs();
+      renderModelPathPanel();
+      document.querySelectorAll("[data-bracket-action='toggle-view']").forEach(function (button) {
+        button.textContent = fullView ? "Round view" : "Full bracket";
+        button.setAttribute("aria-pressed", String(fullView));
+      });
+
+    }
+
+
+
+    document.querySelectorAll("[data-bracket-action]").forEach(function (button) {
+
+      button.addEventListener("click", function () {
+
+        var action = button.getAttribute("data-bracket-action");
+
+        if (action === "toggle-view") {
+
+          fullView = !fullView;
+
+          render();
+
+          return;
+
+        }
+
+        if (action === "model") {
+
+          modelPathOpen = !modelPathOpen;
+
+          if (modelPathOpen) {
+
+            Object.keys(picks).forEach(function (key) {
+
+              delete picks[key];
+
+            });
+
+            announce("Showing the model path through the bracket.");
+
+          } else {
+
+            announce("Model path hidden.");
+
+          }
+
+          render();
+
+          if (modelPathOpen && modelPathPanel) {
+
+            modelPathPanel.focus({ preventScroll: true });
+
+            modelPathPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+          }
+
+          return;
+
+        }
+
+        Object.keys(picks).forEach(function (key) {
+
+          delete picks[key];
+
+        });
+
+        modelPathOpen = false;
+
+        announce("Bracket picks cleared.");
+
+        render();
+
+      });
+
+    });
+
+
+
+    renderSeeds();
+
+    render();
+
+  }
+
+
+
+  function initTuningLedger() {
+    document.querySelectorAll("[data-ledger-root='true']").forEach(function (root) {
+      var grid = root.querySelector("[data-ledger-grid='true']");
+      var sortButtons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+      var filterButtons = Array.from(root.querySelectorAll("[data-ledger-filter]"));
+      var statusNode = root.querySelector("[data-ledger-status='true']");
+      var emptyNode = root.querySelector("[data-ledger-empty='true']");
+
+      if (!grid || sortButtons.length === 0) {
+        return;
+      }
+
+      var currentMetric = root.getAttribute("data-ledger-default") || "severity";
+      var currentFilter = root.getAttribute("data-ledger-default-filter") || "all";
+
+      function announce(text) {
+        if (statusNode) {
+          statusNode.textContent = text;
+        }
+      }
+
+
+
+      function metricValue(card, metric) {
+
+        var raw = Number(card.getAttribute("data-ledger-" + metric));
+        return Number.isFinite(raw) ? raw : -Infinity;
+      }
+
+      function setActiveMetric(metric) {
+        sortButtons.forEach(function (button) {
+          var active = button.getAttribute("data-ledger-sort") === metric;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function setActiveFilter(filter) {
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-ledger-filter") === filter;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function applyLedgerState() {
+        var cards = Array.from(grid.querySelectorAll("[data-ledger-card='true']"));
+        cards.sort(function (a, b) {
+          var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
+          if (primary !== 0) {
+            return primary;
+          }
+          var secondary = metricValue(b, "severity") - metricValue(a, "severity");
+          if (secondary !== 0) {
+            return secondary;
+          }
+          return metricValue(b, "date") - metricValue(a, "date");
+        });
+        var visibleCount = 0;
+        cards.forEach(function (card) {
+          var issue = card.getAttribute("data-ledger-issue") || "";
+          var show = currentFilter === "all" || issue === currentFilter;
+          card.hidden = !show;
+          if (show) {
+            visibleCount += 1;
+          }
+          grid.appendChild(card);
+        });
+        if (emptyNode) {
+          emptyNode.hidden = visibleCount !== 0;
+        }
+        setActiveMetric(currentMetric);
+        setActiveFilter(currentFilter);
+        var activeSortButton = sortButtons.find(function (button) {
+          return button.getAttribute("data-ledger-sort") === currentMetric;
+        });
+        var activeFilterButton = filterButtons.find(function (button) {
+          return button.getAttribute("data-ledger-filter") === currentFilter;
+        });
+        var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All misses";
+        var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Highest priority";
+        announce(filterText + " filter, " + sortText + " order applied.");
+      }
+
+      sortButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentMetric = button.getAttribute("data-ledger-sort");
+          applyLedgerState();
+        });
+      });
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentFilter = button.getAttribute("data-ledger-filter");
+          applyLedgerState();
+        });
+      });
+
+      applyLedgerState();
+    });
+  }
+
+  function initReviewBoard() {
+    document.querySelectorAll("[data-review-root='true']").forEach(function (root) {
+      var board = root.querySelector(".review-board");
+      var sortButtons = Array.from(root.querySelectorAll("[data-review-sort]"));
+      var filterButtons = Array.from(root.querySelectorAll("[data-review-filter]"));
+      var statusNode = root.querySelector("[data-review-status='true']");
+      var emptyNode = root.querySelector("[data-review-empty='true']");
+
+      if (!board || sortButtons.length === 0 || filterButtons.length === 0) {
+        return;
+      }
+
+      var currentMetric = root.getAttribute("data-review-default") || "date";
+      var currentFilter = root.getAttribute("data-review-default-filter") || "all";
+
+      function announce(text) {
+        if (statusNode) {
+          statusNode.textContent = text;
+        }
+      }
+
+      function metricValue(card, metric) {
+        var raw = Number(card.getAttribute("data-review-" + metric));
+        return Number.isFinite(raw) ? raw : -Infinity;
+      }
+
+      function setActiveMetric(metric) {
+        sortButtons.forEach(function (button) {
+          var active = button.getAttribute("data-review-sort") === metric;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function setActiveFilter(filter) {
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-review-filter") === filter;
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function matchesFilter(card, filter) {
+        if (filter === "all") {
+          return true;
+        }
+        if (filter === "hit" || filter === "miss") {
+          return card.getAttribute("data-review-grade") === filter;
+        }
+        if (filter === "draw") {
+          return card.getAttribute("data-review-draw") === "true";
+        }
+        if (filter === "knockout") {
+          return card.getAttribute("data-review-knockout") === "true";
+        }
+        return true;
+      }
+
+      function applyReviewState() {
+        var cards = Array.from(board.querySelectorAll("[data-review-card='true']"));
+        cards.sort(function (a, b) {
+          var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
+          if (primary !== 0) {
+            return primary;
+          }
+          return metricValue(b, "date") - metricValue(a, "date");
+        });
+
+        var visibleCount = 0;
+        cards.forEach(function (card) {
+          var show = matchesFilter(card, currentFilter);
+          card.hidden = !show;
+          if (show) {
+            visibleCount += 1;
+          }
+          board.appendChild(card);
+        });
+
+        if (emptyNode) {
+          emptyNode.hidden = visibleCount !== 0;
+        }
+
+        setActiveMetric(currentMetric);
+        setActiveFilter(currentFilter);
+
+        var activeSortButton = sortButtons.find(function (button) {
+          return button.getAttribute("data-review-sort") === currentMetric;
+        });
+        var activeFilterButton = filterButtons.find(function (button) {
+          return button.getAttribute("data-review-filter") === currentFilter;
+        });
+        var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All graded";
+        var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Most recent";
+        announce(filterText + " filter, " + sortText + " order applied.");
+      }
+
+      sortButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentMetric = button.getAttribute("data-review-sort");
+          applyReviewState();
+        });
+      });
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          currentFilter = button.getAttribute("data-review-filter");
+          applyReviewState();
+        });
+      });
+
+      applyReviewState();
+    });
+  }
+
+  ready(function () {
+    formatLocalTimes();
+    initBracket();
+    initTuningLedger();
+    initReviewBoard();
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/lindadata\.github\.io\/world-cup-2026-betting-model\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>LindaData World Cup 2026 forecasting model.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Static forecasts built with R, Python, SQL, DuckDB, and Quarto.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
