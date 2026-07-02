@@ -39,7 +39,7 @@ jobs:
       API_FOOTBALL_SEASON: ${{ inputs.season || vars.API_FOOTBALL_SEASON || '2026' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v5
         with:
