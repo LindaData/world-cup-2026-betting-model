@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-02T21:06:34.677838Z",
+  "refreshed_at_utc": "2026-07-02T22:34:25.971491Z",
   "dates_requested": [
     "20260701",
     "20260702",
@@ -412,24 +412,24 @@
       "date_utc": "2026-07-02T19:10Z",
       "name": "Miami Marlins at Colorado Rockies",
       "short_name": "MIA @ COL",
-      "status": "In Progress",
-      "status_short": "Top 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Colorado Rockies",
       "away_team": "Miami Marlins",
-      "home_score": "5",
+      "home_score": "14",
       "away_score": "4",
-      "home_record": "34-53",
-      "away_record": "46-41",
+      "home_record": "35-53",
+      "away_record": "46-42",
       "venue": "Coors Field",
       "broadcasts": [
         "MLB.TV",
         "Rockies.TV",
         "Marlins.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815999"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815999/marlins-rockies"
     },
     {
       "sport": "mlb",
@@ -749,7 +749,7 @@
       "away_team": "San Francisco Giants",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "34-53",
+      "home_record": "35-53",
       "away_record": "36-50",
       "venue": "Coors Field",
       "broadcasts": [
@@ -824,7 +824,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "41-46",
-      "away_record": "46-41",
+      "away_record": "46-42",
       "venue": "Sutter Health Park",
       "broadcasts": [
         "MLB.TV",
