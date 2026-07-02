@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-02T14:35:43.567355Z",
+  "refreshed_at_utc": "2026-07-02T16:44:44.464613Z",
   "dates_requested": [
     "20260701",
     "20260702",
@@ -363,9 +363,9 @@
       "date_utc": "2026-07-02T16:35Z",
       "name": "Pittsburgh Pirates at Philadelphia Phillies",
       "short_name": "PIT @ PHI",
-      "status": "Scheduled",
-      "status_short": "7/2 - 12:35 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Philadelphia Phillies",
@@ -379,7 +379,7 @@
         "MLB.TV",
         "NBC Sports Phil"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815994/pirates-phillies"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815994"
     },
     {
       "sport": "mlb",
