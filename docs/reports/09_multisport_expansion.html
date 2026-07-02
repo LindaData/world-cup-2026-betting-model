@@ -4559,11 +4559,17 @@ config/sports.json
     var statusNode = document.getElementById("model-bracket-status");
 
     var tabsNode = document.querySelector(".bracket-tabs");
+
     var modelPathPanel = document.getElementById("model-path-panel");
+
     var modelPathSummary = modelPathPanel ? modelPathPanel.querySelector(".model-path-summary") : null;
+
     var modelPathRounds = modelPathPanel ? modelPathPanel.querySelector(".model-path-rounds") : null;
+
     var summaryNode = document.getElementById("bracket-summary-strip");
+
     var modeNoteNode = document.getElementById("bracket-mode-note");
+
 
 
     if (!dataNode || !root || !championNode) {
@@ -4807,90 +4813,175 @@ config/sports.json
 
 
     function clearLaterPicks(roundIndex) {
+
       Object.keys(picks).forEach(function (key) {
+
         var keyRound = Number(key.split("-")[0]);
+
         if (keyRound > roundIndex) {
+
           delete picks[key];
+
         }
+
       });
+
     }
+
+
 
     function currentKnockoutStats() {
+
       var stats = {
+
         completed: 0,
+
         open: 0,
+
         holds: 0,
+
         misses: 0,
+
         manualSelections: Object.keys(picks).length
+
       };
 
+
+
       (data.round32 || []).forEach(function (match) {
+
         if (!match || !match.fixture) {
+
           return;
+
         }
+
         var official = officialWinner(match);
+
         if (official) {
+
           stats.completed += 1;
+
           var projected = projectedWinner(match);
+
           if (projected && projected.name === official.name) {
+
             stats.holds += 1;
+
           } else {
+
             stats.misses += 1;
+
           }
+
         } else {
+
           stats.open += 1;
+
         }
+
       });
 
+
+
       return stats;
+
     }
+
+
 
     function summaryCard(label, value, note, tone) {
+
       return "<article class='bracket-summary-card " + escapeHtml(tone || "is-neutral") + "'>" +
+
         "<span>" + escapeHtml(label) + "</span>" +
+
         "<strong>" + escapeHtml(value) + "</strong>" +
+
         "<small>" + escapeHtml(note) + "</small>" +
+
         "</article>";
+
     }
+
+
 
     function renderBracketSummary() {
+
       if (!summaryNode && !modeNoteNode) {
+
         return;
+
       }
+
+
 
       var stats = currentKnockoutStats();
+
       var modeLabel = "Forecast bracket";
+
       var modeCopy = "Unresolved knockout matches follow the current public forecast until you override them.";
+
       var modeTone = "is-forecast";
+
       var modeCard = summaryCard("Bracket mode", "Forecast", "public model path is active", "is-forecast");
 
+
+
       if (modelPathOpen) {
+
         modeLabel = "Model path";
+
         modeCopy = "Official results stay locked. Future rounds continue on the current model path until completed matches replace them.";
+
         modeTone = "is-model";
+
         modeCard = summaryCard("Bracket mode", "Model", "future rounds follow the model path", "is-model");
+
       } else if (stats.manualSelections > 0) {
+
         modeLabel = "Scenario bracket";
+
         modeCopy = "Your selections override unresolved matches from the round you touched onward. Reset picks to return to the public forecast.";
+
         modeTone = "is-user";
+
         modeCard = summaryCard("Manual picks", String(stats.manualSelections), "scenario selections active", "is-user");
+
       }
+
+
 
       if (summaryNode) {
+
         summaryNode.innerHTML = [
+
           summaryCard("Official results", String(stats.completed), "knockout outcomes already locked", "is-neutral"),
+
           summaryCard("Open fixtures", String(stats.open), "knockout matches still unresolved", stats.open > 0 ? "is-model" : "is-neutral"),
+
           summaryCard("Model holds", String(stats.holds), "completed calls still correct", stats.holds > 0 ? "is-positive" : "is-neutral"),
+
           summaryCard("Model misses", String(stats.misses), "completed calls to revisit", stats.misses > 0 ? "is-alert" : "is-neutral"),
+
           modeCard
+
         ].join("");
+
       }
 
+
+
       if (modeNoteNode) {
+
         modeNoteNode.className = "bracket-mode-note " + modeTone;
+
         modeNoteNode.innerHTML = "<strong>" + escapeHtml(modeLabel) + ":</strong> " + escapeHtml(modeCopy);
+
       }
+
     }
+
 
 
     function buildRounds(sourcePicks) {
@@ -5048,44 +5139,83 @@ config/sports.json
 
 
       var summaryCopy = completedStats.matches > 0
+
         ? completedStats.hits + " of " + completedStats.matches + " completed knockout calls still match the model path."
+
         : "Completed knockout results will lock into this path as soon as they are official.";
+
       var openFixtures = currentKnockoutStats().open;
+
       var statGrid = "<div class='model-path-stat-grid'>" +
+
         "<div><span>Official results</span><strong>" + escapeHtml(String(completedStats.matches)) + "</strong><small>locked knockout outcomes</small></div>" +
+
         "<div><span>Model holds</span><strong>" + escapeHtml(String(completedStats.hits)) + "</strong><small>completed calls still correct</small></div>" +
+
         "<div><span>Model misses</span><strong>" + escapeHtml(String(completedStats.misses)) + "</strong><small>completed calls to revisit</small></div>" +
+
         "<div><span>Open fixtures</span><strong>" + escapeHtml(String(openFixtures)) + "</strong><small>knockout matches still unresolved</small></div>" +
+
         "</div>";
 
+
+
       modelPathSummary.innerHTML = champion
+
         ? "<div><span class='section-kicker'>Model path</span><h3>" + escapeHtml(champion.name) + " is the projected champion</h3><p>" + escapeHtml(summaryCopy) + " Completed knockout results stay locked while unresolved matches continue on the current model path.</p>" + statGrid + "</div><div class='model-path-champion'><span>Final pick</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | final-match edge " + formatPct(championProb) + "</small></div>"
+
         : "<div><span class='section-kicker'>Model path</span><h3>Model path is pending</h3><p>The bracket needs at least one projected finalist before a full path can be shown.</p></div>";
 
+
+
       modelPathRounds.innerHTML = modelRounds.map(function (round, roundIndex) {
+
         var rows = round.map(function (match) {
+
           var official = officialWinner(match);
+
           var winner = official || projectedWinner(match);
+
           var projected = projectedWinner(match);
+
           var probability = winnerProbability(match, winner);
+
           var stateClass = official
+
             ? ((projected && projected.name === official.name) ? "held" : "miss")
+
             : ((roundIndex === 0 ? "current" : "projected"));
+
           var completedLabel = official
+
             ? ((projected && projected.name === official.name) ? "Official | model held" : "Official | model miss")
+
             : ((roundIndex === 0 ? "Current forecast" : "Projected round"));
+
           var detailLabel = official
+
             ? ((match.fixture && match.fixture.actualScore ? match.fixture.actualScore + " | " : "") + (match.fixture && match.fixture.officialOutcome ? match.fixture.officialOutcome : "completed"))
+
             : ("advance probability " + (formatPct(probability) || "pending"));
+
           return "<li class='model-path-item is-" + escapeHtml(stateClass) + "'>" +
+
             "<span class='model-path-badge is-" + escapeHtml(stateClass) + "'>" + escapeHtml(completedLabel) + "</span>" +
+
             "<span class='model-path-match'>" + escapeHtml(matchupText(match)) + "</span>" +
+
             "<strong>" + escapeHtml(winner ? winner.name : "Pending seed") + "</strong>" +
+
             "<small>" + escapeHtml(detailLabel) + "</small>" +
+
             "</li>";
+
         }).join("");
+
         return "<section class='model-path-round'><h4>" + escapeHtml(roundNames[roundIndex]) + "</h4><ol>" + rows + "</ol></section>";
+
       }).join("");
+
     }
 
 
@@ -5196,12 +5326,20 @@ config/sports.json
 
       var locked = Boolean(official);
 
+
+
       var label = document.createElement("div");
+
       label.className = "bracket-match-label";
+
       label.textContent = match.fixture && match.fixture.timing
+
         ? match.fixture.timing
+
         : (roundIndex === 0 ? "Current pairing" : "Projected match");
+
       card.appendChild(label);
+
       card.appendChild(teamButton(
 
         match.teamA,
@@ -5365,19 +5503,33 @@ config/sports.json
       tabsNode.innerHTML = "";
 
       roundNames.forEach(function (name, index) {
+
         var tab = document.createElement("button");
+
         tab.type = "button";
+
         tab.className = "bracket-tab";
+
         tab.setAttribute("role", "tab");
+
         tab.setAttribute("aria-selected", String(index === activeRound));
+
         tab.setAttribute("aria-label", name);
+
         tab.setAttribute("aria-controls", "bracket-round-" + index);
+
         tab.title = name;
+
         tab.textContent = shortRoundNames[index];
+
         tab.addEventListener("click", function () {
+
           activeRound = index;
+
           fullView = false;
+
           render();
+
         });
 
         tabsNode.appendChild(tab);
@@ -5399,14 +5551,23 @@ config/sports.json
 
 
       rounds.forEach(function (round, roundIndex) {
+
         var column = document.createElement("section");
+
         column.className = "bracket-round";
+
         column.id = "bracket-round-" + roundIndex;
+
         if (!fullView && roundIndex === activeRound) {
+
           column.classList.add("is-active");
+
         }
+
         var heading = document.createElement("h3");
+
         heading.textContent = roundNames[roundIndex];
+
         column.appendChild(heading);
 
         var list = document.createElement("div");
@@ -5426,27 +5587,49 @@ config/sports.json
       });
 
 
+
       var finalMatch = rounds[rounds.length - 1][0];
+
       var officialChampion = officialWinner(finalMatch);
+
       var champion = picks["4-0"]
+
         ? (finalMatch.teamA && finalMatch.teamA.name === picks["4-0"] ? finalMatch.teamA : finalMatch.teamB)
+
         : (officialChampion || projectedWinner(finalMatch));
+
       var championLabel = officialChampion
+
         ? "Official champion"
+
         : (modelPathOpen ? "Model path champion" : (Object.keys(picks).length > 0 ? "Your bracket champion" : "Current forecast champion"));
+
       var championState = officialChampion
+
         ? "is-official"
+
         : (modelPathOpen ? "is-model" : (Object.keys(picks).length > 0 ? "is-user" : "is-forecast"));
+
       championNode.className = "bracket-champion-card " + championState;
+
       championNode.innerHTML = champion
+
         ? "<span>" + escapeHtml(championLabel) + "</span><strong>" + escapeHtml(champion.name) + "</strong><small>" + escapeHtml(champion.seed || "Projected seed") + " | strength " + escapeHtml(champion.elo || "pending") + "</small>"
+
         : "";
+
       renderBracketSummary();
+
       renderTabs();
+
       renderModelPathPanel();
+
       document.querySelectorAll("[data-bracket-action='toggle-view']").forEach(function (button) {
+
         button.textContent = fullView ? "Round view" : "Full bracket";
+
         button.setAttribute("aria-pressed", String(fullView));
+
       });
 
     }
@@ -5530,24 +5713,43 @@ config/sports.json
 
 
   function initTuningLedger() {
+
     document.querySelectorAll("[data-ledger-root='true']").forEach(function (root) {
+
       var grid = root.querySelector("[data-ledger-grid='true']");
+
       var sortButtons = Array.from(root.querySelectorAll("[data-ledger-sort]"));
+
       var filterButtons = Array.from(root.querySelectorAll("[data-ledger-filter]"));
+
       var statusNode = root.querySelector("[data-ledger-status='true']");
+
       var emptyNode = root.querySelector("[data-ledger-empty='true']");
 
+
+
       if (!grid || sortButtons.length === 0) {
+
         return;
+
       }
 
+
+
       var currentMetric = root.getAttribute("data-ledger-default") || "severity";
+
       var currentFilter = root.getAttribute("data-ledger-default-filter") || "all";
 
+
+
       function announce(text) {
+
         if (statusNode) {
+
           statusNode.textContent = text;
+
         }
+
       }
 
 
@@ -5555,200 +5757,395 @@ config/sports.json
       function metricValue(card, metric) {
 
         var raw = Number(card.getAttribute("data-ledger-" + metric));
+
         return Number.isFinite(raw) ? raw : -Infinity;
+
       }
+
+
 
       function setActiveMetric(metric) {
+
         sortButtons.forEach(function (button) {
+
           var active = button.getAttribute("data-ledger-sort") === metric;
+
           button.setAttribute("aria-pressed", String(active));
+
         });
+
       }
 
+
+
       function setActiveFilter(filter) {
+
         filterButtons.forEach(function (button) {
+
           var active = button.getAttribute("data-ledger-filter") === filter;
+
           button.setAttribute("aria-pressed", String(active));
+
         });
+
       }
+
+
 
       function applyLedgerState() {
+
         var cards = Array.from(grid.querySelectorAll("[data-ledger-card='true']"));
+
         cards.sort(function (a, b) {
+
           var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
+
           if (primary !== 0) {
+
             return primary;
+
           }
+
           var secondary = metricValue(b, "severity") - metricValue(a, "severity");
+
           if (secondary !== 0) {
+
             return secondary;
+
           }
+
           return metricValue(b, "date") - metricValue(a, "date");
+
         });
+
         var visibleCount = 0;
+
         cards.forEach(function (card) {
+
           var issue = card.getAttribute("data-ledger-issue") || "";
+
           var show = currentFilter === "all" || issue === currentFilter;
+
           card.hidden = !show;
+
           if (show) {
+
             visibleCount += 1;
+
           }
+
           grid.appendChild(card);
+
         });
+
         if (emptyNode) {
+
           emptyNode.hidden = visibleCount !== 0;
+
         }
+
         setActiveMetric(currentMetric);
+
         setActiveFilter(currentFilter);
+
         var activeSortButton = sortButtons.find(function (button) {
+
           return button.getAttribute("data-ledger-sort") === currentMetric;
+
         });
+
         var activeFilterButton = filterButtons.find(function (button) {
+
           return button.getAttribute("data-ledger-filter") === currentFilter;
+
         });
+
         var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All misses";
+
         var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Highest priority";
+
         announce(filterText + " filter, " + sortText + " order applied.");
+
       }
 
+
+
       sortButtons.forEach(function (button) {
+
         button.addEventListener("click", function () {
+
           currentMetric = button.getAttribute("data-ledger-sort");
+
           applyLedgerState();
+
         });
+
       });
 
+
+
       filterButtons.forEach(function (button) {
+
         button.addEventListener("click", function () {
+
           currentFilter = button.getAttribute("data-ledger-filter");
+
           applyLedgerState();
+
         });
+
       });
+
+
 
       applyLedgerState();
+
     });
+
   }
+
+
 
   function initReviewBoard() {
+
     document.querySelectorAll("[data-review-root='true']").forEach(function (root) {
+
       var board = root.querySelector(".review-board");
+
       var sortButtons = Array.from(root.querySelectorAll("[data-review-sort]"));
+
       var filterButtons = Array.from(root.querySelectorAll("[data-review-filter]"));
+
       var statusNode = root.querySelector("[data-review-status='true']");
+
       var emptyNode = root.querySelector("[data-review-empty='true']");
 
+
+
       if (!board || sortButtons.length === 0 || filterButtons.length === 0) {
+
         return;
+
       }
+
+
 
       var currentMetric = root.getAttribute("data-review-default") || "date";
+
       var currentFilter = root.getAttribute("data-review-default-filter") || "all";
 
+
+
       function announce(text) {
+
         if (statusNode) {
+
           statusNode.textContent = text;
+
         }
+
       }
+
+
 
       function metricValue(card, metric) {
+
         var raw = Number(card.getAttribute("data-review-" + metric));
+
         return Number.isFinite(raw) ? raw : -Infinity;
+
       }
+
+
 
       function setActiveMetric(metric) {
+
         sortButtons.forEach(function (button) {
+
           var active = button.getAttribute("data-review-sort") === metric;
+
           button.setAttribute("aria-pressed", String(active));
+
         });
+
       }
+
+
 
       function setActiveFilter(filter) {
+
         filterButtons.forEach(function (button) {
+
           var active = button.getAttribute("data-review-filter") === filter;
+
           button.setAttribute("aria-pressed", String(active));
+
         });
+
       }
+
+
 
       function matchesFilter(card, filter) {
+
         if (filter === "all") {
+
           return true;
+
         }
+
         if (filter === "hit" || filter === "miss") {
+
           return card.getAttribute("data-review-grade") === filter;
+
         }
+
         if (filter === "draw") {
+
           return card.getAttribute("data-review-draw") === "true";
+
         }
+
         if (filter === "knockout") {
+
           return card.getAttribute("data-review-knockout") === "true";
+
         }
+
         return true;
+
       }
+
+
 
       function applyReviewState() {
+
         var cards = Array.from(board.querySelectorAll("[data-review-card='true']"));
+
         cards.sort(function (a, b) {
+
           var primary = metricValue(b, currentMetric) - metricValue(a, currentMetric);
+
           if (primary !== 0) {
+
             return primary;
+
           }
+
           return metricValue(b, "date") - metricValue(a, "date");
+
         });
+
+
 
         var visibleCount = 0;
+
         cards.forEach(function (card) {
+
           var show = matchesFilter(card, currentFilter);
+
           card.hidden = !show;
+
           if (show) {
+
             visibleCount += 1;
+
           }
+
           board.appendChild(card);
+
         });
+
+
 
         if (emptyNode) {
+
           emptyNode.hidden = visibleCount !== 0;
+
         }
 
+
+
         setActiveMetric(currentMetric);
+
         setActiveFilter(currentFilter);
 
+
+
         var activeSortButton = sortButtons.find(function (button) {
+
           return button.getAttribute("data-review-sort") === currentMetric;
+
         });
+
         var activeFilterButton = filterButtons.find(function (button) {
+
           return button.getAttribute("data-review-filter") === currentFilter;
+
         });
+
         var filterText = activeFilterButton ? activeFilterButton.textContent.trim() : "All graded";
+
         var sortText = activeSortButton ? activeSortButton.textContent.trim() : "Most recent";
+
         announce(filterText + " filter, " + sortText + " order applied.");
+
       }
 
+
+
       sortButtons.forEach(function (button) {
+
         button.addEventListener("click", function () {
+
           currentMetric = button.getAttribute("data-review-sort");
+
           applyReviewState();
+
         });
+
       });
+
+
 
       filterButtons.forEach(function (button) {
+
         button.addEventListener("click", function () {
+
           currentFilter = button.getAttribute("data-review-filter");
+
           applyReviewState();
+
         });
+
       });
 
+
+
       applyReviewState();
+
     });
+
   }
 
+
+
   ready(function () {
+
     formatLocalTimes();
+
     initBracket();
+
     initTuningLedger();
+
     initReviewBoard();
+
   });
+
 })();
+
 </script>
+
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

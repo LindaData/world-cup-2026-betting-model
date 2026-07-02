@@ -1393,6 +1393,7 @@ render_archive_cards <- function(rows, limit = 6, include_review = FALSE) {
         '<div><span>Actual result probability</span><strong>', display_percent(row$actual_result_probability, 1), '</strong></div>',
         '<div><span>Total goal error</span><strong>', ifelse(is.na(safe_number(row$total_goal_error)), "Pending", paste0(display_number(row$total_goal_error, 2), " goals")), '</strong></div>',
         '<div><span>Flag</span><strong>', escape_html(safe_text(row$upset_check, safe_text(row$score_error_band, "None"))), '</strong></div>',
+        '<div><span>Local film</span><strong>', escape_html(safe_text(row$recording_status, "No local film saved yet")), '</strong></div>',
         '</div>',
         '<p class="archive-card-note">Predicted ', escape_html(safe_text(row$predicted_score, "NA")), '; actual ', escape_html(safe_text(row$actual_score, "NA")), '.</p>'
       )
@@ -1403,6 +1404,7 @@ render_archive_cards <- function(rows, limit = 6, include_review = FALSE) {
         '<div><span>Replay</span><strong>', escape_html(safe_text(row$replay_status, "Check provider")), '</strong></div>',
         '<div><span>Kickoff</span><strong>', match_time_display(row), '</strong></div>',
         '<div><span>Lookup hint</span><strong>', escape_html(safe_text(row$replay_lookup_hint, "Use match label in Peacock search")), '</strong></div>',
+        '<div><span>Local film</span><strong>', escape_html(safe_text(row$recording_status, "No local film saved yet")), '</strong></div>',
         '</div>'
       )
     }
@@ -1440,6 +1442,7 @@ render_game_archive_section <- function(bundle, compact = TRUE, limit = 6) {
   metrics <- c(
     archive_metric_card("Tracked matches", archive_summary_value(summary, "matches_tracked", "0"), "Every fixture on the board gets a watch-source row."),
     archive_metric_card("Completed reviews", archive_summary_value(summary, "review_rows", "0"), "Completed matches tied back to model grading."),
+    archive_metric_card("Local film saved", archive_summary_value(summary, "local_recordings_found", "0"), "Private recordings detected on this laptop only."),
     archive_metric_card("Model hit rate", display_percent(archive_summary_value(summary, "model_hit_rate", NA), 1), "Share of completed matches where the public pick landed."),
     archive_metric_card("Average goal error", ifelse(is.na(suppressWarnings(as.numeric(archive_summary_value(summary, "average_goal_error", NA)))), "Pending", paste0(display_number(archive_summary_value(summary, "average_goal_error", NA), 2), " goals")), "Average total-goals miss on graded matches.")
   )
@@ -1482,18 +1485,18 @@ render_game_archive_page <- function(bundle) {
   summary <- bundle$archive_summary
 
   status_rows <- data.frame(
-    label = c("Tracked fixtures", "Completed reviews", "Upcoming fixtures", "Today fixtures"),
+    label = c("Tracked fixtures", "Completed reviews", "Upcoming fixtures", "Local film saved"),
     value = c(
       archive_summary_value(summary, "matches_tracked", "0"),
       archive_summary_value(summary, "review_rows", "0"),
       archive_summary_value(summary, "upcoming_matches", "0"),
-      archive_summary_value(summary, "today_matches", "0")
+      archive_summary_value(summary, "local_recordings_found", "0")
     ),
     note = c(
       "All fixtures currently carried on the match board.",
       "Completed matches with model review fields attached.",
       "Future matches already in the watch registry.",
-      "Matches currently marked as today."
+      "Private recordings detected in the local recordings folder."
     ),
     stringsAsFactors = FALSE
   )
@@ -1501,7 +1504,7 @@ render_game_archive_page <- function(bundle) {
   registry_table <- if (nrow(registry) > 0) {
     display_table(
       registry |>
-        dplyr::select(date, match_phase, archive_status, match_label, venue_label, official_watch_platform, replay_status, replay_lookup_hint),
+        dplyr::select(date, match_phase, archive_status, match_label, venue_label, official_watch_platform, replay_status, recording_status, replay_lookup_hint),
       caption = "Official watch-source registry."
     )
   } else {
@@ -1511,7 +1514,7 @@ render_game_archive_page <- function(bundle) {
   review_table <- if (nrow(review) > 0) {
     display_table(
       review |>
-        dplyr::select(date, match_phase, match_label, review_outcome, actual_result_probability, total_goal_error, score_error_band, upset_check),
+        dplyr::select(date, match_phase, match_label, review_outcome, actual_result_probability, total_goal_error, recording_status, score_error_band, upset_check),
       caption = "Completed match review board."
     )
   } else {

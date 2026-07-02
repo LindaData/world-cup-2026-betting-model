@@ -26,6 +26,11 @@ data/raw/*
 !data/raw/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+data/private/*
+!data/private/.gitkeep
+!data/private/recordings/
+data/private/recordings/*
+!data/private/recordings/.gitkeep
 data/seed/*.csv
 data/samples/*.csv
 docs/samples/*.csv

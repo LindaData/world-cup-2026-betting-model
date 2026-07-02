@@ -5,6 +5,7 @@ dir.create(model_dir, recursive = TRUE, showWarnings = FALSE)
 
 board_path <- file.path(model_dir, "matchday_prediction_board.csv")
 accuracy_path <- file.path(model_dir, "matchday_model_accuracy_detail.csv")
+recording_registry_path <- file.path(model_dir, "local_recording_registry.csv")
 
 if (!file.exists(board_path)) {
   stop("Missing matchday_prediction_board.csv. Run R/17_matchday_prediction_board.R first.")
@@ -13,6 +14,12 @@ if (!file.exists(board_path)) {
 board <- readr::read_csv(board_path, show_col_types = FALSE)
 accuracy <- if (file.exists(accuracy_path)) {
   readr::read_csv(accuracy_path, show_col_types = FALSE)
+} else {
+  data.frame()
+}
+
+recording_registry <- if (file.exists(recording_registry_path)) {
+  readr::read_csv(recording_registry_path, show_col_types = FALSE)
 } else {
   data.frame()
 }
@@ -92,6 +99,38 @@ watch_registry <- board |>
     rights_note
   ) |>
   dplyr::arrange(date, match_label)
+
+if (nrow(recording_registry) > 0) {
+  watch_registry <- watch_registry |>
+    dplyr::left_join(
+      recording_registry |>
+        dplyr::select(
+          "match_key",
+          "recording_found",
+          "recording_status",
+          "recording_file_name",
+          "recording_size_gb",
+          "recording_modified_utc"
+        ),
+      by = "match_key"
+    ) |>
+    dplyr::mutate(
+      recording_found = dplyr::coalesce(.data$recording_found, FALSE),
+      recording_status = dplyr::coalesce(.data$recording_status, "No local film saved yet"),
+      recording_file_name = dplyr::coalesce(.data$recording_file_name, ""),
+      recording_size_gb = .data$recording_size_gb,
+      recording_modified_utc = dplyr::coalesce(.data$recording_modified_utc, "")
+    )
+} else {
+  watch_registry <- watch_registry |>
+    dplyr::mutate(
+      recording_found = FALSE,
+      recording_status = "No local film saved yet",
+      recording_file_name = "",
+      recording_size_gb = NA_real_,
+      recording_modified_utc = ""
+    )
+}
 
 completed_board <- board |>
   dplyr::filter(match_timing == "Completed") |>
@@ -194,6 +233,27 @@ review_table <- review_table |>
   ) |>
   dplyr::arrange(dplyr::desc(date), match_label)
 
+if (nrow(recording_registry) > 0) {
+  review_table <- review_table |>
+    dplyr::left_join(
+      recording_registry |>
+        dplyr::select("match_key", "recording_found", "recording_status", "recording_modified_utc"),
+      by = "match_key"
+    ) |>
+    dplyr::mutate(
+      recording_found = dplyr::coalesce(.data$recording_found, FALSE),
+      recording_status = dplyr::coalesce(.data$recording_status, "No local film saved yet"),
+      recording_modified_utc = dplyr::coalesce(.data$recording_modified_utc, "")
+    )
+} else {
+  review_table <- review_table |>
+    dplyr::mutate(
+      recording_found = FALSE,
+      recording_status = "No local film saved yet",
+      recording_modified_utc = ""
+    )
+}
+
 summary_table <- data.frame(
   metric = c(
     "matches_tracked",
@@ -202,6 +262,7 @@ summary_table <- data.frame(
     "today_matches",
     "peacock_registry_rows",
     "review_rows",
+    "local_recordings_found",
     "model_hit_rate",
     "average_goal_error"
   ),
@@ -212,6 +273,7 @@ summary_table <- data.frame(
     sum(board$match_timing == "Today", na.rm = TRUE),
     nrow(watch_registry),
     nrow(review_table),
+    sum(watch_registry$recording_found, na.rm = TRUE),
     if (nrow(review_table) > 0 && "model_correct" %in% names(review_table) && any(!is.na(review_table$model_correct))) {
       mean(review_table$model_correct, na.rm = TRUE)
     } else {
