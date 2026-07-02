@@ -943,6 +943,36 @@ Predicted 1-1; actual 0-0.
 </section>
 <section class="page-section archive-explainer">
 <div class="section-heading">
+<span class="section-kicker">Local film workflow</span>
+<h2>
+How To Mark A Match As Recorded
+</h2>
+<p>
+Record the match with your own tool, save it into the private recordings folder, then rerun the local registry and render steps. The public site only shows whether local film exists. It does not publish the file or its full path.
+</p>
+</div>
+<div class="method-grid">
+<div>
+<strong>1. Save the file</strong><span><code>data/private/recordings/</code></span>
+</div>
+<div>
+<strong>2. Use the match key</strong><span><code>wc2026-49478__south-africa-vs-canada.mp4</code></span>
+</div>
+<div>
+<strong>3. Rebuild the registry</strong><span><code>R/26_build_local_recording_registry.R</code></span>
+</div>
+</div>
+<details class="technical-disclosure">
+<summary>
+Show local refresh commands
+</summary>
+<pre><code>&amp; 'C:\Program Files\R\R-4.1.1\bin\Rscript.exe' 'R/26_build_local_recording_registry.R'
+&amp; 'C:\Program Files\R\R-4.1.1\bin\Rscript.exe' 'R/25_build_game_archive.R'
+&amp; 'C:\Program Files\R\R-4.1.1\bin\Rscript.exe' 'R/12_render_reports.R'</code></pre>
+</details>
+</section>
+<section class="page-section archive-explainer">
+<div class="section-heading">
 <span class="section-kicker">Workflow</span>
 <h2>
 How To Use The Archive
