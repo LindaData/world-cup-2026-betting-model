@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-02T22:34:25.971491Z",
+  "refreshed_at_utc": "2026-07-02T23:55:47.399164Z",
   "dates_requested": [
     "20260701",
     "20260702",
@@ -437,14 +437,14 @@
       "date_utc": "2026-07-02T22:40Z",
       "name": "Chicago White Sox at Cleveland Guardians",
       "short_name": "CHW @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/2 - 6:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 4th",
+      "state": "in",
+      "period": 4,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
       "away_team": "Chicago White Sox",
-      "home_score": "0",
+      "home_score": "2",
       "away_score": "0",
       "home_record": "45-42",
       "away_record": "45-40",
@@ -454,7 +454,7 @@
         "CLEGuardians.TV",
         "CHSN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815993/white-sox-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815993"
     },
     {
       "sport": "mlb",
@@ -462,15 +462,15 @@
       "date_utc": "2026-07-02T23:15Z",
       "name": "St. Louis Cardinals at Atlanta Braves",
       "short_name": "STL @ ATL",
-      "status": "Scheduled",
-      "status_short": "7/2 - 7:15 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Atlanta Braves",
       "away_team": "St. Louis Cardinals",
-      "home_score": "0",
-      "away_score": "0",
+      "home_score": "5",
+      "away_score": "3",
       "home_record": "50-34",
       "away_record": "44-39",
       "venue": "Truist Park",
@@ -479,7 +479,7 @@
         "BravesVision",
         "Cardinals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815995/cardinals-braves"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815995"
     },
     {
       "sport": "mlb",
@@ -487,14 +487,14 @@
       "date_utc": "2026-07-02T23:40Z",
       "name": "Tampa Bay Rays at Kansas City Royals",
       "short_name": "TB @ KC",
-      "status": "Scheduled",
-      "status_short": "7/2 - 7:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "End 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Kansas City Royals",
       "away_team": "Tampa Bay Rays",
-      "home_score": "0",
+      "home_score": "1",
       "away_score": "0",
       "home_record": "35-52",
       "away_record": "50-33",
@@ -504,7 +504,7 @@
         "Royals.TV",
         "Rays.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815998/rays-royals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815998"
     },
     {
       "sport": "mlb",
