@@ -1,0 +1,148 @@
+---
+title: "Film Study Review"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+params:
+  data_dir: "data/processed/film_study"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+data_dir <- params$data_dir
+
+read_output <- function(name) {
+  path <- file.path(data_dir, name)
+  if (!file.exists(path)) {
+    stop("Missing required file: ", path, call. = FALSE)
+  }
+  read.csv(path, stringsAsFactors = FALSE)
+}
+
+tags <- read_output("film_study_tags.csv")
+events <- read_output("film_study_events_enriched.csv")
+possessions <- read_output("film_study_possessions.csv")
+match_features <- read_output("film_study_match_features.csv")
+zone_summary <- read_output("film_study_zone_summary.csv")
+transitions <- read_output("film_study_event_transitions.csv")
+dictionary <- read_output("film_study_data_dictionary.csv")
+metadata_path <- file.path(data_dir, "film_study_feature_metadata.json")
+metadata_lines <- if (file.exists(metadata_path)) readLines(metadata_path, warn = FALSE) else character()
+
+coerce_logical <- function(x) {
+  tolower(as.character(x)) %in% c("true", "1", "t", "yes")
+}
+
+events$is_shot <- coerce_logical(events$is_shot)
+events$is_goal <- coerce_logical(events$is_goal)
+events$is_card <- coerce_logical(events$is_card)
+```
+
+# Overview
+
+This private report summarizes tagged match-review data from the local film-study workflow. The outputs are heuristic summaries built from manual event tags and screen-relative click locations.
+
+```{r overview}
+overview <- data.frame(
+  metric = c(
+    "Tagged matches",
+    "Tagged events",
+    "Heuristic possessions",
+    "Tagged shots",
+    "Tagged goals",
+    "Tagged cards"
+  ),
+  value = c(
+    length(unique(tags$match_key)),
+    nrow(tags),
+    nrow(possessions),
+    sum(events$is_shot, na.rm = TRUE),
+    sum(events$is_goal, na.rm = TRUE),
+    sum(events$is_card, na.rm = TRUE)
+  )
+)
+overview
+```
+
+# Match Features
+
+```{r match-features}
+match_features
+```
+
+# Event Mix
+
+```{r event-mix}
+event_counts <- sort(table(events$event_type), decreasing = TRUE)
+barplot(
+  event_counts,
+  las = 2,
+  col = "#2a9d8f",
+  border = NA,
+  main = "Tagged Events by Type",
+  ylab = "Count"
+)
+```
+
+# Possession Summary
+
+```{r possession-summary}
+possessions
+```
+
+```{r possession-plot}
+if (nrow(possessions) > 0) {
+  barplot(
+    possessions$possession_duration_seconds,
+    names.arg = possessions$possession_id,
+    col = "#264653",
+    border = NA,
+    main = "Possession Duration",
+    xlab = "Possession ID",
+    ylab = "Seconds"
+  )
+}
+```
+
+# Spatial Zones
+
+```{r zone-summary}
+zone_summary
+```
+
+# Event Transitions
+
+```{r transitions}
+transitions
+```
+
+# Sample Tagged Events
+
+```{r sample-events}
+sample_events <- events[, c(
+  "match_key",
+  "event_index",
+  "event_type",
+  "team_inferred",
+  "player",
+  "time_seconds",
+  "x_zone",
+  "y_lane",
+  "next_event_type"
+)]
+sample_events
+```
+
+# Data Dictionary
+
+```{r dictionary}
+dictionary
+```
+
+# Metadata
+
+```{r metadata}
+cat(paste(metadata_lines, collapse = "\n"))
+```

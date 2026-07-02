@@ -197,6 +197,147 @@ CREATE TABLE IF NOT EXISTS fact_2026_world_cup_fixture_times (
   venue_label VARCHAR
 );
 
+CREATE TABLE IF NOT EXISTS film_study_tags (
+  recorded_at_utc VARCHAR,
+  match_key VARCHAR,
+  home_team VARCHAR,
+  away_team VARCHAR,
+  video_file VARCHAR,
+  event_type VARCHAR,
+  team VARCHAR,
+  player VARCHAR,
+  outcome VARCHAR,
+  time_seconds DOUBLE,
+  clock VARCHAR,
+  frame_index BIGINT,
+  x_pct DOUBLE,
+  y_pct DOUBLE,
+  notes VARCHAR,
+  source_file VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS film_study_events_enriched (
+  recorded_at_utc VARCHAR,
+  match_key VARCHAR,
+  home_team VARCHAR,
+  away_team VARCHAR,
+  video_file VARCHAR,
+  event_type VARCHAR,
+  team VARCHAR,
+  player VARCHAR,
+  outcome VARCHAR,
+  time_seconds DOUBLE,
+  clock VARCHAR,
+  frame_index BIGINT,
+  x_pct DOUBLE,
+  y_pct DOUBLE,
+  notes VARCHAR,
+  source_file VARCHAR,
+  event_index BIGINT,
+  seconds_since_prev_event DOUBLE,
+  event_group VARCHAR,
+  x_zone VARCHAR,
+  y_lane VARCHAR,
+  is_shot BOOLEAN,
+  is_goal BOOLEAN,
+  is_card BOOLEAN,
+  is_attacking_event BOOLEAN,
+  is_terminal_event BOOLEAN,
+  is_on_target BOOLEAN,
+  team_clean VARCHAR,
+  possession_id BIGINT,
+  team_inferred VARCHAR,
+  next_event_type VARCHAR,
+  next_team_inferred VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS film_study_possessions (
+  match_key VARCHAR,
+  possession_id BIGINT,
+  home_team VARCHAR,
+  away_team VARCHAR,
+  team_inferred VARCHAR,
+  possession_start_seconds DOUBLE,
+  possession_end_seconds DOUBLE,
+  possession_events BIGINT,
+  shots BIGINT,
+  goals BIGINT,
+  passes BIGINT,
+  attack_entries BIGINT,
+  turnovers BIGINT,
+  fouls BIGINT,
+  cards BIGINT,
+  notes_logged BIGINT,
+  first_x_zone VARCHAR,
+  last_x_zone VARCHAR,
+  first_y_lane VARCHAR,
+  last_y_lane VARCHAR,
+  possession_duration_seconds DOUBLE,
+  shot_rate_per_event DOUBLE
+);
+
+CREATE TABLE IF NOT EXISTS film_study_match_features (
+  match_key VARCHAR,
+  home_team VARCHAR,
+  away_team VARCHAR,
+  tagged_events BIGINT,
+  unique_players_tagged BIGINT,
+  unique_teams_tagged BIGINT,
+  tagged_shots BIGINT,
+  tagged_goals BIGINT,
+  shots_on_target BIGINT,
+  tagged_cards BIGINT,
+  tagged_fouls BIGINT,
+  tagged_turnovers BIGINT,
+  tagged_notes BIGINT,
+  avg_seconds_between_events DOUBLE,
+  median_seconds_between_events DOUBLE,
+  tagged_possessions BIGINT,
+  avg_possession_seconds DOUBLE,
+  median_possession_seconds DOUBLE,
+  max_possession_seconds DOUBLE,
+  avg_events_per_possession DOUBLE,
+  max_events_in_possession BIGINT
+);
+
+CREATE TABLE IF NOT EXISTS film_study_zone_summary (
+  match_key VARCHAR,
+  team_inferred VARCHAR,
+  x_zone VARCHAR,
+  y_lane VARCHAR,
+  events BIGINT,
+  shots BIGINT,
+  goals BIGINT
+);
+
+CREATE TABLE IF NOT EXISTS film_study_event_transitions (
+  match_key VARCHAR,
+  team_inferred VARCHAR,
+  event_type VARCHAR,
+  next_event_type VARCHAR,
+  transition_count BIGINT,
+  transition_rate DOUBLE
+);
+
+CREATE TABLE IF NOT EXISTS film_study_clips (
+  match_key VARCHAR,
+  event_index BIGINT,
+  event_type VARCHAR,
+  team_inferred VARCHAR,
+  player VARCHAR,
+  time_seconds DOUBLE,
+  video_file VARCHAR,
+  clip_file VARCHAR,
+  seconds_before DOUBLE,
+  seconds_after DOUBLE,
+  fps DOUBLE,
+  width BIGINT,
+  height BIGINT,
+  clip_start_seconds DOUBLE,
+  clip_end_seconds DOUBLE,
+  frames_written BIGINT
+);
+
 CREATE TABLE IF NOT EXISTS dim_locations_from_results (
   city VARCHAR,
   country VARCHAR,

@@ -1,0 +1,71 @@
+---
+title: "Film Study State Engine"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+params:
+  data_dir: "data/processed/film_study"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+data_dir <- params$data_dir
+
+read_csv_if_exists <- function(name) {
+  path <- file.path(data_dir, name)
+  if (!file.exists(path)) {
+    return(data.frame())
+  }
+  read.csv(path, stringsAsFactors = FALSE)
+}
+
+summary_path <- file.path(data_dir, "film_study_state_engine_summary.json")
+summary_lines <- if (file.exists(summary_path)) readLines(summary_path, warn = FALSE) else "State engine not built yet."
+state_summary <- read_csv_if_exists("film_study_state_engine_summary.csv")
+transition_summary <- read_csv_if_exists("film_study_state_engine_transitions.csv")
+snapshot <- read_csv_if_exists("film_study_state_engine_current_snapshot.csv")
+```
+
+# Overview
+
+This private state engine treats each tagged event state like a move position. The pitch is split into a 12 by 8 grid, and each state is anchored to the current event family plus the current grid cell. A board-style alias is also created so the same cell can be read as a coordinate such as `F5` or `J2`. From each state it estimates:
+
+- immediate next-move probabilities
+- possession-level downstream outcome probabilities
+- a simple advantage score based on those downstream outcomes
+- likely next event type and next grid destination
+- average grid progress, step length, and whether the next action tends to enter dangerous territory
+
+The board coordinates are a reading aid, not a claim that football behaves like chess. The point is to turn continuous movement into a stable state graph that can be modeled as transitions, paths, and downstream value.
+
+# Engine Summary
+
+```{r engine-summary}
+cat(paste(summary_lines, collapse = "\n"))
+```
+
+# State Table
+
+```{r state-table}
+state_summary
+```
+
+# Reading the State Table
+
+- `board_cell` is the board-style alias for the current grid cell.
+- `avg_forward_cell_progress` is the average column gain to the next tagged event.
+- `final_third_entry_rate` is the share of visits from this state that move into the final third on the next tagged action.
+- `most_likely_next_board_cell` is the destination cell the empirical engine sees most often from this state.
+
+# Transition Table
+
+```{r transition-table}
+transition_summary
+```
+
+# Current-State Snapshot
+
+```{r snapshot}
+snapshot
+```

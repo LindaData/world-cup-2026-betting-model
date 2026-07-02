@@ -1,0 +1,101 @@
+---
+title: "Film Study Modeling"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+params:
+  data_dir: "data/processed/film_study"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+data_dir <- params$data_dir
+
+read_csv_if_exists <- function(name) {
+  path <- file.path(data_dir, name)
+  if (!file.exists(path)) {
+    return(data.frame())
+  }
+  read.csv(path, stringsAsFactors = FALSE)
+}
+
+summary_path <- file.path(data_dir, "film_study_model_summary.json")
+summary_lines <- if (file.exists(summary_path)) readLines(summary_path, warn = FALSE) else "Model summary not created yet."
+event_frame <- read_csv_if_exists("film_study_event_model_frame.csv")
+possession_frame <- read_csv_if_exists("film_study_possession_model_frame.csv")
+event_metrics <- read_csv_if_exists("film_study_event_model_metrics.csv")
+event_coefs <- read_csv_if_exists("film_study_event_model_coefficients.csv")
+event_preds <- read_csv_if_exists("film_study_event_model_predictions.csv")
+pos_metrics <- read_csv_if_exists("film_study_possession_model_metrics.csv")
+pos_coefs <- read_csv_if_exists("film_study_possession_model_coefficients.csv")
+pos_preds <- read_csv_if_exists("film_study_possession_model_predictions.csv")
+```
+
+# Overview
+
+This private report summarizes experimental models fit from the local film-study event tags. If the tagged sample is too small, the report shows the gating rule instead of pretending the estimates are stable.
+
+# Model Summary
+
+```{r summary}
+cat(paste(summary_lines, collapse = "\n"))
+```
+
+# Event Model Frame
+
+```{r event-frame}
+event_frame
+```
+
+# Next Event Shot Model
+
+```{r event-model}
+if (nrow(event_metrics) == 0) {
+  cat("The next-event shot model was not fit because the local sample is still too small.\n")
+} else {
+  event_metrics
+}
+```
+
+```{r event-coefs}
+if (nrow(event_coefs) > 0) {
+  event_coefs
+}
+```
+
+```{r event-preds}
+if (nrow(event_preds) > 0) {
+  cols <- intersect(c("match_key", "event_index", "event_type", "next_event_type", "pred_next_shot_prob"), names(event_preds))
+  event_preds[, cols, drop = FALSE]
+}
+```
+
+# Possession Model Frame
+
+```{r possession-frame}
+possession_frame
+```
+
+# Possession Outcome Model
+
+```{r possession-model}
+if (nrow(pos_metrics) == 0) {
+  cat("The possession outcome model was not fit because the local sample is still too small.\n")
+} else {
+  pos_metrics
+}
+```
+
+```{r possession-coefs}
+if (nrow(pos_coefs) > 0) {
+  pos_coefs
+}
+```
+
+```{r possession-preds}
+if (nrow(pos_preds) > 0) {
+  cols <- intersect(c("match_key", "possession_id", "possession_outcome", "predicted_outcome"), names(pos_preds))
+  pos_preds[, cols, drop = FALSE]
+}
+```

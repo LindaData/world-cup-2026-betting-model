@@ -129,6 +129,317 @@ See [SECURITY.md](SECURITY.md) for the repository security policy.
 - Live lineup and card projections depend on provider coverage.
 - API odds and market-comparison scaffolding exist, but market edge is not presented as operational unless complete odds inputs are available.
 - Multi-sport expansion is documented as a roadmap, not part of the primary World Cup navigation.
+- Local film-study tagging is available for user-supplied video files and exports private CSV tags for downstream modeling.
+
+## Local Film Study
+
+Use the local Python tagger for private match review on video files you already have the right to analyze:
+
+If you want to capture a local screen region directly into the workflow, install the film-study extras first:
+
+```powershell
+py -m pip install -e .[filmstudy]
+```
+
+Then start a private local capture from RStudio or PowerShell. The capture stays on your laptop, writes into `data/private/recordings/`, and then registers the saved file for tagging and downstream analysis.
+
+To inspect the available monitors first:
+
+```r
+source("R/28_film_study_workflow.R")
+list_capture_monitors()
+```
+
+To save a reusable capture profile:
+
+```r
+source("R/28_film_study_workflow.R")
+
+create_capture_profile(
+  profile_name = "peacock-main-window",
+  select_region = TRUE
+)
+```
+
+After that, you can reuse the same region without drawing it again:
+
+```r
+source("R/38_capture_and_process_film_study_session.R")
+
+capture_and_process_film_study_session(
+  match_key = "wc2026-49483",
+  home_team = "France",
+  away_team = "Sweden",
+  profile_name = "peacock-main-window",
+  select_region = FALSE,
+  quality_profile = "archive"
+)
+```
+
+From PowerShell:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\capture_film_study_screen.py --match-key wc2026-49483 --home-team France --away-team Sweden --select-region --quality-profile archive
+```
+
+From RStudio:
+
+```r
+source("R/28_film_study_workflow.R")
+
+capture_film_study_screen(
+  match_key = "wc2026-49483",
+  home_team = "France",
+  away_team = "Sweden",
+  select_region = TRUE,
+  quality_profile = "archive"
+)
+```
+
+That opens a region selector, records the selected area until you press `q`, saves the file, and immediately registers it into the film-study catalog. `archive` uses MJPG AVI for higher quality. `compact` uses MP4 for smaller files.
+
+If you want to test the same capture-registration path without live screen capture, you can import a local sample video through the recorder:
+
+```r
+source("R/28_film_study_workflow.R")
+
+capture_film_study_screen(
+  match_key = "wc2026-49483",
+  home_team = "France",
+  away_team = "Sweden",
+  mock_video = "C:/path/to/local-sample.mp4"
+)
+```
+
+That writes the sample into `data/private/recordings/`, creates a capture manifest, and registers it exactly like a recorded session. It is useful for validating the workflow when desktop capture is unavailable.
+
+To generate a local tagger preset template before review:
+
+```r
+source("R/28_film_study_workflow.R")
+
+create_tagger_preset_template(
+  match_key = "wc2026-49483",
+  home_team = "France",
+  away_team = "Sweden"
+)
+```
+
+That writes a JSON template in `data/private/tagger_presets/`. The tagger will use it automatically when the file name matches the `match_key`. During tagging, `h` and `a` can be used in the Team prompt for home and away, and blank values fall back to the most recent tagged values.
+
+If you want one end-to-end session from capture through tagging and model-ready outputs:
+
+```r
+source("R/38_capture_and_process_film_study_session.R")
+
+capture_and_process_film_study_session(
+  match_key = "wc2026-49483",
+  home_team = "France",
+  away_team = "Sweden",
+  select_region = TRUE,
+  quality_profile = "archive"
+)
+```
+
+That workflow:
+
+1. lets you select the screen region
+2. records the local video
+3. creates a local tagger preset template for the match
+4. opens the tagger when recording stops
+5. rebuilds the film-study datasets after tagging
+6. refreshes clips, DuckDB, private reports, state-engine outputs, and a per-match export bundle
+
+Session exports now carry explicit readiness states:
+
+- `captured_ready_for_review`: video metadata and quality audit exist
+- `ready_for_annotation`: capture manifest and tagger preset are in place
+- `analysis_ready`: tags have been created and the private analysis outputs can be rebuilt from them
+
+If you want a quick non-interactive smoke test from RStudio before a real session:
+
+```r
+source("R/38_capture_and_process_film_study_session.R")
+
+capture_and_process_film_study_session(
+  match_key = "smoke-test-001",
+  home_team = "Home",
+  away_team = "Away",
+  region = c(0, 0, 320, 180),
+  select_region = FALSE,
+  max_seconds = 2,
+  no_preview = TRUE,
+  launch_tagger = FALSE,
+  skip_previews = TRUE,
+  quality_profile = "compact"
+)
+```
+
+That is useful for proving the local desktop capture path works before you run a longer real review session.
+
+To validate that the local setup is ready on this laptop:
+
+```r
+source("R/39_validate_film_study_setup.R")
+validate_local_film_study_setup()
+```
+
+Or from PowerShell:
+
+```powershell
+& "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -ExecutionPolicy Bypass -File scripts\run_project_python.ps1 scripts\validate_film_study_setup.py
+```
+
+To validate setup and launch the private Shiny workbench in one step:
+
+```powershell
+.\scripts\start_film_study_workbench.ps1
+```
+
+To start a real capture session from PowerShell without opening RStudio first:
+
+```powershell
+.\scripts\start_film_study_capture_session.ps1 -MatchKey "wc2026-49483" -HomeTeam "France" -AwayTeam "Sweden"
+```
+
+Or reuse a saved profile:
+
+```powershell
+.\scripts\start_film_study_capture_session.ps1 -MatchKey "wc2026-49483" -HomeTeam "France" -AwayTeam "Sweden" -ProfileName "peacock-main-window"
+```
+
+First register the local video and extract its metadata:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\prepare_film_study_session.py --video "C:\path\to\match.mp4" --match-key wc2026-49483 --home-team France --away-team Sweden
+```
+
+That writes private video metadata to `data/private/video_library/` and generates preview stills plus a contact sheet for quick review.
+
+To register the file and open the tagger immediately:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\prepare_film_study_session.py --video "C:\path\to\match.mp4" --match-key wc2026-49483 --home-team France --away-team Sweden --launch-tagger
+```
+
+Or launch the tagger directly:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\video_tagger.py --video "C:\path\to\match.mp4" --match-key wc2026-49483 --home-team France --away-team Sweden
+```
+
+That writes private tag files to `data/private/film_tags/`.
+
+If your local recorder saves files into one folder, you can point the workflow at that folder and let it grab the newest file:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\ingest_latest_local_video.py --source-dir "C:\path\to\video-folder" --match-key wc2026-49483 --home-team France --away-team Sweden --launch-tagger
+```
+
+If you want the project to wait for the next saved local video and register it as soon as it appears:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\watch_for_next_video.py --source-dir "C:\path\to\video-folder" --match-key wc2026-49483 --home-team France --away-team Sweden --launch-tagger
+```
+
+To combine all local tag files into one model-ready table:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\build_film_study_dataset.py
+```
+
+To generate analysis-ready outputs from those tags:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\build_film_study_features.py
+```
+
+That creates:
+
+- `data/processed/film_study/film_study_events_enriched.csv`
+- `data/processed/film_study/film_study_possessions.csv`
+- `data/processed/film_study/film_study_match_features.csv`
+- `data/processed/film_study/film_study_zone_summary.csv`
+- `data/processed/film_study/film_study_event_transitions.csv`
+- `data/processed/film_study/film_study_feature_metadata.json`
+
+To extract short clips around tagged events from your local video file:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\extract_film_study_clips.py --seconds-before 3 --seconds-after 4
+```
+
+To load the local film-study outputs into DuckDB for SQL and R analysis:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\build_film_study_duckdb.py
+```
+
+You can run the same workflow from RStudio:
+
+```r
+source("R/28_film_study_workflow.R")
+
+prepare_film_session(
+  video = "C:/path/to/match.mp4",
+  match_key = "wc2026-49483",
+  home_team = "France",
+  away_team = "Sweden",
+  launch_tagger = TRUE
+)
+
+ingest_latest_local_video(
+  source_dir = "C:/path/to/video-folder",
+  match_key = "wc2026-49483",
+  home_team = "France",
+  away_team = "Sweden"
+)
+
+refresh_film_study_analysis()
+
+extract_film_study_clips(event_types = c("shot", "goal"))
+
+build_film_study_duckdb()
+```
+
+The feature layer uses explicit heuristics, not full tracking data. Possessions are split when the tagged team changes, a long gap occurs, or a terminal event ends the sequence. Screen click coordinates are kept as tagged percentages and should only be interpreted as spatial football zones if you tag consistently.
+
+Render the private HTML review report from RStudio:
+
+```r
+source("R/29_render_film_study_review.R")
+render_film_study_review()
+```
+
+Launch the local Shiny control surface from RStudio:
+
+```r
+source("R/30_launch_film_study_app.R")
+launch_film_study_app()
+```
+
+Fit the private film-study models and render the modeling report:
+
+```r
+source("R/31_fit_film_study_models.R")
+fit_film_study_models()
+
+source("R/32_render_film_study_modeling_report.R")
+render_film_study_modeling_report()
+```
+
+Run the full local film-study pipeline in one command:
+
+```r
+source("R/34_process_film_study_session.R")
+
+process_film_study_session(
+  source_dir = "C:/path/to/video-folder",
+  match_key = "wc2026-49483",
+  home_team = "France",
+  away_team = "Sweden"
+)
+```
 
 ## Planned Features
 

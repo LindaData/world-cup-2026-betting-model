@@ -1,0 +1,137 @@
+---
+title: "Film Study Workflow"
+subtitle: "How the local capture and tagging pipeline fits into the GitHub-hosted project"
+description: "A GitHub-hosted guide to the private local film-study workflow for screen capture, annotation, and analysis-ready football review data."
+toc: true
+number-sections: true
+code-fold: true
+code-tools: true
+execute:
+  echo: true
+---
+
+## What Runs Where
+
+This project now has two separate surfaces:
+
+1. **GitHub Pages site**
+   - hosts the public project documentation
+   - hosts the static World Cup forecasting pages
+   - can show workflow guidance, methodology, and non-private outputs
+
+2. **Local film-study workflow on your laptop**
+   - records a screen region while you watch
+   - registers the saved video
+   - opens the local tagger
+   - rebuilds private review and statistical-analysis outputs
+
+GitHub Pages is the right host for the public-facing guide and static reports. It is **not** the place where live screen capture or local video tagging runs.
+
+## Why The Recorder Stays Local
+
+The recorder needs access to:
+
+- your unlocked desktop session
+- the video window you are watching
+- local file storage for recordings and clips
+- keyboard and mouse input for tagging
+
+That is why the capture and annotation path stays on your machine even though the project itself is hosted on GitHub.
+
+## End-To-End Flow
+
+The workflow is:
+
+1. select a screen region or reuse a saved capture profile
+2. record the match window locally
+3. register the saved video and extract technical metadata
+4. create a tagger preset for the match
+5. tag events such as passes, shots, saves, goals, turnovers, and fouls
+6. rebuild model-ready tables, clips, DuckDB outputs, and state-engine summaries
+7. keep the private artifacts local while the public GitHub site documents the system
+
+## Session States
+
+Each exported session now has a clear readiness state:
+
+- **captured_ready_for_review**: the recording exists and passed the quality audit
+- **ready_for_annotation**: the recording, capture manifest, and tagger preset are all in place
+- **analysis_ready**: tagged events exist and the statistical outputs can be rebuilt from them
+
+## Main Local Commands
+
+### Validate setup
+
+```r
+source("R/39_validate_film_study_setup.R")
+validate_local_film_study_setup()
+```
+
+### Start a full capture session from RStudio
+
+```r
+source("R/38_capture_and_process_film_study_session.R")
+
+capture_and_process_film_study_session(
+  match_key = "wc2026-real-001",
+  home_team = "Home",
+  away_team = "Away",
+  select_region = TRUE,
+  quality_profile = "archive"
+)
+```
+
+### Reuse a saved capture profile
+
+```r
+source("R/38_capture_and_process_film_study_session.R")
+
+capture_and_process_film_study_session(
+  match_key = "wc2026-real-001",
+  home_team = "Home",
+  away_team = "Away",
+  profile_name = "peacock-main-window",
+  select_region = FALSE,
+  quality_profile = "archive"
+)
+```
+
+### Launch the private Shiny workbench
+
+```powershell
+.\scripts\start_film_study_workbench.ps1
+```
+
+## Private Outputs Produced Locally
+
+The local workflow can produce:
+
+- recording files in `data/private/recordings/`
+- video metadata in `data/private/video_library/`
+- tag files in `data/private/film_tags/`
+- event, possession, and transition tables in `data/processed/film_study/`
+- clip extracts in `data/private/clips/`
+- DuckDB outputs for R, Python, and SQL analysis
+- per-session manifests and summaries in `data/private/session_exports/`
+
+These files are intentionally private and should not be pushed into the public GitHub Pages site.
+
+## What GitHub Pages Should Show
+
+The GitHub-hosted site is the right place for:
+
+- workflow documentation
+- model descriptions
+- data dictionaries
+- static methodological pages
+- example screenshots or diagrams
+- public forecasting outputs that do not expose private recordings or credentials
+
+## Recommended Split
+
+Use GitHub Pages for the **public project hub** and keep the film-study runtime local:
+
+- **Public GitHub site:** static documentation and publishable model outputs
+- **Local laptop workflow:** capture, tagging, video review, and private analysis artifacts
+
+That split matches how the code now works.
