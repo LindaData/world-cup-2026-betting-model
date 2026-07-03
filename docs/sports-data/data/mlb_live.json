@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-03T19:02:34.214638Z",
+  "refreshed_at_utc": "2026-07-03T20:35:52.555768Z",
   "dates_requested": [
     "20260702",
     "20260703",
@@ -240,10 +240,10 @@
       "date_utc": "2026-07-03T20:05Z",
       "name": "St. Louis Cardinals at Chicago Cubs",
       "short_name": "STL @ CHC",
-      "status": "Scheduled",
-      "status_short": "7/3 - 4:05 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Chicago Cubs",
       "away_team": "St. Louis Cardinals",
@@ -258,7 +258,7 @@
         "Cardinals.TV",
         "KMOV-TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816007/cardinals-cubs"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816007"
     },
     {
       "sport": "mlb",
