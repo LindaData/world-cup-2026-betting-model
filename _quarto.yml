@@ -30,49 +30,53 @@ website:
   description: "Static World Cup 2026 match probabilities, projected scores, bracket projections, and model performance notes."
   favicon: assets/favicon.svg
   navbar:
-    title: "WC 2026 Forecasts"
+    title: "LindaData WC HQ"
     background: "#102a43"
     left:
       - href: index.qmd
-        text: Home
+        text: HQ
+      - href: index.qmd#model-board
+        text: Board
       - href: reports/08_matchday_predictions.qmd
         text: Predictions
-      - href: reports/11_game_archive.qmd
-        text: Archive
       - href: reports/08_matchday_predictions.qmd#bracket
         text: Bracket
-      - href: reports/00_data_overview.qmd
-        text: Coverage
-      - href: reports/12_film_study_workflow.qmd
-        text: Film Study
-      - text: Methodology
+      - href: reports/11_game_archive.qmd
+        text: Archive
+      - text: Model Lab
         menu:
           - href: reports/08_matchday_predictions.qmd#model-review
             text: Model Review
+          - href: reports/10_model_challengers.qmd
+            text: Challenger Bench
           - href: reports/07_fixture_predictions.qmd
             text: Model Overview
           - href: reports/05_poisson_goals_model.qmd
             text: Goals Forecast
           - href: reports/02_ordinal_result_model.qmd
-            text: Win / Draw / Loss Model
+            text: Win / Draw / Loss
           - href: reports/04_knn_similarity_model.qmd
             text: Similar Match Model
-          - href: reports/10_model_challengers.qmd
-            text: Model Challengers
           - href: reports/03_distribution_review.qmd
             text: Distribution Checks
           - href: reports/06_regression_diagnostics.qmd
             text: Diagnostics
-          - href: reports/09_multisport_expansion.qmd
-            text: Multi-Sport Roadmap
+      - text: Data / Ops
+        menu:
+          - href: reports/00_data_overview.qmd
+            text: Data Coverage
           - href: reports/12_film_study_workflow.qmd
             text: Film Study Workflow
+          - href: reports/09_multisport_expansion.qmd
+            text: Multi-Sport Roadmap
     right:
+      - text: LindaData HQ
+        href: https://lindadata.github.io/
       - text: GitHub
         href: https://github.com/LindaData/world-cup-2026-betting-model
   page-footer:
-    left: "LindaData World Cup 2026 forecasting model."
-    right: "Static forecasts built with R, Python, SQL, DuckDB, and Quarto."
+    left: "LindaData World Cup 2026 research system."
+    right: "Forecasts, model review, data coverage, and project operations."
 
 format:
   html:
