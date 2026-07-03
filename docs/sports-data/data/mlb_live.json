@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-03T02:10:56.368853Z",
+  "refreshed_at_utc": "2026-07-03T06:06:53.911473Z",
   "dates_requested": [
     "20260702",
     "20260703",
@@ -113,24 +113,24 @@
       "date_utc": "2026-07-02T23:15Z",
       "name": "St. Louis Cardinals at Atlanta Braves",
       "short_name": "STL @ ATL",
-      "status": "In Progress",
-      "status_short": "Mid 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Atlanta Braves",
       "away_team": "St. Louis Cardinals",
       "home_score": "5",
       "away_score": "11",
-      "home_record": "50-34",
-      "away_record": "44-39",
+      "home_record": "50-35",
+      "away_record": "45-39",
       "venue": "Truist Park",
       "broadcasts": [
         "MLB.TV",
         "BravesVision",
         "Cardinals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815995"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815995/cardinals-braves"
     },
     {
       "sport": "mlb",
@@ -163,17 +163,17 @@
       "date_utc": "2026-07-03T00:05Z",
       "name": "Detroit Tigers at Texas Rangers",
       "short_name": "DET @ TEX",
-      "status": "In Progress",
-      "status_short": "Bot 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Texas Rangers",
       "away_team": "Detroit Tigers",
-      "home_score": "6",
-      "away_score": "3",
-      "home_record": "44-43",
-      "away_record": "38-49",
+      "home_score": "10",
+      "away_score": "4",
+      "home_record": "45-43",
+      "away_record": "38-50",
       "venue": "Globe Life Field",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -181,7 +181,7 @@
         "Rangers Sports Network",
         "Tigers.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401815997"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401815997/tigers-rangers"
     },
     {
       "sport": "mlb",
@@ -189,24 +189,24 @@
       "date_utc": "2026-07-03T01:40Z",
       "name": "Los Angeles Angels at Seattle Mariners",
       "short_name": "LAA @ SEA",
-      "status": "In Progress",
-      "status_short": "Bot 2nd",
-      "state": "in",
-      "period": 2,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Seattle Mariners",
       "away_team": "Los Angeles Angels",
-      "home_score": "0",
+      "home_score": "1",
       "away_score": "0",
-      "home_record": "44-43",
-      "away_record": "36-51",
+      "home_record": "45-43",
+      "away_record": "36-52",
       "venue": "T-Mobile Park",
       "broadcasts": [
         "MLB.TV",
         "Mariners.TV",
         "Angels.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816000"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816000/angels-mariners"
     },
     {
       "sport": "mlb",
@@ -214,17 +214,17 @@
       "date_utc": "2026-07-03T02:10Z",
       "name": "San Diego Padres at Los Angeles Dodgers",
       "short_name": "SD @ LAD",
-      "status": "In Progress",
-      "status_short": "Top 1st",
-      "state": "in",
-      "period": 1,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Los Angeles Dodgers",
       "away_team": "San Diego Padres",
-      "home_score": "0",
-      "away_score": "0",
-      "home_record": "56-31",
-      "away_record": "43-42",
+      "home_score": "12",
+      "away_score": "7",
+      "home_record": "57-31",
+      "away_record": "43-43",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "MLB.TV",
@@ -232,7 +232,7 @@
         "Sportsnet LA",
         "Padres.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816001"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816001/padres-dodgers"
     },
     {
       "sport": "mlb",
@@ -250,7 +250,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "49-38",
-      "away_record": "44-39",
+      "away_record": "45-39",
       "venue": "Wrigley Field",
       "broadcasts": [
         "MLB.TV",
@@ -375,7 +375,7 @@
       "away_team": "New York Mets",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "50-34",
+      "home_record": "50-35",
       "away_record": "36-51",
       "venue": "Truist Park",
       "broadcasts": [
@@ -449,7 +449,7 @@
       "away_team": "Boston Red Sox",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "36-51",
+      "home_record": "36-52",
       "away_record": "37-48",
       "venue": "Angel Stadium",
       "broadcasts": [
@@ -523,8 +523,8 @@
       "away_team": "San Diego Padres",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "56-31",
-      "away_record": "43-42",
+      "home_record": "57-31",
+      "away_record": "43-43",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -549,7 +549,7 @@
       "away_team": "Toronto Blue Jays",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "44-43",
+      "home_record": "45-43",
       "away_record": "41-46",
       "venue": "T-Mobile Park",
       "broadcasts": [
@@ -625,8 +625,8 @@
       "away_team": "Detroit Tigers",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "44-43",
-      "away_record": "38-49",
+      "home_record": "45-43",
+      "away_record": "38-50",
       "venue": "Globe Life Field",
       "broadcasts": [
         "MLB.TV",
@@ -650,7 +650,7 @@
       "away_team": "Toronto Blue Jays",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "44-43",
+      "home_record": "45-43",
       "away_record": "41-46",
       "venue": "T-Mobile Park",
       "broadcasts": [
@@ -751,7 +751,7 @@
       "away_team": "New York Mets",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "50-34",
+      "home_record": "50-35",
       "away_record": "36-51",
       "venue": "Truist Park",
       "broadcasts": [
@@ -776,7 +776,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "49-38",
-      "away_record": "44-39",
+      "away_record": "45-39",
       "venue": "Wrigley Field",
       "broadcasts": [
         "MLB.TV",
@@ -849,7 +849,7 @@
       "away_team": "Boston Red Sox",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "36-51",
+      "home_record": "36-52",
       "away_record": "37-48",
       "venue": "Angel Stadium",
       "broadcasts": [
@@ -924,8 +924,8 @@
       "away_team": "San Diego Padres",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "56-31",
-      "away_record": "43-42",
+      "home_record": "57-31",
+      "away_record": "43-43",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "MLB.TV",
