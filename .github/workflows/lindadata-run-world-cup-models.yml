@@ -1,0 +1,161 @@
+name: LindaData Run World Cup Models
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "Pipeline profile to run"
+        required: true
+        default: "free-refresh"
+        type: choice
+        options:
+          - free-refresh
+          - local-rebuild
+      include_keyed_apis:
+        description: "Use GitHub Secrets for Football-Data, Odds metadata, and API-Football"
+        required: true
+        default: false
+        type: boolean
+      include_odds_quota:
+        description: "Allow quota-consuming Odds API odds pull"
+        required: true
+        default: false
+        type: boolean
+      api_football_advanced:
+        description: "Pull capped API-Football injuries, odds, players, and fixture detail"
+        required: true
+        default: false
+        type: boolean
+      api_football_max_fixtures:
+        description: "Max API-Football fixtures for advanced detail"
+        required: true
+        default: "2"
+        type: string
+      api_football_max_player_pages:
+        description: "Max API-Football player pages for advanced detail"
+        required: true
+        default: "1"
+        type: string
+      commit_outputs:
+        description: "Commit rendered docs and public-safe model outputs back to main"
+        required: true
+        default: true
+        type: boolean
+  schedule:
+    - cron: "17 11 * * *"
+
+permissions:
+  contents: write
+
+env:
+  FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+  THE_ODDS_API_KEY: ${{ secrets.THE_ODDS_API_KEY }}
+  API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
+  API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+  API_FOOTBALL_HOST: ${{ vars.API_FOOTBALL_HOST || 'v3.football.api-sports.io' }}
+  API_FOOTBALL_WORLD_CUP_LEAGUE_ID: ${{ vars.API_FOOTBALL_WORLD_CUP_LEAGUE_ID || '1' }}
+  API_FOOTBALL_SEASON: ${{ vars.API_FOOTBALL_SEASON || '2026' }}
+  FOOTBALL_DATA_WORLD_CUP_COMPETITION: ${{ vars.FOOTBALL_DATA_WORLD_CUP_COMPETITION || 'WC' }}
+  FOOTBALL_DATA_SEASON: ${{ vars.FOOTBALL_DATA_SEASON || '2026' }}
+  ODDS_API_SPORT_KEY: ${{ vars.ODDS_API_SPORT_KEY || 'soccer_fifa_world_cup' }}
+  ODDS_REGIONS: ${{ vars.ODDS_REGIONS || 'us' }}
+  ODDS_MARKETS: ${{ vars.ODDS_MARKETS || 'h2h,spreads,totals' }}
+  ODDS_ODDS_FORMAT: ${{ vars.ODDS_ODDS_FORMAT || 'decimal' }}
+
+concurrency:
+  group: lindadata-world-cup-model-run
+  cancel-in-progress: false
+
+jobs:
+  run-models:
+    name: CDO model run, CTO render, COO publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout LindaData World Cup repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install system libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libgit2-dev
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .[analysis]
+
+      - name: Install R dependencies
+        run: |
+          Rscript -e 'install.packages(c("DBI", "duckdb", "dplyr", "readr", "jsonlite", "glue", "here", "reticulate", "knitr", "rmarkdown", "htmltools", "tidyr", "purrr", "stringr", "lubridate", "ggplot2", "scales", "broom", "MASS", "nnet", "mgcv", "rpart", "randomForest"), repos = "https://cloud.r-project.org")'
+
+      - name: Run LindaData model pipeline
+        run: |
+          PROFILE="${{ github.event.inputs.profile || 'free-refresh' }}"
+          INCLUDE_KEYED_APIS="${{ github.event.inputs.include_keyed_apis || 'false' }}"
+          INCLUDE_ODDS_QUOTA="${{ github.event.inputs.include_odds_quota || 'false' }}"
+          API_FOOTBALL_ADVANCED="${{ github.event.inputs.api_football_advanced || 'false' }}"
+          API_FOOTBALL_MAX_FIXTURES="${{ github.event.inputs.api_football_max_fixtures || '2' }}"
+          API_FOOTBALL_MAX_PLAYER_PAGES="${{ github.event.inputs.api_football_max_player_pages || '1' }}"
+
+          ARGS=(--profile "$PROFILE" --continue-on-error)
+          if [[ "$INCLUDE_KEYED_APIS" == "true" ]]; then
+            ARGS+=(--include-keyed-apis)
+          fi
+          if [[ "$INCLUDE_ODDS_QUOTA" == "true" ]]; then
+            ARGS+=(--include-odds-quota)
+          fi
+          if [[ "$API_FOOTBALL_ADVANCED" == "true" ]]; then
+            ARGS+=(--api-football-advanced)
+          fi
+          ARGS+=(--api-football-max-fixtures "$API_FOOTBALL_MAX_FIXTURES")
+          ARGS+=(--api-football-max-player-pages "$API_FOOTBALL_MAX_PLAYER_PAGES")
+
+          python scripts/update_pipeline.py "${ARGS[@]}"
+
+      - name: Build public-safe output cache
+        if: always()
+        run: |
+          python scripts/publish_public_model_outputs.py
+
+      - name: Upload model run diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lindadata-world-cup-model-run-${{ github.run_id }}
+          path: |
+            data/processed/update_runs/**
+            data/public/**
+            docs/current_data_status.md
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit rendered docs and public-safe outputs
+        if: ${{ success() && (github.event_name == 'schedule' || github.event.inputs.commit_outputs == 'true') }}
+        run: |
+          git config user.name "LindaData Model Runner"
+          git config user.email "lindadata-model-runner@users.noreply.github.com"
+          git add -f docs data/public
+          git reset -- data/raw data/private data/processed || true
+          if [[ -n "$(git status --porcelain docs data/public)" ]]; then
+            git commit -m "Run LindaData World Cup models and publish outputs"
+            git push
+          else
+            echo "No public output changes to commit."
+          fi
