@@ -1,7 +1,7 @@
 ---
-title: "World Cup 2026 Forecasting Model"
-subtitle: "Static match probabilities, projected scores, and tournament paths."
-description: "A readable static World Cup 2026 forecasting site with match probabilities, expected scores, bracket projections, data freshness notes, and model performance monitoring."
+title: "LindaData World Cup 2026 Forecasting Hub"
+subtitle: "Project command center for match probabilities, bracket paths, and model review."
+description: "A readable LindaData World Cup 2026 forecasting command center with match probabilities, bracket projections, data freshness notes, model performance monitoring, and project operating context."
 image: assets/social-preview.png
 toc: false
 number-sections: false
@@ -18,32 +18,38 @@ root <- if (file.exists("data/processed/modeling")) "." else ".."
 source(file.path(root, "R", "report_helpers.R"))
 source(file.path(root, "R", "matchday_components.R"))
 source(file.path(root, "R", "static_readability_overrides.R"))
+source(file.path(root, "R", "lindadata_project_ui.R"))
 bundle <- load_matchday_bundle(root)
 board <- bundle$board
 summary <- bundle$summary
 ```
 
-```{r hero, results="asis"}
-cat(render_home_hero(summary, board))
-cat(render_quick_status(summary))
+```{r project-shell, results="asis"}
+cat(render_lindadata_project_shell(summary, board))
+```
+
+```{r model-board, results="asis"}
 cat(render_model_market_board(
   board,
   title = "Current Model Board",
-  subtitle = "A compact sportsbook-style view of the current slate and next available matches.",
+  subtitle = "Scan the current slate, next available matches, model probabilities, expected score, and pick.",
   limit = 6,
   section_id = "model-board"
 ))
+```
+
+```{r forecast-command-center, results="asis"}
 cat(render_forecast_command_center(bundle, board, compact = TRUE, base_path = "reports/08_matchday_predictions.html"))
 cat(render_model_suite_strip(bundle, compact = TRUE, base_path = "reports/10_model_challengers.html"))
 cat(render_model_review_section(bundle, compact = TRUE, limit = 5))
 ```
 
 ```{r static-note, results="asis"}
-cat(render_static_api_note(summary))
+cat(render_static_api_note(summary, compact = TRUE))
 ```
 
 ```{r today, results="asis"}
-cat(render_today_section(board, summary))
+cat(render_today_section(board, summary, heading = "Current Forecasts"))
 ```
 
 ```{r next-match, results="asis"}
