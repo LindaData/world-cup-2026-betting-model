@@ -1,7 +1,7 @@
 ---
 title: "World Cup 2026 Forecasting Model"
-subtitle: "Static match probabilities, projected scores, and tournament paths."
-description: "A readable static World Cup 2026 forecasting site with match probabilities, expected scores, bracket projections, data freshness notes, and model performance monitoring."
+subtitle: "LindaData command center for static match probabilities, projected scores, and tournament paths."
+description: "A readable LindaData World Cup 2026 forecasting site with match probabilities, expected scores, bracket projections, data freshness notes, model performance monitoring, and clear project routing."
 image: assets/social-preview.png
 toc: false
 number-sections: false
@@ -23,13 +23,196 @@ board <- bundle$board
 summary <- bundle$summary
 ```
 
+<style>
+.ld-project-hq {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.8fr);
+  gap: 1rem;
+  margin: 0.25rem 0 1.25rem;
+  padding: clamp(1rem, 2.5vw, 1.35rem);
+  border: 1px solid rgba(15, 107, 104, 0.22);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at top left, rgba(217, 164, 65, 0.20), transparent 28rem),
+    linear-gradient(135deg, #102a43 0%, #0f4f4d 100%);
+  color: #ffffff;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.16);
+}
+.ld-project-hq h2 {
+  margin: 0.25rem 0 0.45rem;
+  color: #ffffff;
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
+  line-height: 1.05;
+}
+.ld-project-hq p,
+.ld-project-hq span,
+.ld-project-hq small {
+  color: rgba(255, 255, 255, 0.84);
+}
+.ld-project-hq .section-kicker {
+  color: #f5d27a;
+}
+.ld-hq-actions,
+.ld-quick-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+.ld-hq-actions a,
+.ld-quick-nav a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  padding: 0.5rem 0.78rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-weight: 800;
+  text-decoration: none;
+}
+.ld-hq-actions a:first-child {
+  background: #ffffff;
+  color: #0b4f4d;
+}
+.ld-hq-panel {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+}
+.ld-hq-status,
+.ld-route-card {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.72rem;
+  backdrop-filter: blur(10px);
+}
+.ld-hq-status span,
+.ld-route-card span {
+  display: block;
+  margin-bottom: 0.18rem;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ld-hq-status strong,
+.ld-route-card strong {
+  display: block;
+  color: #ffffff;
+  line-height: 1.2;
+}
+.ld-hq-grid,
+.ld-workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 1.35rem;
+}
+.ld-hq-card,
+.ld-workflow-card {
+  border: 1px solid #dbe3eb;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 0.85rem;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+}
+.ld-hq-card span,
+.ld-workflow-card span {
+  display: block;
+  color: #0f6b68;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.ld-hq-card strong,
+.ld-workflow-card strong {
+  display: block;
+  margin: 0.18rem 0;
+  color: #17252a;
+  font-size: 1.02rem;
+}
+.ld-hq-card p,
+.ld-workflow-card p {
+  margin: 0;
+  color: #52616b;
+  font-size: 0.91rem;
+}
+.ld-review-note {
+  border-left: 4px solid #d9a441;
+  border-radius: 12px;
+  background: #fffaf0;
+  padding: 0.9rem 1rem;
+  margin: 1rem 0 1.25rem;
+  color: #405261;
+}
+.ld-review-note strong {
+  color: #17252a;
+}
+@media (max-width: 760px) {
+  .ld-project-hq {
+    grid-template-columns: 1fr;
+    border-radius: 14px;
+  }
+  .ld-hq-actions a,
+  .ld-quick-nav a {
+    flex: 1 1 100%;
+  }
+}
+</style>
+
+<section id="lindadata-project-hq" class="ld-project-hq" aria-labelledby="ld-hq-title">
+  <div>
+    <span class="section-kicker">LindaData project HQ</span>
+    <h2 id="ld-hq-title">World Cup forecast command center</h2>
+    <p>Use this as the top-level dashboard for current picks, bracket paths, model health, data coverage, and executive routing. Forecasts come first; methodology stays one click away.</p>
+    <div class="ld-hq-actions" aria-label="Primary project actions">
+      <a href="#model-board">Open model board</a>
+      <a href="reports/08_matchday_predictions.html">Full predictions</a>
+      <a href="reports/08_matchday_predictions.html#bracket">Bracket</a>
+      <a href="reports/00_data_overview.html">Data coverage</a>
+    </div>
+  </div>
+  <div class="ld-hq-panel" aria-label="Project routing and status">
+    <div class="ld-hq-status"><span>Status</span><strong>Active public research site</strong><small>Static, public-safe, no credentials or private feeds exposed.</small></div>
+    <div class="ld-route-card"><span>Executive route</span><strong>CDO model quality · CTO pipeline and site · COO publishing flow</strong></div>
+    <div class="ld-route-card"><span>Review rule</span><strong>Improve readability first; promote model changes only after backtesting.</strong></div>
+  </div>
+</section>
+
+<nav class="ld-quick-nav" aria-label="World Cup forecast shortcuts">
+  <a href="#today">Current slate</a>
+  <a href="#next-match">Next match</a>
+  <a href="#model-review">Model review</a>
+  <a href="#bracket-preview">Bracket preview</a>
+  <a href="#champion-outlook">Champion outlook</a>
+</nav>
+
+<section class="page-section" id="start-here">
+  <div class="section-heading">
+    <span class="section-kicker">Start here</span>
+    <h2>Morning review flow</h2>
+    <p>Read the page in this order so the project stays easy to manage on mobile.</p>
+  </div>
+  <div class="ld-workflow-grid">
+    <div class="ld-workflow-card"><span>1</span><strong>Current board</strong><p>Check model pick, probability edge, expected score, and forecast timestamp.</p></div>
+    <div class="ld-workflow-card"><span>2</span><strong>Model review</strong><p>Scan hit rate, misses, draw calibration, and score error before trusting upgrades.</p></div>
+    <div class="ld-workflow-card"><span>3</span><strong>Bracket path</strong><p>Use the bracket and champion outlook for tournament-level storylines.</p></div>
+    <div class="ld-workflow-card"><span>4</span><strong>Escalate gaps</strong><p>Route data gaps, UI issues, or model concerns through the LindaData org.</p></div>
+  </div>
+</section>
+
 ```{r hero, results="asis"}
 cat(render_home_hero(summary, board))
 cat(render_quick_status(summary))
 cat(render_model_market_board(
   board,
   title = "Current Model Board",
-  subtitle = "A compact sportsbook-style view of the current slate and next available matches.",
+  subtitle = "A compact forecast board with the current slate and next available matches.",
   limit = 6,
   section_id = "model-board"
 ))
@@ -41,6 +224,8 @@ cat(render_model_review_section(bundle, compact = TRUE, limit = 5))
 ```{r static-note, results="asis"}
 cat(render_static_api_note(summary))
 ```
+
+<div class="ld-review-note"><strong>Project standard:</strong> this site should stay prediction-first, mobile-readable, and public-safe. Model changes should be routed through the CDO review path; site and refresh issues should route through CTO/COO.</div>
 
 ```{r today, results="asis"}
 cat(render_today_section(board, summary))
@@ -77,5 +262,7 @@ cat(render_methodology_short())
 ## Limitations
 
 This forecast is probabilistic. Lineups, injuries, card projections, and provider feeds update when the connected sources make those records available. Current tournament accuracy should be interpreted carefully because completed-match sample sizes are still small.
+
+This is not a live betting terminal. It is a LindaData research dashboard that separates public forecasts, model review, and data coverage so decisions can be checked before action.
 
 <p class="responsible-note">Responsible use: this site presents statistical forecasts for education and research. Always verify official match information before making decisions.</p>
