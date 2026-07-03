@@ -59,8 +59,7 @@ summary <- bundle$summary
   gap: 0.55rem;
   margin-top: 0.9rem;
 }
-.ld-hq-actions a,
-.ld-quick-nav a {
+.ld-hq-actions a {
   min-height: 42px;
   display: inline-flex;
   align-items: center;
@@ -76,6 +75,26 @@ summary <- bundle$summary
 .ld-hq-actions a:first-child {
   background: #ffffff;
   color: #0b4f4d;
+}
+.ld-quick-nav {
+  margin: 0.25rem 0 1.1rem;
+}
+.ld-quick-nav a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #b8d5d3;
+  border-radius: 999px;
+  padding: 0.5rem 0.78rem;
+  background: #f7fbfb;
+  color: #0b4f4d;
+  font-weight: 800;
+  text-decoration: none;
+}
+.ld-quick-nav a:hover {
+  background: #e7f3f2;
+  color: #083f3d;
 }
 .ld-hq-panel {
   display: grid;
