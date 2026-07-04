@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-04T19:02:06.846140Z",
+  "refreshed_at_utc": "2026-07-04T20:27:08.245769Z",
   "dates_requested": [
     "20260703",
     "20260704",
@@ -365,14 +365,14 @@
       "name": "Minnesota Twins at New York Yankees",
       "short_name": "MIN @ NYY",
       "status": "In Progress",
-      "status_short": "Top 5th",
+      "status_short": "Top 8th",
       "state": "in",
-      "period": 5,
+      "period": 8,
       "clock": "0:00",
       "home_team": "New York Yankees",
       "away_team": "Minnesota Twins",
-      "home_score": "1",
-      "away_score": "6",
+      "home_score": "4",
+      "away_score": "7",
       "home_record": "49-38",
       "away_record": "42-47",
       "venue": "Yankee Stadium",
@@ -390,15 +390,15 @@
       "date_utc": "2026-07-04T20:05Z",
       "name": "Detroit Tigers at Texas Rangers",
       "short_name": "DET @ TEX",
-      "status": "Scheduled",
-      "status_short": "7/4 - 4:05 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Texas Rangers",
       "away_team": "Detroit Tigers",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "2",
       "home_record": "45-43",
       "away_record": "38-50",
       "venue": "Globe Life Field",
@@ -407,7 +407,7 @@
         "Rangers Sports Network",
         "Tigers.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816020/tigers-rangers"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816020"
     },
     {
       "sport": "mlb",
@@ -415,9 +415,9 @@
       "date_utc": "2026-07-04T20:10Z",
       "name": "Toronto Blue Jays at Seattle Mariners",
       "short_name": "TOR @ SEA",
-      "status": "Scheduled",
-      "status_short": "7/4 - 4:10 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "End 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Seattle Mariners",
@@ -433,7 +433,7 @@
         "Sportsnet",
         "TVA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816029/blue-jays-mariners"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816029"
     },
     {
       "sport": "mlb",
