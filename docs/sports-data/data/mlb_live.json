@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-04T17:56:28.718165Z",
+  "refreshed_at_utc": "2026-07-04T19:02:06.846140Z",
   "dates_requested": [
     "20260703",
     "20260704",
@@ -340,23 +340,23 @@
       "date_utc": "2026-07-04T15:05Z",
       "name": "Pittsburgh Pirates at Washington Nationals",
       "short_name": "PIT @ WSH",
-      "status": "In Progress",
-      "status_short": "Bot 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Washington Nationals",
       "away_team": "Pittsburgh Pirates",
       "home_score": "1",
       "away_score": "7",
-      "home_record": "46-43",
-      "away_record": "44-45",
+      "home_record": "46-44",
+      "away_record": "45-45",
       "venue": "Nationals Park",
       "broadcasts": [
         "MLB.TV",
         "Nationals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816019"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816019/pirates-nationals"
     },
     {
       "sport": "mlb",
@@ -365,14 +365,14 @@
       "name": "Minnesota Twins at New York Yankees",
       "short_name": "MIN @ NYY",
       "status": "In Progress",
-      "status_short": "Bot 1st",
+      "status_short": "Top 5th",
       "state": "in",
-      "period": 1,
+      "period": 5,
       "clock": "0:00",
       "home_team": "New York Yankees",
       "away_team": "Minnesota Twins",
-      "home_score": "0",
-      "away_score": "3",
+      "home_score": "1",
+      "away_score": "6",
       "home_record": "49-38",
       "away_record": "42-47",
       "venue": "Yankee Stadium",
@@ -749,8 +749,8 @@
       "away_team": "Pittsburgh Pirates",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "46-43",
-      "away_record": "44-45",
+      "home_record": "46-44",
+      "away_record": "45-45",
       "venue": "Nationals Park",
       "broadcasts": [
         "Peacock"
