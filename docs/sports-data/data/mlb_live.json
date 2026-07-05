@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-05T16:56:18.365564Z",
+  "refreshed_at_utc": "2026-07-05T17:57:48.898600Z",
   "dates_requested": [
     "20260704",
     "20260705",
@@ -414,22 +414,22 @@
       "date_utc": "2026-07-05T17:00Z",
       "name": "Pittsburgh Pirates at Washington Nationals",
       "short_name": "PIT @ WSH",
-      "status": "Scheduled",
-      "status_short": "7/5 - 1:00 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Washington Nationals",
       "away_team": "Pittsburgh Pirates",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "4",
       "home_record": "46-44",
       "away_record": "45-45",
       "venue": "Nationals Park",
       "broadcasts": [
         "Peacock"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816034/pirates-nationals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816034"
     },
     {
       "sport": "mlb",
@@ -437,10 +437,10 @@
       "date_utc": "2026-07-05T17:05Z",
       "name": "Baltimore Orioles at Cincinnati Reds",
       "short_name": "BAL @ CIN",
-      "status": "Scheduled",
-      "status_short": "7/5 - 1:05 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 4th",
+      "state": "in",
+      "period": 4,
       "clock": "0:00",
       "home_team": "Cincinnati Reds",
       "away_team": "Baltimore Orioles",
@@ -452,7 +452,7 @@
       "broadcasts": [
         "Peacock"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816030/orioles-reds"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816030"
     },
     {
       "sport": "mlb",
@@ -460,15 +460,15 @@
       "date_utc": "2026-07-05T17:35Z",
       "name": "Minnesota Twins at New York Yankees",
       "short_name": "MIN @ NYY",
-      "status": "Scheduled",
-      "status_short": "7/5 - 1:35 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "New York Yankees",
       "away_team": "Minnesota Twins",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "1",
       "home_record": "49-39",
       "away_record": "43-47",
       "venue": "Yankee Stadium",
@@ -476,7 +476,7 @@
         "Peacock",
         "NBCSN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816032/twins-yankees"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816032"
     },
     {
       "sport": "mlb",
@@ -484,9 +484,9 @@
       "date_utc": "2026-07-05T18:00Z",
       "name": "Chicago White Sox at Cleveland Guardians",
       "short_name": "CHW @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/5 - 2:00 PM EDT",
-      "state": "pre",
+      "status": "Rain Delay",
+      "status_short": "Rain Delay, Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
@@ -499,7 +499,7 @@
       "broadcasts": [
         "Peacock"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816031/white-sox-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816031"
     },
     {
       "sport": "mlb",
