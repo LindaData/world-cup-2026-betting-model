@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-05T22:53:26.142571Z",
+  "refreshed_at_utc": "2026-07-05T23:57:54.174786Z",
   "dates_requested": [
     "20260704",
     "20260705",
@@ -600,23 +600,23 @@
       "date_utc": "2026-07-05T20:00Z",
       "name": "San Francisco Giants at Colorado Rockies",
       "short_name": "SF @ COL",
-      "status": "In Progress",
-      "status_short": "Top 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Colorado Rockies",
       "away_team": "San Francisco Giants",
       "home_score": "7",
       "away_score": "6",
-      "home_record": "36-54",
-      "away_record": "37-51",
+      "home_record": "37-54",
+      "away_record": "37-52",
       "venue": "Coors Field",
       "broadcasts": [
         "Peacock",
         "NBC Sports BA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816039"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816039/giants-rockies"
     },
     {
       "sport": "mlb",
@@ -624,22 +624,22 @@
       "date_utc": "2026-07-05T20:00Z",
       "name": "Milwaukee Brewers at Arizona Diamondbacks",
       "short_name": "MIL @ ARI",
-      "status": "In Progress",
-      "status_short": "Bot 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Arizona Diamondbacks",
       "away_team": "Milwaukee Brewers",
       "home_score": "2",
       "away_score": "3",
-      "home_record": "44-44",
-      "away_record": "54-33",
+      "home_record": "44-45",
+      "away_record": "55-33",
       "venue": "Chase Field (NH)",
       "broadcasts": [
         "Peacock"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816042"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816042/brewers-diamondbacks"
     },
     {
       "sport": "mlb",
@@ -648,14 +648,14 @@
       "name": "Miami Marlins at Athletics Athletics",
       "short_name": "MIA @ ATH",
       "status": "In Progress",
-      "status_short": "Top 8th",
+      "status_short": "Bot 9th",
       "state": "in",
-      "period": 8,
+      "period": 9,
       "clock": "0:00",
       "home_team": "Athletics",
       "away_team": "Miami Marlins",
-      "home_score": "0",
-      "away_score": "8",
+      "home_score": "8",
+      "away_score": "9",
       "home_record": "41-48",
       "away_record": "48-42",
       "venue": "Sutter Health Park",
@@ -670,17 +670,17 @@
       "date_utc": "2026-07-05T21:00Z",
       "name": "Toronto Blue Jays at Seattle Mariners",
       "short_name": "TOR @ SEA",
-      "status": "In Progress",
-      "status_short": "Top 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Seattle Mariners",
       "away_team": "Toronto Blue Jays",
-      "home_score": "3",
+      "home_score": "4",
       "away_score": "0",
-      "home_record": "46-44",
-      "away_record": "42-47",
+      "home_record": "47-44",
+      "away_record": "42-48",
       "venue": "T-Mobile Park",
       "broadcasts": [
         "Peacock",
@@ -688,7 +688,7 @@
         "Sportsnet",
         "TVA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816044"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816044/blue-jays-mariners"
     },
     {
       "sport": "mlb",
@@ -696,10 +696,10 @@
       "date_utc": "2026-07-05T23:20Z",
       "name": "San Diego Padres at Los Angeles Dodgers",
       "short_name": "SD @ LAD",
-      "status": "Scheduled",
-      "status_short": "7/5 - 7:20 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Los Angeles Dodgers",
       "away_team": "San Diego Padres",
@@ -712,7 +712,7 @@
         "NBC",
         "Peacock"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816043/padres-dodgers"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816043"
     },
     {
       "sport": "mlb",
@@ -856,7 +856,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "47-40",
-      "away_record": "54-33",
+      "away_record": "55-33",
       "venue": "Busch Stadium",
       "broadcasts": [
         "MLB.TV",
@@ -881,7 +881,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "43-45",
-      "away_record": "44-44",
+      "away_record": "44-45",
       "venue": "Petco Park",
       "broadcasts": [
         "MLB.TV",
@@ -906,8 +906,8 @@
       "away_team": "Toronto Blue Jays",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "37-51",
-      "away_record": "42-47",
+      "home_record": "37-52",
+      "away_record": "42-48",
       "venue": "Oracle Park",
       "broadcasts": [
         "MLB.TV",
@@ -933,7 +933,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "59-31",
-      "away_record": "36-54",
+      "away_record": "37-54",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "MLB.TV",
