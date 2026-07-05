@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-05T15:43:30.550285Z",
+  "refreshed_at_utc": "2026-07-05T16:56:18.365564Z",
   "dates_requested": [
     "20260704",
     "20260705",
@@ -390,9 +390,9 @@
       "date_utc": "2026-07-05T16:30Z",
       "name": "New York Mets at Atlanta Braves",
       "short_name": "NYM @ ATL",
-      "status": "Scheduled",
-      "status_short": "7/5 - 12:30 PM EDT",
-      "state": "pre",
+      "status": "Rain Delay",
+      "status_short": "Rain Delay, Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Atlanta Braves",
@@ -406,7 +406,7 @@
         "NBC",
         "Peacock"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816033/mets-braves"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816033"
     },
     {
       "sport": "mlb",
