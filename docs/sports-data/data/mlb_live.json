@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-06T15:58:07.655959Z",
+  "refreshed_at_utc": "2026-07-06T18:10:31.926488Z",
   "dates_requested": [
     "20260705",
     "20260706",
@@ -369,9 +369,9 @@
       "date_utc": "2026-07-06T18:10Z",
       "name": "Philadelphia Phillies at Kansas City Royals",
       "short_name": "PHI @ KC",
-      "status": "Scheduled",
-      "status_short": "7/6 - 2:10 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Kansas City Royals",
@@ -387,7 +387,7 @@
         "Royals.TV",
         "NBC Sports Phil"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816049/phillies-royals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816049"
     },
     {
       "sport": "mlb",
