@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-06T20:20:03.584141Z",
+  "refreshed_at_utc": "2026-07-06T21:52:29.390187Z",
   "dates_requested": [
     "20260705",
     "20260706",
@@ -369,17 +369,17 @@
       "date_utc": "2026-07-06T18:10Z",
       "name": "Philadelphia Phillies at Kansas City Royals",
       "short_name": "PHI @ KC",
-      "status": "In Progress",
-      "status_short": "Mid 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Kansas City Royals",
       "away_team": "Philadelphia Phillies",
-      "home_score": "10",
+      "home_score": "15",
       "away_score": "1",
-      "home_record": "36-54",
-      "away_record": "50-40",
+      "home_record": "37-54",
+      "away_record": "50-41",
       "venue": "Kauffman Stadium",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -387,7 +387,7 @@
         "Royals.TV",
         "NBC Sports Phil"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816049"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816049/phillies-royals"
     },
     {
       "sport": "mlb",
@@ -759,7 +759,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "37-53",
-      "away_record": "36-54",
+      "away_record": "37-54",
       "venue": "Citi Field",
       "broadcasts": [
         "MLB.TV",
@@ -784,7 +784,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "41-48",
-      "away_record": "50-40",
+      "away_record": "50-41",
       "venue": "Great American Ball Park",
       "broadcasts": [
         "MLB.TV",
