@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-06T21:52:29.390187Z",
+  "refreshed_at_utc": "2026-07-06T22:58:14.570037Z",
   "dates_requested": [
     "20260705",
     "20260706",
@@ -395,10 +395,10 @@
       "date_utc": "2026-07-06T22:40Z",
       "name": "New York Yankees at Tampa Bay Rays",
       "short_name": "NYY @ TB",
-      "status": "Scheduled",
-      "status_short": "7/6 - 6:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Mid 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Tampa Bay Rays",
       "away_team": "New York Yankees",
@@ -412,7 +412,7 @@
         "Rays.TV",
         "YES"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816046/yankees-rays"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816046"
     },
     {
       "sport": "mlb",
@@ -420,15 +420,15 @@
       "date_utc": "2026-07-06T22:45Z",
       "name": "Houston Astros at Washington Nationals",
       "short_name": "HOU @ WSH",
-      "status": "Scheduled",
-      "status_short": "7/6 - 6:45 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Mid 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Washington Nationals",
       "away_team": "Houston Astros",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "1",
       "home_record": "46-45",
       "away_record": "45-47",
       "venue": "Nationals Park",
@@ -437,7 +437,7 @@
         "Space City Home Network",
         "Nationals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816045/astros-nationals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816045"
     },
     {
       "sport": "mlb",
