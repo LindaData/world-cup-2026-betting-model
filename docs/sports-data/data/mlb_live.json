@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-06T12:06:54.721567Z",
+  "refreshed_at_utc": "2026-07-06T15:58:07.655959Z",
   "dates_requested": [
     "20260705",
     "20260706",
@@ -259,7 +259,7 @@
       "away_score": "3",
       "home_record": "44-45",
       "away_record": "55-33",
-      "venue": "Chase Field",
+      "venue": "Chase Field (NH)",
       "broadcasts": [
         "Peacock"
       ],
