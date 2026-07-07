@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-07T20:22:32.121108Z",
+  "refreshed_at_utc": "2026-07-07T21:49:51.395107Z",
   "dates_requested": [
     "20260706",
     "20260707",
@@ -217,17 +217,17 @@
       "date_utc": "2026-07-07T18:15Z",
       "name": "Milwaukee Brewers at St. Louis Cardinals",
       "short_name": "MIL @ STL",
-      "status": "In Progress",
-      "status_short": "Bot 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "St. Louis Cardinals",
       "away_team": "Milwaukee Brewers",
       "home_score": "3",
       "away_score": "4",
-      "home_record": "47-41",
-      "away_record": "56-33",
+      "home_record": "47-42",
+      "away_record": "57-33",
       "venue": "Busch Stadium",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -235,7 +235,7 @@
         "Cardinals.TV",
         "Brewers.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401871790"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401871790/brewers-cardinals"
     },
     {
       "sport": "mlb",
@@ -503,8 +503,8 @@
       "away_team": "Milwaukee Brewers",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "47-41",
-      "away_record": "56-33",
+      "home_record": "47-42",
+      "away_record": "57-33",
       "venue": "Busch Stadium",
       "broadcasts": [
         "MLB.TV",
@@ -905,8 +905,8 @@
       "away_team": "Milwaukee Brewers",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "47-41",
-      "away_record": "56-33",
+      "home_record": "47-42",
+      "away_record": "57-33",
       "venue": "Busch Stadium",
       "broadcasts": [
         "MLB.TV",
