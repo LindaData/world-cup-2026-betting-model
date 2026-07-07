@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-07T21:49:51.395107Z",
+  "refreshed_at_utc": "2026-07-07T22:51:49.994555Z",
   "dates_requested": [
     "20260706",
     "20260707",
@@ -243,9 +243,9 @@
       "date_utc": "2026-07-07T22:35Z",
       "name": "Chicago Cubs at Baltimore Orioles",
       "short_name": "CHC @ BAL",
-      "status": "Scheduled",
-      "status_short": "7/7 - 6:35 PM EDT",
-      "state": "pre",
+      "status": "Rain Delay",
+      "status_short": "Rain Delay, Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Baltimore Orioles",
@@ -260,7 +260,7 @@
         "Marquee Sports Net",
         "MASN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816055/cubs-orioles"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816055"
     },
     {
       "sport": "mlb",
@@ -268,9 +268,9 @@
       "date_utc": "2026-07-07T22:40Z",
       "name": "Athletics Athletics at Detroit Tigers",
       "short_name": "ATH @ DET",
-      "status": "Scheduled",
-      "status_short": "7/7 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Detroit Tigers",
@@ -285,7 +285,7 @@
         "Tigers.TV",
         "NBC Sports CA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816053/athletics-tigers"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816053"
     },
     {
       "sport": "mlb",
@@ -293,9 +293,9 @@
       "date_utc": "2026-07-07T22:40Z",
       "name": "Atlanta Braves at Pittsburgh Pirates",
       "short_name": "ATL @ PIT",
-      "status": "Scheduled",
-      "status_short": "7/7 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Pittsburgh Pirates",
@@ -310,7 +310,7 @@
         "BravesVision",
         "Gray Media"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816054/braves-pirates"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816054"
     },
     {
       "sport": "mlb",
@@ -318,9 +318,9 @@
       "date_utc": "2026-07-07T22:40Z",
       "name": "New York Yankees at Tampa Bay Rays",
       "short_name": "NYY @ TB",
-      "status": "Scheduled",
-      "status_short": "7/7 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Tampa Bay Rays",
@@ -336,7 +336,7 @@
         "Rays.TV",
         "YES"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816058/yankees-rays"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816058"
     },
     {
       "sport": "mlb",
@@ -344,9 +344,9 @@
       "date_utc": "2026-07-07T22:40Z",
       "name": "Seattle Mariners at Miami Marlins",
       "short_name": "SEA @ MIA",
-      "status": "Scheduled",
-      "status_short": "7/7 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Miami Marlins",
@@ -361,7 +361,7 @@
         "Marlins.TV",
         "Mariners.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816060/mariners-marlins"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816060"
     },
     {
       "sport": "mlb",
@@ -369,9 +369,9 @@
       "date_utc": "2026-07-07T22:45Z",
       "name": "Houston Astros at Washington Nationals",
       "short_name": "HOU @ WSH",
-      "status": "Scheduled",
-      "status_short": "7/7 - 6:45 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Washington Nationals",
@@ -386,7 +386,7 @@
         "Space City Home Network",
         "Nationals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816056/astros-nationals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816056"
     },
     {
       "sport": "mlb",
