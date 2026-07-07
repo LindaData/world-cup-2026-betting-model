@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-07T16:18:22.871426Z",
+  "refreshed_at_utc": "2026-07-07T18:26:09.535379Z",
   "dates_requested": [
     "20260706",
     "20260707",
@@ -217,9 +217,9 @@
       "date_utc": "2026-07-07T18:15Z",
       "name": "Milwaukee Brewers at St. Louis Cardinals",
       "short_name": "MIL @ STL",
-      "status": "Scheduled",
-      "status_short": "7/7 - 2:15 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "St. Louis Cardinals",
@@ -235,7 +235,7 @@
         "Cardinals.TV",
         "Brewers.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401871790/brewers-cardinals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401871790"
     },
     {
       "sport": "mlb",
