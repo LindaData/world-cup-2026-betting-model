@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-08T21:58:49.313406Z",
+  "refreshed_at_utc": "2026-07-08T23:08:22.181356Z",
   "dates_requested": [
     "20260707",
     "20260708",
@@ -418,17 +418,17 @@
       "date_utc": "2026-07-08T19:45Z",
       "name": "Toronto Blue Jays at San Francisco Giants",
       "short_name": "TOR @ SF",
-      "status": "In Progress",
-      "status_short": "Top 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "San Francisco Giants",
       "away_team": "Toronto Blue Jays",
       "home_score": "0",
-      "away_score": "7",
-      "home_record": "38-53",
-      "away_record": "43-49",
+      "away_score": "10",
+      "home_record": "38-54",
+      "away_record": "44-49",
       "venue": "Oracle Park",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -436,7 +436,7 @@
         "NBC Sports BA",
         "Sportsnet"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816082"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816082/blue-jays-giants"
     },
     {
       "sport": "mlb",
@@ -444,10 +444,10 @@
       "date_utc": "2026-07-08T22:35Z",
       "name": "Chicago Cubs at Baltimore Orioles",
       "short_name": "CHC @ BAL",
-      "status": "Scheduled",
-      "status_short": "7/8 - 6:35 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "End 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Baltimore Orioles",
       "away_team": "Chicago Cubs",
@@ -461,7 +461,7 @@
         "Marquee Sports Net",
         "MASN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816070/cubs-orioles"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816070"
     },
     {
       "sport": "mlb",
@@ -469,14 +469,14 @@
       "date_utc": "2026-07-08T22:40Z",
       "name": "Athletics Athletics at Detroit Tigers",
       "short_name": "ATH @ DET",
-      "status": "Scheduled",
-      "status_short": "7/8 - 6:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Detroit Tigers",
       "away_team": "Athletics",
-      "home_score": "0",
+      "home_score": "1",
       "away_score": "0",
       "home_record": "41-50",
       "away_record": "41-50",
@@ -486,7 +486,7 @@
         "Tigers.TV",
         "NBC Sports CA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816068/athletics-tigers"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816068"
     },
     {
       "sport": "mlb",
@@ -494,10 +494,10 @@
       "date_utc": "2026-07-08T22:40Z",
       "name": "Atlanta Braves at Pittsburgh Pirates",
       "short_name": "ATL @ PIT",
-      "status": "Scheduled",
-      "status_short": "7/8 - 6:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Pittsburgh Pirates",
       "away_team": "Atlanta Braves",
@@ -510,7 +510,7 @@
         "MLB.TV",
         "BravesVision"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816069/braves-pirates"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816069"
     },
     {
       "sport": "mlb",
@@ -518,10 +518,10 @@
       "date_utc": "2026-07-08T22:40Z",
       "name": "New York Yankees at Tampa Bay Rays",
       "short_name": "NYY @ TB",
-      "status": "Scheduled",
-      "status_short": "7/8 - 6:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Tampa Bay Rays",
       "away_team": "New York Yankees",
@@ -535,7 +535,7 @@
         "Prime Video",
         "Rays.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816073/yankees-rays"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816073"
     },
     {
       "sport": "mlb",
@@ -543,14 +543,14 @@
       "date_utc": "2026-07-08T22:40Z",
       "name": "Seattle Mariners at Miami Marlins",
       "short_name": "SEA @ MIA",
-      "status": "Scheduled",
-      "status_short": "7/8 - 6:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Miami Marlins",
       "away_team": "Seattle Mariners",
-      "home_score": "0",
+      "home_score": "1",
       "away_score": "0",
       "home_record": "50-42",
       "away_record": "47-45",
@@ -560,7 +560,7 @@
         "Marlins.TV",
         "Mariners.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816075/mariners-marlins"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816075"
     },
     {
       "sport": "mlb",
@@ -568,10 +568,10 @@
       "date_utc": "2026-07-08T22:45Z",
       "name": "Houston Astros at Washington Nationals",
       "short_name": "HOU @ WSH",
-      "status": "Scheduled",
-      "status_short": "7/8 - 6:45 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Washington Nationals",
       "away_team": "Houston Astros",
@@ -585,7 +585,7 @@
         "Space City Home Network",
         "Nationals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816071/astros-nationals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816071"
     },
     {
       "sport": "mlb",
@@ -1100,7 +1100,7 @@
       "away_team": "Colorado Rockies",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "38-53",
+      "home_record": "38-54",
       "away_record": "38-55",
       "venue": "Oracle Park",
       "broadcasts": [
