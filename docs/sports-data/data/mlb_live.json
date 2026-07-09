@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-09T22:25:56.894029Z",
+  "refreshed_at_utc": "2026-07-09T23:43:32.130521Z",
   "dates_requested": [
     "20260708",
     "20260709",
@@ -537,14 +537,14 @@
       "date_utc": "2026-07-09T22:40Z",
       "name": "Athletics Athletics at Detroit Tigers",
       "short_name": "ATH @ DET",
-      "status": "Scheduled",
-      "status_short": "7/9 - 6:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 4th",
+      "state": "in",
+      "period": 4,
       "clock": "0:00",
       "home_team": "Detroit Tigers",
       "away_team": "Athletics",
-      "home_score": "0",
+      "home_score": "1",
       "away_score": "0",
       "home_record": "42-50",
       "away_record": "41-51",
@@ -554,7 +554,7 @@
         "Tigers.TV",
         "NBC Sports CA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816083/athletics-tigers"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816083"
     },
     {
       "sport": "mlb",
@@ -562,15 +562,15 @@
       "date_utc": "2026-07-09T22:40Z",
       "name": "Seattle Mariners at Miami Marlins",
       "short_name": "SEA @ MIA",
-      "status": "Scheduled",
-      "status_short": "7/9 - 6:40 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 4th",
+      "state": "in",
+      "period": 4,
       "clock": "0:00",
       "home_team": "Miami Marlins",
       "away_team": "Seattle Mariners",
-      "home_score": "0",
-      "away_score": "0",
+      "home_score": "2",
+      "away_score": "1",
       "home_record": "51-42",
       "away_record": "47-46",
       "venue": "loanDepot park",
@@ -579,7 +579,7 @@
         "Marlins.TV",
         "Mariners.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816089/mariners-marlins"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816089"
     },
     {
       "sport": "mlb",
@@ -587,10 +587,10 @@
       "date_utc": "2026-07-09T23:10Z",
       "name": "Philadelphia Phillies at Cincinnati Reds",
       "short_name": "PHI @ CIN",
-      "status": "Scheduled",
-      "status_short": "7/9 - 7:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Cincinnati Reds",
       "away_team": "Philadelphia Phillies",
@@ -604,7 +604,7 @@
         "Reds.TV",
         "NBC Sports Phil"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816088/phillies-reds"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816088"
     },
     {
       "sport": "mlb",
