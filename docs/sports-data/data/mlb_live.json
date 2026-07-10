@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-10T01:58:57.447322Z",
+  "refreshed_at_utc": "2026-07-10T06:05:30.191195Z",
   "dates_requested": [
     "20260709",
     "20260710",
@@ -239,24 +239,24 @@
       "date_utc": "2026-07-09T23:45Z",
       "name": "Milwaukee Brewers at St. Louis Cardinals",
       "short_name": "MIL @ STL",
-      "status": "In Progress",
-      "status_short": "Top 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "St. Louis Cardinals",
       "away_team": "Milwaukee Brewers",
       "home_score": "4",
-      "away_score": "7",
-      "home_record": "48-43",
-      "away_record": "58-34",
+      "away_score": "8",
+      "home_record": "48-44",
+      "away_record": "59-34",
       "venue": "Busch Stadium",
       "broadcasts": [
         "MLB.TV",
         "Brewers.TV",
         "Cardinals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816093"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816093/brewers-cardinals"
     },
     {
       "sport": "mlb",
@@ -264,24 +264,24 @@
       "date_utc": "2026-07-10T00:05Z",
       "name": "Los Angeles Angels at Texas Rangers",
       "short_name": "LAA @ TEX",
-      "status": "In Progress",
-      "status_short": "End 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Texas Rangers",
       "away_team": "Los Angeles Angels",
-      "home_score": "6",
-      "away_score": "1",
-      "home_record": "46-46",
-      "away_record": "37-56",
+      "home_score": "7",
+      "away_score": "6",
+      "home_record": "47-46",
+      "away_record": "37-57",
       "venue": "Globe Life Field",
       "broadcasts": [
         "MLB.TV",
         "Rangers Sports Network",
         "Angels.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816090"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816090/angels-rangers"
     },
     {
       "sport": "mlb",
@@ -289,24 +289,24 @@
       "date_utc": "2026-07-10T01:40Z",
       "name": "Arizona Diamondbacks at San Diego Padres",
       "short_name": "ARI @ SD",
-      "status": "In Progress",
-      "status_short": "End 1st",
-      "state": "in",
-      "period": 1,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "San Diego Padres",
       "away_team": "Arizona Diamondbacks",
-      "home_score": "0",
-      "away_score": "0",
-      "home_record": "46-46",
-      "away_record": "45-47",
+      "home_score": "1",
+      "away_score": "3",
+      "home_record": "46-47",
+      "away_record": "46-47",
       "venue": "Petco Park",
       "broadcasts": [
         "MLB.TV",
         "Padres.TV",
         "DBACKS.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816094"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816094/diamondbacks-padres"
     },
     {
       "sport": "mlb",
@@ -314,24 +314,24 @@
       "date_utc": "2026-07-10T01:45Z",
       "name": "Colorado Rockies at San Francisco Giants",
       "short_name": "COL @ SF",
-      "status": "In Progress",
-      "status_short": "Bot 1st",
-      "state": "in",
-      "period": 1,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "San Francisco Giants",
       "away_team": "Colorado Rockies",
-      "home_score": "1",
-      "away_score": "0",
-      "home_record": "38-54",
-      "away_record": "38-56",
+      "home_score": "8",
+      "away_score": "2",
+      "home_record": "39-54",
+      "away_record": "38-57",
       "venue": "Oracle Park",
       "broadcasts": [
         "MLB.TV",
         "NBC Sports BA",
         "Rockies.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816095"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816095/rockies-giants"
     },
     {
       "sport": "mlb",
@@ -349,7 +349,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "47-47",
-      "away_record": "58-34",
+      "away_record": "59-34",
       "venue": "PNC Park",
       "broadcasts": [
         "MLB.TV",
@@ -576,7 +576,7 @@
       "away_team": "Houston Astros",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "46-46",
+      "home_record": "47-46",
       "away_record": "46-49",
       "venue": "Globe Life Field",
       "broadcasts": [
@@ -602,7 +602,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "46-48",
-      "away_record": "37-56",
+      "away_record": "37-57",
       "venue": "Target Field",
       "broadcasts": [
         "MLB.TV",
@@ -626,7 +626,7 @@
       "away_team": "Atlanta Braves",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-43",
+      "home_record": "48-44",
       "away_record": "54-38",
       "venue": "Busch Stadium",
       "broadcasts": [
@@ -650,7 +650,7 @@
       "away_team": "Toronto Blue Jays",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "46-46",
+      "home_record": "46-47",
       "away_record": "44-49",
       "venue": "Petco Park",
       "broadcasts": [
@@ -677,7 +677,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "61-33",
-      "away_record": "45-47",
+      "away_record": "46-47",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "MLB.TV",
@@ -701,8 +701,8 @@
       "away_team": "Colorado Rockies",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "38-54",
-      "away_record": "38-56",
+      "home_record": "39-54",
+      "away_record": "38-57",
       "venue": "Oracle Park",
       "broadcasts": [
         "MLB.TV",
@@ -728,7 +728,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "46-48",
-      "away_record": "37-56",
+      "away_record": "37-57",
       "venue": "Target Field",
       "broadcasts": [
         "MLB.TV",
@@ -778,7 +778,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "47-47",
-      "away_record": "58-34",
+      "away_record": "59-34",
       "venue": "PNC Park",
       "broadcasts": [
         "MLB.TV",
@@ -826,8 +826,8 @@
       "away_team": "Colorado Rockies",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "38-54",
-      "away_record": "38-56",
+      "home_record": "39-54",
+      "away_record": "38-57",
       "venue": "Oracle Park",
       "broadcasts": [
         "MLB.TV",
@@ -977,7 +977,7 @@
       "away_team": "Houston Astros",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "46-46",
+      "home_record": "47-46",
       "away_record": "46-49",
       "venue": "Globe Life Field",
       "broadcasts": [
@@ -1028,7 +1028,7 @@
       "away_team": "Atlanta Braves",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-43",
+      "home_record": "48-44",
       "away_record": "54-38",
       "venue": "Busch Stadium",
       "broadcasts": [
@@ -1053,7 +1053,7 @@
       "away_team": "Toronto Blue Jays",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "46-46",
+      "home_record": "46-47",
       "away_record": "44-49",
       "venue": "Petco Park",
       "broadcasts": [
@@ -1082,7 +1082,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "61-33",
-      "away_record": "45-47",
+      "away_record": "46-47",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "MLB.TV",
