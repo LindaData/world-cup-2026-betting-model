@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-10T21:32:20.348367Z",
+  "refreshed_at_utc": "2026-07-10T22:51:37.965466Z",
   "dates_requested": [
     "20260709",
     "20260710",
@@ -339,9 +339,9 @@
       "date_utc": "2026-07-10T22:40Z",
       "name": "Milwaukee Brewers at Pittsburgh Pirates",
       "short_name": "MIL @ PIT",
-      "status": "Scheduled",
-      "status_short": "7/10 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "Rain Delay",
+      "status_short": "Rain Delay, Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Pittsburgh Pirates",
@@ -355,7 +355,7 @@
         "MLB.TV",
         "Brewers.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816100/brewers-pirates"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816100"
     },
     {
       "sport": "mlb",
@@ -363,9 +363,9 @@
       "date_utc": "2026-07-10T22:40Z",
       "name": "Philadelphia Phillies at Detroit Tigers",
       "short_name": "PHI @ DET",
-      "status": "Scheduled",
-      "status_short": "7/10 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Detroit Tigers",
@@ -380,7 +380,7 @@
         "Tigers.TV",
         "NBC Sports Phil"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816102/phillies-tigers"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816102"
     },
     {
       "sport": "mlb",
@@ -388,9 +388,9 @@
       "date_utc": "2026-07-10T22:45Z",
       "name": "New York Yankees at Washington Nationals",
       "short_name": "NYY @ WSH",
-      "status": "Scheduled",
-      "status_short": "7/10 - 6:45 PM EDT",
-      "state": "pre",
+      "status": "Delayed",
+      "status_short": "Delayed, Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Washington Nationals",
@@ -407,7 +407,7 @@
         "Gray Media",
         "YES"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816101/yankees-nationals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816101"
     },
     {
       "sport": "mlb",
@@ -512,31 +512,6 @@
     },
     {
       "sport": "mlb",
-      "event_id": "401816096",
-      "date_utc": "2026-07-10T23:15Z",
-      "name": "Boston Red Sox at New York Mets",
-      "short_name": "BOS @ NYM",
-      "status": "Scheduled",
-      "status_short": "7/10 - 7:15 PM EDT",
-      "state": "pre",
-      "period": 1,
-      "clock": "0:00",
-      "home_team": "New York Mets",
-      "away_team": "Boston Red Sox",
-      "home_score": "0",
-      "away_score": "0",
-      "home_record": "40-54",
-      "away_record": "43-48",
-      "venue": "Citi Field",
-      "broadcasts": [
-        "MLB.TV",
-        "Apple TV",
-        "NESN"
-      ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816096/red-sox-mets"
-    },
-    {
-      "sport": "mlb",
       "event_id": "401816105",
       "date_utc": "2026-07-10T23:40Z",
       "name": "Athletics Athletics at Chicago White Sox",
@@ -560,6 +535,31 @@
         "WCIU-TV"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401816105/athletics-white-sox"
+    },
+    {
+      "sport": "mlb",
+      "event_id": "401816096",
+      "date_utc": "2026-07-10T23:50Z",
+      "name": "Boston Red Sox at New York Mets",
+      "short_name": "BOS @ NYM",
+      "status": "Delayed",
+      "status_short": "Delayed, Top 1st",
+      "state": "in",
+      "period": 1,
+      "clock": "0:00",
+      "home_team": "New York Mets",
+      "away_team": "Boston Red Sox",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "40-54",
+      "away_record": "43-48",
+      "venue": "Citi Field",
+      "broadcasts": [
+        "MLB.TV",
+        "Apple TV",
+        "NESN"
+      ],
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816096"
     },
     {
       "sport": "mlb",
