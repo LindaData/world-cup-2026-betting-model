@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-10T22:51:37.965466Z",
+  "refreshed_at_utc": "2026-07-10T23:49:18.215846Z",
   "dates_requested": [
     "20260709",
     "20260710",
@@ -364,14 +364,14 @@
       "name": "Philadelphia Phillies at Detroit Tigers",
       "short_name": "PHI @ DET",
       "status": "In Progress",
-      "status_short": "Bot 1st",
+      "status_short": "Bot 4th",
       "state": "in",
-      "period": 1,
+      "period": 4,
       "clock": "0:00",
       "home_team": "Detroit Tigers",
       "away_team": "Philadelphia Phillies",
-      "home_score": "0",
-      "away_score": "0",
+      "home_score": "2",
+      "away_score": "2",
       "home_record": "43-50",
       "away_record": "52-42",
       "venue": "Comerica Park",
@@ -415,14 +415,14 @@
       "date_utc": "2026-07-10T23:05Z",
       "name": "Kansas City Royals at Baltimore Orioles",
       "short_name": "KC @ BAL",
-      "status": "Scheduled",
-      "status_short": "7/10 - 7:05 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Mid 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Baltimore Orioles",
       "away_team": "Kansas City Royals",
-      "home_score": "0",
+      "home_score": "2",
       "away_score": "0",
       "home_record": "43-51",
       "away_record": "38-56",
@@ -432,7 +432,7 @@
         "Royals.TV",
         "MASN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816099/royals-orioles"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816099"
     },
     {
       "sport": "mlb",
@@ -440,10 +440,10 @@
       "date_utc": "2026-07-10T23:10Z",
       "name": "Chicago Cubs at Cincinnati Reds",
       "short_name": "CHC @ CIN",
-      "status": "Scheduled",
-      "status_short": "7/10 - 7:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Cincinnati Reds",
       "away_team": "Chicago Cubs",
@@ -457,7 +457,7 @@
         "Marquee Sports Net",
         "Reds.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816097/cubs-reds"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816097"
     },
     {
       "sport": "mlb",
@@ -465,10 +465,10 @@
       "date_utc": "2026-07-10T23:10Z",
       "name": "Cleveland Guardians at Miami Marlins",
       "short_name": "CLE @ MIA",
-      "status": "Scheduled",
-      "status_short": "7/10 - 7:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Miami Marlins",
       "away_team": "Cleveland Guardians",
@@ -482,7 +482,7 @@
         "CLEGuardians.TV",
         "Marlins.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816098/guardians-marlins"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816098"
     },
     {
       "sport": "mlb",
@@ -490,10 +490,10 @@
       "date_utc": "2026-07-10T23:10Z",
       "name": "Seattle Mariners at Tampa Bay Rays",
       "short_name": "SEA @ TB",
-      "status": "Scheduled",
-      "status_short": "7/10 - 7:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Tampa Bay Rays",
       "away_team": "Seattle Mariners",
@@ -508,7 +508,7 @@
         "Rays.TV",
         "Mariners.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816103/mariners-rays"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816103"
     },
     {
       "sport": "mlb",
@@ -516,9 +516,9 @@
       "date_utc": "2026-07-10T23:40Z",
       "name": "Athletics Athletics at Chicago White Sox",
       "short_name": "ATH @ CHW",
-      "status": "Scheduled",
-      "status_short": "7/10 - 7:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Mid 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Chicago White Sox",
@@ -534,7 +534,7 @@
         "CHSN",
         "WCIU-TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816105/athletics-white-sox"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816105"
     },
     {
       "sport": "mlb",
