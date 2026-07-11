@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-11T04:55:05.281028Z",
+  "refreshed_at_utc": "2026-07-11T07:06:14.857084Z",
   "dates_requested": [
     "20260710",
     "20260711",
@@ -292,23 +292,23 @@
       "date_utc": "2026-07-11T00:15Z",
       "name": "Atlanta Braves at St. Louis Cardinals",
       "short_name": "ATL @ STL",
-      "status": "In Progress",
-      "status_short": "Mid 7th",
-      "state": "in",
-      "period": 7,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "St. Louis Cardinals",
       "away_team": "Atlanta Braves",
-      "home_score": "1",
+      "home_score": "2",
       "away_score": "1",
-      "home_record": "48-44",
-      "away_record": "54-38",
+      "home_record": "49-44",
+      "away_record": "54-39",
       "venue": "Busch Stadium",
       "broadcasts": [
         "MLB.TV",
         "Apple TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816106"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816106/braves-cardinals"
     },
     {
       "sport": "mlb",
@@ -342,24 +342,24 @@
       "date_utc": "2026-07-11T02:10Z",
       "name": "Arizona Diamondbacks at Los Angeles Dodgers",
       "short_name": "ARI @ LAD",
-      "status": "In Progress",
-      "status_short": "Top 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Los Angeles Dodgers",
       "away_team": "Arizona Diamondbacks",
-      "home_score": "2",
+      "home_score": "3",
       "away_score": "9",
-      "home_record": "61-33",
-      "away_record": "46-47",
+      "home_record": "61-34",
+      "away_record": "47-47",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "MLB.TV",
         "Sportsnet LA",
         "DBACKS.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816108"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816108/diamondbacks-dodgers"
     },
     {
       "sport": "mlb",
@@ -367,17 +367,17 @@
       "date_utc": "2026-07-11T02:15Z",
       "name": "Colorado Rockies at San Francisco Giants",
       "short_name": "COL @ SF",
-      "status": "In Progress",
-      "status_short": "Bot 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "San Francisco Giants",
       "away_team": "Colorado Rockies",
-      "home_score": "2",
-      "away_score": "1",
-      "home_record": "39-54",
-      "away_record": "38-57",
+      "home_score": "3",
+      "away_score": "4",
+      "home_record": "39-55",
+      "away_record": "39-57",
       "venue": "Oracle Park",
       "broadcasts": [
         "MLB.TV",
@@ -385,7 +385,7 @@
         "KNTV",
         "Rockies.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816109"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816109/rockies-giants"
     },
     {
       "sport": "mlb",
@@ -525,8 +525,8 @@
       "away_team": "Colorado Rockies",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "39-54",
-      "away_record": "38-57",
+      "home_record": "39-55",
+      "away_record": "39-57",
       "venue": "Oracle Park",
       "broadcasts": [
         "MLB.TV",
@@ -727,8 +727,8 @@
       "away_team": "Atlanta Braves",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-44",
-      "away_record": "54-38",
+      "home_record": "49-44",
+      "away_record": "54-39",
       "venue": "Busch Stadium",
       "broadcasts": [
         "MLB.TV",
@@ -780,8 +780,8 @@
       "away_team": "Arizona Diamondbacks",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "61-33",
-      "away_record": "46-47",
+      "home_record": "61-34",
+      "away_record": "47-47",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "MLB.TV",
@@ -1053,8 +1053,8 @@
       "away_team": "Atlanta Braves",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-44",
-      "away_record": "54-38",
+      "home_record": "49-44",
+      "away_record": "54-39",
       "venue": "Busch Stadium",
       "broadcasts": [
         "MLB.TV",
@@ -1103,8 +1103,8 @@
       "away_team": "Colorado Rockies",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "39-54",
-      "away_record": "38-57",
+      "home_record": "39-55",
+      "away_record": "39-57",
       "venue": "Oracle Park",
       "broadcasts": [
         "MLB.TV",
@@ -1128,8 +1128,8 @@
       "away_team": "Arizona Diamondbacks",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "61-33",
-      "away_record": "46-47",
+      "home_record": "61-34",
+      "away_record": "47-47",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "ESPN Unlmtd",
