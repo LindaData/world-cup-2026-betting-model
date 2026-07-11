@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-11T19:38:54.258322Z",
+  "refreshed_at_utc": "2026-07-11T20:38:28.722909Z",
   "dates_requested": [
     "20260710",
     "20260711",
@@ -418,14 +418,14 @@
       "name": "Los Angeles Angels at Minnesota Twins",
       "short_name": "LAA @ MIN",
       "status": "In Progress",
-      "status_short": "Top 4th",
+      "status_short": "Bot 7th",
       "state": "in",
-      "period": 4,
+      "period": 7,
       "clock": "0:00",
       "home_team": "Minnesota Twins",
       "away_team": "Los Angeles Angels",
-      "home_score": "3",
-      "away_score": "2",
+      "home_score": "5",
+      "away_score": "3",
       "home_record": "46-49",
       "away_record": "38-57",
       "venue": "Target Field",
@@ -442,48 +442,24 @@
       "date_utc": "2026-07-11T18:10Z",
       "name": "Athletics Athletics at Chicago White Sox",
       "short_name": "ATH @ CHW",
-      "status": "In Progress",
-      "status_short": "Bot 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Chicago White Sox",
       "away_team": "Athletics",
       "home_score": "1",
       "away_score": "0",
-      "home_record": "48-45",
-      "away_record": "41-53",
+      "home_record": "49-45",
+      "away_record": "41-54",
       "venue": "Rate Field",
       "broadcasts": [
         "MLB.TV",
         "NBC Sports CA",
         "CHSN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816120"
-    },
-    {
-      "sport": "mlb",
-      "event_id": "401816115",
-      "date_utc": "2026-07-11T20:05Z",
-      "name": "Milwaukee Brewers at Pittsburgh Pirates",
-      "short_name": "MIL @ PIT",
-      "status": "Scheduled",
-      "status_short": "7/11 - 4:05 PM EDT",
-      "state": "pre",
-      "period": 1,
-      "clock": "0:00",
-      "home_team": "Pittsburgh Pirates",
-      "away_team": "Milwaukee Brewers",
-      "home_score": "0",
-      "away_score": "0",
-      "home_record": "48-47",
-      "away_record": "59-35",
-      "venue": "PNC Park",
-      "broadcasts": [
-        "MLB.TV",
-        "Brewers.TV"
-      ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816115/brewers-pirates"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816120/athletics-white-sox"
     },
     {
       "sport": "mlb",
@@ -491,14 +467,14 @@
       "date_utc": "2026-07-11T20:05Z",
       "name": "New York Yankees at Washington Nationals",
       "short_name": "NYY @ WSH",
-      "status": "Scheduled",
-      "status_short": "7/11 - 4:05 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Washington Nationals",
       "away_team": "New York Yankees",
-      "home_score": "0",
+      "home_score": "2",
       "away_score": "0",
       "home_record": "48-47",
       "away_record": "52-42",
@@ -508,7 +484,7 @@
         "Nationals.TV",
         "YES"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816116/yankees-nationals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816116"
     },
     {
       "sport": "mlb",
@@ -516,15 +492,15 @@
       "date_utc": "2026-07-11T20:05Z",
       "name": "Colorado Rockies at San Francisco Giants",
       "short_name": "COL @ SF",
-      "status": "Scheduled",
-      "status_short": "7/11 - 4:05 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "San Francisco Giants",
       "away_team": "Colorado Rockies",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "1",
       "home_record": "39-55",
       "away_record": "39-57",
       "venue": "Oracle Park",
@@ -533,7 +509,7 @@
         "NBC Sports BA",
         "Rockies.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816124/rockies-giants"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816124"
     },
     {
       "sport": "mlb",
@@ -541,10 +517,10 @@
       "date_utc": "2026-07-11T20:10Z",
       "name": "Boston Red Sox at New York Mets",
       "short_name": "BOS @ NYM",
-      "status": "Scheduled",
-      "status_short": "7/11 - 4:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Mid 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "New York Mets",
       "away_team": "Boston Red Sox",
@@ -559,7 +535,7 @@
         "SNY",
         "NESN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816111/red-sox-mets"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816111"
     },
     {
       "sport": "mlb",
@@ -567,10 +543,10 @@
       "date_utc": "2026-07-11T20:10Z",
       "name": "Cleveland Guardians at Miami Marlins",
       "short_name": "CLE @ MIA",
-      "status": "Scheduled",
-      "status_short": "7/11 - 4:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Miami Marlins",
       "away_team": "Cleveland Guardians",
@@ -584,7 +560,7 @@
         "CLEGuardians.TV",
         "Marlins.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816113/guardians-marlins"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816113"
     },
     {
       "sport": "mlb",
@@ -592,9 +568,9 @@
       "date_utc": "2026-07-11T20:10Z",
       "name": "Seattle Mariners at Tampa Bay Rays",
       "short_name": "SEA @ TB",
-      "status": "Scheduled",
-      "status_short": "7/11 - 4:10 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Tampa Bay Rays",
@@ -609,7 +585,31 @@
         "Rays.TV",
         "Mariners.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816118/mariners-rays"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816118"
+    },
+    {
+      "sport": "mlb",
+      "event_id": "401816115",
+      "date_utc": "2026-07-11T20:15Z",
+      "name": "Milwaukee Brewers at Pittsburgh Pirates",
+      "short_name": "MIL @ PIT",
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
+      "clock": "0:00",
+      "home_team": "Pittsburgh Pirates",
+      "away_team": "Milwaukee Brewers",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "48-47",
+      "away_record": "59-35",
+      "venue": "PNC Park",
+      "broadcasts": [
+        "MLB.TV",
+        "Brewers.TV"
+      ],
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816115"
     },
     {
       "sport": "mlb",
@@ -1028,8 +1028,8 @@
       "away_team": "Athletics",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-45",
-      "away_record": "41-53",
+      "home_record": "49-45",
+      "away_record": "41-54",
       "venue": "Rate Field",
       "broadcasts": [
         "MLB.TV",
