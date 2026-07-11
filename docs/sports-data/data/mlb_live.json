@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-11T17:27:46.940515Z",
+  "refreshed_at_utc": "2026-07-11T18:25:17.813566Z",
   "dates_requested": [
     "20260710",
     "20260711",
@@ -394,14 +394,14 @@
       "name": "Milwaukee Brewers at Pittsburgh Pirates",
       "short_name": "MIL @ PIT",
       "status": "In Progress",
-      "status_short": "Top 5th",
+      "status_short": "Bot 7th",
       "state": "in",
-      "period": 5,
+      "period": 7,
       "clock": "0:00",
       "home_team": "Pittsburgh Pirates",
       "away_team": "Milwaukee Brewers",
       "home_score": "3",
-      "away_score": "2",
+      "away_score": "6",
       "home_record": "47-47",
       "away_record": "59-34",
       "venue": "PNC Park",
@@ -417,9 +417,9 @@
       "date_utc": "2026-07-11T18:10Z",
       "name": "Los Angeles Angels at Minnesota Twins",
       "short_name": "LAA @ MIN",
-      "status": "Scheduled",
-      "status_short": "7/11 - 2:10 PM EDT",
-      "state": "pre",
+      "status": "Delayed",
+      "status_short": "Delayed, Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Minnesota Twins",
@@ -434,7 +434,7 @@
         "Twins.TV",
         "Angels.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816119/angels-twins"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816119"
     },
     {
       "sport": "mlb",
@@ -442,10 +442,10 @@
       "date_utc": "2026-07-11T18:10Z",
       "name": "Athletics Athletics at Chicago White Sox",
       "short_name": "ATH @ CHW",
-      "status": "Scheduled",
-      "status_short": "7/11 - 2:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Chicago White Sox",
       "away_team": "Athletics",
@@ -459,7 +459,7 @@
         "NBC Sports CA",
         "CHSN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816120/athletics-white-sox"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816120"
     },
     {
       "sport": "mlb",
