@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-12T15:31:10.720653Z",
+  "refreshed_at_utc": "2026-07-12T16:46:57.542983Z",
   "dates_requested": [
     "20260711",
     "20260712",
@@ -417,14 +417,14 @@
       "date_utc": "2026-07-12T16:15Z",
       "name": "Milwaukee Brewers at Pittsburgh Pirates",
       "short_name": "MIL @ PIT",
-      "status": "Scheduled",
-      "status_short": "7/12 - 12:15 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "End 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Pittsburgh Pirates",
       "away_team": "Milwaukee Brewers",
-      "home_score": "0",
+      "home_score": "4",
       "away_score": "0",
       "home_record": "49-47",
       "away_record": "59-36",
@@ -432,7 +432,7 @@
       "broadcasts": [
         "Peacock"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816130/brewers-pirates"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816130"
     },
     {
       "sport": "mlb",
