@@ -40,7 +40,7 @@ test("mobile review workspace renders and persists notes", async ({ page }) => {
   const pageNote = page.getByRole("textbox", { name: /page note/i });
   await pageNote.fill("Mobile visual smoke test");
 
-  await page.getByRole("link", { name: /catalog/i }).last().click();
+  await page.getByRole("link", { name: /signals/i }).last().click();
   await expect(appHome).toBeVisible();
   await expect(notebook).toBeVisible();
 
