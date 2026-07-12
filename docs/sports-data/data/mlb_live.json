@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-12T22:11:50.346661Z",
+  "refreshed_at_utc": "2026-07-12T23:14:19.233133Z",
   "dates_requested": [
     "20260711",
     "20260712",
@@ -715,24 +715,24 @@
       "date_utc": "2026-07-12T20:05Z",
       "name": "Colorado Rockies at San Francisco Giants",
       "short_name": "COL @ SF",
-      "status": "In Progress",
-      "status_short": "Bot 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "San Francisco Giants",
       "away_team": "Colorado Rockies",
       "home_score": "3",
       "away_score": "1",
-      "home_record": "40-55",
-      "away_record": "39-58",
+      "home_record": "41-55",
+      "away_record": "39-59",
       "venue": "Oracle Park",
       "broadcasts": [
         "MLB.TV",
         "NBC Sports BA",
         "Rockies.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816139"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816139/rockies-giants"
     },
     {
       "sport": "mlb",
@@ -740,17 +740,17 @@
       "date_utc": "2026-07-12T20:10Z",
       "name": "Arizona Diamondbacks at Los Angeles Dodgers",
       "short_name": "ARI @ LAD",
-      "status": "In Progress",
-      "status_short": "Bot 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Los Angeles Dodgers",
       "away_team": "Arizona Diamondbacks",
       "home_score": "3",
-      "away_score": "4",
-      "home_record": "61-35",
-      "away_record": "48-47",
+      "away_score": "5",
+      "home_record": "61-36",
+      "away_record": "49-47",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -758,7 +758,7 @@
         "Sportsnet LA",
         "DBACKS.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816138"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816138/diamondbacks-dodgers"
     },
     {
       "sport": "mlb",
@@ -766,17 +766,17 @@
       "date_utc": "2026-07-12T20:10Z",
       "name": "Toronto Blue Jays at San Diego Padres",
       "short_name": "TOR @ SD",
-      "status": "In Progress",
-      "status_short": "Bot 7th",
-      "state": "in",
-      "period": 7,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "San Diego Padres",
       "away_team": "Toronto Blue Jays",
-      "home_score": "3",
-      "away_score": "3",
-      "home_record": "47-48",
-      "away_record": "45-50",
+      "home_score": "5",
+      "away_score": "4",
+      "home_record": "48-48",
+      "away_record": "45-51",
       "venue": "Petco Park",
       "broadcasts": [
         "MLB.TV",
@@ -784,7 +784,7 @@
         "Sportsnet",
         "TVA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816140"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816140/blue-jays-padres"
     }
   ],
   "errors": []
