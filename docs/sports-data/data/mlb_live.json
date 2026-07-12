@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-12T01:49:14.089109Z",
+  "refreshed_at_utc": "2026-07-12T05:18:10.937864Z",
   "dates_requested": [
     "20260711",
     "20260712",
@@ -288,24 +288,24 @@
       "date_utc": "2026-07-11T23:05Z",
       "name": "Houston Astros at Texas Rangers",
       "short_name": "HOU @ TEX",
-      "status": "In Progress",
-      "status_short": "Top 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Texas Rangers",
       "away_team": "Houston Astros",
-      "home_score": "1",
+      "home_score": "3",
       "away_score": "9",
-      "home_record": "48-46",
-      "away_record": "46-50",
+      "home_record": "48-47",
+      "away_record": "47-50",
       "venue": "Globe Life Field",
       "broadcasts": [
         "MLB.TV",
         "Rangers Sports Network",
         "Space City Home Network"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816122"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816122/astros-rangers"
     },
     {
       "sport": "mlb",
@@ -313,17 +313,17 @@
       "date_utc": "2026-07-11T23:10Z",
       "name": "Chicago Cubs at Cincinnati Reds",
       "short_name": "CHC @ CIN",
-      "status": "In Progress",
-      "status_short": "Bot 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Cincinnati Reds",
       "away_team": "Chicago Cubs",
       "home_score": "3",
       "away_score": "5",
-      "home_record": "43-50",
-      "away_record": "52-42",
+      "home_record": "43-51",
+      "away_record": "53-42",
       "venue": "Great American Ball Park",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -331,7 +331,7 @@
         "Marquee Sports Net",
         "Reds.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816112"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816112/cubs-reds"
     },
     {
       "sport": "mlb",
@@ -364,17 +364,17 @@
       "date_utc": "2026-07-12T00:40Z",
       "name": "Toronto Blue Jays at San Diego Padres",
       "short_name": "TOR @ SD",
-      "status": "In Progress",
-      "status_short": "Bot 3rd",
-      "state": "in",
-      "period": 3,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "San Diego Padres",
       "away_team": "Toronto Blue Jays",
-      "home_score": "4",
-      "away_score": "4",
-      "home_record": "46-48",
-      "away_record": "45-49",
+      "home_score": "8",
+      "away_score": "7",
+      "home_record": "47-48",
+      "away_record": "45-50",
       "venue": "Petco Park",
       "broadcasts": [
         "MLB.TV",
@@ -384,7 +384,7 @@
         "Sportsnet",
         "TVA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816125"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816125/blue-jays-padres"
     },
     {
       "sport": "mlb",
@@ -392,24 +392,24 @@
       "date_utc": "2026-07-12T01:10Z",
       "name": "Arizona Diamondbacks at Los Angeles Dodgers",
       "short_name": "ARI @ LAD",
-      "status": "In Progress",
-      "status_short": "Bot 3rd",
-      "state": "in",
-      "period": 3,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Los Angeles Dodgers",
       "away_team": "Arizona Diamondbacks",
-      "home_score": "0",
-      "away_score": "0",
-      "home_record": "61-34",
-      "away_record": "47-47",
+      "home_score": "2",
+      "away_score": "9",
+      "home_record": "61-35",
+      "away_record": "48-47",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "MLB.TV",
         "Sportsnet LA",
         "DBACKS.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816123"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816123/diamondbacks-dodgers"
     },
     {
       "sport": "mlb",
@@ -524,8 +524,8 @@
       "away_team": "Chicago Cubs",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "43-50",
-      "away_record": "52-42",
+      "home_record": "43-51",
+      "away_record": "53-42",
       "venue": "Great American Ball Park",
       "broadcasts": [
         "MLB.TV",
@@ -699,8 +699,8 @@
       "away_team": "Houston Astros",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-46",
-      "away_record": "46-50",
+      "home_record": "48-47",
+      "away_record": "47-50",
       "venue": "Globe Life Field",
       "broadcasts": [
         "MLB.TV",
@@ -749,8 +749,8 @@
       "away_team": "Arizona Diamondbacks",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "61-34",
-      "away_record": "47-47",
+      "home_record": "61-35",
+      "away_record": "48-47",
       "venue": "Dodger Stadium",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -775,8 +775,8 @@
       "away_team": "Toronto Blue Jays",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "46-48",
-      "away_record": "45-49",
+      "home_record": "47-48",
+      "away_record": "45-50",
       "venue": "Petco Park",
       "broadcasts": [
         "MLB.TV",
