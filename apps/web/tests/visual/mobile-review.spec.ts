@@ -11,7 +11,7 @@ test("mobile review workspace renders and persists notes", async ({ page }) => {
     if (message.type() === "error") consoleErrors.push(message.text());
   });
 
-  await page.goto("http://127.0.0.1:4173/game-stat-pulse/", {
+  await page.goto("http://127.0.0.1:4173/", {
     waitUntil: "networkidle",
   });
 
@@ -26,7 +26,7 @@ test("mobile review workspace renders and persists notes", async ({ page }) => {
   );
 
   const appHome = page.getByRole("link", {
-    name: /Game Stat Pulse approval workspace/i,
+    name: /LindaData sports hub/i,
   });
   await expect(appHome).toBeVisible();
 
@@ -44,7 +44,7 @@ test("mobile review workspace renders and persists notes", async ({ page }) => {
   await expect(appHome).toBeVisible();
   await expect(notebook).toBeVisible();
 
-  await page.goto("http://127.0.0.1:4173/game-stat-pulse/", {
+  await page.goto("http://127.0.0.1:4173/", {
     waitUntil: "networkidle",
   });
   await page.getByRole("button", { name: /open review notebook/i }).click();
