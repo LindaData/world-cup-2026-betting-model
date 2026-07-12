@@ -151,3 +151,23 @@ function profitForStatus(americanOdds: number, stake: number, status: WagerStatu
 function avg(values: number[]) {
   return values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0;
 }
+
+/**
+ * Bundled sample ledger. Kept here so every surface that renders it (Bankroll,
+ * the Today hero) can chip it as demo data — sample rows must never read as a
+ * real live bankroll.
+ */
+export const SAMPLE_LEDGER_CSV = `date,sport,selection,market,american_odds,stake,status,model_probability,closing_odds,book,notes
+2026-06-01,MLB,Dodgers ML,Moneyline,-118,20,win,56.5,-130,DraftKings,Starter edge
+2026-06-02,NBA,Celtics spread,Spread,-105,18,loss,53,-112,FanDuel,Power rating lean
+2026-06-03,Soccer,Inter Miami over,Total,+115,14,win,48,+102,Caesars,Tempo projection
+2026-06-04,NHL,Rangers puck line,Puck line,+140,12,open,43,+125,BetMGM,Underdog price
+2026-06-05,MLB,Orioles ML,Moneyline,-102,16,win,52,-116,DraftKings,Market moved
+2026-06-06,NBA,Liberty total,Total,-110,15,push,54,-105,FanDuel,Landed on number
+2026-06-07,NFL,Chiefs futures,Futures,+180,10,open,40,+155,Caesars,Settles later
+2026-06-08,MLB,Mariners under,Total,-108,14,loss,51.5,-120,BetMGM,Weather model`;
+
+/** True when the given CSV text is exactly the bundled sample ledger. */
+export function isSampleLedgerCsv(csvText: string): boolean {
+  return csvText.trim() === SAMPLE_LEDGER_CSV.trim();
+}

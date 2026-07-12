@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { NotebookPen } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReviewWorkspacePanel from "./ReviewWorkspacePanel";
+import { NOTES_LAUNCHER_SLOT_ID } from "./Layout";
 import {
   REVIEW_WORKSPACE_EVENT,
   type ReviewContext,
@@ -30,8 +32,29 @@ export default function GlobalReviewWorkspace() {
   const [expanded, setExpanded] = useState(false);
   const [tab, setTab] = useState<Tab>("current");
   const [notice, setNotice] = useState("");
+  const [launcherSlot, setLauncherSlot] = useState<HTMLElement | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
   const latest = useRef(workspace);
+
+  // The launcher lives in the top nav bar as a quiet icon button (never a
+  // floating FAB competing with each screen's one primary action). This
+  // component mounts outside the route Suspense, so the slot may not exist
+  // yet on first render (the lazy route tree can still be on its fallback):
+  // watch the DOM until the slot appears, and re-run the lookup on route
+  // changes in case the tree was swapped out.
+  useEffect(() => {
+    const find = () => {
+      const el = document.getElementById(NOTES_LAUNCHER_SLOT_ID);
+      setLauncherSlot(el);
+      return el;
+    };
+    if (find()) return;
+    const observer = new MutationObserver(() => {
+      if (find()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [location.pathname]);
 
   const context = useMemo(
     () => getReviewContext(location.pathname, location.search),
@@ -44,7 +67,6 @@ export default function GlobalReviewWorkspace() {
   const currentText = savedNote?.text ?? oldNote;
   const label = visibleLabel(context);
   const noteCount = Object.keys(workspace.notes).length + (workspace.globalText.trim() ? 1 : 0);
-  const approvalPage = location.pathname === "/" || location.pathname === "/approval";
 
   useEffect(() => {
     latest.current = workspace;
@@ -109,21 +131,31 @@ export default function GlobalReviewWorkspace() {
     if (fileInput.current) fileInput.current.value = "";
   };
 
+  // Quiet ghost icon button in the top nav bar: the green accent stays
+  // reserved for each screen's one true primary action, and nothing floats
+  // over inputs or cards on mobile.
+  const launcher = !expanded && (
+    <button
+      type="button"
+      onClick={() => { setExpanded(true); setTab("current"); }}
+      aria-label={text.expand}
+      title={text.notes}
+      className="review-notes-launcher relative flex min-h-11 min-w-11 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
+    >
+      <NotebookPen className="h-5 w-5" aria-hidden="true" />
+      {noteCount > 0 && (
+        <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-muted px-1 text-[10px] font-semibold tabular-nums text-muted-foreground">
+          {noteCount}
+        </span>
+      )}
+    </button>
+  );
+
   return (
     <div lang={locale}>
-      {!expanded && (
-        <button
-          type="button"
-          onClick={() => { setExpanded(true); setTab("current"); }}
-          aria-label={text.expand}
-          className={`review-notes-launcher fixed right-3 lg:right-6 lg:bottom-6 z-[60] min-h-12 px-4 rounded-full border border-primary/40 bg-primary text-primary-foreground shadow-2xl flex items-center gap-2 font-semibold ${
-            approvalPage ? "bottom-[calc(8.75rem+env(safe-area-inset-bottom))]" : "bottom-[calc(4.75rem+env(safe-area-inset-bottom))]"
-          }`}
-        >
-          <NotebookPen className="w-5 h-5" /> {text.notes}
-          {noteCount > 0 && <span className="min-w-6 h-6 px-1.5 rounded-full bg-black/20 text-xs flex items-center justify-center">{noteCount}</span>}
-        </button>
-      )}
+      {/* Portal-only: while the slot is missing we render nothing, so the
+          button never ends up as stray debris after <main>. */}
+      {launcher && launcherSlot && createPortal(launcher, launcherSlot)}
 
       {expanded && (
         <ReviewWorkspacePanel

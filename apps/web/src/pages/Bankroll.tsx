@@ -1,25 +1,24 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import Papa from "papaparse";
-import {
-  AlertTriangle,
-  ArrowUpRight,
-  Banknote,
-  Brain,
-  Database,
-  Download,
-  LineChart,
-  Microscope,
-  ShieldAlert,
-  Target,
-  WalletCards,
-} from "lucide-react";
+import { AlertTriangle, ChevronDown, Download, PenLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/PageHeader";
+import { PortfolioSubNav } from "@/components/PortfolioSubNav";
+import { StatusChip } from "@/components/StatusBadge";
 import { downloadCsv } from "@/lib/download";
 import { formatAmericanOdds, formatMoney, formatPercent } from "@/lib/edgeMath";
 import {
+  SAMPLE_LEDGER_CSV,
+  isSampleLedgerCsv,
   isValidWagerInput,
   normalizeWagerStatus,
   parseLedgerOdds,
@@ -32,15 +31,7 @@ import {
 
 const STORAGE_KEY = "gsp:bankroll-ledger:v1";
 
-const SAMPLE_CSV = `date,sport,selection,market,american_odds,stake,status,model_probability,closing_odds,book,notes
-2026-06-01,MLB,Dodgers ML,Moneyline,-118,20,win,56.5,-130,DraftKings,Starter edge
-2026-06-02,NBA,Celtics spread,Spread,-105,18,loss,53,-112,FanDuel,Power rating lean
-2026-06-03,Soccer,Inter Miami over,Total,+115,14,win,48,+102,Caesars,Tempo projection
-2026-06-04,NHL,Rangers puck line,Puck line,+140,12,open,43,+125,BetMGM,Open plus-price
-2026-06-05,MLB,Orioles ML,Moneyline,-102,16,win,52,-116,DraftKings,Market moved
-2026-06-06,NBA,Liberty total,Total,-110,15,push,54,-105,FanDuel,Landed on number
-2026-06-07,NFL,Chiefs futures,Futures,+180,10,open,40,+155,Caesars,Longer hold
-2026-06-08,MLB,Mariners under,Total,-108,14,loss,51.5,-120,BetMGM,Weather model`;
+const SAMPLE_CSV = SAMPLE_LEDGER_CSV;
 
 type StoredLedger = {
   startingBankroll: string;
@@ -49,18 +40,51 @@ type StoredLedger = {
 
 export default function Bankroll() {
   const stored = useMemo(readStoredLedger, []);
-  const [startingBankroll, setStartingBankroll] = useState(stored.startingBankroll);
-  const [csvText, setCsvText] = useState(stored.csvText);
+  const [startingBankroll, setStartingBankrollState] = useState(stored.startingBankroll);
+  const [csvText, setCsvTextState] = useState(stored.csvText);
   const [notice, setNotice] = useState<string | null>(null);
+  // The bundled sample is a preview, not the user's ledger: nothing is
+  // persisted until they explicitly edit, load the sample, or clear.
+  const [persistEnabled, setPersistEnabled] = useState(stored.existed);
+  const setCsvText = useCallback((value: string) => {
+    setPersistEnabled(true);
+    setCsvTextState(value);
+  }, []);
+  const setStartingBankroll = useCallback((value: string) => {
+    setPersistEnabled(true);
+    setStartingBankrollState(value);
+  }, []);
+
+  const [editorOpen, setEditorOpen] = useState(false);
+  const editorRef = useRef<HTMLElement | null>(null);
+  const openLedgerEditor = useCallback(() => {
+    setEditorOpen(true);
+    // Wait a frame for the collapsible content to mount before scrolling.
+    window.setTimeout(() => {
+      const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+      editorRef.current?.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    }, 0);
+  }, []);
+
+  // Today's "Log today's bet" deep-links here with ?log=1.
+  const [searchParams] = useSearchParams();
+  const wantsEditor = searchParams.get("log") != null;
+  useEffect(() => {
+    if (wantsEditor) openLedgerEditor();
+  }, [wantsEditor, openLedgerEditor]);
 
   useEffect(() => {
+    if (!persistEnabled) return;
     try {
       const payload: StoredLedger = { startingBankroll, csvText };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     } catch {
       /* ignore */
     }
-  }, [csvText, startingBankroll]);
+  }, [csvText, persistEnabled, startingBankroll]);
 
   const parsedBankroll = Number(startingBankroll);
   const parsed = useMemo(() => parseWagerCsv(csvText), [csvText]);
@@ -106,252 +130,333 @@ export default function Bankroll() {
     );
   };
 
-  return (
-    <div className="space-y-5 pb-28 lg:pb-0">
-      <header className="surface-card sportsbook-glow overflow-hidden">
-        <div className="grid gap-4 p-4 sm:p-6 lg:grid-cols-[minmax(0,1fr)_390px]">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-md border border-primary/35 bg-primary/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-primary">
-              <Microscope className="h-3.5 w-3.5" />
-              Performance Ledger
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-4xl font-black leading-tight">
-                Monitor exposure, realized return, and execution quality.
-              </h1>
-              <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-                Paste a local CSV ledger with prices, stake, status, model probability, closing line, and notes.
-                Use it to understand where returns, concentration, and closing-line performance are coming from.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={exportLedger} disabled={!wagers.length}>
-                <Download className="h-4 w-4" /> Export ledger
-              </Button>
-              <Button variant="outline" className="border-secondary/45 text-secondary hover:bg-secondary/10" asChild>
-                <Link to="/model">
-                  <Brain className="h-4 w-4" /> Open model audit
-                </Link>
-              </Button>
-            </div>
-          </div>
+  const delta = summary.currentBankroll - summary.startingBankroll;
+  const deltaClass = delta > 0 ? "text-gain" : delta < 0 ? "text-loss" : "text-muted-foreground";
+  const isSample = isSampleLedgerCsv(csvText);
 
-          <aside className="market-panel bg-black/25 p-4">
-            <div className="mb-3 flex items-center justify-between">
-              <div>
-                <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Current capital</div>
-                <div className={summary.currentBankroll >= summary.startingBankroll ? "mt-1 text-2xl font-black text-primary" : "mt-1 text-2xl font-black text-red-300"}>
-                  {formatMoney(summary.currentBankroll)}
-                </div>
-              </div>
-              <Banknote className="h-9 w-9 text-primary" />
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <MetricCell label="Open risk" value={formatMoney(summary.openExposure)} tone="amber" />
-              <MetricCell label="Settled return" value={formatMoney(summary.settledProfit)} tone={summary.settledProfit >= 0 ? "green" : "red"} />
-              <MetricCell label="ROI" value={`${summary.roiPct.toFixed(1)}%`} tone={summary.roiPct >= 0 ? "green" : "red"} />
-              <MetricCell label="Avg edge" value={summary.avgModelEdgePct == null ? "-" : `${summary.avgModelEdgePct.toFixed(1)}%`} />
-            </div>
-          </aside>
+  return (
+    <div className="mx-auto max-w-5xl space-y-5 pb-36 lg:pb-0">
+      {/* When the whole ledger is the bundled sample, the entire page — open
+          positions, insights, settled wagers — is demo data, so one
+          page-level chip scopes everything (and the card chip goes away). */}
+      <PageHeader
+        title="Portfolio"
+        badge={isSample ? <StatusChip tone="muted" label="Demo" /> : undefined}
+      />
+      <PortfolioSubNav active="desk" />
+
+      <header className="surface-card p-4 sm:p-6">
+        <div className="label-mono">Bankroll</div>
+        <div className="num-hero mt-2">{formatMoney(summary.currentBankroll)}</div>
+        <div className={`mt-1 text-sm font-semibold tabular-nums ${deltaClass}`}>
+          {delta >= 0 ? "+" : ""}
+          {formatMoney(delta)} since start
+          {summary.settledStake ? ` · ${summary.roiPct.toFixed(1)}% return on settled stakes` : ""}
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-3 border-t border-border pt-4 sm:grid-cols-4">
+          <Stat label="Open risk" value={formatMoney(summary.openExposure)} />
+          <Stat label="Open positions" value={String(summary.openRows)} />
+          <Stat
+            label="Settled return"
+            value={formatMoney(summary.settledProfit)}
+            tone={summary.settledProfit > 0 ? "gain" : summary.settledProfit < 0 ? "loss" : undefined}
+          />
+          <Stat
+            label="Vs final odds"
+            value={
+              summary.avgClvPct == null
+                ? "—"
+                : `${summary.avgClvPct > 0 ? "+" : ""}${summary.avgClvPct.toFixed(2)} pts`
+            }
+          />
+        </div>
+
+        {/* Logging a bet is THE action of a betting desk, so it gets the one
+            green primary. Export is a utility and stays quiet. On mobile the
+            primary is bottom-anchored instead (see the fixed bar below). */}
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <Button className="hidden min-h-11 sm:px-8 lg:inline-flex" onClick={openLedgerEditor}>
+            <PenLine className="h-4 w-4" /> Log a bet
+          </Button>
+          <Button
+            variant="outline"
+            className="min-h-11 flex-1 sm:flex-none lg:flex-none"
+            onClick={exportLedger}
+            disabled={!wagers.length}
+          >
+            <Download className="h-4 w-4" /> Export ledger
+          </Button>
+          <Link to="/model" className="text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+            Open model audit
+          </Link>
         </div>
       </header>
 
-      <section className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
-        <Metric label="Open positions" value={summary.openRows} icon={ShieldAlert} tone="amber" />
-        <Metric label="Open exposure" value={formatMoney(summary.openExposure)} icon={WalletCards} tone="amber" />
-        <Metric label="Settled return" value={formatMoney(summary.settledProfit)} icon={Target} tone={summary.settledProfit >= 0 ? "green" : "red"} />
-        <Metric label="ROI" value={`${summary.roiPct.toFixed(1)}%`} icon={LineChart} tone={summary.roiPct >= 0 ? "green" : "red"} />
-        <Metric label="Avg CLV" value={summary.avgClvPct == null ? "-" : `${summary.avgClvPct.toFixed(2)} pts`} icon={LineChart} />
+      <section className="space-y-3">
+        <div className="label-mono px-1">Open positions</div>
+        {openWagers.length ? (
+          <div className="grid gap-3 md:grid-cols-2">
+            {openWagers.slice(0, 8).map((wager, index) => (
+              <OpenWagerCard key={`${wager.date}-${wager.selection}-${index}`} wager={wager} />
+            ))}
+          </div>
+        ) : (
+          <div className="surface-card p-4 text-sm text-muted-foreground">
+            No open positions right now. Rows with status "open" in your ledger will show up here with stake, upside, and model edge.
+          </div>
+        )}
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_390px]">
-        <div className="min-w-0 space-y-4">
-          <section className="surface-card overflow-hidden">
-            <div className="border-b border-white/10 bg-white/[0.035] px-4 py-3">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-primary">Insight brief</div>
-              <h2 className="mt-1 text-lg font-black">What the ledger says</h2>
-            </div>
-            <div className="grid gap-3 p-4 md:grid-cols-3">
-              {insightCards.map((card) => (
-                <InsightCard key={card.title} {...card} />
-              ))}
-            </div>
-          </section>
+      <section className="space-y-3">
+        <div className="label-mono px-1">Insights</div>
+        <div className="grid gap-3 md:grid-cols-3">
+          {insightCards.map((card) => (
+            <InsightCard key={card.title} {...card} />
+          ))}
+        </div>
+      </section>
 
-          <section className="surface-card overflow-hidden">
-            <div className="border-b border-white/10 bg-white/[0.035] px-4 py-3">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-primary">Open positions</div>
-              <h2 className="mt-1 text-lg font-black">Unsettled exposure</h2>
-            </div>
-            <div className="grid gap-3 p-4 md:grid-cols-2">
-              {openWagers.slice(0, 8).map((wager, index) => (
-                <OpenWagerCard key={`${wager.date}-${wager.selection}-${index}`} wager={wager} />
+      <section className="surface-card overflow-hidden">
+        <div className="border-b border-border px-4 py-3">
+          <div className="label-mono">Settled wagers</div>
+        </div>
+        {settledWagers.length ? (
+          <>
+            {/* Mobile: each wager collapses to a stacked card row (profit is the hero). */}
+            <ul className="divide-y divide-border md:hidden">
+              {settledWagers.map((wager, index) => (
+                <SettledWagerRow key={`${wager.date}-${wager.selection}-${index}`} wager={wager} />
               ))}
-              {!openWagers.length && (
-                <div className="rounded-lg border border-white/10 bg-black/20 p-4 text-sm text-muted-foreground">
-                  No open exposure in the current ledger.
-                </div>
-              )}
-            </div>
-          </section>
-
-          <section className="surface-card overflow-hidden">
-            <div className="border-b border-white/10 bg-white/[0.035] px-4 py-3">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-primary">Settled ledger</div>
-              <h2 className="mt-1 text-lg font-black">Realized records</h2>
-            </div>
-            <div className="overflow-x-auto">
+            </ul>
+            {/* Desktop: full table. */}
+            <div className="hidden overflow-x-auto md:block">
               <table className="w-full min-w-[980px] text-sm">
-                <thead className="bg-white/[0.035] text-left text-[10px] uppercase tracking-wide text-muted-foreground">
+                <thead className="text-left">
                   <tr>
-                    <th className="p-3">Date</th>
-                    <th className="p-3">Selection</th>
-                    <th className="p-3">Sport</th>
-                    <th className="p-3">Market</th>
-                    <th className="p-3">Odds</th>
-                    <th className="p-3">Stake</th>
-                    <th className="p-3">Status</th>
-                    <th className="p-3">Profit</th>
-                    <th className="p-3">Edge</th>
-                    <th className="p-3">CLV</th>
-                    <th className="p-3">Book</th>
+                    <Th>Date</Th>
+                    <Th>Selection</Th>
+                    <Th>Sport</Th>
+                    <Th>Market</Th>
+                    <Th>Odds</Th>
+                    <Th>Stake</Th>
+                    <Th>Status</Th>
+                    <Th>Profit</Th>
+                    <Th>Edge</Th>
+                    <Th>Vs final odds</Th>
+                    <Th>Book</Th>
                   </tr>
                 </thead>
                 <tbody>
                   {settledWagers.map((wager, index) => (
                     <LedgerRow key={`${wager.date}-${wager.selection}-${index}`} wager={wager} />
                   ))}
-                  {!settledWagers.length && (
-                    <tr>
-                      <td colSpan={11} className="p-4 text-sm text-muted-foreground">
-                        No settled wagers in the current ledger.
-                      </td>
-                    </tr>
-                  )}
                 </tbody>
               </table>
             </div>
-          </section>
+          </>
+        ) : (
+          <div className="p-4 text-sm text-muted-foreground">
+            No settled wagers yet. Once rows are graded win, loss, or push they appear here with
+            profit, edge, and how your price compared with the final odds.
+          </div>
+        )}
+      </section>
+
+      <section className="surface-card overflow-hidden">
+        <Tabs defaultValue="sport">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-2.5">
+            <div className="label-mono">Return by</div>
+            <TabsList className="h-9">
+              <TabsTrigger value="sport" className="min-h-8 px-4">
+                Sport
+              </TabsTrigger>
+              <TabsTrigger value="book" className="min-h-8 px-4">
+                Book
+              </TabsTrigger>
+            </TabsList>
+          </div>
+          <TabsContent value="sport" className="mt-0">
+            <SegmentTable rows={bySport.slice(0, 6)} valueLabel="Sport" />
+          </TabsContent>
+          <TabsContent value="book" className="mt-0">
+            <SegmentTable rows={byBook.slice(0, 6)} valueLabel="Book" />
+          </TabsContent>
+        </Tabs>
+      </section>
+
+      <section ref={editorRef} className="surface-card scroll-mt-20 p-4 sm:p-6">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <div className="label-mono">Ledger</div>
+            <div className="mt-3 flex gap-6">
+              <Stat label="Risk of bankroll" value={`${summary.exposurePct.toFixed(1)}%`} />
+              <Stat label="Open upside" value={formatMoney(summary.openPotentialProfit)} />
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" className="min-h-11" onClick={() => setCsvText(SAMPLE_CSV)}>
+              Load sample
+            </Button>
+            <Button variant="ghost" className="min-h-11 text-muted-foreground" onClick={() => setCsvText("")}>
+              Clear
+            </Button>
+          </div>
         </div>
 
-        <aside className="min-w-0 space-y-4">
-          <section className="surface-card p-4">
-            <div className="text-[10px] uppercase tracking-[0.22em] text-secondary">Ledger settings</div>
-            <h2 className="mt-1 text-lg font-black">Starting capital</h2>
-            <label className="mt-4 block">
-              <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Starting capital $</span>
-              <Input
-                value={startingBankroll}
-                onChange={(event) => setStartingBankroll(event.target.value)}
-                inputMode="decimal"
-                className="mt-1 min-h-11 bg-black/25"
-              />
-            </label>
-            <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-              <MetricCell label="Risk %" value={`${summary.exposurePct.toFixed(1)}%`} tone={summary.exposurePct > 10 ? "red" : "green"} />
-              <MetricCell label="Open upside" value={formatMoney(summary.openPotentialProfit)} />
-            </div>
-          </section>
-
-          <section className="surface-card overflow-hidden">
-            <div className="border-b border-white/10 bg-white/[0.035] px-4 py-3">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-primary">Segment analysis</div>
-              <h2 className="mt-1 text-lg font-black">Return by sport</h2>
-            </div>
-            <SegmentTable rows={bySport.slice(0, 6)} valueLabel="Sport" />
-          </section>
-
-          <section className="surface-card overflow-hidden">
-            <div className="border-b border-white/10 bg-white/[0.035] px-4 py-3">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-primary">Source analysis</div>
-              <h2 className="mt-1 text-lg font-black">Return by book</h2>
-            </div>
-            <SegmentTable rows={byBook.slice(0, 6)} valueLabel="Book" />
-          </section>
-
-          <section className="surface-card p-4">
-            <div className="text-[10px] uppercase tracking-[0.22em] text-primary">CSV input</div>
-            <h2 className="mt-1 text-lg font-black">Local ledger rows</h2>
-            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              Required fields are selection, price, and stake. Optional fields such as model probability, closing line,
-              sport, source, and notes unlock the deeper diagnostic views.
-            </p>
-            <Textarea
-              value={csvText}
-              onChange={(event) => setCsvText(event.target.value)}
-              className="mt-4 min-h-[22rem] bg-black/25 font-mono text-xs"
-              placeholder="date,sport,selection,market,american_odds,stake,status,model_probability,closing_odds,book,notes"
+        {/* Raw CSV editing is plumbing, not portfolio: closed by default,
+            opened by the "Log a bet" primary. */}
+        <Collapsible
+          className="mt-4 border-t border-border pt-1"
+          open={editorOpen}
+          onOpenChange={setEditorOpen}
+        >
+          <CollapsibleTrigger className="group flex min-h-11 w-full items-center justify-between gap-2 text-left text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+            Edit ledger
+            <ChevronDown
+              className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180"
+              aria-hidden="true"
             />
-            {notice && (
-              <div className="mt-3 flex gap-2 rounded-lg border border-amber-500/25 bg-amber-500/10 p-3 text-sm text-amber-300">
-                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" /> {notice}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="grid gap-4 pt-3 sm:grid-cols-[220px_minmax(0,1fr)]">
+              <label className="block">
+                <span className="label-mono">Starting capital $</span>
+                <Input
+                  value={startingBankroll}
+                  onChange={(event) => setStartingBankroll(event.target.value)}
+                  inputMode="decimal"
+                  className="mt-1 min-h-11 text-lg font-bold tabular-nums"
+                />
+              </label>
+              <div>
+                <span className="label-mono">Ledger rows (CSV)</span>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                  Selection, price, and stake are required. Model probability, final odds, sport,
+                  book, and notes unlock the deeper views.
+                </p>
+                <Textarea
+                  value={csvText}
+                  onChange={(event) => setCsvText(event.target.value)}
+                  className="mt-3 min-h-[18rem] font-mono text-xs"
+                  placeholder="date,sport,selection,market,american_odds,stake,status,model_probability,closing_odds,book,notes"
+                />
+                {notice && (
+                  <div className="mt-3 flex gap-2 rounded-md border border-border bg-background p-3 text-sm text-muted-foreground">
+                    <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" /> {notice}
+                  </div>
+                )}
               </div>
-            )}
-            <div className="mt-3 flex flex-wrap gap-2">
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => setCsvText(SAMPLE_CSV)}>
-                <Database className="h-4 w-4" /> Load sample
-              </Button>
-              <Button variant="outline" onClick={() => setCsvText("")}>
-                Clear
-              </Button>
             </div>
-          </section>
-        </aside>
+          </CollapsibleContent>
+        </Collapsible>
       </section>
+
+      {/* Mobile: the one primary action, bottom-anchored above the tab bar. */}
+      <div className="fixed inset-x-0 bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-20 border-t border-border bg-background/95 p-3 backdrop-blur lg:hidden">
+        <Button className="min-h-11 w-full" onClick={openLedgerEditor}>
+          <PenLine className="h-4 w-4" /> Log a bet
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function Th({ children }: { children: React.ReactNode }) {
+  return <th className="label-mono p-3 font-medium">{children}</th>;
+}
+
+function Stat({ label, value, tone }: { label: string; value: string; tone?: "gain" | "loss" }) {
+  const color = tone === "gain" ? "text-gain" : tone === "loss" ? "text-loss" : "text-foreground";
+  return (
+    <div className="min-w-0">
+      <div className="label-mono truncate">{label}</div>
+      <div className={`mt-0.5 truncate text-lg font-bold tabular-nums ${color}`}>{value}</div>
     </div>
   );
 }
 
 function OpenWagerCard({ wager }: { wager: TrackedWager }) {
   return (
-    <article className="market-panel p-4">
+    <article className="surface-card p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{wager.sport || "Sport"}</div>
-          <h3 className="truncate text-lg font-black">{wager.selection}</h3>
-          <p className="mt-1 truncate text-xs text-muted-foreground">{wager.market || "Market"} / {wager.book || "Book"}</p>
+          <div className="label-mono">{wager.sport || "Sport"}</div>
+          <h3 className="truncate text-base font-bold">{wager.selection}</h3>
+          <p className="mt-0.5 truncate text-xs text-muted-foreground">
+            {wager.market || "Market"} · {wager.book || "Book"}
+          </p>
         </div>
-        <span className="rounded-sm bg-secondary/15 px-2 py-1 text-sm font-black text-secondary">
+        <span className="rounded-md border border-border bg-background px-2 py-1 text-sm font-bold tabular-nums">
           {formatAmericanOdds(wager.americanOdds)}
         </span>
       </div>
-      <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
-        <MetricCell label="Stake" value={formatMoney(wager.stake)} tone="amber" />
-        <MetricCell label="Upside" value={formatMoney(wager.potentialProfit)} />
-        <MetricCell label="Edge" value={wager.modelEdgePct == null ? "-" : `${wager.modelEdgePct.toFixed(1)}%`} tone={wager.modelEdgePct == null || wager.modelEdgePct >= 0 ? "green" : "red"} />
+      <div className="mt-3 grid grid-cols-3 gap-3 border-t border-border pt-3">
+        <Stat label="Stake" value={formatMoney(wager.stake)} />
+        <Stat label="Upside" value={formatMoney(wager.potentialProfit)} tone="gain" />
+        <Stat label="Edge" value={wager.modelEdgePct == null ? "—" : `${wager.modelEdgePct.toFixed(1)}%`} />
       </div>
-      <div className="mt-3 text-xs leading-relaxed text-muted-foreground">{wager.notes || "No note recorded."}</div>
+      {wager.notes && <div className="mt-3 text-xs leading-relaxed text-muted-foreground">{wager.notes}</div>}
     </article>
   );
 }
 
 function LedgerRow({ wager }: { wager: TrackedWager }) {
-  const resultClass =
-    wager.status === "win"
-      ? "text-primary"
-      : wager.status === "loss"
-        ? "text-red-300"
-        : wager.status === "push"
-          ? "text-secondary"
-          : "text-muted-foreground";
+  const statusClass =
+    wager.status === "win" ? "text-gain" : wager.status === "loss" ? "text-loss" : "text-muted-foreground";
+  const profitClass = wager.profit > 0 ? "text-gain" : wager.profit < 0 ? "text-loss" : "text-muted-foreground";
   return (
-    <tr className="border-t border-white/5">
-      <td className="p-3 tabular-nums text-muted-foreground">{wager.date || "-"}</td>
+    <tr className="border-t border-border">
+      <td className="p-3 tabular-nums text-muted-foreground">{wager.date || "—"}</td>
       <td className="p-3 font-semibold">{wager.selection}</td>
-      <td className="p-3">{wager.sport || "-"}</td>
-      <td className="p-3">{wager.market || "-"}</td>
+      <td className="p-3 text-muted-foreground">{wager.sport || "—"}</td>
+      <td className="p-3 text-muted-foreground">{wager.market || "—"}</td>
       <td className="p-3 tabular-nums">{formatAmericanOdds(wager.americanOdds)}</td>
       <td className="p-3 tabular-nums">{formatMoney(wager.stake)}</td>
-      <td className={`p-3 font-black uppercase ${resultClass}`}>{wager.status}</td>
-      <td className={wager.profit >= 0 ? "p-3 font-black text-primary" : "p-3 font-black text-red-300"}>{formatMoney(wager.profit)}</td>
-      <td className={wager.modelEdgePct == null ? "p-3 text-muted-foreground" : wager.modelEdgePct >= 0 ? "p-3 font-black text-primary" : "p-3 font-black text-red-300"}>
-        {wager.modelEdgePct == null ? "-" : `${wager.modelEdgePct.toFixed(2)}%`}
+      <td className={`p-3 text-xs font-bold uppercase tracking-wide ${statusClass}`}>{wager.status}</td>
+      <td className={`p-3 font-bold tabular-nums ${profitClass}`}>{formatMoney(wager.profit)}</td>
+      {/* Green only for strictly positive values: the single accent must keep
+          its meaning. Zero/negative reads muted (red stays for money losses). */}
+      <td className={wager.modelEdgePct != null && wager.modelEdgePct > 0 ? "p-3 tabular-nums text-gain" : "p-3 tabular-nums text-muted-foreground"}>
+        {wager.modelEdgePct == null ? "—" : `${wager.modelEdgePct.toFixed(2)}%`}
       </td>
-      <td className={wager.clvPct == null ? "p-3 text-muted-foreground" : wager.clvPct >= 0 ? "p-3 font-black text-primary" : "p-3 font-black text-red-300"}>
-        {wager.clvPct == null ? "-" : `${wager.clvPct.toFixed(2)} pts`}
+      <td className={wager.clvPct != null && wager.clvPct > 0 ? "p-3 tabular-nums text-gain" : "p-3 tabular-nums text-muted-foreground"}>
+        {wager.clvPct == null ? "—" : `${wager.clvPct.toFixed(2)} pts`}
       </td>
-      <td className="p-3">{wager.book || "-"}</td>
+      <td className="p-3 text-muted-foreground">{wager.book || "—"}</td>
     </tr>
+  );
+}
+
+/**
+ * Mobile settled-wager row: selection + date on the left, profit as the
+ * right-aligned hero, odds/market/book as a muted second line. Nothing is
+ * clipped off-screen.
+ */
+function SettledWagerRow({ wager }: { wager: TrackedWager }) {
+  const profitClass = wager.profit > 0 ? "text-gain" : wager.profit < 0 ? "text-loss" : "text-muted-foreground";
+  const statusClass =
+    wager.status === "win" ? "text-gain" : wager.status === "loss" ? "text-loss" : "text-muted-foreground";
+  return (
+    <li className="flex items-start justify-between gap-3 p-4">
+      <div className="min-w-0">
+        <div className="truncate text-sm font-semibold">{wager.selection}</div>
+        <div className="mt-0.5 truncate text-xs text-muted-foreground tabular-nums">
+          {[wager.date, wager.market, formatAmericanOdds(wager.americanOdds), wager.book]
+            .filter(Boolean)
+            .join(" · ")}
+        </div>
+      </div>
+      <div className="shrink-0 text-right">
+        <div className={`text-lg font-bold tabular-nums ${profitClass}`}>
+          {wager.profit > 0 ? "+" : ""}
+          {formatMoney(wager.profit)}
+        </div>
+        <div className={`text-[10px] font-bold uppercase tracking-wide ${statusClass}`}>
+          {wager.status}
+        </div>
+      </div>
+    </li>
   );
 }
 
@@ -410,16 +515,26 @@ function buildInsightCards(summary: ReturnType<typeof summarizeLedger>, bySport:
       detail: topOpenSport?.openExposure
         ? `${formatMoney(topOpenSport.openExposure)} across ${topOpenSport.openRows} open row${topOpenSport.openRows === 1 ? "" : "s"}`
         : "No unsettled positions are currently in the ledger.",
-      tone: topOpenSport?.openExposure && summary.exposurePct > 10 ? ("red" as const) : ("amber" as const),
+      tone: "neutral" as const,
     },
+    // One metric, one unit, plain words: the headline is how far your price
+    // ended up from where the odds finished, and the body explains that same
+    // number without market jargon.
     {
-      title: "Execution quality",
-      value: summary.avgClvPct == null ? "Not enough data" : `${summary.avgClvPct.toFixed(2)} pts CLV`,
+      title: "Your price vs the final odds",
+      value:
+        summary.avgClvPct == null
+          ? "Not enough data"
+          : summary.avgClvPct >= 0
+            ? `Better by ${summary.avgClvPct.toFixed(2)} pts`
+            : `Worse by ${Math.abs(summary.avgClvPct).toFixed(2)} pts`,
       detail:
-        summary.avgModelEdgePct == null
-          ? "Add model_probability values to measure how far your estimates are from market-implied probability."
-          : `Average model edge ${summary.avgModelEdgePct.toFixed(2)}% across priced rows.`,
-      tone: summary.avgClvPct != null && summary.avgClvPct >= 0 ? ("green" as const) : ("amber" as const),
+        summary.avgClvPct == null
+          ? "Add the final odds to each row to see whether you got better prices than where the market ended up."
+          : summary.avgClvPct >= 0
+            ? "On average you got better prices than where the odds finished — a good sign your bets were placed at the right time."
+            : "On average the odds finished better than the prices you took — later bets would have paid more.",
+      tone: summary.avgClvPct != null && summary.avgClvPct > 0 ? ("gain" as const) : ("neutral" as const),
     },
     {
       title: "Best settled segment",
@@ -427,7 +542,7 @@ function buildInsightCards(summary: ReturnType<typeof summarizeLedger>, bySport:
       detail: bestSettledSport?.settledRows
         ? `${formatMoney(bestSettledSport.settledProfit)} return at ${bestSettledSport.roiPct.toFixed(1)}% ROI. ${topBook?.key ? `Most volume: ${topBook.key}.` : ""}`
         : "Grade a few rows to see which sports or sources are driving outcomes.",
-      tone: bestSettledSport?.settledProfit && bestSettledSport.settledProfit >= 0 ? ("green" as const) : ("amber" as const),
+      tone: bestSettledSport?.settledProfit && bestSettledSport.settledProfit >= 0 ? ("gain" as const) : ("neutral" as const),
     },
   ];
 }
@@ -441,112 +556,54 @@ function InsightCard({
   title: string;
   value: string;
   detail: string;
-  tone: "green" | "amber" | "red";
+  tone: "gain" | "neutral";
 }) {
-  const toneClass = {
-    green: "border-primary/25 bg-primary/5",
-    amber: "border-secondary/25 bg-secondary/5",
-    red: "border-red-500/25 bg-red-500/5",
-  }[tone];
-  const iconClass = {
-    green: "text-primary",
-    amber: "text-secondary",
-    red: "text-red-300",
-  }[tone];
-
   return (
-    <article className={`rounded-lg border p-4 ${toneClass}`}>
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{title}</div>
-          <div className="mt-1 text-lg font-black">{value}</div>
-        </div>
-        <ArrowUpRight className={`h-5 w-5 shrink-0 ${iconClass}`} />
-      </div>
-      <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{detail}</p>
+    <article className="surface-card p-4">
+      <div className="label-mono">{title}</div>
+      <div className={`mt-1 text-lg font-bold ${tone === "gain" ? "text-gain" : "text-foreground"}`}>{value}</div>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{detail}</p>
     </article>
   );
 }
 
 function SegmentTable({ rows, valueLabel }: { rows: SegmentSummary[]; valueLabel: string }) {
   if (!rows.length) {
-    return <div className="p-4 text-sm text-muted-foreground">No segment data available yet.</div>;
+    return (
+      <div className="p-4 text-sm text-muted-foreground">
+        Nothing to break down yet. Add ledger rows and returns by {valueLabel.toLowerCase()} will appear here.
+      </div>
+    );
   }
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[520px] text-sm">
-        <thead className="bg-white/[0.035] text-left text-[10px] uppercase tracking-wide text-muted-foreground">
+      <table className="w-full min-w-[440px] text-sm">
+        <thead className="text-left">
           <tr>
-            <th className="p-3">{valueLabel}</th>
-            <th className="p-3">Rows</th>
-            <th className="p-3">Open risk</th>
-            <th className="p-3">Return</th>
-            <th className="p-3">ROI</th>
-            <th className="p-3">Avg edge</th>
+            <Th>{valueLabel}</Th>
+            <Th>Rows</Th>
+            <Th>Open risk</Th>
+            <Th>Return</Th>
+            <Th>ROI</Th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.key} className="border-t border-white/5">
+            <tr key={row.key} className="border-t border-border">
               <td className="p-3 font-semibold">{row.key}</td>
-              <td className="p-3 tabular-nums">{row.rows}</td>
+              <td className="p-3 tabular-nums text-muted-foreground">{row.rows}</td>
               <td className="p-3 tabular-nums">{formatMoney(row.openExposure)}</td>
-              <td className={row.settledProfit >= 0 ? "p-3 tabular-nums text-primary" : "p-3 tabular-nums text-red-300"}>
+              <td className={row.settledProfit > 0 ? "p-3 font-semibold tabular-nums text-gain" : row.settledProfit < 0 ? "p-3 font-semibold tabular-nums text-loss" : "p-3 tabular-nums text-muted-foreground"}>
                 {formatMoney(row.settledProfit)}
               </td>
-              <td className={row.roiPct >= 0 ? "p-3 tabular-nums text-primary" : "p-3 tabular-nums text-red-300"}>
-                {row.settledRows ? `${row.roiPct.toFixed(1)}%` : "-"}
-              </td>
-              <td className="p-3 tabular-nums text-muted-foreground">
-                {row.avgEdgePct == null ? "-" : `${row.avgEdgePct.toFixed(1)}%`}
+              <td className={row.settledRows && row.roiPct > 0 ? "p-3 tabular-nums text-gain" : row.settledRows && row.roiPct < 0 ? "p-3 tabular-nums text-loss" : "p-3 tabular-nums text-muted-foreground"}>
+                {row.settledRows ? `${row.roiPct.toFixed(1)}%` : "—"}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
-  );
-}
-
-function Metric({
-  label,
-  value,
-  icon: Icon,
-  tone = "green",
-}: {
-  label: string;
-  value: number | string;
-  icon: typeof WalletCards;
-  tone?: "green" | "amber" | "red";
-}) {
-  const toneClass = {
-    green: "text-primary bg-primary/10 border-primary/25",
-    amber: "text-secondary bg-secondary/10 border-secondary/25",
-    red: "text-red-300 bg-red-500/10 border-red-500/25",
-  }[tone];
-
-  return (
-    <div className="surface-card min-w-0 p-3">
-      <div className="flex items-center justify-between gap-3">
-        <div className="min-w-0">
-          <div className="truncate text-[10px] uppercase tracking-wide text-muted-foreground">{label}</div>
-          <div className="mt-1 truncate text-2xl font-black tabular-nums">{typeof value === "number" ? value.toLocaleString() : value}</div>
-        </div>
-        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-md border ${toneClass}`}>
-          <Icon className="h-5 w-5" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MetricCell({ label, value, tone = "green" }: { label: string; value: string; tone?: "green" | "amber" | "red" }) {
-  const color = tone === "amber" ? "text-secondary" : tone === "red" ? "text-red-300" : "text-primary";
-  return (
-    <div className="odds-cell">
-      <div className="text-[10px] uppercase text-muted-foreground">{label}</div>
-      <div className={color}>{value}</div>
     </div>
   );
 }
@@ -593,15 +650,24 @@ function pick(record: Record<string, string>, keys: string[]) {
   return "";
 }
 
-function readStoredLedger(): StoredLedger {
-  if (typeof window === "undefined") return { startingBankroll: "1000", csvText: SAMPLE_CSV };
+/**
+ * Reads the persisted ledger. When nothing is stored the bundled sample is
+ * shown as a chipped demo preview (`existed: false`) — it is NOT written back
+ * to localStorage until the user makes an explicit edit.
+ */
+function readStoredLedger(): StoredLedger & { existed: boolean } {
+  const preview = { startingBankroll: "1000", csvText: SAMPLE_CSV, existed: false };
+  if (typeof window === "undefined") return preview;
   try {
-    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "");
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw == null) return preview;
+    const parsed = JSON.parse(raw);
     return {
       startingBankroll: String(parsed?.startingBankroll ?? "1000"),
       csvText: String(parsed?.csvText ?? SAMPLE_CSV),
+      existed: true,
     };
   } catch {
-    return { startingBankroll: "1000", csvText: SAMPLE_CSV };
+    return preview;
   }
 }

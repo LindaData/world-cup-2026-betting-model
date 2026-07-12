@@ -180,7 +180,11 @@ function update(id: string, patch: Partial<DatasetState>) {
 async function headInfo(url: string, bust: boolean): Promise<{ ok: boolean; status: number; size: number | null; lastModified: string | null }> {
   const u = bust ? `${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}` : url;
   try {
-    const res = await fetch(u, { method: "HEAD", cache: "default" });
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(new Error("Timed out")), 5_000);
+    const res = await fetch(u, { method: "HEAD", cache: "default", signal: controller.signal }).finally(() =>
+      clearTimeout(timer),
+    );
     const size = res.headers.get("content-length");
     return {
       ok: res.ok,

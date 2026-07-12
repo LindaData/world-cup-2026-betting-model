@@ -98,9 +98,24 @@ function writeCache<T>(key: string, data: T, meta: CachedMeta) {
   }
 }
 
+/**
+ * Network requests are time-boxed so the UI always resolves to an explicit
+ * state (live / cached / demo / unavailable) instead of loading forever.
+ */
+const FETCH_TIMEOUT_MS = 5_000;
+
+function timeoutSignal(ms: number): AbortSignal {
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(new Error(`Timed out after ${ms}ms`)), ms);
+  return controller.signal;
+}
+
 async function fetchText(url: string): Promise<string> {
   const sep = url.includes("?") ? "&" : "?";
-  const res = await fetch(`${url}${sep}t=${Date.now()}`, { cache: "no-store" });
+  const res = await fetch(`${url}${sep}t=${Date.now()}`, {
+    cache: "no-store",
+    signal: timeoutSignal(FETCH_TIMEOUT_MS),
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.text();
 }
@@ -138,7 +153,7 @@ function demoUrl(key: string): string {
 
 async function fetchDemo(key: string): Promise<{ data: unknown; rows: number } | null> {
   try {
-    const res = await fetch(demoUrl(key));
+    const res = await fetch(demoUrl(key), { signal: timeoutSignal(FETCH_TIMEOUT_MS) });
     if (!res.ok) return null;
     const data = await res.json();
     return { data, rows: rowCount("json", data) };

@@ -1,25 +1,66 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { CalendarDays, FlaskConical, Home, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useData } from "@/context/DataContext";
 import { BETTING_DESK_ENABLED } from "@/lib/flags";
 
+/** Header slot the global Notes launcher portals into (quiet icon, no FAB). */
+export const NOTES_LAUNCHER_SLOT_ID = "notes-launcher-slot";
+
 interface NavItem {
   to: string;
   label: string;
   icon: typeof Home;
-  end?: boolean;
+  /** Route prefixes (besides `to`) that keep this tab highlighted. */
+  childPrefixes: string[];
 }
 
 // Exactly 4 tabs (3 when the private betting desk is disabled).
 const navItems: NavItem[] = [
-  { to: "/", label: "Today", icon: Home, end: true },
-  { to: "/matches", label: "Matches", icon: CalendarDays },
+  { to: "/", label: "Today", icon: Home, childPrefixes: [] },
+  {
+    to: "/matches",
+    label: "Matches",
+    icon: CalendarDays,
+    childPrefixes: ["/football", "/nba", "/mlb"],
+  },
   ...(BETTING_DESK_ENABLED
-    ? [{ to: "/bankroll", label: "Portfolio", icon: Wallet }]
+    ? [
+        {
+          to: "/bankroll",
+          label: "Portfolio",
+          icon: Wallet,
+          childPrefixes: ["/portfolio", "/edge", "/desk"],
+        },
+      ]
     : []),
-  { to: "/research", label: "Research", icon: FlaskConical },
+  {
+    to: "/research",
+    label: "Research",
+    icon: FlaskConical,
+    childPrefixes: [
+      "/status",
+      "/datasets",
+      "/model",
+      "/signals",
+      "/coverage",
+      "/dictionary",
+      "/quality",
+      "/basket",
+      "/explore",
+      "/approval",
+    ],
+  },
 ];
+
+/** Sub-routes highlight their parent tab so the user never loses orientation. */
+function isTabActive(item: NavItem, pathname: string): boolean {
+  if (item.to === "/") return pathname === "/";
+  const prefixes = [item.to, ...item.childPrefixes];
+  return prefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
 
 function formatRefreshTime(iso: string | null): string | null {
   if (!iso) return null;
@@ -30,6 +71,7 @@ function formatRefreshTime(iso: string | null): string | null {
 
 export default function Layout() {
   const { lastRefresh } = useData();
+  const { pathname } = useLocation();
   const refreshedAt = formatRefreshTime(lastRefresh);
 
   return (
@@ -55,19 +97,18 @@ export default function Layout() {
           >
             {navItems.map((item) => {
               const Icon = item.icon;
+              const active = isTabActive(item, pathname);
               return (
                 <NavLink
                   key={item.to}
                   to={item.to}
-                  end={item.end}
-                  className={({ isActive }) =>
-                    cn(
-                      "flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-md px-3 py-2 text-sm font-semibold transition-colors",
-                      isActive
-                        ? "text-primary"
-                        : "text-muted-foreground hover:bg-card hover:text-foreground",
-                    )
-                  }
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-md px-3 py-2 text-sm font-semibold transition-colors",
+                    active
+                      ? "text-primary"
+                      : "text-muted-foreground hover:bg-card hover:text-foreground",
+                  )}
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
                   {item.label}
@@ -76,11 +117,18 @@ export default function Layout() {
             })}
           </nav>
 
-          {refreshedAt && (
-            <span className="label-mono shrink-0 tabular-nums" title="Last data refresh">
-              Updated {refreshedAt}
-            </span>
-          )}
+          <div className="flex shrink-0 items-center gap-2">
+            {refreshedAt && (
+              <span
+                className="label-mono hidden tabular-nums sm:inline"
+                title="Last data refresh"
+              >
+                Updated {refreshedAt}
+              </span>
+            )}
+            {/* The global Notes launcher portals into this slot as a quiet icon button. */}
+            <div id={NOTES_LAUNCHER_SLOT_ID} className="flex items-center" />
+          </div>
         </div>
       </header>
 
@@ -98,17 +146,16 @@ export default function Layout() {
         >
           {navItems.map((item) => {
             const Icon = item.icon;
+            const active = isTabActive(item, pathname);
             return (
               <li key={item.to}>
                 <NavLink
                   to={item.to}
-                  end={item.end}
-                  className={({ isActive }) =>
-                    cn(
-                      "flex min-h-14 flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-semibold active:bg-card",
-                      isActive ? "text-primary" : "text-muted-foreground",
-                    )
-                  }
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "flex min-h-14 flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-semibold active:bg-card",
+                    active ? "text-primary" : "text-muted-foreground",
+                  )}
                 >
                   <Icon className="h-5 w-5" aria-hidden="true" />
                   {item.label}

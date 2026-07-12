@@ -1,35 +1,46 @@
+import { ProbabilityBar } from "@/components/ProbabilityBar";
+import { cn } from "@/lib/utils";
 import type { LiveEvent } from "@/types";
 
-export function LiveScoreCard({ event }: { event: LiveEvent }) {
-  const isPost = event.state === "post";
+export function LiveScoreCard({
+  event,
+  prediction,
+}: {
+  event: LiveEvent;
+  /** Model win probabilities for this event, when the model has them. */
+  prediction?: { home: number; draw: number; away: number };
+}) {
   const isLive = event.state === "in";
   return (
     <div className="surface-card p-4">
-      <div className="flex items-center justify-between mb-3">
+      <div className="mb-3 flex items-center justify-between gap-2">
+        {/* Green = the one accent; red stays reserved for losses. */}
         <span
-          className={`chip ${
-            isLive
-              ? "bg-red-100 text-red-700"
-              : isPost
-                ? "bg-slate-100 text-slate-700"
-                : "bg-primary/15 text-primary"
-          }`}
+          className={cn("chip", isLive ? "bg-gain/15 text-gain" : "bg-muted text-muted-foreground")}
         >
-          {isLive && <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />}
+          {isLive && (
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-current" aria-hidden="true" />
+          )}
           {event.status_short || event.status}
         </span>
-        {event.venue && (
-          <span className="text-[11px] text-muted-foreground truncate ml-2">{event.venue}</span>
-        )}
+        {event.venue && <span className="label-mono ml-2 truncate">{event.venue}</span>}
       </div>
+
       <div className="space-y-2">
-        <Row team={event.away_team} score={event.away_score} record={event.away_record} />
         <Row team={event.home_team} score={event.home_score} record={event.home_record} />
+        <Row team={event.away_team} score={event.away_score} record={event.away_record} />
       </div>
+
+      {prediction && (
+        <ProbabilityBar
+          className="mt-3"
+          probs={prediction}
+          labels={{ home: event.home_team, away: event.away_team }}
+        />
+      )}
+
       {event.broadcasts && event.broadcasts.length > 0 && (
-        <div className="mt-3 text-[11px] text-muted-foreground">
-          {event.broadcasts.join(" • ")}
-        </div>
+        <div className="label-mono mt-3">{event.broadcasts.join(" · ")}</div>
       )}
     </div>
   );
@@ -37,12 +48,12 @@ export function LiveScoreCard({ event }: { event: LiveEvent }) {
 
 function Row({ team, score, record }: { team: string; score: string; record?: string }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-3">
       <div className="min-w-0">
-        <div className="font-medium text-card-foreground truncate">{team}</div>
-        {record && <div className="text-[11px] text-muted-foreground">{record}</div>}
+        <div className="truncate text-sm font-semibold text-card-foreground">{team}</div>
+        {record && <div className="label-mono mt-0.5 tabular-nums">{record}</div>}
       </div>
-      <div className="text-2xl font-bold tabular-nums text-card-foreground ml-3">{score || "–"}</div>
+      <div className="num-hero text-card-foreground">{score || "–"}</div>
     </div>
   );
 }

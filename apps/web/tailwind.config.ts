@@ -56,6 +56,8 @@ export default {
           DEFAULT: "hsl(var(--away))", // #4A90D9
           deep: "hsl(var(--away-deep))", // #23578F
         },
+        warn: "hsl(var(--warn))", // #E5A83B — offline/degraded status, never money
+
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

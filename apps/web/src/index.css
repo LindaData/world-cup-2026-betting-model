@@ -19,6 +19,7 @@
     --ink-muted: 212 16% 56%; /* #7D8EA1 */
     --gain: 145 67% 51%; /* #2ED573 — the ONE green accent */
     --loss: 358 100% 68%; /* #FF5A5F — losses/negative money ONLY */
+    --warn: 38 72% 56%; /* #E5A83B — offline/degraded status, never money */
     --draw: 214 28% 28%; /* #33445A — draw segment slate */
     --away: 211 65% 57%; /* #4A90D9 — away-team blue */
     --away-deep: 211 61% 35%; /* #23578F */
