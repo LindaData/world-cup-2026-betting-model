@@ -26,7 +26,7 @@ test("mobile review workspace renders and persists notes", async ({ page }) => {
   );
 
   const appHome = page.getByRole("link", {
-    name: /LindaData sports hub/i,
+    name: /LindaData Sports home/i,
   });
   await expect(appHome).toBeVisible();
 
@@ -40,7 +40,7 @@ test("mobile review workspace renders and persists notes", async ({ page }) => {
   const pageNote = page.getByRole("textbox", { name: /page note/i });
   await pageNote.fill("Mobile visual smoke test");
 
-  await page.getByRole("link", { name: /signals/i }).last().click();
+  await page.getByRole("link", { name: /matches/i }).last().click();
   await expect(appHome).toBeVisible();
   await expect(notebook).toBeVisible();
 

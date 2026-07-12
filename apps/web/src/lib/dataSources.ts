@@ -20,6 +20,8 @@ export const SOURCES: SourceDef[] = [
   { key: "football_live", label: "Football Live", kind: "json", url: `${BASE}/football_live.json` },
   { key: "football_fixtures", label: "Football Fixtures", kind: "json", url: `${BASE}/football_fixtures.json` },
   { key: "football_standings", label: "Football Standings", kind: "json", url: `${BASE}/football_standings.json` },
+  // Goes live automatically once the model pipeline publishes predictions.
+  { key: "model_predictions", label: "Model Predictions", kind: "json", url: `${BASE}/model_predictions.json` },
   { key: "nba_live", label: "NBA Live", kind: "json", url: `${BASE}/nba_live.json` },
   { key: "mlb_live", label: "MLB Live", kind: "json", url: `${BASE}/mlb_live.json` },
   { key: "basketball_snapshot", label: "NBA Snapshot", kind: "json", url: `${BASE}/basketball_snapshot.json` },
@@ -52,7 +54,7 @@ export const SOURCES: SourceDef[] = [
   },
 ];
 
-export type LoadOrigin = "network" | "fallback" | "cache" | "empty";
+export type LoadOrigin = "network" | "fallback" | "cache" | "demo" | "empty";
 
 export interface LoadResult<T = unknown> {
   key: string;
@@ -126,6 +128,25 @@ function rowCount(kind: SourceKind, data: unknown): number {
   return 0;
 }
 
+// Bundled demo data: last-resort fallback so the app looks intentional with
+// zero live data. Disabled by building with VITE_DEMO=false.
+const DEMO_ENABLED = import.meta.env.VITE_DEMO !== "false";
+
+function demoUrl(key: string): string {
+  return `${import.meta.env.BASE_URL}demo-data/${key}.json`;
+}
+
+async function fetchDemo(key: string): Promise<{ data: unknown; rows: number } | null> {
+  try {
+    const res = await fetch(demoUrl(key));
+    if (!res.ok) return null;
+    const data = await res.json();
+    return { data, rows: rowCount("json", data) };
+  } catch {
+    return null;
+  }
+}
+
 async function fetchOne(url: string, kind: SourceKind): Promise<{ data: unknown; rows: number }> {
   const text = await fetchText(url);
   if (kind === "csv") {
@@ -188,6 +209,21 @@ export async function loadSource(src: SourceDef): Promise<LoadResult> {
         url: cached.meta.url,
         error: (primaryErr as Error).message,
       };
+    }
+    // Bundled demo data (network AND cache failed)
+    if (DEMO_ENABLED) {
+      const demo = await fetchDemo(src.key);
+      if (demo) {
+        return {
+          key: src.key,
+          data: demo.data,
+          rows: demo.rows,
+          origin: "demo",
+          fetchedAt: now,
+          url: demoUrl(src.key),
+          error: (primaryErr as Error).message,
+        };
+      }
     }
     return {
       key: src.key,

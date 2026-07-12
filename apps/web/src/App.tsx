@@ -9,23 +9,29 @@ import Layout from "@/components/Layout";
 import GlobalReviewWorkspace from "@/components/GlobalReviewWorkspace";
 import { BETTING_DESK_ENABLED } from "@/lib/flags";
 
+// Primary tabs
+const Today = lazy(() => import("./pages/Today"));
+const Matches = lazy(() => import("./pages/Matches"));
+const Research = lazy(() => import("./pages/Research"));
+
+// Research sub-pages (keep their routes)
 const Approval = lazy(() => import("./pages/Approval"));
-const BettingDesk = lazy(() => import("./pages/BettingDesk"));
 const Datasets = lazy(() => import("./pages/Datasets"));
-const EdgeLab = lazy(() => import("./pages/EdgeLab"));
-const Portfolio = lazy(() => import("./pages/Portfolio"));
 const ModelAudit = lazy(() => import("./pages/ModelAudit"));
-const Bankroll = lazy(() => import("./pages/Bankroll"));
 const Coverage = lazy(() => import("./pages/Coverage"));
 const Dictionary = lazy(() => import("./pages/Dictionary"));
 const Quality = lazy(() => import("./pages/Quality"));
 const ReviewBasket = lazy(() => import("./pages/ReviewBasket"));
 const Signals = lazy(() => import("./pages/Signals"));
-const Football = lazy(() => import("./pages/Football"));
-const NBA = lazy(() => import("./pages/NBA"));
-const MLB = lazy(() => import("./pages/MLB"));
 const Status = lazy(() => import("./pages/Status"));
 const RawDataLab = lazy(() => import("./pages/RawDataLab"));
+
+// Private betting desk (flag-gated)
+const BettingDesk = lazy(() => import("./pages/BettingDesk"));
+const EdgeLab = lazy(() => import("./pages/EdgeLab"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
+const Bankroll = lazy(() => import("./pages/Bankroll"));
+
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -41,8 +47,16 @@ const App = () => (
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route element={<Layout />}>
-                <Route path="/" element={<Football />} />
-                <Route path="/football" element={<Navigate to="/" replace />} />
+                <Route path="/" element={<Today />} />
+                <Route path="/matches" element={<Matches />} />
+                <Route path="/research" element={<Research />} />
+
+                {/* Legacy sport routes redirect into the Matches tab */}
+                <Route path="/football" element={<Navigate to="/matches" replace />} />
+                <Route path="/nba" element={<Navigate to="/matches?sport=nba" replace />} />
+                <Route path="/mlb" element={<Navigate to="/matches?sport=mlb" replace />} />
+
+                {/* Research sub-pages keep their routes */}
                 <Route path="/approval" element={<Approval />} />
                 <Route path="/datasets" element={<Datasets />} />
                 <Route path="/model" element={<ModelAudit />} />
@@ -53,9 +67,8 @@ const App = () => (
                 <Route path="/basket" element={<ReviewBasket />} />
                 <Route path="/explore" element={<RawDataLab />} />
                 <Route path="/raw" element={<Navigate to="/explore" replace />} />
-                <Route path="/nba" element={<NBA />} />
-                <Route path="/mlb" element={<MLB />} />
                 <Route path="/status" element={<Status />} />
+
                 {BETTING_DESK_ENABLED && (
                   <>
                     <Route path="/desk" element={<BettingDesk />} />
@@ -81,7 +94,7 @@ function RouteFallback() {
   return (
     <div className="min-h-screen bg-background p-4 text-foreground">
       <div className="surface-card mx-auto mt-8 max-w-md p-4 text-sm text-muted-foreground">
-        Loading desk...
+        Loading...
       </div>
     </div>
   );

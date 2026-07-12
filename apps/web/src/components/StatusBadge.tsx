@@ -5,6 +5,7 @@ const styles: Record<LoadOrigin, string> = {
   network: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
   fallback: "bg-amber-500/15 text-amber-400 border border-amber-500/30",
   cache: "bg-sky-500/15 text-sky-400 border border-sky-500/30",
+  demo: "bg-muted text-muted-foreground border border-border",
   empty: "bg-red-500/15 text-red-400 border border-red-500/30",
 };
 
@@ -12,6 +13,7 @@ const labels: Record<LoadOrigin, string> = {
   network: "Live",
   fallback: "Fallback",
   cache: "Cached",
+  demo: "Demo",
   empty: "Unavailable",
 };
 

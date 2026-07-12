@@ -48,6 +48,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // North-star semantic colors
+        gain: "hsl(var(--gain))", // #2ED573 — probability, positive delta, primary actions
+        loss: "hsl(var(--loss))", // #FF5A5F — losses / negative money ONLY
+        draw: "hsl(var(--draw))", // #33445A — draw segment slate
+        away: {
+          DEFAULT: "hsl(var(--away))", // #4A90D9
+          deep: "hsl(var(--away-deep))", // #23578F
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

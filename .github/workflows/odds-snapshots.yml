@@ -1,0 +1,51 @@
+name: Odds Snapshots
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Hourly trigger, but the script only spends API credits when a daily
+    # snapshot is due or a fixture is inside the closing-line window, so the
+    # free tier is respected.
+    - cron: "5 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: odds-snapshots
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      THE_ODDS_API_KEY: ${{ secrets.THE_ODDS_API_KEY }}
+      ODDS_SPORT_KEYS: ${{ vars.ODDS_SPORT_KEYS || 'soccer_fifa_world_cup' }}
+      ODDS_OUTRIGHT_KEYS: ${{ vars.ODDS_OUTRIGHT_KEYS || 'soccer_fifa_world_cup_winner' }}
+      ODDS_REGIONS: ${{ vars.ODDS_REGIONS || 'us,eu' }}
+      ODDS_MARKETS: ${{ vars.ODDS_MARKETS || 'h2h,spreads,totals' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Capture odds snapshot
+        run: python scripts/fetch_odds_snapshots.py
+
+      - name: Commit odds data
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          git add docs/sports-data/data/odds/
+          if git diff --cached --quiet; then
+            echo "No odds changes."
+            exit 0
+          fi
+          git commit -m "data: odds snapshot"
+          git push
