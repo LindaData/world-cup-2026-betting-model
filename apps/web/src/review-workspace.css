@@ -1,0 +1,2 @@
+#global-review-workspace { bottom: calc(8.75rem + env(safe-area-inset-bottom)); }
+@media (min-width: 1024px) { #global-review-workspace { bottom: 1.5rem; } }

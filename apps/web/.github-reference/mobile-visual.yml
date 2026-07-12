@@ -1,0 +1,60 @@
+name: Mobile Visual Test
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mobile-visual:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+      - run: bun run test
+      - run: bun run build
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save @playwright/test@1.55.0
+          npx playwright install --with-deps webkit
+
+      - name: Start production preview
+        run: |
+          bun run preview -- --host 127.0.0.1 --port 4173 > /tmp/game-stat-pulse-preview.log 2>&1 &
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/game-stat-pulse/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/game-stat-pulse-preview.log
+          exit 1
+
+      - name: Run iPhone smoke test
+        shell: bash
+        run: |
+          set +e
+          npx playwright test tests/visual/mobile-review.spec.ts --reporter=line 2>&1 | tee /tmp/playwright.log
+          status=${PIPESTATUS[0]}
+          exit "$status"
+
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-visual-evidence
+          path: |
+            test-results/**
+            playwright-report/**
+            /tmp/game-stat-pulse-preview.log
+            /tmp/playwright.log
+          if-no-files-found: ignore

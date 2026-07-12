@@ -6,6 +6,13 @@ A LindaData project for World Cup 2026 forecasting, model review, and public-saf
 
 ![World Cup 2026 Forecasting Model preview](assets/social-preview.svg)
 
+## Repository Layout
+
+This repo is the consolidated home of the LindaData sports portfolio (see `MIGRATION.md` for the full map):
+
+- **Repo root** — the World Cup 2026 forecasting engine: R models, Python data pipelines, DuckDB, and the Quarto site published to GitHub Pages from `docs/`.
+- **`apps/web/`** — the consolidated React app (formerly `game-stat-pulse`, absorbing `lindadata-sports-hub`): World Cup fixtures/standings/live scores, NBA/MLB data, dataset review tooling, and a private betting desk gated behind `VITE_ENABLE_BETTING_DESK`. Deploys to Vercel.
+
 ## Project Role
 
 This repo is part of the LindaData HQ portfolio. It should be treated as a product/research project, not as an isolated notebook.

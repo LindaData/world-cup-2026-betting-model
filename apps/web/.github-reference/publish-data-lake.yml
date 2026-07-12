@@ -1,0 +1,76 @@
+name: Publish Data Lake
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * *"
+
+permissions:
+  contents: read
+
+env:
+  API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+  R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+  R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+  R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+  R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+  R2_PUBLIC_BASE_URL: ${{ secrets.R2_PUBLIC_BASE_URL }}
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install duckdb pandas pyarrow requests pyyaml
+
+      - name: Build existing sports datasets
+        run: python scripts/build_data_lake.py
+
+      - name: Fetch and validate API-Football review samples
+        run: python scripts/run_api_football_review.py
+
+      - name: Profile datasets
+        run: python scripts/profile_datasets.py
+
+      - name: Validate datasets
+        run: python scripts/validate_datasets.py
+
+      - name: Upload data lake build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: modeling-data-lake-build
+          path: build
+          retention-days: 14
+
+      - name: Configure rclone for Cloudflare R2
+        if: ${{ env.R2_ACCESS_KEY_ID != '' }}
+        run: |
+          mkdir -p ~/.config/rclone
+          cat > ~/.config/rclone/rclone.conf <<EOF
+          [r2]
+          type = s3
+          provider = Cloudflare
+          access_key_id = ${R2_ACCESS_KEY_ID}
+          secret_access_key = ${R2_SECRET_ACCESS_KEY}
+          endpoint = https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com
+          acl = private
+          EOF
+
+      - name: Install rclone
+        if: ${{ env.R2_ACCESS_KEY_ID != '' }}
+        run: curl -fsSL https://rclone.org/install.sh | sudo bash
+
+      - name: Upload build to R2
+        if: ${{ env.R2_ACCESS_KEY_ID != '' }}
+        run: |
+          rclone copy --transfers 8 --checkers 16 --s3-no-check-bucket build "r2:${R2_BUCKET_NAME}"
+          echo "Uploaded to R2 bucket: ${R2_BUCKET_NAME}"

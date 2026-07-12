@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 14% 7%;
+    --foreground: 210 20% 95%;
+
+    --card: 210 12% 11%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 210 12% 11%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 188 83% 48%;
+    --primary-foreground: 210 40% 7%;
+
+    --secondary: 34 91% 59%;
+    --secondary-foreground: 210 40% 7%;
+
+    --muted: 210 10% 16%;
+    --muted-foreground: 214 15% 71%;
+
+    --accent: 188 83% 48%;
+    --accent-foreground: 210 40% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 12% 21%;
+    --input: 210 12% 21%;
+    --ring: 188 83% 48%;
+
+    --navy: 210 14% 7%;
+    --navy-deep: 215 18% 6%;
+    --navy-light: 210 12% 11%;
+    --teal: 188 83% 48%;
+    --teal-soft: 191 80% 60%;
+    --gold: 34 91% 59%;
+    --market-red: 4 78% 58%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5% 26%;
+    --sidebar-primary: 240 6% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent-foreground: 240 6% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html, body, #root {
+    @apply min-h-screen;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background:
+      radial-gradient(circle at 12% 0%, hsl(188 83% 18% / 0.22), transparent 28rem),
+      radial-gradient(circle at 88% 8%, hsl(34 91% 20% / 0.18), transparent 24rem),
+      linear-gradient(180deg, hsl(var(--navy-deep)), hsl(var(--background)) 28rem);
+  }
+}
+
+@layer components {
+  .surface-card {
+    @apply bg-card/95 text-card-foreground rounded-lg shadow-sm border border-white/10;
+    box-shadow: 0 18px 48px hsl(210 30% 3% / 0.32);
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium;
+  }
+  .market-panel {
+    @apply rounded-lg border border-white/10 bg-white/[0.035];
+  }
+  .odds-cell {
+    @apply rounded-md border border-white/10 bg-black/25 px-3 py-2 text-center font-semibold tabular-nums;
+  }
+  .sportsbook-glow {
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.08), 0 0 0 1px hsl(188 83% 48% / 0.08), 0 24px 70px hsl(210 45% 6% / 0.28);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}

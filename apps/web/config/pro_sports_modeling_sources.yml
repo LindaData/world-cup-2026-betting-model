@@ -1,0 +1,132 @@
+version: 1
+purpose: >
+  Source-domain plan for professional sports betting research data pulls.
+  This file is not a betting model and does not place wagers; it defines the
+  data coverage needed before advanced statistical modeling can be reliable.
+
+modeling_domains:
+  reference:
+    description: Stable identifiers and lookup tables used to join every feed.
+    examples:
+      - sports
+      - countries
+      - leagues
+      - seasons
+      - teams
+      - players
+      - venues
+      - bookmakers
+      - bet_markets
+  event_context:
+    description: Game or fixture schedule, status, venue, and result context.
+    examples:
+      - schedules
+      - fixtures
+      - results
+      - standings
+      - venue_context
+      - head_to_head_history
+  participant_context:
+    description: Who is involved in each event and how team/player identities change over time.
+    examples:
+      - rosters
+      - squads
+      - coaches
+      - transfers
+      - team_seasons
+      - player_team_history
+  performance:
+    description: Historical team, player, and event statistics used for predictive features.
+    examples:
+      - team_statistics
+      - player_statistics
+      - fixture_statistics
+      - fixture_events
+      - player_game_statistics
+      - rankings
+  availability:
+    description: Player and team availability signals that can materially move a market.
+    examples:
+      - injuries
+      - sidelined_periods
+      - lineups
+      - suspensions
+  market_data:
+    description: Betting-market observations needed for implied probability, closing-line, and calibration work.
+    examples:
+      - pre_match_odds
+      - live_odds
+      - odds_mapping
+      - bookmaker_reference
+      - bet_market_reference
+      - line_movement
+  derived_features:
+    description: Features generated after ingestion, not raw provider endpoints.
+    examples:
+      - rest_days
+      - travel_distance
+      - rolling_form
+      - elo_or_power_ratings
+      - no_vig_implied_probabilities
+      - market_consensus
+      - closing_line_value
+      - calibration_targets
+
+provider_rollout:
+  football:
+    primary_provider: api-football-v3
+    current_registry: config/api_football_endpoints.yml
+    status: active_review_samples
+    priority_domains:
+      - reference
+      - event_context
+      - participant_context
+      - performance
+      - availability
+      - market_data
+  basketball:
+    primary_provider: api-sports-basketball
+    status: planned
+    priority_domains:
+      - reference
+      - event_context
+      - participant_context
+      - performance
+      - availability
+      - market_data
+  baseball:
+    primary_provider: api-sports-baseball
+    status: planned
+    priority_domains:
+      - reference
+      - event_context
+      - participant_context
+      - performance
+      - availability
+      - market_data
+  hockey:
+    primary_provider: api-sports-hockey
+    status: planned
+    priority_domains:
+      - reference
+      - event_context
+      - participant_context
+      - performance
+      - availability
+      - market_data
+  american_football:
+    primary_provider: api-sports-american-football
+    status: planned
+    priority_domains:
+      - reference
+      - event_context
+      - participant_context
+      - performance
+      - availability
+      - market_data
+
+controls:
+  raw_retention: retain_provider_payloads_server_side
+  browser_exposure: limited_review_samples_only
+  secret_handling: actions_secrets_only
+  modeling_gate: no_model_training_until_data_approval
