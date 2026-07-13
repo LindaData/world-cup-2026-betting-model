@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useBasketCount } from "@/hooks/use-basket-count";
+import { BETTING_DESK_ENABLED } from "@/lib/flags";
 
 interface ResearchTool {
   to: string;
@@ -21,6 +22,12 @@ interface ResearchTool {
   name: string;
   blurb: string;
   desktopHeavy?: boolean;
+  /**
+   * Internal data-engineering surface (SQL lab, feed ops, review queues).
+   * Ops tools only render on private desk builds — the public Research tab
+   * stays trust-building content a first-time reader can parse in 5 seconds.
+   */
+  ops?: boolean;
 }
 
 const TOOLS: ResearchTool[] = [
@@ -42,12 +49,14 @@ const TOOLS: ResearchTool[] = [
     name: "Data approval",
     blurb: "New data is reviewed here before it can move a prediction.",
     desktopHeavy: true,
+    ops: true,
   },
   {
     to: "/datasets",
     icon: Database,
     name: "Datasets",
     blurb: "Every table we keep, where it came from, and when it last updated.",
+    ops: true,
   },
   {
     to: "/explore",
@@ -55,6 +64,7 @@ const TOOLS: ResearchTool[] = [
     name: "Query lab",
     blurb: "Ask your own questions of the raw data with SQL.",
     desktopHeavy: true,
+    ops: true,
   },
   {
     to: "/coverage",
@@ -62,6 +72,7 @@ const TOOLS: ResearchTool[] = [
     name: "Coverage",
     blurb: "Which teams and matches we have solid data for, and where it is thin.",
     desktopHeavy: true,
+    ops: true,
   },
   {
     to: "/dictionary",
@@ -74,23 +85,29 @@ const TOOLS: ResearchTool[] = [
     icon: ClipboardCheck,
     name: "QA checks",
     blurb: "Automatic checks that flag broken or suspicious data.",
+    ops: true,
   },
   {
     to: "/basket",
     icon: Inbox,
     name: "Review queue",
     blurb: "Items you flagged while browsing, waiting for a closer look.",
+    ops: true,
   },
   {
     to: "/status",
     icon: Activity,
     name: "Feed status",
     blurb: "Whether each data feed is live, cached, or running on demo data.",
+    ops: true,
   },
 ];
 
 export default function Research() {
   const basketCount = useBasketCount();
+  // Public builds keep the tab to trust-building content (Model audit,
+  // Signals, Dictionary); the ops console only exists on desk builds.
+  const tools = TOOLS.filter((tool) => BETTING_DESK_ENABLED || !tool.ops);
 
   return (
     <div className="space-y-6">
@@ -107,7 +124,7 @@ export default function Research() {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        {TOOLS.map((tool) => {
+        {tools.map((tool) => {
           const Icon = tool.icon;
           const isQueue = tool.to === "/basket";
           return (

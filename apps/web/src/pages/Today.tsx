@@ -170,7 +170,11 @@ export default function Today() {
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {liveEvents.map((event) => (
               <Link key={event.event_id} to={`/match/${event.event_id}`} className="block">
-                <LiveScoreCard event={event} prediction={predictions[event.event_id]} />
+                <LiveScoreCard
+                  event={event}
+                  prediction={predictions[event.event_id]}
+                  preliminary={predictionsPreliminary}
+                />
               </Link>
             ))}
           </div>
@@ -187,7 +191,9 @@ export default function Today() {
         }
       >
         {upNext.length > 0 ? (
-          <div className="grid gap-3 sm:grid-cols-2">
+          // Three-across on desktop so a 3-card slate fills one row instead
+          // of wrapping 2+1 with an orphan.
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {upNext.map((fixture) => (
               <UpNextCard
                 key={fixture.game_id}
@@ -207,7 +213,12 @@ export default function Today() {
           <EmptyState
             title="No matches scheduled yet."
             body="Once the fixture feed publishes, each upcoming match shows up here with kickoff time and the model's win chances."
-            link={{ to: "/status", label: "Check feed status" }}
+            link={
+              // Feed status is an ops tool — public builds point at Research.
+              BETTING_DESK_ENABLED
+                ? { to: "/status", label: "Check feed status" }
+                : { to: "/research", label: "See how the model works" }
+            }
           />
         )}
       </Section>
@@ -311,8 +322,9 @@ function BankrollHero({
 
 /**
  * The shop window: the model's title chances as a movers-style leaderboard.
- * Bars scale relative to the favorite (leader fills the row) so the ranking
- * reads at a glance; the printed percentage carries the honest number.
+ * Bars fill an absolute 0-100% track (a 31% chance is 31% of the row) so the
+ * picture tells the same honest story as the printed percentage — no team
+ * ever looks like a lock.
  */
 function ChampionHero({
   chances,
@@ -329,7 +341,6 @@ function ChampionHero({
     // can't render "3100%".
     pct: c.probability <= 1 ? c.probability * 100 : c.probability,
   }));
-  const maxPct = rows.reduce((max, row) => Math.max(max, row.pct), 0);
 
   return (
     <section className="surface-card p-5">
@@ -356,7 +367,7 @@ function ChampionHero({
                 <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                   <div
                     className="h-full rounded-full bg-gain"
-                    style={{ width: `${maxPct > 0 ? (row.pct / maxPct) * 100 : 0}%` }}
+                    style={{ width: `${Math.min(Math.max(row.pct, 0), 100)}%` }}
                   />
                 </div>
               </div>
@@ -432,13 +443,17 @@ function NextMatchCard({
       <p className="mt-2 text-2xl font-extrabold leading-tight text-card-foreground">
         {homeName} <span className="text-lg font-normal text-muted-foreground">vs</span> {awayName}
       </p>
+      {/* One kickoff line: relative words plus the calendar date in parens
+          (the corner countdown already anchors urgency — no repeats). */}
       <p className="mt-1 text-sm font-medium text-foreground">
         {formatRelativeKickoff(kickoff, now)}
+        {daysUntilLocal(kickoff, now) < 7 && (
+          <span className="font-normal text-muted-foreground"> ({formatShortDate(kickoff)})</span>
+        )}
       </p>
-      <p className="mt-0.5 text-xs text-muted-foreground">
-        {formatKickoff(kickoff, true)}
-        {fixture.venue ? ` · ${fixture.venue}` : ""}
-      </p>
+      {fixture.venue && (
+        <p className="mt-0.5 text-xs text-muted-foreground">{fixture.venue}</p>
+      )}
 
       {prediction ? (
         <div className="mt-4 space-y-2">
@@ -501,9 +516,14 @@ function UpNextCard({
         <p className="mt-0.5 truncate text-xs text-muted-foreground">{meta}</p>
       </div>
       {pick ? (
+        // Verdict-copy pattern: neutral words carry the pick, green marks the
+        // number only — green means "model's number", never a side.
         <div className="shrink-0 text-right">
-          <p className="text-xl font-extrabold tabular-nums text-gain">{pick.pct}%</p>
-          <p className="label-mono">{pick.name}</p>
+          <p className="label-mono">Model favors</p>
+          <p className="text-sm font-semibold text-card-foreground">
+            {pick.name} ·{" "}
+            <span className="text-xl font-extrabold tabular-nums text-gain">{pick.pct}%</span>
+          </p>
         </div>
       ) : (
         <p className="label-mono shrink-0">{teamsTbd ? "TBD" : "—"}</p>
@@ -604,6 +624,15 @@ function formatHeaderDate(d: Date): string {
   return new Intl.DateTimeFormat(undefined, {
     weekday: "long",
     month: "long",
+    day: "numeric",
+  }).format(d);
+}
+
+/** Short calendar date for the kickoff parenthetical: "Tue, Jul 14". */
+function formatShortDate(d: Date): string {
+  return new Intl.DateTimeFormat(undefined, {
+    weekday: "short",
+    month: "short",
     day: "numeric",
   }).format(d);
 }

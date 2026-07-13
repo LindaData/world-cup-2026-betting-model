@@ -17,9 +17,9 @@ export interface ProbabilityBarProps {
 }
 
 const SEGMENTS = [
-  { key: "home", color: "bg-gain text-primary-foreground" },
-  { key: "draw", color: "bg-draw text-foreground/90" },
-  { key: "away", color: "bg-away text-primary-foreground" },
+  { key: "home", color: "bg-gain text-primary-foreground", dot: "bg-gain" },
+  { key: "draw", color: "bg-draw text-foreground/90", dot: "bg-draw" },
+  { key: "away", color: "bg-away text-primary-foreground", dot: "bg-away" },
 ] as const;
 
 /** Hide the in-segment percent label when the segment is too narrow to fit it. */
@@ -92,6 +92,24 @@ export function ProbabilityBar({ probs, marketProbs, labels, className }: Probab
           ))}
         </div>
       )}
+
+      {/* Names for every segment — a first-time reader must never have to
+          guess that the grey middle means "Draw". One quiet line, always on. */}
+      <div
+        className="mt-1 flex items-center justify-between gap-2 text-[10px] uppercase tracking-wide text-muted-foreground"
+        data-testid="prob-legend"
+        aria-hidden="true"
+      >
+        {SEGMENTS.map(({ key, dot }) => (
+          <span key={key} className="flex min-w-0 items-center gap-1">
+            <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", dot)} />
+            <span className="truncate font-mono">
+              {names[key]}{" "}
+              <span className="tabular-nums">{pct(model[key])}%</span>
+            </span>
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

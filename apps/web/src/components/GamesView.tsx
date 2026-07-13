@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { PreliminaryChip } from "@/components/PreliminaryChip";
 import { ProbabilityBar } from "@/components/ProbabilityBar";
 import { cn } from "@/lib/utils";
 import {
@@ -44,9 +45,12 @@ const SORTS: { key: SortKey; label: string }[] = [
 export function GamesView({
   rows,
   predictions,
+  preliminary = false,
 }: {
   rows: GameRow[];
   predictions?: PredictionMap;
+  /** True while the prediction feed is placeholder output — chips every model number. */
+  preliminary?: boolean;
 }) {
   const variant = useContext(GamesViewVariantContext);
   const grouped = variant === "grouped";
@@ -183,7 +187,12 @@ export function GamesView({
                 <h3 className="label-mono">Up next</h3>
                 <div className="grid gap-2 sm:grid-cols-2">
                   {upNext.map((g) => (
-                    <MatchCard key={g.game_id} game={g} prediction={predictions?.[g.game_id]} />
+                    <MatchCard
+                      key={g.game_id}
+                      game={g}
+                      prediction={predictions?.[g.game_id]}
+                      preliminary={preliminary}
+                    />
                   ))}
                 </div>
               </section>
@@ -197,6 +206,7 @@ export function GamesView({
                       key={g.game_id}
                       game={g}
                       prediction={predictions?.[g.game_id]}
+                      preliminary={preliminary}
                       played
                     />
                   ))}
@@ -207,7 +217,12 @@ export function GamesView({
         ) : (
           <div className="grid gap-2 sm:grid-cols-2">
             {slice.map((g) => (
-              <MatchCard key={g.game_id} game={g} prediction={predictions?.[g.game_id]} />
+              <MatchCard
+                key={g.game_id}
+                game={g}
+                prediction={predictions?.[g.game_id]}
+                preliminary={preliminary}
+              />
             ))}
           </div>
         )
@@ -250,10 +265,13 @@ export function GamesView({
 function MatchCard({
   game,
   prediction,
+  preliminary = false,
   played = false,
 }: {
   game: GameRow;
   prediction?: ModelPrediction;
+  /** True while the prediction feed is placeholder output. */
+  preliminary?: boolean;
   /** Played rows keep the score + "Model leaned X" line and skip the bar. */
   played?: boolean;
 }) {
@@ -309,13 +327,24 @@ function MatchCard({
         <ScoreNum value={game.away_score} />
       </div>
 
+      {/* Honesty rule: any model number from the placeholder pipeline carries
+          the same quiet Preliminary chip. TBD teaching copy has no number, so
+          it takes no chip. */}
       {prediction &&
         (teamsTbd || played ? (
-          verdict && <p className="mt-3 text-xs text-muted-foreground">{verdict.text}</p>
+          verdict && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <p className="text-xs text-muted-foreground">{verdict.text}</p>
+              {preliminary && !teamsTbd && <PreliminaryChip />}
+            </div>
+          )
         ) : (
           <div className="mt-3 space-y-1.5">
             <ProbabilityBar probs={prediction} labels={{ home: homeName, away: awayName }} />
-            {verdict && <p className="text-xs text-muted-foreground">{verdict.text}</p>}
+            <div className="flex flex-wrap items-center gap-2">
+              {verdict && <p className="text-xs text-muted-foreground">{verdict.text}</p>}
+              {preliminary && <PreliminaryChip />}
+            </div>
           </div>
         ))}
     </Link>

@@ -14,9 +14,32 @@ describe("ProbabilityBar", () => {
   it("shows percent labels inside segments", () => {
     render(<ProbabilityBar probs={{ home: 0.64, draw: 0.22, away: 0.14 }} />);
 
-    expect(screen.getByText("64%")).toBeInTheDocument();
-    expect(screen.getByText("22%")).toBeInTheDocument();
-    expect(screen.getByText("14%")).toBeInTheDocument();
+    expect(screen.getByTestId("prob-segment-home")).toHaveTextContent("64%");
+    expect(screen.getByTestId("prob-segment-draw")).toHaveTextContent("22%");
+    expect(screen.getByTestId("prob-segment-away")).toHaveTextContent("14%");
+  });
+
+  it("names every segment in the legend, including Draw", () => {
+    render(
+      <ProbabilityBar
+        probs={{ home: 0.42, draw: 0.27, away: 0.31 }}
+        labels={{ home: "France", away: "Argentina" }}
+      />,
+    );
+
+    const legend = screen.getByTestId("prob-legend");
+    expect(legend).toHaveTextContent("France 42%");
+    expect(legend).toHaveTextContent("Draw 27%");
+    expect(legend).toHaveTextContent("Argentina 31%");
+  });
+
+  it("falls back to Home/Draw/Away legend names without labels", () => {
+    render(<ProbabilityBar probs={{ home: 0.5, draw: 0.2, away: 0.3 }} />);
+
+    const legend = screen.getByTestId("prob-legend");
+    expect(legend).toHaveTextContent("Home 50%");
+    expect(legend).toHaveTextContent("Draw 20%");
+    expect(legend).toHaveTextContent("Away 30%");
   });
 
   it("normalizes inputs that do not sum to 1", () => {
