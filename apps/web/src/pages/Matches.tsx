@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { SPORT_LABELS } from "@/lib/sports";
 import { Skeleton } from "@/components/ui/skeleton";
+import { GamesViewVariantContext } from "@/components/GamesView";
 
 const Football = lazy(() => import("./Football"));
 const NBA = lazy(() => import("./NBA"));
@@ -58,9 +59,15 @@ export default function Matches() {
         ))}
       </div>
 
-      <Suspense fallback={<MatchesSkeleton />}>
-        <Page />
-      </Suspense>
+      {/* Soccer reads as a grouped feed ("Up next" then "Played") with no
+          sort chips; NBA/MLB keep their sortable schedule view. */}
+      <GamesViewVariantContext.Provider
+        value={sport === "football" ? "grouped" : "sortable"}
+      >
+        <Suspense fallback={<MatchesSkeleton />}>
+          <Page />
+        </Suspense>
+      </GamesViewVariantContext.Provider>
     </div>
   );
 }

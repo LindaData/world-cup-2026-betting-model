@@ -4,12 +4,19 @@ import Papa from "papaparse";
 import { ArrowRight, PenLine } from "lucide-react";
 import { useData } from "@/context/DataContext";
 import { LiveScoreCard } from "@/components/LiveScoreCard";
+import { PreliminaryChip } from "@/components/PreliminaryChip";
 import { ProbabilityBar } from "@/components/ProbabilityBar";
 import { StatusChip } from "@/components/StatusBadge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSkeletonTimeout } from "@/hooks/use-skeleton-timeout";
 import { BETTING_DESK_ENABLED } from "@/lib/flags";
 import { formatMoney } from "@/lib/edgeMath";
+import {
+  getPredictions,
+  getTitleChances,
+  type ModelPrediction,
+  type TitleChance,
+} from "@/lib/modelFeeds";
 import {
   SAMPLE_LEDGER_CSV,
   isSampleLedgerCsv,
@@ -24,17 +31,19 @@ import {
 } from "@/lib/betLedger";
 import {
   friendlyTeamName,
-  isFinishedStatus,
   isPlaceholderTeam,
   matchVerdict,
   placeholderMatchLabel,
 } from "@/lib/matchVerdict";
-import type { LiveFeed, Manifest } from "@/types";
+import type { LiveFeed } from "@/types";
 
 /** Must match the Bankroll page's storage key so both read the same ledger. */
 const LEDGER_STORAGE_KEY = "gsp:bankroll-ledger:v1";
 
 const LIVE_FEED_KEYS = ["football_live", "nba_live", "mlb_live"] as const;
+
+/** How many compact cards "Up next" shows before deferring to Matches. */
+const UP_NEXT_LIMIT = 6;
 
 interface FixtureRow {
   game_id: string;
@@ -48,25 +57,11 @@ interface FixtureRow {
   venue?: string;
 }
 
-interface PredictionEntry {
-  home_team?: string;
-  away_team?: string;
-  home: number;
-  draw: number;
-  away: number;
-}
-
-interface PredictionsFeed {
-  predictions?: Record<string, PredictionEntry>;
-  model_version?: string;
-  generated_at_utc?: string;
-}
-
 export default function Today() {
   const { results, loading } = useData();
 
-  // Coarse clock for the countdown; ticks once a minute (information update,
-  // not decoration, so no reduced-motion concern).
+  // Coarse clock for the relative kickoff copy; ticks once a minute
+  // (information update, not decoration, so no reduced-motion concern).
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
     const id = window.setInterval(() => setNow(new Date()), 60_000);
@@ -77,9 +72,14 @@ export default function Today() {
     () => asFixtures(results.football_fixtures?.data),
     [results.football_fixtures],
   );
-  const predictionsFeed = (results.model_predictions?.data as PredictionsFeed | null) ?? null;
-  const predictions = predictionsFeed?.predictions ?? {};
-  const manifest = (results.manifest?.data as Manifest | null) ?? null;
+  const { map: predictions, preliminary: predictionsPreliminary } = useMemo(
+    () => getPredictions(results),
+    [results],
+  );
+  const { list: titleChances, preliminary: championPreliminary } = useMemo(
+    () => getTitleChances(results),
+    [results],
+  );
 
   const liveEvents = useMemo(
     () =>
@@ -92,10 +92,6 @@ export default function Today() {
   );
 
   const todayKey = localDateKey(now);
-  const todaysMatches = useMemo(
-    () => fixtures.filter((f) => localDateKey(new Date(f.date_utc)) === todayKey),
-    [fixtures, todayKey],
-  );
   const upcoming = useMemo(
     () =>
       fixtures
@@ -103,7 +99,19 @@ export default function Today() {
         .sort((a, b) => new Date(a.date_utc).getTime() - new Date(b.date_utc).getTime()),
     [fixtures, now],
   );
-  const nextMatch = upcoming[0] ?? null;
+  // The featured card only fronts a real matchup — a TBD bracket slot never
+  // gets the hero treatment, it waits in "Up next" with teaching copy.
+  const nextMatch = useMemo(
+    () =>
+      upcoming.find(
+        (f) => !isPlaceholderTeam(f.home_team) && !isPlaceholderTeam(f.away_team),
+      ) ?? null,
+    [upcoming],
+  );
+  const upNext = useMemo(
+    () => upcoming.filter((f) => f !== nextMatch).slice(0, UP_NEXT_LIMIT),
+    [upcoming, nextMatch],
+  );
 
   const ledger = useMemo(() => readLedgerSummary(todayKey), [todayKey]);
 
@@ -115,7 +123,7 @@ export default function Today() {
     return (
       <div className="space-y-6" aria-busy="true">
         <Skeleton className="h-28 w-full" />
-        <Skeleton className="h-24 w-full" />
+        <Skeleton className="h-40 w-full" />
         <Skeleton className="h-40 w-full" />
       </div>
     );
@@ -125,8 +133,9 @@ export default function Today() {
   // page is demo data, card/section-level chips only otherwise — never both
   // in the same viewport.
   const fixturesDemo = results.football_fixtures?.origin === "demo";
+  const championDemo = results.model_champion?.origin === "demo";
   const ledgerDemo = !BETTING_DESK_ENABLED || !ledger || ledger.isSample;
-  const pageDemo = fixturesDemo && ledgerDemo;
+  const pageDemo = fixturesDemo && championDemo && ledgerDemo;
 
   return (
     <div className="space-y-6 pb-36 lg:pb-4">
@@ -141,67 +150,63 @@ export default function Today() {
       {BETTING_DESK_ENABLED ? (
         <BankrollHero ledger={ledger} showDemoChip={!pageDemo} />
       ) : (
-        <PublicHero
-          nextMatch={nextMatch}
-          now={now}
-          predictionsFeed={predictionsFeed}
-          manifest={manifest}
+        <ChampionHero
+          chances={titleChances}
+          preliminary={championPreliminary}
+          demoChip={championDemo && !pageDemo}
         />
       )}
 
-      <Section label="Live now">
-        {liveEvents.length > 0 ? (
+      <NextMatchCard
+        fixture={nextMatch}
+        prediction={nextMatch ? predictions[nextMatch.game_id] ?? null : null}
+        preliminary={predictionsPreliminary}
+        demoChip={fixturesDemo && !pageDemo}
+        now={now}
+      />
+
+      {liveEvents.length > 0 && (
+        <Section label="Live now">
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {liveEvents.map((event) => (
-              <LiveScoreCard key={event.event_id} event={event} />
+              <Link key={event.event_id} to={`/match/${event.event_id}`} className="block">
+                <LiveScoreCard event={event} prediction={predictions[event.event_id]} />
+              </Link>
             ))}
           </div>
-        ) : (
-          <EmptyState
-            title="Nothing is live right now."
-            body="The moment a match kicks off, its score lands here and updates through full time."
-          />
-        )}
-      </Section>
+        </Section>
+      )}
 
       <Section
-        label="Today's matches"
-        chip={fixturesDemo && !pageDemo ? <StatusChip tone="muted" label="Demo" /> : null}
+        label="Up next"
+        chip={
+          <>
+            {fixturesDemo && !pageDemo && <StatusChip tone="muted" label="Demo" />}
+            {predictionsPreliminary && upNext.length > 0 && <PreliminaryChip />}
+          </>
+        }
       >
-        {todaysMatches.length > 0 ? (
+        {upNext.length > 0 ? (
           <div className="grid gap-3 sm:grid-cols-2">
-            {todaysMatches.map((fixture) => (
-              <MatchCard
+            {upNext.map((fixture) => (
+              <UpNextCard
                 key={fixture.game_id}
                 fixture={fixture}
                 prediction={predictions[fixture.game_id] ?? null}
+                now={now}
               />
             ))}
           </div>
         ) : upcoming.length > 0 ? (
-          <div className="space-y-2.5">
-            <EmptyState
-              title="No kickoffs today."
-              body="Here's what's next on the calendar — match cards move up here on game day."
-            />
-            {/* The upcoming cards get their own label so the section header
-                never contradicts its content (none of these are today). */}
-            <h3 className="label-mono pt-1">Up next</h3>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {upcoming.slice(0, 4).map((fixture) => (
-                <MatchCard
-                  key={fixture.game_id}
-                  fixture={fixture}
-                  prediction={predictions[fixture.game_id] ?? null}
-                  showDate
-                />
-              ))}
-            </div>
-          </div>
+          <EmptyState
+            title="That's the whole slate."
+            body="Every remaining fixture is above — new matches appear here the moment the schedule publishes."
+            link={{ to: "/matches", label: "Browse all matches" }}
+          />
         ) : (
           <EmptyState
             title="No matches scheduled yet."
-            body="Once the fixture feed publishes, each match day shows team matchups, kickoff times, and a home/draw/away probability bar for what the model thinks of every result."
+            body="Once the fixture feed publishes, each upcoming match shows up here with kickoff time and the model's win chances."
             link={{ to: "/status", label: "Check feed status" }}
           />
         )}
@@ -304,144 +309,206 @@ function BankrollHero({
   );
 }
 
-function PublicHero({
-  nextMatch,
-  now,
-  predictionsFeed,
-  manifest,
+/**
+ * The shop window: the model's title chances as a movers-style leaderboard.
+ * Bars scale relative to the favorite (leader fills the row) so the ranking
+ * reads at a glance; the printed percentage carries the honest number.
+ */
+function ChampionHero({
+  chances,
+  preliminary,
+  demoChip,
 }: {
-  nextMatch: FixtureRow | null;
-  now: Date;
-  predictionsFeed: PredictionsFeed | null;
-  manifest: Manifest | null;
+  chances: TitleChance[];
+  preliminary: boolean;
+  demoChip: boolean;
 }) {
-  const predictionCount = Object.keys(predictionsFeed?.predictions ?? {}).length;
-  const publishedGames = Object.values(manifest?.sports ?? {}).reduce(
-    (sum, sport) => sum + (sport.published_games || 0),
-    0,
-  );
-  const recordCaption =
-    predictionCount > 0
-      ? `${predictionCount} prediction${predictionCount === 1 ? "" : "s"} live${
-          predictionsFeed?.model_version ? ` · ${predictionsFeed.model_version}` : ""
-        } — wins and losses appear once matches are graded.`
-      : publishedGames > 0
-        ? `Tracking ${publishedGames} published matches — the model's win-loss record appears after the first graded matchday.`
-        : "The model's win-loss record appears here after the first graded matchday.";
+  const rows = chances.slice(0, 8).map((c) => ({
+    team: c.team,
+    // Feed publishes 0-1 fractions; tolerate 0-100 so a pipeline change
+    // can't render "3100%".
+    pct: c.probability <= 1 ? c.probability * 100 : c.probability,
+  }));
+  const maxPct = rows.reduce((max, row) => Math.max(max, row.pct), 0);
 
   return (
-    <section className="surface-card grid gap-5 p-5 sm:grid-cols-2">
-      <div>
-        <p className="label-mono">Next match</p>
-        {nextMatch ? (
-          <>
-            <p className="num-hero mt-1">{formatCountdown(new Date(nextMatch.date_utc), now)}</p>
-            <p className="mt-1 text-sm text-foreground">
-              {nextMatch.home_team} vs {nextMatch.away_team}
-            </p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              {formatKickoff(new Date(nextMatch.date_utc), true)}
-              {nextMatch.venue ? ` · ${nextMatch.venue}` : ""}
-            </p>
-          </>
-        ) : (
-          <>
-            <p className="num-hero mt-1 text-muted-foreground">—</p>
-            <p className="mt-1.5 text-xs text-muted-foreground">
-              When fixtures publish, a countdown to the next kickoff lives here.
-            </p>
-          </>
-        )}
+    <section className="surface-card p-5">
+      <div className="flex items-center gap-2">
+        <p className="label-mono">The model's call</p>
+        {demoChip && <StatusChip tone="muted" label="Demo" />}
       </div>
-      <div className="border-t border-border pt-4 sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0">
-        <p className="label-mono">Model record</p>
-        <p className="num-hero mt-1 text-muted-foreground">—</p>
-        <p className="mt-1.5 text-xs text-muted-foreground">{recordCaption}</p>
+      <div className="mt-0.5 flex flex-wrap items-center gap-2">
+        <h2 className="text-lg font-bold text-card-foreground">Who wins the World Cup</h2>
+        {preliminary && <PreliminaryChip />}
       </div>
+
+      {rows.length > 0 ? (
+        <>
+          <div className="mt-4 space-y-3">
+            {rows.map((row) => (
+              <div key={row.team}>
+                <div className="flex items-baseline justify-between gap-3">
+                  <p className="truncate text-sm font-semibold text-card-foreground">{row.team}</p>
+                  <p className="shrink-0 text-2xl font-extrabold tabular-nums text-gain">
+                    {Math.round(row.pct)}%
+                  </p>
+                </div>
+                <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full rounded-full bg-gain"
+                    style={{ width: `${maxPct > 0 ? (row.pct / maxPct) * 100 : 0}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Each number is the model's chance that team lifts the trophy.
+          </p>
+        </>
+      ) : (
+        <p className="mt-3 text-xs text-muted-foreground">
+          The model's title chances land here once the champion feed publishes — one green bar per
+          team, favorite on top.
+        </p>
+      )}
     </section>
   );
 }
 
 /* ------------------------------ match cards ------------------------------ */
 
-function MatchCard({
+/** The featured fixture: big names, plain-words kickoff, full probability bar. */
+function NextMatchCard({
   fixture,
   prediction,
-  showDate = false,
+  preliminary,
+  demoChip,
+  now,
 }: {
-  fixture: FixtureRow;
-  prediction: PredictionEntry | null;
-  showDate?: boolean;
+  fixture: FixtureRow | null;
+  prediction: ModelPrediction | null;
+  preliminary: boolean;
+  demoChip: boolean;
+  now: Date;
 }) {
+  if (!fixture) {
+    return (
+      <section className="surface-card p-5">
+        <p className="label-mono">Next match</p>
+        <p className="num-hero mt-1 text-muted-foreground">—</p>
+        <p className="mt-1.5 text-xs text-muted-foreground">
+          When fixtures publish, the next kickoff lives here with the model's win chances for both
+          teams.
+        </p>
+      </section>
+    );
+  }
+
   const kickoff = new Date(fixture.date_utc);
-  const finished = isFinished(fixture);
-  // Bracket placeholders ("Loser SF1") get a human title and friendly names
-  // so a TBD third-place match never reads as broken data.
-  const bracketLabel = placeholderMatchLabel(fixture.home_team, fixture.away_team);
   const homeName = friendlyTeamName(fixture.home_team);
   const awayName = friendlyTeamName(fixture.away_team);
-  // Teams-TBD fixtures never render a hard probability bar — a concrete 44%
-  // for teams that don't exist yet is false precision, not honesty.
-  const teamsTbd =
-    isPlaceholderTeam(fixture.home_team) || isPlaceholderTeam(fixture.away_team);
-  const meta = [
-    finished ? "Full time" : formatKickoff(kickoff, showDate),
-    bracketLabel ? "Teams decided after the semi-finals" : null,
-    fixture.venue,
-    fixture.league,
-  ]
-    .filter(Boolean)
-    .join(" · ");
   const verdict = prediction
     ? matchVerdict({
         homeTeam: fixture.home_team,
         awayTeam: fixture.away_team,
         probs: prediction,
-        finished,
-        homeScore: fixture.home_score,
-        awayScore: fixture.away_score,
       })
     : null;
 
   return (
-    <div className="surface-card p-4">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="truncate font-semibold text-card-foreground">
-            {bracketLabel ?? (
-              <>
-                {homeName} <span className="font-normal text-muted-foreground">vs</span>{" "}
-                {awayName}
-              </>
-            )}
-          </p>
-          <p className="mt-0.5 truncate text-xs text-muted-foreground">{meta}</p>
+    <Link
+      to={`/match/${fixture.game_id}`}
+      className="surface-card block p-5 transition-colors hover:border-muted-foreground/50"
+    >
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <p className="label-mono">Next match</p>
+          {demoChip && <StatusChip tone="muted" label="Demo" />}
         </div>
-        {finished && (
-          <p className="shrink-0 text-2xl font-extrabold tabular-nums text-card-foreground">
-            {fixture.home_score}–{fixture.away_score}
-          </p>
-        )}
+        <p className="label-mono tabular-nums">in {formatCountdown(kickoff, now)}</p>
       </div>
-      {teamsTbd ? (
-        <p className="mt-3 text-xs text-muted-foreground">
-          {verdict?.text ??
-            "Teams aren't set yet — model odds appear here once both teams are decided."}
-        </p>
-      ) : prediction ? (
-        <div className="mt-3 space-y-1.5">
-          <ProbabilityBar
-            probs={{ home: prediction.home, draw: prediction.draw, away: prediction.away }}
-            labels={{ home: homeName, away: awayName }}
-          />
-          {verdict && <p className="text-xs text-muted-foreground">{verdict.text}</p>}
+
+      <p className="mt-2 text-2xl font-extrabold leading-tight text-card-foreground">
+        {homeName} <span className="text-lg font-normal text-muted-foreground">vs</span> {awayName}
+      </p>
+      <p className="mt-1 text-sm font-medium text-foreground">
+        {formatRelativeKickoff(kickoff, now)}
+      </p>
+      <p className="mt-0.5 text-xs text-muted-foreground">
+        {formatKickoff(kickoff, true)}
+        {fixture.venue ? ` · ${fixture.venue}` : ""}
+      </p>
+
+      {prediction ? (
+        <div className="mt-4 space-y-2">
+          <ProbabilityBar probs={prediction} labels={{ home: homeName, away: awayName }} />
+          <div className="flex flex-wrap items-center gap-2">
+            {verdict && <p className="text-sm text-muted-foreground">{verdict.text}</p>}
+            {preliminary && <PreliminaryChip />}
+          </div>
         </div>
       ) : (
-        <p className="mt-3 text-xs text-muted-foreground">
+        <p className="mt-4 text-xs text-muted-foreground">
           Model prediction lands before kickoff.
         </p>
       )}
-    </div>
+    </Link>
+  );
+}
+
+/** Compact upcoming row: matchup + kickoff left, the model's pick right. */
+function UpNextCard({
+  fixture,
+  prediction,
+  now,
+}: {
+  fixture: FixtureRow;
+  prediction: ModelPrediction | null;
+  now: Date;
+}) {
+  const kickoff = new Date(fixture.date_utc);
+  // Bracket placeholders ("Loser SF1") get a human title and friendly names
+  // so a TBD third-place match never reads as broken data.
+  const bracketLabel = placeholderMatchLabel(fixture.home_team, fixture.away_team);
+  const homeName = friendlyTeamName(fixture.home_team);
+  const awayName = friendlyTeamName(fixture.away_team);
+  // Teams-TBD fixtures never quote a hard percentage — a concrete 44% for
+  // teams that don't exist yet is false precision, not honesty.
+  const teamsTbd =
+    isPlaceholderTeam(fixture.home_team) || isPlaceholderTeam(fixture.away_team);
+  const pick = !teamsTbd && prediction ? topPick(prediction, homeName, awayName) : null;
+  const meta = [
+    formatRelativeKickoff(kickoff, now),
+    teamsTbd ? "Teams decided after the semi-finals" : fixture.venue,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+  return (
+    <Link
+      to={`/match/${fixture.game_id}`}
+      className="surface-card flex items-center justify-between gap-3 p-4 transition-colors hover:border-muted-foreground/50"
+    >
+      <div className="min-w-0">
+        <p className="truncate font-semibold text-card-foreground">
+          {bracketLabel ?? (
+            <>
+              {homeName} <span className="font-normal text-muted-foreground">vs</span> {awayName}
+            </>
+          )}
+        </p>
+        <p className="mt-0.5 truncate text-xs text-muted-foreground">{meta}</p>
+      </div>
+      {pick ? (
+        <div className="shrink-0 text-right">
+          <p className="text-xl font-extrabold tabular-nums text-gain">{pick.pct}%</p>
+          <p className="label-mono">{pick.name}</p>
+        </div>
+      ) : (
+        <p className="label-mono shrink-0">{teamsTbd ? "TBD" : "—"}</p>
+      )}
+    </Link>
   );
 }
 
@@ -507,8 +574,24 @@ function asFixtures(data: unknown): FixtureRow[] {
   );
 }
 
-function isFinished(fixture: FixtureRow): boolean {
-  return isFinishedStatus(fixture.status);
+/** The model's most likely result for a compact card: name + rounded percent. */
+function topPick(
+  prediction: ModelPrediction,
+  homeName: string,
+  awayName: string,
+): { name: string; pct: number } | null {
+  const home = Math.max(prediction.home || 0, 0);
+  const draw = Math.max(prediction.draw || 0, 0);
+  const away = Math.max(prediction.away || 0, 0);
+  const total = home + draw + away;
+  if (total <= 0) return null;
+  const pick: "home" | "draw" | "away" =
+    home >= draw && home >= away ? "home" : away >= draw ? "away" : "draw";
+  const value = pick === "home" ? home : pick === "away" ? away : draw;
+  return {
+    name: pick === "draw" ? "Draw" : pick === "home" ? homeName : awayName,
+    pct: Math.round((value / total) * 100),
+  };
 }
 
 function localDateKey(d: Date): string {
@@ -534,9 +617,36 @@ function formatKickoff(d: Date, withDay: boolean): string {
   ).format(d);
 }
 
+/** Whole local calendar days between now and a target date (0 = today). */
+function daysUntilLocal(target: Date, now: Date): number {
+  const startOfNow = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  const startOfTarget = new Date(
+    target.getFullYear(),
+    target.getMonth(),
+    target.getDate(),
+  ).getTime();
+  return Math.round((startOfTarget - startOfNow) / 86_400_000);
+}
+
+/** Plain-words kickoff in the user's local time: "Tomorrow, 3:00 PM". */
+function formatRelativeKickoff(d: Date, now: Date): string {
+  const time = new Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(d);
+  const days = daysUntilLocal(d, now);
+  if (days === 0) return `Today, ${time}`;
+  if (days === 1) return `Tomorrow, ${time}`;
+  if (days > 1 && days < 7) {
+    const weekday = new Intl.DateTimeFormat(undefined, { weekday: "long" }).format(d);
+    return `${weekday}, ${time}`;
+  }
+  return formatKickoff(d, true);
+}
+
 function formatCountdown(target: Date, now: Date): string {
   const ms = target.getTime() - now.getTime();
-  if (ms <= 0) return "Kicking off";
+  if (ms <= 0) return "moments";
   const mins = Math.floor(ms / 60_000);
   const days = Math.floor(mins / 1440);
   const hours = Math.floor((mins % 1440) / 60);
