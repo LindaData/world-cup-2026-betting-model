@@ -46,7 +46,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-r-v2-
 
+      # Non-fatal on Pages: a broken R toolchain must never block deploying
+      # the committed site HTML and the web app.
       - name: Install R packages
+        continue-on-error: true
         run: Rscript R/00_setup.R
 
       # Fresh render when it works; committed docs/ HTML otherwise, so a
