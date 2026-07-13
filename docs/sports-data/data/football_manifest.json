@@ -1,0 +1,15 @@
+{
+  "country": null,
+  "files": {
+    "fixtures": "football_fixtures.json",
+    "standings": "football_standings.json"
+  },
+  "fixtures_rows": 104,
+  "host": "site.api.espn.com",
+  "league_id": "fifa.world",
+  "league_name": "FIFA World Cup",
+  "provider": "ESPN",
+  "refreshed_at_utc": "2026-07-13T00:31:17.256699Z",
+  "season": "2026",
+  "standings_rows": 48
+}
