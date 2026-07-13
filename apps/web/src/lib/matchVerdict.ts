@@ -28,7 +28,12 @@ interface VerdictProbs {
 /** True when a team name is a bracket placeholder, not a real team. */
 export function isPlaceholderTeam(name: string): boolean {
   const trimmed = (name ?? "").trim();
-  return /^(winner|loser)\b/i.test(trimmed) || /^tbd\b/i.test(trimmed);
+  return (
+    /^(winner|loser)\b/i.test(trimmed) ||
+    // ESPN publishes trailing forms like "Semifinal 1 Winner".
+    /\b(winner|loser)$/i.test(trimmed) ||
+    /^tbd\b/i.test(trimmed)
+  );
 }
 
 /** "Loser SF1" → "Semi-final 1 loser"; real team names pass through. */
@@ -46,10 +51,15 @@ export function friendlyTeamName(name: string): string {
  */
 export function placeholderMatchLabel(homeTeam: string, awayTeam: string): string | null {
   if (!isPlaceholderTeam(homeTeam) || !isPlaceholderTeam(awayTeam)) return null;
-  if (/^loser\s+sf\s*1$/i.test(homeTeam.trim()) && /^loser\s+sf\s*2$/i.test(awayTeam.trim())) {
+  // Both feed spellings: "Loser SF1" (demo/API) and "Semifinal 1 Loser" (ESPN).
+  const sfLoser = (n: number) =>
+    new RegExp(`^(loser\\s+sf\\s*${n}|semi-?final\\s*${n}\\s+loser)$`, "i");
+  const sfWinner = (n: number) =>
+    new RegExp(`^(winner\\s+sf\\s*${n}|semi-?final\\s*${n}\\s+winner)$`, "i");
+  if (sfLoser(1).test(homeTeam.trim()) && sfLoser(2).test(awayTeam.trim())) {
     return "Third-place match";
   }
-  if (/^winner\s+sf\s*1$/i.test(homeTeam.trim()) && /^winner\s+sf\s*2$/i.test(awayTeam.trim())) {
+  if (sfWinner(1).test(homeTeam.trim()) && sfWinner(2).test(awayTeam.trim())) {
     return "Final";
   }
   return null;

@@ -1,3 +1,4 @@
+import { PreliminaryChip } from "@/components/PreliminaryChip";
 import { ProbabilityBar } from "@/components/ProbabilityBar";
 import { cn } from "@/lib/utils";
 import type { LiveEvent } from "@/types";
@@ -5,10 +6,13 @@ import type { LiveEvent } from "@/types";
 export function LiveScoreCard({
   event,
   prediction,
+  preliminary = false,
 }: {
   event: LiveEvent;
   /** Model win probabilities for this event, when the model has them. */
   prediction?: { home: number; draw: number; away: number };
+  /** True while the prediction feed is placeholder output. */
+  preliminary?: boolean;
 }) {
   const isLive = event.state === "in";
   return (
@@ -32,11 +36,13 @@ export function LiveScoreCard({
       </div>
 
       {prediction && (
-        <ProbabilityBar
-          className="mt-3"
-          probs={prediction}
-          labels={{ home: event.home_team, away: event.away_team }}
-        />
+        <div className="mt-3 space-y-1.5">
+          <ProbabilityBar
+            probs={prediction}
+            labels={{ home: event.home_team, away: event.away_team }}
+          />
+          {preliminary && <PreliminaryChip />}
+        </div>
       )}
 
       {event.broadcasts && event.broadcasts.length > 0 && (

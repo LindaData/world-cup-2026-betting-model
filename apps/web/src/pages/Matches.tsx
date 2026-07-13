@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { EXTRA_SPORTS_ENABLED } from "@/lib/flags";
 import { SPORT_LABELS } from "@/lib/sports";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GamesViewVariantContext } from "@/components/GamesView";
@@ -11,10 +12,16 @@ const MLB = lazy(() => import("./MLB"));
 
 // Labels come from the shared sports constant so every tab, table, and ledger
 // calls the same sport by the same name ("Soccer", not "Football").
+// NBA/MLB have no model coverage yet, so their tabs are flag-gated: public
+// builds see one sport and no switcher at all.
 const SPORTS = [
   { key: "football", label: SPORT_LABELS.football, Page: Football },
-  { key: "nba", label: SPORT_LABELS.nba, Page: NBA },
-  { key: "mlb", label: SPORT_LABELS.mlb, Page: MLB },
+  ...(EXTRA_SPORTS_ENABLED
+    ? [
+        { key: "nba", label: SPORT_LABELS.nba, Page: NBA },
+        { key: "mlb", label: SPORT_LABELS.mlb, Page: MLB },
+      ]
+    : []),
 ] as const;
 
 type SportKey = (typeof SPORTS)[number]["key"];
@@ -36,28 +43,31 @@ export default function Matches() {
 
   return (
     <div className="space-y-5">
-      <div
-        role="group"
-        aria-label="Choose a sport"
-        className="inline-flex rounded-lg border border-border bg-card p-1"
-      >
-        {SPORTS.map((s) => (
-          <button
-            key={s.key}
-            type="button"
-            aria-pressed={s.key === sport}
-            onClick={() => selectSport(s.key)}
-            className={cn(
-              "min-h-11 rounded-md px-4 text-sm font-semibold transition-colors",
-              s.key === sport
-                ? "bg-muted text-primary"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            {s.label}
-          </button>
-        ))}
-      </div>
+      {/* One live sport = no switcher: the World Cup heading stands alone. */}
+      {SPORTS.length > 1 && (
+        <div
+          role="group"
+          aria-label="Choose a sport"
+          className="inline-flex rounded-lg border border-border bg-card p-1"
+        >
+          {SPORTS.map((s) => (
+            <button
+              key={s.key}
+              type="button"
+              aria-pressed={s.key === sport}
+              onClick={() => selectSport(s.key)}
+              className={cn(
+                "min-h-11 rounded-md px-4 text-sm font-semibold transition-colors",
+                s.key === sport
+                  ? "bg-muted text-primary"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Soccer reads as a grouped feed ("Up next" then "Played") with no
           sort chips; NBA/MLB keep their sortable schedule view. */}

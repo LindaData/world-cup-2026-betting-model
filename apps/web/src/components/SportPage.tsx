@@ -2,11 +2,12 @@ import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { useData } from "@/context/DataContext";
 import { LiveScoreCard } from "@/components/LiveScoreCard";
-import { GamesView, type PredictionMap } from "@/components/GamesView";
+import { GamesView } from "@/components/GamesView";
 import { StandingsView } from "@/components/StandingsView";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSkeletonTimeout } from "@/hooks/use-skeleton-timeout";
+import { getPredictions } from "@/lib/modelFeeds";
 import type { GameRow, LiveFeed, StandingRow } from "@/types";
 
 /** Per-sport section wording (soccer defaults; NBA/MLB localize these). */
@@ -34,26 +35,6 @@ interface SportPageProps {
   mapStandings?: (data: unknown) => StandingRow[];
 }
 
-/** Pull the {game_id: {home, draw, away}} map out of the model_predictions feed. */
-function extractPredictions(data: unknown): PredictionMap {
-  if (!data || typeof data !== "object") return {};
-  const preds = (data as { predictions?: unknown }).predictions;
-  if (!preds || typeof preds !== "object") return {};
-  const out: PredictionMap = {};
-  for (const [id, v] of Object.entries(preds as Record<string, unknown>)) {
-    if (!v || typeof v !== "object") continue;
-    const p = v as Record<string, unknown>;
-    if (
-      typeof p.home === "number" &&
-      typeof p.draw === "number" &&
-      typeof p.away === "number"
-    ) {
-      out[id] = { home: p.home, draw: p.draw, away: p.away };
-    }
-  }
-  return out;
-}
-
 export function SportPage({
   title,
   liveKey,
@@ -71,62 +52,92 @@ export function SportPage({
   const live = results[liveKey];
   const games = results[gamesKey];
   const standings = results[standingsKey];
-  const predictionSource = results["model_predictions"];
 
   const liveFeed = live?.data as LiveFeed | null;
+  const liveEvents = liveFeed?.events ?? [];
   const gameRows = mapGames
     ? mapGames(games?.data ?? null)
     : ((games?.data as GameRow[] | null) ?? []);
   const standingRows = mapStandings
     ? mapStandings(standings?.data ?? null)
     : ((standings?.data as StandingRow[] | null) ?? []);
-  const predictions = useMemo(
-    () => extractPredictions(predictionSource?.data ?? null),
-    [predictionSource],
+  const { map: predictions, preliminary } = useMemo(
+    () => getPredictions(results),
+    [results],
   );
 
-  // Mobile answers "who plays next?" first: fixtures render above the full
-  // standings table. Desktop keeps standings before fixtures (order classes
-  // only reorder below md).
+  // Same order on every breakpoint: live scores (only while something is
+  // actually live), then the fixture feed with the model's bars — the
+  // product — then standings. The quiet no-live state collapses into a
+  // one-line strip instead of a full-height card above the fold.
   return (
     <div className="flex flex-col gap-8">
-      <div className="order-none">
+      <div>
         <h1 className="text-2xl font-bold tracking-tight md:text-3xl">{title}</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           {subtitle ?? "Historical research data. Not betting advice."}
         </p>
       </div>
 
-      <Section
-        className="order-1"
-        title={copy?.liveTitle ?? "Live & Recent"}
-        badge={live && <StatusBadge origin={live.origin} />}
-      >
-        {loading && !live && !skeletonExpired ? (
+      {loading && !live && !skeletonExpired ? (
+        <Section
+          title={copy?.liveTitle ?? "Live & Recent"}
+          badge={live && <StatusBadge origin={live.origin} />}
+        >
           <SkeletonGrid />
-        ) : liveFeed && liveFeed.events.length > 0 ? (
+        </Section>
+      ) : liveEvents.length > 0 ? (
+        <Section
+          title={copy?.liveTitle ?? "Live & Recent"}
+          badge={live && <StatusBadge origin={live.origin} />}
+        >
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {liveFeed.events.map((e) => (
-              <LiveScoreCard key={e.event_id} event={e} prediction={predictions[e.event_id]} />
+            {liveEvents.map((e) => (
+              <LiveScoreCard
+                key={e.event_id}
+                event={e}
+                prediction={predictions[e.event_id]}
+                preliminary={preliminary}
+              />
             ))}
           </div>
+        </Section>
+      ) : (
+        <SlimStrip
+          msg={
+            feedOffline(live)
+              ? copy?.offlineLive ??
+                "Feed offline — live scores return here on their own once it reconnects."
+              : copy?.emptyLive ??
+                "No live matches right now. Scores tick here in real time while games are on."
+          }
+        />
+      )}
+
+      <Section
+        title={copy?.gamesTitle ?? "Fixtures & Results"}
+        badge={games && <StatusBadge origin={games.origin} />}
+      >
+        {loading && !games && !skeletonExpired ? (
+          <Skeleton className="h-64 w-full" />
+        ) : gameRows.length ? (
+          <GamesView rows={gameRows} predictions={predictions} preliminary={preliminary} />
         ) : (
           <EmptyMsg
             msg={
-              copy?.emptyLive ??
-              "No live matches right now. Scores tick here in real time while games are on."
+              copy?.emptyGames ??
+              "No matches yet. Fixtures, final scores, and the model's win probabilities show up here once the data feed goes live."
             }
             offlineMsg={
-              copy?.offlineLive ??
-              "Feed offline — live scores return here on their own once it reconnects."
+              copy?.offlineGames ??
+              "Feed offline — the match schedule, final scores, and model probabilities return here on their own once it reconnects."
             }
-            offline={feedOffline(live)}
+            offline={feedOffline(games)}
           />
         )}
       </Section>
 
       <Section
-        className="order-3 md:order-2"
         title={copy?.standingsTitle ?? "Standings"}
         badge={standings && <StatusBadge origin={standings.origin} />}
       >
@@ -148,31 +159,16 @@ export function SportPage({
           />
         )}
       </Section>
-
-      <Section
-        className="order-2 md:order-3"
-        title={copy?.gamesTitle ?? "Fixtures & Results"}
-        badge={games && <StatusBadge origin={games.origin} />}
-      >
-        {loading && !games && !skeletonExpired ? (
-          <Skeleton className="h-64 w-full" />
-        ) : gameRows.length ? (
-          <GamesView rows={gameRows} predictions={predictions} />
-        ) : (
-          <EmptyMsg
-            msg={
-              copy?.emptyGames ??
-              "No matches yet. Fixtures, final scores, and the model's win probabilities show up here once the data feed goes live."
-            }
-            offlineMsg={
-              copy?.offlineGames ??
-              "Feed offline — the match schedule, final scores, and model probabilities return here on their own once it reconnects."
-            }
-            offline={feedOffline(games)}
-          />
-        )}
-      </Section>
     </div>
+  );
+}
+
+/** One-line quiet state for "nothing is live" — never a full-height card. */
+function SlimStrip({ msg }: { msg: string }) {
+  return (
+    <p className="rounded-md border border-border bg-card px-3 py-2 text-xs text-muted-foreground">
+      {msg}
+    </p>
   );
 }
 

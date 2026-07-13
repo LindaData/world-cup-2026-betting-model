@@ -31,7 +31,9 @@ export function StandingsView({ rows }: { rows: StandingRow[] }) {
   // single-group filter, so a per-row group label would state the group a
   // second (or third) time. A future flat/sortable view without section
   // headers can reintroduce the column.
-  const columnCount = isFootball ? 9 : 6;
+  // Football drops the FORM column: "WWD" strings are insider shorthand, not
+  // model output — and the model is the product.
+  const columnCount = isFootball ? 8 : 6;
 
   return (
     <div className="space-y-3">
@@ -74,7 +76,7 @@ export function StandingsView({ rows }: { rows: StandingRow[] }) {
                         <span className="label-mono ml-1">pts</span>
                       </div>
                       <div className="label-mono mt-1 tabular-nums">
-                        {r.wins}-{r.draws}-{r.losses} · GD {r.goal_difference}
+                        {r.wins}W-{r.draws}D-{r.losses}L · {formatGoalDiff(r.goal_difference)}
                       </div>
                     </>
                   ) : (
@@ -109,9 +111,11 @@ export function StandingsView({ rows }: { rows: StandingRow[] }) {
                   <Th right>Pts</Th>
                 </>
               ) : (
-                <Th right>Pct</Th>
+                <>
+                  <Th right>Pct</Th>
+                  <Th>Form</Th>
+                </>
               )}
-              <Th>Form</Th>
             </tr>
           </thead>
           <tbody>
@@ -142,14 +146,23 @@ export function StandingsView({ rows }: { rows: StandingRow[] }) {
                     </td>
                   </>
                 ) : (
-                  <td className="px-3 py-2 text-right tabular-nums">{r.percentage}</td>
+                  <>
+                    <td className="px-3 py-2 text-right tabular-nums">{r.percentage}</td>
+                    <td className="label-mono px-3 py-2">{r.form}</td>
+                  </>
                 )}
-                <td className="label-mono px-3 py-2">{r.form}</td>
               </tr>
               )),
             ])}
           </tbody>
         </table>
+        {/* Spell the abbreviations out once — a first-time reader should never
+            have to decode P/W/D/L/GD. */}
+        {isFootball && (
+          <p className="label-mono border-t border-border px-3 py-2">
+            P played · W wins · D draws · L losses · GD goal difference
+          </p>
+        )}
       </div>
     </div>
   );
