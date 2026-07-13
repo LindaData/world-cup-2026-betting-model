@@ -66,10 +66,10 @@ export function SportPage({
     [results],
   );
 
-  // Same order on every breakpoint: live scores (only while something is
-  // actually live), then the fixture feed with the model's bars — the
-  // product — then standings. The quiet no-live state collapses into a
-  // one-line strip instead of a full-height card above the fold.
+  // Same order on every breakpoint: live scores lead only while something is
+  // actually live; otherwise the fixture feed with the model's bars — the
+  // product — leads, and the quiet "nothing is live" line waits below the
+  // fold at the end of the page instead of opening it.
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -102,17 +102,7 @@ export function SportPage({
             ))}
           </div>
         </Section>
-      ) : (
-        <SlimStrip
-          msg={
-            feedOffline(live)
-              ? copy?.offlineLive ??
-                "Feed offline — live scores return here on their own once it reconnects."
-              : copy?.emptyLive ??
-                "No live matches right now. Scores tick here in real time while games are on."
-          }
-        />
-      )}
+      ) : null}
 
       <Section
         title={copy?.gamesTitle ?? "Fixtures & Results"}
@@ -159,6 +149,20 @@ export function SportPage({
           />
         )}
       </Section>
+
+      {/* Nothing live: one quiet line at the end of the page — the fixtures
+          and the model's bars lead, never an empty placeholder. */}
+      {!(loading && !live && !skeletonExpired) && liveEvents.length === 0 && (
+        <SlimStrip
+          msg={
+            feedOffline(live)
+              ? copy?.offlineLive ??
+                "Feed offline — live scores return here on their own once it reconnects."
+              : copy?.emptyLive ??
+                "No live matches right now. Scores tick here in real time while games are on."
+          }
+        />
+      )}
     </div>
   );
 }

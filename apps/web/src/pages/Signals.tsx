@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useData } from "@/context/DataContext";
+import { BETTING_DESK_ENABLED } from "@/lib/flags";
 import type { GameRow, LiveFeed, StandingRow } from "@/types";
 
 type SportFilter = "All" | "NBA" | "MLB";
@@ -95,11 +96,14 @@ export default function Signals() {
               <Button className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => void refresh()} disabled={loading}>
                 <Activity className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} /> Refresh feeds
               </Button>
-              <Button variant="outline" className="border-secondary/45 text-secondary hover:bg-secondary/10" asChild>
-                <Link to="/explore">
-                  <Database className="h-4 w-4" /> Inspect raw data
-                </Link>
-              </Button>
+              {/* The SQL lab is an ops tool — it only exists on desk builds. */}
+              {BETTING_DESK_ENABLED && (
+                <Button variant="outline" className="border-secondary/45 text-secondary hover:bg-secondary/10" asChild>
+                  <Link to="/explore">
+                    <Database className="h-4 w-4" /> Inspect raw data
+                  </Link>
+                </Button>
+              )}
             </div>
             <p className="text-[11px] text-muted-foreground">
               Last refresh: {lastRefresh ? new Date(lastRefresh).toLocaleString() : "loading"}

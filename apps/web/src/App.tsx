@@ -58,21 +58,23 @@ const App = () => (
                 <Route path="/nba" element={<Navigate to="/matches?sport=nba" replace />} />
                 <Route path="/mlb" element={<Navigate to="/matches?sport=mlb" replace />} />
 
-                {/* Research sub-pages keep their routes */}
-                <Route path="/approval" element={<Approval />} />
-                <Route path="/datasets" element={<Datasets />} />
+                {/* Public research sub-pages: trust-building content only */}
                 <Route path="/model" element={<ModelAudit />} />
                 <Route path="/signals" element={<Signals />} />
-                <Route path="/coverage" element={<Coverage />} />
                 <Route path="/dictionary" element={<Dictionary />} />
-                <Route path="/quality" element={<Quality />} />
-                <Route path="/basket" element={<ReviewBasket />} />
-                <Route path="/explore" element={<RawDataLab />} />
-                <Route path="/raw" element={<Navigate to="/explore" replace />} />
-                <Route path="/status" element={<Status />} />
 
                 {BETTING_DESK_ENABLED && (
                   <>
+                    {/* Ops console: data-engineering tools stay private */}
+                    <Route path="/approval" element={<Approval />} />
+                    <Route path="/datasets" element={<Datasets />} />
+                    <Route path="/coverage" element={<Coverage />} />
+                    <Route path="/quality" element={<Quality />} />
+                    <Route path="/basket" element={<ReviewBasket />} />
+                    <Route path="/explore" element={<RawDataLab />} />
+                    <Route path="/raw" element={<Navigate to="/explore" replace />} />
+                    <Route path="/status" element={<Status />} />
+
                     <Route path="/desk" element={<BettingDesk />} />
                     <Route path="/edge" element={<EdgeLab />} />
                     <Route path="/portfolio" element={<Portfolio />} />

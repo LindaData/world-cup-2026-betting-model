@@ -213,7 +213,12 @@ export default function Today() {
           <EmptyState
             title="No matches scheduled yet."
             body="Once the fixture feed publishes, each upcoming match shows up here with kickoff time and the model's win chances."
-            link={{ to: "/status", label: "Check feed status" }}
+            link={
+              // Feed status is an ops tool — public builds point at Research.
+              BETTING_DESK_ENABLED
+                ? { to: "/status", label: "Check feed status" }
+                : { to: "/research", label: "See how the model works" }
+            }
           />
         )}
       </Section>

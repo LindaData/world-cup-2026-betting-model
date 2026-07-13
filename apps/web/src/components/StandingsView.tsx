@@ -168,6 +168,17 @@ export function StandingsView({ rows }: { rows: StandingRow[] }) {
   );
 }
 
+/**
+ * Plain-words goal difference for the mobile cards: "+5 goals" / "-2 goals" /
+ * "even goals" — never the insider "GD 5".
+ */
+function formatGoalDiff(gd: string | undefined): string {
+  const n = Number(gd);
+  if (!Number.isFinite(n) || gd == null || gd === "") return "even goals";
+  if (n === 0) return "even goals";
+  return `${n > 0 ? "+" : ""}${n} goals`;
+}
+
 function Th({ children, right }: { children: React.ReactNode; right?: boolean }) {
   return (
     <th className={cn("label-mono px-3 py-2.5 font-medium", right ? "text-right" : "text-left")}>
