@@ -27,7 +27,7 @@ jobs:
       ODDS_MARKETS: ${{ vars.ODDS_MARKETS || 'h2h,spreads,totals' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v5
         with:
