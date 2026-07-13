@@ -42,14 +42,17 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .r-lib
-          key: ${{ runner.os }}-r-${{ hashFiles('R/00_setup.R') }}
+          key: ${{ runner.os }}-r-v2-${{ hashFiles('R/00_setup.R') }}
           restore-keys: |
-            ${{ runner.os }}-r-
+            ${{ runner.os }}-r-v2-
 
       - name: Install R packages
         run: Rscript R/00_setup.R
 
+      # Fresh render when it works; committed docs/ HTML otherwise, so a
+      # render failure never blocks deploying the site and the app.
       - name: Render Quarto site
+        continue-on-error: true
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           API_FOOTBALL_HOST: v3.football.api-sports.io
