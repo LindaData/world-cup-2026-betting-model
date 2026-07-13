@@ -58,6 +58,25 @@ jobs:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
         run: quarto render
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      # The consolidated web app ships inside the same Pages artifact at /app/.
+      # Built after the Quarto render so nothing cleans it out of docs/.
+      - name: Build web app into docs/app
+        working-directory: apps/web
+        env:
+          VITE_BASE: /world-cup-2026-betting-model/app/
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+          mkdir -p ../../docs/app
+          cp -r dist/. ../../docs/app/
+          for route in matches research status approval datasets model signals coverage dictionary quality basket explore nba mlb football; do
+            mkdir -p "../../docs/app/$route"
+            cp dist/index.html "../../docs/app/$route/index.html"
+          done
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
