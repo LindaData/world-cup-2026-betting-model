@@ -1,0 +1,12 @@
+{
+  "note": "Preliminary placeholder title chances. Replaced by the champion simulation output.",
+  "provider": "placeholder",
+  "refreshed_at_utc": "2026-07-13T00:00:00Z",
+  "simulations": 50000,
+  "title_chances": [
+    { "team": "France", "probability": 0.31 },
+    { "team": "Argentina", "probability": 0.26 },
+    { "team": "Spain", "probability": 0.23 },
+    { "team": "England", "probability": 0.2 }
+  ]
+}

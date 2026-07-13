@@ -40,6 +40,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f docs/sports-data/data/football_live.json
           git add -f docs/sports-data/data/nba_live.json
           git add -f docs/sports-data/data/mlb_live.json
           git add -f docs/sports-data/data/live_manifest.json

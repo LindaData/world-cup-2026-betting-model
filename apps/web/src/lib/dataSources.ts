@@ -22,6 +22,7 @@ export const SOURCES: SourceDef[] = [
   { key: "football_standings", label: "Football Standings", kind: "json", url: `${BASE}/football_standings.json` },
   // Goes live automatically once the model pipeline publishes predictions.
   { key: "model_predictions", label: "Model Predictions", kind: "json", url: `${BASE}/model_predictions.json` },
+  { key: "model_champion", label: "Model Champion", kind: "json", url: `${BASE}/model_champion.json` },
   { key: "nba_live", label: "NBA Live", kind: "json", url: `${BASE}/nba_live.json` },
   { key: "mlb_live", label: "MLB Live", kind: "json", url: `${BASE}/mlb_live.json` },
   { key: "basketball_snapshot", label: "NBA Snapshot", kind: "json", url: `${BASE}/basketball_snapshot.json` },

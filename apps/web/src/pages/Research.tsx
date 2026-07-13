@@ -97,6 +97,9 @@ export default function Research() {
       <div>
         <p className="label-mono">Research</p>
         <h1 className="text-2xl md:text-3xl font-bold mt-1">Why trust this</h1>
+        <p className="text-sm text-foreground mt-1 max-w-prose">
+          How the model is built and how accurate it has been.
+        </p>
         <p className="text-sm text-muted-foreground mt-1 max-w-prose">
           Everything behind the numbers: how the model is graded, where the data
           comes from, and the checks that keep it honest.

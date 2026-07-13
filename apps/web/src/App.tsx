@@ -12,6 +12,7 @@ import { BETTING_DESK_ENABLED } from "@/lib/flags";
 // Primary tabs
 const Today = lazy(() => import("./pages/Today"));
 const Matches = lazy(() => import("./pages/Matches"));
+const MatchDetail = lazy(() => import("./pages/MatchDetail"));
 const Research = lazy(() => import("./pages/Research"));
 
 // Research sub-pages (keep their routes)
@@ -49,6 +50,7 @@ const App = () => (
               <Route element={<Layout />}>
                 <Route path="/" element={<Today />} />
                 <Route path="/matches" element={<Matches />} />
+                <Route path="/match/:id" element={<MatchDetail />} />
                 <Route path="/research" element={<Research />} />
 
                 {/* Legacy sport routes redirect into the Matches tab */}

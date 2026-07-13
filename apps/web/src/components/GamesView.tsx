@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,15 +13,24 @@ import {
   placeholderMatchLabel,
 } from "@/lib/matchVerdict";
 import type { GameRow } from "@/types";
+import type { ModelPrediction, PredictionMap } from "@/lib/modelFeeds";
 
-export interface ModelPrediction {
-  home: number;
-  draw: number;
-  away: number;
-}
+// Types live in modelFeeds now; re-exported so existing imports keep working.
+export type { ModelPrediction, PredictionMap } from "@/lib/modelFeeds";
 
-/** Model win probabilities keyed by game_id / event_id. */
-export type PredictionMap = Record<string, ModelPrediction>;
+/**
+ * How the surrounding page presents fixtures.
+ *
+ * "grouped" (soccer, the default): the list splits into "Up next" (soonest
+ * kickoff first) above "Played" (most recent first). The grouping IS the
+ * order, so no sort chips render — one less control to learn.
+ *
+ * "sortable" (NBA/MLB): keeps the chip-sorted view unchanged.
+ *
+ * Matches.tsx provides the value for the selected sport.
+ */
+export type GamesViewVariant = "grouped" | "sortable";
+export const GamesViewVariantContext = createContext<GamesViewVariant>("grouped");
 
 type SortKey = "kickoff" | "date_utc" | "home_team" | "away_team";
 
@@ -38,16 +48,20 @@ export function GamesView({
   rows: GameRow[];
   predictions?: PredictionMap;
 }) {
+  const variant = useContext(GamesViewVariantContext);
+  const grouped = variant === "grouped";
   const [q, setQ] = useState("");
   // Default is "next kickoff first": the hero slot goes to the next match a
   // reader can act on, never a far-future placeholder. The Date chip keeps
-  // the plain chronological views.
+  // the plain chronological views (sortable variant only).
   const [sortKey, setSortKey] = useState<SortKey>("kickoff");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [page, setPage] = useState(0);
   const pageSize = 24;
 
-  const filtered = useMemo(() => {
+  // `list` is the paged order. `playedStart` marks where the "Played" group
+  // begins in the grouped variant (-1 when the list is one flat sort).
+  const { list, playedStart } = useMemo(() => {
     const ql = q.trim().toLowerCase();
     const f = ql
       ? rows.filter(
@@ -57,7 +71,7 @@ export function GamesView({
             r.date_utc?.toLowerCase().includes(ql),
         )
       : rows;
-    if (sortKey === "kickoff") {
+    if (grouped || sortKey === "kickoff") {
       // Upcoming matches ascending from now, then recent results descending.
       const nowMs = Date.now();
       const time = (r: GameRow) => {
@@ -66,7 +80,10 @@ export function GamesView({
       };
       const upcoming = f.filter((r) => time(r) >= nowMs).sort((a, b) => time(a) - time(b));
       const past = f.filter((r) => time(r) < nowMs).sort((a, b) => time(b) - time(a));
-      return [...upcoming, ...past];
+      return {
+        list: [...upcoming, ...past],
+        playedStart: grouped ? upcoming.length : -1,
+      };
     }
     const sorted = [...f].sort((a, b) => {
       const av = a[sortKey] ?? "";
@@ -74,12 +91,22 @@ export function GamesView({
       const cmp = av.localeCompare(bv, undefined, { numeric: true });
       return sortDir === "asc" ? cmp : -cmp;
     });
-    return sorted;
-  }, [rows, q, sortKey, sortDir]);
+    return { list: sorted, playedStart: -1 };
+  }, [rows, q, sortKey, sortDir, grouped]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const totalPages = Math.max(1, Math.ceil(list.length / pageSize));
   const safePage = Math.min(page, totalPages - 1);
-  const slice = filtered.slice(safePage * pageSize, safePage * pageSize + pageSize);
+  const sliceStart = safePage * pageSize;
+  const slice = list.slice(sliceStart, sliceStart + pageSize);
+
+  // Because the grouped list is always "all upcoming, then all played", a
+  // page slice is a run of upcoming followed by a run of played — one cut.
+  const upNextCount =
+    playedStart >= 0
+      ? Math.min(Math.max(playedStart - sliceStart, 0), slice.length)
+      : slice.length;
+  const upNext = slice.slice(0, upNextCount);
+  const played = slice.slice(upNextCount);
 
   const toggleSort = (k: SortKey) => {
     // "Next" has one fixed order (upcoming first), so re-tapping it is a no-op.
@@ -96,7 +123,8 @@ export function GamesView({
 
   return (
     <div className="space-y-3">
-      {/* Quiet toolbar: search, sort, count */}
+      {/* Quiet toolbar: search, count, and (sortable variant only) sort chips.
+          The grouped feed drops the chips — its two sections are the order. */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <Input
           placeholder="Search team or date"
@@ -108,49 +136,81 @@ export function GamesView({
           className="h-11 bg-card sm:max-w-xs"
         />
         <div className="flex items-center justify-between gap-3 sm:justify-end">
-          <div className="flex items-center gap-1" role="group" aria-label="Sort matches">
-            {SORTS.map((s) => {
-              const active = s.key === sortKey;
-              return (
-                <button
-                  key={s.key}
-                  type="button"
-                  aria-pressed={active}
-                  onClick={() => toggleSort(s.key)}
-                  className={cn(
-                    // Same chip family as the standings group filters: 44px
-                    // hit area, visible border so all three read as buttons.
-                    "chip min-h-11 border px-3 transition-colors",
-                    active
-                      ? "border-border bg-muted text-foreground"
-                      : "border-border/60 bg-card text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  {s.label}
-                  {active &&
-                    s.key !== "kickoff" &&
-                    (sortDir === "asc" ? (
-                      <ArrowUp className="h-3 w-3" aria-hidden="true" />
-                    ) : (
-                      <ArrowDown className="h-3 w-3" aria-hidden="true" />
-                    ))}
-                </button>
-              );
-            })}
-          </div>
+          {!grouped && (
+            <div className="flex items-center gap-1" role="group" aria-label="Sort matches">
+              {SORTS.map((s) => {
+                const active = s.key === sortKey;
+                return (
+                  <button
+                    key={s.key}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => toggleSort(s.key)}
+                    className={cn(
+                      // Same chip family as the standings group filters: 44px
+                      // hit area, visible border so all three read as buttons.
+                      "chip min-h-11 border px-3 transition-colors",
+                      active
+                        ? "border-border bg-muted text-foreground"
+                        : "border-border/60 bg-card text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {s.label}
+                    {active &&
+                      s.key !== "kickoff" &&
+                      (sortDir === "asc" ? (
+                        <ArrowUp className="h-3 w-3" aria-hidden="true" />
+                      ) : (
+                        <ArrowDown className="h-3 w-3" aria-hidden="true" />
+                      ))}
+                  </button>
+                );
+              })}
+            </div>
+          )}
           <span className="label-mono tabular-nums">
-            {filtered.length.toLocaleString()} matches
+            {list.length.toLocaleString()} matches
           </span>
         </div>
       </div>
 
       {/* Match cards */}
       {slice.length > 0 ? (
-        <div className="grid gap-2 sm:grid-cols-2">
-          {slice.map((g) => (
-            <MatchCard key={g.game_id} game={g} prediction={predictions?.[g.game_id]} />
-          ))}
-        </div>
+        grouped ? (
+          <div className="space-y-5">
+            {upNext.length > 0 && (
+              <section aria-label="Up next" className="space-y-2">
+                <h3 className="label-mono">Up next</h3>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {upNext.map((g) => (
+                    <MatchCard key={g.game_id} game={g} prediction={predictions?.[g.game_id]} />
+                  ))}
+                </div>
+              </section>
+            )}
+            {played.length > 0 && (
+              <section aria-label="Played" className="space-y-2">
+                <h3 className="label-mono">Played</h3>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {played.map((g) => (
+                    <MatchCard
+                      key={g.game_id}
+                      game={g}
+                      prediction={predictions?.[g.game_id]}
+                      played
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+        ) : (
+          <div className="grid gap-2 sm:grid-cols-2">
+            {slice.map((g) => (
+              <MatchCard key={g.game_id} game={g} prediction={predictions?.[g.game_id]} />
+            ))}
+          </div>
+        )
       ) : (
         <div className="surface-card p-6 text-center text-sm text-muted-foreground">
           No matches found. Try a different team or date.
@@ -187,7 +247,16 @@ export function GamesView({
   );
 }
 
-function MatchCard({ game, prediction }: { game: GameRow; prediction?: ModelPrediction }) {
+function MatchCard({
+  game,
+  prediction,
+  played = false,
+}: {
+  game: GameRow;
+  prediction?: ModelPrediction;
+  /** Played rows keep the score + "Model leaned X" line and skip the bar. */
+  played?: boolean;
+}) {
   // Bracket placeholders read as broken data: give the fixture a human title
   // ("Third-place match") and friendly participant names instead.
   const bracketLabel = placeholderMatchLabel(game.home_team, game.away_team);
@@ -206,8 +275,13 @@ function MatchCard({ game, prediction }: { game: GameRow; prediction?: ModelPred
         awayScore: game.away_score,
       })
     : null;
+  // Every card is a link into the match page — full-card hit area, and a
+  // plain Link stays in the tab order for keyboard readers.
   return (
-    <div className="surface-card p-4">
+    <Link
+      to={`/match/${game.game_id}`}
+      className="surface-card block p-4 transition-colors hover:border-muted-foreground/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
       <div className="flex items-center justify-between gap-2">
         <span className="label-mono tabular-nums">{formatDate(game.date_utc)}</span>
         <span className="label-mono truncate">{game.status}</span>
@@ -223,14 +297,20 @@ function MatchCard({ game, prediction }: { game: GameRow; prediction?: ModelPred
       )}
 
       <div className="mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1.5">
-        <TeamName name={homeName} dot={prediction && !teamsTbd ? "bg-gain" : undefined} />
+        <TeamName
+          name={homeName}
+          dot={prediction && !teamsTbd && !played ? "bg-gain" : undefined}
+        />
         <ScoreNum value={game.home_score} />
-        <TeamName name={awayName} dot={prediction && !teamsTbd ? "bg-away" : undefined} />
+        <TeamName
+          name={awayName}
+          dot={prediction && !teamsTbd && !played ? "bg-away" : undefined}
+        />
         <ScoreNum value={game.away_score} />
       </div>
 
       {prediction &&
-        (teamsTbd ? (
+        (teamsTbd || played ? (
           verdict && <p className="mt-3 text-xs text-muted-foreground">{verdict.text}</p>
         ) : (
           <div className="mt-3 space-y-1.5">
@@ -238,7 +318,7 @@ function MatchCard({ game, prediction }: { game: GameRow; prediction?: ModelPred
             {verdict && <p className="text-xs text-muted-foreground">{verdict.text}</p>}
           </div>
         ))}
-    </div>
+    </Link>
   );
 }
 
