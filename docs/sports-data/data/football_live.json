@@ -1,0 +1,38 @@
+{
+  "sport": "football",
+  "refreshed_at_utc": "2026-07-13T01:05:00.605059Z",
+  "dates_requested": [
+    "20260712",
+    "20260713",
+    "20260714"
+  ],
+  "event_count": 1,
+  "events": [
+    {
+      "sport": "football",
+      "event_id": "760514",
+      "date_utc": "2026-07-14T19:00Z",
+      "name": "Spain at France",
+      "short_name": "ESP @ FRA",
+      "status": "Scheduled",
+      "status_short": "Scheduled",
+      "state": "pre",
+      "period": "",
+      "clock": "0'",
+      "home_team": "France",
+      "away_team": "Spain",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "",
+      "away_record": "",
+      "venue": "AT&T Stadium",
+      "broadcasts": [
+        "FOX",
+        "Tele",
+        "FOX One"
+      ],
+      "link": "https://www.espn.com/soccer/match/_/gameId/760514/spain-france"
+    }
+  ],
+  "errors": []
+}
