@@ -1,0 +1,5 @@
+{
+  "catalog_url": "https://REPLACE_WITH_R2_PUBLIC_DOMAIN/catalog/catalog.json",
+  "fallback_mode": true,
+  "notice": "Until the R2 catalog is published, the app builds a catalog from the existing public LindaData GitHub CSV/JSON files."
+}

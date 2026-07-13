@@ -1,0 +1,85 @@
+datasets:
+  - id: nba_games
+    display_name: NBA Games
+    description: Per-game NBA results, scores, and status (API-Sports basketball).
+    sport: NBA
+    source_api: api-sports
+    source_endpoint: /basketball/games
+    entity: games
+    granularity: per_game
+    league_id: 12
+    league_name: NBA
+    season: "2024-2025"
+    primary_key: game_id
+    partition_columns: [season]
+    source_csv: docs/sports-data/data/basketball_games_full.csv
+  - id: nba_standings
+    display_name: NBA Standings
+    description: NBA team standings by conference (API-Sports basketball).
+    sport: NBA
+    source_api: api-sports
+    source_endpoint: /basketball/standings
+    entity: standings
+    granularity: per_team
+    league_id: 12
+    league_name: NBA
+    season: "2024-2025"
+    primary_key: team_id
+    partition_columns: [season]
+    source_csv: docs/sports-data/data/basketball_standings.csv
+  - id: nba_live
+    display_name: NBA Live
+    description: Today's NBA scoreboard snapshot.
+    sport: NBA
+    source_api: api-sports
+    source_endpoint: /basketball/games?date=today
+    entity: scores
+    granularity: snapshot
+    league_id: 12
+    league_name: NBA
+    season: null
+    primary_key: event_id
+    partition_columns: []
+    source_json: docs/sports-data/data/nba_live.json
+  - id: mlb_games
+    display_name: MLB Games
+    description: Per-game MLB results, scores, and status (API-Sports baseball).
+    sport: MLB
+    source_api: api-sports
+    source_endpoint: /baseball/games
+    entity: games
+    granularity: per_game
+    league_id: 1
+    league_name: MLB
+    season: "2024"
+    primary_key: game_id
+    partition_columns: [season]
+    source_csv: docs/sports-data/data/baseball_games_full.csv
+  - id: mlb_standings
+    display_name: MLB Standings
+    description: MLB team standings by division (API-Sports baseball).
+    sport: MLB
+    source_api: api-sports
+    source_endpoint: /baseball/standings
+    entity: standings
+    granularity: per_team
+    league_id: 1
+    league_name: MLB
+    season: "2024"
+    primary_key: team_id
+    partition_columns: [season]
+    source_csv: docs/sports-data/data/baseball_standings.csv
+  - id: mlb_live
+    display_name: MLB Live
+    description: Today's MLB scoreboard snapshot.
+    sport: MLB
+    source_api: api-sports
+    source_endpoint: /baseball/games?date=today
+    entity: scores
+    granularity: snapshot
+    league_id: 1
+    league_name: MLB
+    season: null
+    primary_key: event_id
+    partition_columns: []
+    source_json: docs/sports-data/data/mlb_live.json

@@ -1,0 +1,18 @@
+{
+  "name": "LindaData Sports",
+  "short_name": "LindaData",
+  "description": "World Cup 2026 forecasts, fixtures, and standings.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0B1220",
+  "theme_color": "#0B1220",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

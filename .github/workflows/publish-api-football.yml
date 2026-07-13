@@ -1,21 +1,22 @@
-name: Publish API-Football for Sports Hub
+name: Publish Football for Sports Hub
 
 on:
   push:
     branches: [main]
     paths:
+      - scripts/publish_football_espn.py
       - scripts/publish_api_football.py
       - .github/workflows/publish-api-football.yml
   workflow_dispatch:
     inputs:
       league_id:
-        description: API-Football league ID
-        required: true
+        description: API-Football league ID (enrichment step only)
+        required: false
         default: "1"
         type: string
       season:
-        description: API-Football season
-        required: true
+        description: Season
+        required: false
         default: "2026"
         type: string
   schedule:
@@ -45,30 +46,34 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Validate API key
-        shell: bash
-        run: |
-          if [ -z "$API_FOOTBALL_KEY" ] && [ -z "$API_SPORTS_KEY" ]; then
-            echo "Add API_FOOTBALL_KEY or API_SPORTS_KEY as a repository Actions secret." >&2
-            exit 1
-          fi
+      # ESPN is keyless and covers the 2026 World Cup; API-Football's free
+      # plan does not (it is capped at seasons 2022-2024), so ESPN is the
+      # primary source and API-Football runs afterwards only when a key is
+      # present, overwriting the files with richer data if it succeeds.
+      - name: Publish football data from ESPN
+        run: python scripts/publish_football_espn.py
 
-      - name: Pull and normalize football data
+      - name: Enrich from API-Football (optional)
+        if: env.API_FOOTBALL_KEY != '' || env.API_SPORTS_KEY != ''
+        continue-on-error: true
         run: python scripts/publish_api_football.py
 
       - name: Upload raw API snapshots
         uses: actions/upload-artifact@v4
         with:
-          name: api-football-raw-${{ github.run_id }}
-          path: data/raw/api_football/latest/
+          name: football-raw-${{ github.run_id }}
+          path: |
+            data/raw/football_espn/latest/
+            data/raw/api_football/latest/
           retention-days: 7
-          if-no-files-found: error
+          if-no-files-found: warn
 
       - name: Commit published Sports Hub files
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
           git add docs/sports-data/data/football_fixtures.json \
                   docs/sports-data/data/football_standings.json \
                   docs/sports-data/data/football_manifest.json
@@ -76,5 +81,5 @@ jobs:
             echo "No football data changes."
             exit 0
           fi
-          git commit -m "data: refresh API-Football Sports Hub feed"
+          git commit -m "data: refresh football Sports Hub feed"
           git push

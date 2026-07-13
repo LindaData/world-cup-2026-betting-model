@@ -12,6 +12,7 @@ OUT = ROOT / "docs" / "sports-data" / "data"
 SPORTS = {
     "nba": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
     "mlb": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
+    "football": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard",
 }
 
 

@@ -1,0 +1,347 @@
+defaults:
+  league_id: 39
+  season: 2024
+  team_id: 40
+  opponent_team_id: 42
+  country: England
+  sample_row_limit: 25
+  request_delay_seconds: 6.5
+
+endpoints:
+  - id: football_timezone
+    display_name: Football Timezones
+    description: Supported timezone values for date-aware requests.
+    endpoint: timezone
+    entity: operational_metadata
+    granularity: reference
+    params: {}
+
+  - id: football_countries
+    display_name: Football Countries
+    description: Countries represented in API-Football.
+    endpoint: countries
+    entity: operational_metadata
+    granularity: reference
+    params: {}
+
+  - id: football_league_seasons
+    display_name: Football League Seasons
+    description: Season years available across league data.
+    endpoint: leagues/seasons
+    entity: operational_metadata
+    granularity: reference
+    params: {}
+
+  - id: football_leagues
+    display_name: Football Leagues
+    description: League metadata and coverage flags.
+    endpoint: leagues
+    entity: leagues
+    granularity: per_league
+    primary_key: league.id
+    params:
+      id: "{league_id}"
+
+  - id: football_teams
+    display_name: Football Teams
+    description: Teams participating in the selected league and season.
+    endpoint: teams
+    entity: teams
+    granularity: per_team
+    primary_key: team.id
+    params:
+      league: "{league_id}"
+      season: "{season}"
+
+  - id: football_team_seasons
+    display_name: Football Team Seasons
+    description: Season years available for the sampled team.
+    endpoint: teams/seasons
+    entity: operational_metadata
+    granularity: reference
+    params:
+      team: "{team_id}"
+
+  - id: football_team_statistics
+    display_name: Football Team Statistics
+    description: Aggregate team performance for the selected league and season.
+    endpoint: teams/statistics
+    entity: team_statistics
+    granularity: per_team_season
+    params:
+      league: "{league_id}"
+      season: "{season}"
+      team: "{team_id}"
+
+  - id: football_venues
+    display_name: Football Venues
+    description: Venue metadata for the configured country.
+    endpoint: venues
+    entity: operational_metadata
+    granularity: per_venue
+    primary_key: id
+    params:
+      country: "{country}"
+
+  - id: football_standings
+    display_name: Football Standings
+    description: League table and team rank statistics.
+    endpoint: standings
+    entity: standings
+    granularity: per_team
+    params:
+      league: "{league_id}"
+      season: "{season}"
+
+  - id: football_fixture_rounds
+    display_name: Football Fixture Rounds
+    description: Round labels available for the selected league season.
+    endpoint: fixtures/rounds
+    entity: operational_metadata
+    granularity: reference
+    params:
+      league: "{league_id}"
+      season: "{season}"
+
+  - id: football_fixtures
+    display_name: Football Fixtures
+    description: Fixture sample with every returned field preserved.
+    endpoint: fixtures
+    entity: games
+    granularity: per_fixture
+    primary_key: fixture.id
+    params:
+      league: "{league_id}"
+      season: "{season}"
+
+  - id: football_fixtures_head_to_head
+    display_name: Football Head-to-Head Fixtures
+    description: Historical fixture sample between two teams from the selected league context.
+    endpoint: fixtures/headtohead
+    entity: head_to_head
+    granularity: per_fixture
+    primary_key: fixture.id
+    params:
+      h2h: "{h2h}"
+
+  - id: football_fixture_events
+    display_name: Football Fixture Events
+    description: Goals, cards, substitutions, and other events for one sampled fixture.
+    endpoint: fixtures/events
+    entity: fixture_events
+    granularity: per_event
+    params:
+      fixture: "{fixture_id}"
+
+  - id: football_fixture_lineups
+    display_name: Football Fixture Lineups
+    description: Starting lineups, formations, substitutes, and coaches for one sampled fixture.
+    endpoint: fixtures/lineups
+    entity: fixture_lineups
+    granularity: per_team_fixture
+    params:
+      fixture: "{fixture_id}"
+
+  - id: football_fixture_statistics
+    display_name: Football Fixture Statistics
+    description: Team-level match statistics for one sampled fixture.
+    endpoint: fixtures/statistics
+    entity: fixture_statistics
+    granularity: per_team_fixture
+    params:
+      fixture: "{fixture_id}"
+
+  - id: football_fixture_players
+    display_name: Football Fixture Player Statistics
+    description: Player-level match statistics for one sampled fixture.
+    endpoint: fixtures/players
+    entity: player_game_statistics
+    granularity: per_player_fixture
+    params:
+      fixture: "{fixture_id}"
+
+  - id: football_injuries
+    display_name: Football Injuries
+    description: Injury records for the selected league and season.
+    endpoint: injuries
+    entity: injuries
+    granularity: per_player_fixture
+    params:
+      league: "{league_id}"
+      season: "{season}"
+
+  - id: football_predictions
+    display_name: Football Predictions
+    description: Provider prediction fields for one sampled fixture, kept separate from LindaData models.
+    endpoint: predictions
+    entity: provider_predictions
+    granularity: per_fixture
+    params:
+      fixture: "{fixture_id}"
+
+  - id: football_coaches
+    display_name: Football Coaches
+    description: Coach records associated with the sampled team.
+    endpoint: coachs
+    entity: coaches
+    granularity: per_coach
+    primary_key: id
+    params:
+      team: "{team_id}"
+
+  - id: football_player_seasons
+    display_name: Football Player Seasons
+    description: Season years available for player queries.
+    endpoint: players/seasons
+    entity: operational_metadata
+    granularity: reference
+    params: {}
+
+  - id: football_players
+    display_name: Football Players
+    description: First-page player records for the sampled team and current season.
+    endpoint: players
+    entity: players
+    granularity: per_player
+    primary_key: player.id
+    params:
+      team: "{team_id}"
+      season: "{season}"
+      page: 1
+
+  - id: football_player_squads
+    display_name: Football Player Squads
+    description: Current squad membership for the sampled team.
+    endpoint: players/squads
+    entity: squads
+    granularity: per_player_team
+    params:
+      team: "{team_id}"
+
+  - id: football_player_teams
+    display_name: Football Player Team History
+    description: Team history for one sampled player.
+    endpoint: players/teams
+    entity: player_team_history
+    granularity: per_player_team_period
+    params:
+      player: "{player_id}"
+
+  - id: football_transfers
+    display_name: Football Transfers
+    description: Transfer history for one sampled player.
+    endpoint: transfers
+    entity: transfers
+    granularity: per_transfer
+    params:
+      player: "{player_id}"
+
+  - id: football_trophies
+    display_name: Football Player Trophies
+    description: Trophy history for one sampled player.
+    endpoint: trophies
+    entity: trophies
+    granularity: per_trophy
+    params:
+      player: "{player_id}"
+
+  - id: football_sidelined
+    display_name: Football Player Sidelined History
+    description: Sidelined periods for one sampled player.
+    endpoint: sidelined
+    entity: sidelined
+    granularity: per_player_period
+    params:
+      player: "{player_id}"
+
+  - id: football_top_scorers
+    display_name: Football Top Scorers
+    description: Top-scoring players for the selected league and season.
+    endpoint: players/topscorers
+    entity: player_rankings
+    granularity: per_player_season
+    params:
+      league: "{league_id}"
+      season: "{season}"
+
+  - id: football_top_assists
+    display_name: Football Top Assists
+    description: Top-assist players for the selected league and season.
+    endpoint: players/topassists
+    entity: player_rankings
+    granularity: per_player_season
+    params:
+      league: "{league_id}"
+      season: "{season}"
+
+  - id: football_top_yellow_cards
+    display_name: Football Top Yellow Cards
+    description: Players ranked by yellow cards for the selected league and season.
+    endpoint: players/topyellowcards
+    entity: player_rankings
+    granularity: per_player_season
+    params:
+      league: "{league_id}"
+      season: "{season}"
+
+  - id: football_top_red_cards
+    display_name: Football Top Red Cards
+    description: Players ranked by red cards for the selected league and season.
+    endpoint: players/topredcards
+    entity: player_rankings
+    granularity: per_player_season
+    params:
+      league: "{league_id}"
+      season: "{season}"
+
+  - id: football_odds_live
+    display_name: Football Live Odds
+    description: In-play betting market sample returned by API-Football.
+    endpoint: odds/live
+    entity: odds
+    granularity: live_market
+    params: {}
+
+  - id: football_odds_live_bets
+    display_name: Football Live Odds Bet Types
+    description: Reference list of supported in-play bet markets.
+    endpoint: odds/live/bets
+    entity: betting_reference
+    granularity: reference
+    params: {}
+
+  - id: football_odds
+    display_name: Football Pre-Match Odds
+    description: Pre-match bookmaker odds for the selected league and season sample.
+    endpoint: odds
+    entity: odds
+    granularity: pre_match_market
+    params:
+      league: "{league_id}"
+      season: "{season}"
+      page: 1
+
+  - id: football_odds_mapping
+    display_name: Football Odds Mapping
+    description: Mapping between fixtures and available odds coverage.
+    endpoint: odds/mapping
+    entity: betting_reference
+    granularity: reference
+    params:
+      page: 1
+
+  - id: football_odds_bookmakers
+    display_name: Football Odds Bookmakers
+    description: Bookmaker reference data for odds feeds.
+    endpoint: odds/bookmakers
+    entity: betting_reference
+    granularity: reference
+    params: {}
+
+  - id: football_odds_bets
+    display_name: Football Odds Bet Types
+    description: Reference list of supported pre-match bet markets.
+    endpoint: odds/bets
+    entity: betting_reference
+    granularity: reference
+    params: {}

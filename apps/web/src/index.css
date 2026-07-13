@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Design north star tokens.
+ * Committed dark UI: ground #0B1220, cards #131E2B, borders #223046,
+ * text #E9EEF5, muted #7D8EA1. One green accent #2ED573 (probability,
+ * positive delta, primary actions). Away blue #4A90D9 / #23578F.
+ * Red #FF5A5F is reserved EXCLUSIVELY for losses / negative money.
+ */
+@layer base {
+  :root {
+    /* North-star palette (HSL triplets for tailwind hsl(var(--x)) usage) */
+    --ground: 220 49% 8%; /* #0B1220 */
+    --surface: 213 39% 12%; /* #131E2B */
+    --line: 217 35% 20%; /* #223046 */
+    --ink: 215 38% 94%; /* #E9EEF5 */
+    --ink-muted: 212 16% 56%; /* #7D8EA1 */
+    --gain: 145 67% 51%; /* #2ED573 — the ONE green accent */
+    --loss: 358 100% 68%; /* #FF5A5F — losses/negative money ONLY */
+    --warn: 38 72% 56%; /* #E5A83B — offline/degraded status, never money */
+    --draw: 214 28% 28%; /* #33445A — draw segment slate */
+    --away: 211 65% 57%; /* #4A90D9 — away-team blue */
+    --away-deep: 211 61% 35%; /* #23578F */
+
+    /* shadcn semantic tokens mapped onto the north-star palette */
+    --background: var(--ground);
+    --foreground: var(--ink);
+
+    --card: var(--surface);
+    --card-foreground: var(--ink);
+
+    --popover: var(--surface);
+    --popover-foreground: var(--ink);
+
+    --primary: var(--gain);
+    --primary-foreground: var(--ground);
+
+    --secondary: var(--away);
+    --secondary-foreground: var(--ground);
+
+    --muted: 216 33% 15%;
+    --muted-foreground: var(--ink-muted);
+
+    --accent: var(--gain);
+    --accent-foreground: var(--ground);
+
+    --destructive: var(--loss);
+    --destructive-foreground: var(--ink);
+
+    --border: var(--line);
+    --input: var(--line);
+    --ring: var(--gain);
+
+    /* Legacy aliases (older research pages) remapped to the new palette */
+    --navy: var(--ground);
+    --navy-deep: var(--ground);
+    --navy-light: var(--surface);
+    --teal: var(--gain);
+    --teal-soft: 145 55% 62%;
+    --gold: 36 40% 62%;
+    --market-red: var(--loss);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: var(--surface);
+    --sidebar-foreground: var(--ink);
+    --sidebar-primary: var(--gain);
+    --sidebar-primary-foreground: var(--ground);
+    --sidebar-accent: 216 33% 15%;
+    --sidebar-accent-foreground: var(--ink);
+    --sidebar-border: var(--line);
+    --sidebar-ring: var(--gain);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html, body, #root {
+    @apply min-h-screen;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Motion confirms, never decorates. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .surface-card {
+    @apply bg-card text-card-foreground rounded-lg border border-border;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium;
+  }
+  .market-panel {
+    @apply rounded-lg border border-border bg-card;
+  }
+  .odds-cell {
+    @apply rounded-md border border-border bg-background px-3 py-2 text-center font-semibold tabular-nums;
+  }
+  .sportsbook-glow {
+    box-shadow: none;
+  }
+  /* Numbers ARE the typography: 28-32px hero numbers, heavy, tabular. */
+  .num-hero {
+    @apply font-extrabold tabular-nums;
+    font-size: clamp(1.75rem, 1.5rem + 1vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  /* Letterspaced mono uppercase labels, 10-11px, quiet. */
+  .label-mono {
+    @apply uppercase text-muted-foreground;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
