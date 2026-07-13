@@ -1,0 +1,31 @@
+{
+  "provider": "ESPN",
+  "refreshed_at_utc": "2026-07-13T16:54:03.879344Z",
+  "sports": {
+    "cfb": {
+      "errors": [],
+      "events": 0,
+      "standings_rows": 138
+    },
+    "mlb": {
+      "errors": [],
+      "events": 252,
+      "standings_rows": 30
+    },
+    "nba": {
+      "errors": [],
+      "events": 0,
+      "standings_rows": 30
+    },
+    "nfl": {
+      "errors": [],
+      "events": 0,
+      "standings_rows": 32
+    },
+    "nhl": {
+      "errors": [],
+      "events": 0,
+      "standings_rows": 32
+    }
+  }
+}
