@@ -134,6 +134,14 @@ jobs:
         run: |
           python scripts/publish_public_model_outputs.py
 
+      - name: Publish model predictions to Sports Hub feeds
+        if: always()
+        run: |
+          # Writes docs/sports-data/data/model_predictions.json and
+          # docs/sports-data/data/model_champion.json; the commit step below
+          # already stages docs/, so both files ride the existing publish.
+          python scripts/publish_model_predictions.py
+
       - name: Upload model run diagnostics
         if: always()
         uses: actions/upload-artifact@v4
