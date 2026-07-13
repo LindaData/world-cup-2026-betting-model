@@ -13,6 +13,9 @@ SPORTS = {
     "nba": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
     "mlb": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
     "football": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard",
+    "nfl": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
+    "nhl": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard",
+    "cfb": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard",
 }
 
 

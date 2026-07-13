@@ -32,7 +32,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Fetch live NBA and MLB scoreboards
+      - name: Fetch live scoreboards
         run: python scripts/fetch_live_scoreboards.py
 
       - name: Commit live snapshots
@@ -43,10 +43,13 @@ jobs:
           git add -f docs/sports-data/data/football_live.json
           git add -f docs/sports-data/data/nba_live.json
           git add -f docs/sports-data/data/mlb_live.json
+          git add -f docs/sports-data/data/nfl_live.json
+          git add -f docs/sports-data/data/nhl_live.json
+          git add -f docs/sports-data/data/cfb_live.json
           git add -f docs/sports-data/data/live_manifest.json
           if git diff --cached --quiet; then
             echo "No scoreboard changes."
           else
-            git commit -m "Update live NBA and MLB scoreboards"
+            git commit -m "Update live scoreboards"
             git push
           fi

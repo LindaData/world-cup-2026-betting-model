@@ -50,8 +50,12 @@ credits/month. Sequencing (one competition at a time) + the credit counter in
      records); auto-fill closing odds + CLV from `odds/closing/`.
 - **Phase 2 — prove it:** CLV/calibration report vs Pinnacle no-vig closing
   lines; World Cup retrospective. No stake scaling before this exists.
-- **Phase 3 — outlive the World Cup:** generalize fixtures/Elo pipeline to
-  club competitions (Aug 2026), then NBA models (Oct), then MLB. Rename repo.
+- **Phase 3 — multi-sport one-stop shop (pivot):** keyless ESPN feeds for
+  NFL/NBA/MLB/NHL/CFB (this PR): `scripts/publish_multisport_espn.py` +
+  `publish-multisport.yml` publish per-sport schedules and standings into
+  `docs/sports-data/data/`, and live scoreboards now cover all five leagues.
+  Per-sport models next (MLB in season now, NFL Sept, NBA/NHL Oct); odds
+  ingestion extends per sport once `THE_ODDS_API_KEY` exists. Rename repo.
   Archive the three sibling repos.
 
 ## Owner to-do (blocking Phase 1 completion)

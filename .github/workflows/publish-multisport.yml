@@ -1,0 +1,57 @@
+name: Publish multi-sport ESPN feeds
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 9 * * *"
+  push:
+    branches: [main]
+    paths:
+      - scripts/publish_multisport_espn.py
+      - .github/workflows/publish-multisport.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-multisport
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Publish multi-sport data from ESPN
+        run: python scripts/publish_multisport_espn.py
+
+      - name: Commit published Sports Hub files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          git add docs/sports-data/data/nfl_schedule.json \
+                  docs/sports-data/data/nba_schedule.json \
+                  docs/sports-data/data/mlb_schedule.json \
+                  docs/sports-data/data/nhl_schedule.json \
+                  docs/sports-data/data/cfb_schedule.json \
+                  docs/sports-data/data/nfl_standings_espn.json \
+                  docs/sports-data/data/nba_standings_espn.json \
+                  docs/sports-data/data/mlb_standings_espn.json \
+                  docs/sports-data/data/nhl_standings_espn.json \
+                  docs/sports-data/data/cfb_standings_espn.json \
+                  docs/sports-data/data/multisport_manifest.json
+          if git diff --cached --quiet; then
+            echo "No multi-sport data changes."
+            exit 0
+          fi
+          git commit -m "data: refresh multi-sport ESPN feeds"
+          git push
