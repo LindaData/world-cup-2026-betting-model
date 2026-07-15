@@ -1,12 +1,12 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-14T23:42:24.881045Z",
+  "refreshed_at_utc": "2026-07-15T01:25:20.137830Z",
   "dates_requested": [
-    "20260713",
     "20260714",
-    "20260715"
+    "20260715",
+    "20260716"
   ],
-  "event_count": 1,
+  "event_count": 2,
   "events": [
     {
       "sport": "mlb",
@@ -14,22 +14,45 @@
       "date_utc": "2026-07-15T00:00Z",
       "name": "American All-Stars at National All-Stars",
       "short_name": "AL VS NL",
-      "status": "Scheduled",
-      "status_short": "7/14 - 8:00 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "National All-Stars",
       "away_team": "American All-Stars",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "3",
       "home_record": "",
       "away_record": "",
       "venue": "Citizens Bank Park",
       "broadcasts": [
         "FOX"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401817370/american-national"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401817370"
+    },
+    {
+      "sport": "mlb",
+      "event_id": "401816143",
+      "date_utc": "2026-07-16T23:00Z",
+      "name": "New York Mets at Philadelphia Phillies",
+      "short_name": "NYM @ PHI",
+      "status": "Scheduled",
+      "status_short": "7/16 - 7:00 PM EDT",
+      "state": "pre",
+      "period": 1,
+      "clock": "0:00",
+      "home_team": "Philadelphia Phillies",
+      "away_team": "New York Mets",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "54-43",
+      "away_record": "40-57",
+      "venue": "Citizens Bank Park",
+      "broadcasts": [
+        "ESPN"
+      ],
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816143/mets-phillies"
     }
   ],
   "errors": []
