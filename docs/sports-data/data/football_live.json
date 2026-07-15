@@ -1,6 +1,6 @@
 {
   "sport": "football",
-  "refreshed_at_utc": "2026-07-15T18:55:36.318268Z",
+  "refreshed_at_utc": "2026-07-15T20:03:20.823892Z",
   "dates_requested": [
     "20260714",
     "20260715",
@@ -39,11 +39,11 @@
       "date_utc": "2026-07-15T19:00Z",
       "name": "Argentina at England",
       "short_name": "ARG @ ENG",
-      "status": "Scheduled",
-      "status_short": "Scheduled",
-      "state": "pre",
-      "period": "",
-      "clock": "0'",
+      "status": "Halftime",
+      "status_short": "HT",
+      "state": "in",
+      "period": 1,
+      "clock": "45'+4'",
       "home_team": "England",
       "away_team": "Argentina",
       "home_score": "0",
@@ -56,7 +56,7 @@
         "Tele",
         "FOX One"
       ],
-      "link": "https://www.espn.com/soccer/match/_/gameId/760515/argentina-england"
+      "link": "https://www.espn.com/soccer/match/_/gameId/760515"
     }
   ],
   "errors": []
