@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-15T01:25:20.137830Z",
+  "refreshed_at_utc": "2026-07-15T04:22:12.419495Z",
   "dates_requested": [
     "20260714",
     "20260715",
@@ -14,22 +14,22 @@
       "date_utc": "2026-07-15T00:00Z",
       "name": "American All-Stars at National All-Stars",
       "short_name": "AL VS NL",
-      "status": "In Progress",
-      "status_short": "Bot 3rd",
-      "state": "in",
-      "period": 3,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "National All-Stars",
       "away_team": "American All-Stars",
       "home_score": "0",
-      "away_score": "3",
+      "away_score": "4",
       "home_record": "",
       "away_record": "",
       "venue": "Citizens Bank Park",
       "broadcasts": [
         "FOX"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401817370"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401817370/american-national"
     },
     {
       "sport": "mlb",
