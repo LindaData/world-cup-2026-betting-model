@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-16T22:52:10.782032Z",
+  "refreshed_at_utc": "2026-07-16T23:51:10.304360Z",
   "dates_requested": [
     "20260715",
     "20260716",
@@ -15,9 +15,9 @@
       "name": "New York Mets at Philadelphia Phillies",
       "short_name": "NYM @ PHI",
       "status": "In Progress",
-      "status_short": "Bot 3rd",
+      "status_short": "Bot 6th",
       "state": "in",
-      "period": 3,
+      "period": 6,
       "clock": "0:00",
       "home_team": "Philadelphia Phillies",
       "away_team": "New York Mets",
