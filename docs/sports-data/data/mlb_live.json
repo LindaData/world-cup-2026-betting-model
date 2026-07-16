@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-16T19:57:46.792502Z",
+  "refreshed_at_utc": "2026-07-16T20:55:10.840027Z",
   "dates_requested": [
     "20260715",
     "20260716",
@@ -11,11 +11,11 @@
     {
       "sport": "mlb",
       "event_id": "401816143",
-      "date_utc": "2026-07-16T23:00Z",
+      "date_utc": "2026-07-16T22:00Z",
       "name": "New York Mets at Philadelphia Phillies",
       "short_name": "NYM @ PHI",
       "status": "Scheduled",
-      "status_short": "7/16 - 7:00 PM EDT",
+      "status_short": "7/16 - 6:00 PM EDT",
       "state": "pre",
       "period": 1,
       "clock": "0:00",
