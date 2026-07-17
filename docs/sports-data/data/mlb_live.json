@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-17T01:49:00.163004Z",
+  "refreshed_at_utc": "2026-07-17T04:54:59.229583Z",
   "dates_requested": [
     "20260716",
     "20260717",
@@ -150,7 +150,6 @@
       "away_record": "50-45",
       "venue": "Rogers Centre",
       "broadcasts": [
-        "MLB.TV",
         "Apple TV"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401816141/white-sox-blue-jays"
@@ -351,7 +350,7 @@
       "away_score": "0",
       "home_record": "49-47",
       "away_record": "50-45",
-      "venue": "Chase Field (NH)",
+      "venue": "Chase Field",
       "broadcasts": [
         "MLB.TV",
         "DBACKS.TV",
@@ -678,7 +677,7 @@
       "away_score": "0",
       "home_record": "49-47",
       "away_record": "50-45",
-      "venue": "Chase Field (NH)",
+      "venue": "Chase Field",
       "broadcasts": [
         "MLB.TV",
         "DBACKS.TV",
