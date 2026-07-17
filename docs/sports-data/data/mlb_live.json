@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-17T20:54:16.849160Z",
+  "refreshed_at_utc": "2026-07-17T21:42:26.826584Z",
   "dates_requested": [
     "20260716",
     "20260717",
@@ -691,7 +691,7 @@
       "name": "Pittsburgh Pirates at Cleveland Guardians",
       "short_name": "PIT @ CLE",
       "status": "Scheduled",
-      "status_short": "7/18 - 4:10 PM EDT",
+      "status_short": "7/18 - 7:10 PM EDT",
       "state": "pre",
       "period": 1,
       "clock": "0:00",
