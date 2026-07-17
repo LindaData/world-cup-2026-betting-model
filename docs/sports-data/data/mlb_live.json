@@ -1,12 +1,12 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-17T19:58:23.902312Z",
+  "refreshed_at_utc": "2026-07-17T20:54:16.849160Z",
   "dates_requested": [
     "20260716",
     "20260717",
     "20260718"
   ],
-  "event_count": 31,
+  "event_count": 32,
   "events": [
     {
       "sport": "mlb",
@@ -87,9 +87,9 @@
       "date_utc": "2026-07-17T23:10Z",
       "name": "Pittsburgh Pirates at Cleveland Guardians",
       "short_name": "PIT @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/17 - 7:10 PM EDT",
-      "state": "pre",
+      "status": "Postponed",
+      "status_short": "Postponed",
+      "state": "post",
       "period": 1,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
@@ -411,6 +411,29 @@
     },
     {
       "sport": "mlb",
+      "event_id": "401896568",
+      "date_utc": "2026-07-18T17:10Z",
+      "name": "Pittsburgh Pirates at Cleveland Guardians",
+      "short_name": "PIT @ CLE",
+      "status": "Scheduled",
+      "status_short": "7/18 - 1:10 PM EDT",
+      "state": "pre",
+      "period": 1,
+      "clock": "0:00",
+      "home_team": "Cleveland Guardians",
+      "away_team": "Pittsburgh Pirates",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "51-46",
+      "away_record": "50-47",
+      "venue": "Progressive Field",
+      "broadcasts": [
+        "MLB.TV"
+      ],
+      "link": "https://www.espn.com/mlb/game/_/gameId/401896568/pirates-guardians"
+    },
+    {
+      "sport": "mlb",
       "event_id": "401816164",
       "date_utc": "2026-07-18T18:20Z",
       "name": "Minnesota Twins at Chicago Cubs",
@@ -509,30 +532,6 @@
         "SNY"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401816158/mets-phillies"
-    },
-    {
-      "sport": "mlb",
-      "event_id": "401816159",
-      "date_utc": "2026-07-18T20:10Z",
-      "name": "Pittsburgh Pirates at Cleveland Guardians",
-      "short_name": "PIT @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/18 - 4:10 PM EDT",
-      "state": "pre",
-      "period": 1,
-      "clock": "0:00",
-      "home_team": "Cleveland Guardians",
-      "away_team": "Pittsburgh Pirates",
-      "home_score": "0",
-      "away_score": "0",
-      "home_record": "51-46",
-      "away_record": "50-47",
-      "venue": "Progressive Field",
-      "broadcasts": [
-        "MLB.TV",
-        "CLEGuardians.TV"
-      ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816159/pirates-guardians"
     },
     {
       "sport": "mlb",
@@ -684,6 +683,30 @@
         "Cardinals.TV"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401816169/cardinals-diamondbacks"
+    },
+    {
+      "sport": "mlb",
+      "event_id": "401816159",
+      "date_utc": "2026-07-18T23:10Z",
+      "name": "Pittsburgh Pirates at Cleveland Guardians",
+      "short_name": "PIT @ CLE",
+      "status": "Scheduled",
+      "status_short": "7/18 - 4:10 PM EDT",
+      "state": "pre",
+      "period": 1,
+      "clock": "0:00",
+      "home_team": "Cleveland Guardians",
+      "away_team": "Pittsburgh Pirates",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "51-46",
+      "away_record": "50-47",
+      "venue": "Progressive Field",
+      "broadcasts": [
+        "MLB.TV",
+        "CLEGuardians.TV"
+      ],
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816159/pirates-guardians"
     },
     {
       "sport": "mlb",
