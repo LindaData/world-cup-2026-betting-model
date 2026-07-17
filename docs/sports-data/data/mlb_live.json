@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-17T18:31:32.045212Z",
+  "refreshed_at_utc": "2026-07-17T19:58:23.902312Z",
   "dates_requested": [
     "20260716",
     "20260717",
@@ -37,23 +37,23 @@
       "date_utc": "2026-07-17T17:35Z",
       "name": "Tampa Bay Rays at Boston Red Sox",
       "short_name": "TB @ BOS",
-      "status": "In Progress",
-      "status_short": "Top 5th",
-      "state": "in",
-      "period": 5,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Boston Red Sox",
       "away_team": "Tampa Bay Rays",
-      "home_score": "3",
+      "home_score": "10",
       "away_score": "0",
-      "home_record": "46-48",
-      "away_record": "56-38",
+      "home_record": "47-48",
+      "away_record": "56-39",
       "venue": "Fenway Park",
       "broadcasts": [
         "MLB.TV",
         "Rays.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401872178"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401872178/rays-red-sox"
     },
     {
       "sport": "mlb",
@@ -120,8 +120,8 @@
       "away_team": "Tampa Bay Rays",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "46-48",
-      "away_record": "56-38",
+      "home_record": "47-48",
+      "away_record": "56-39",
       "venue": "Fenway Park",
       "broadcasts": [
         "MLB.TV",
@@ -549,8 +549,8 @@
       "away_team": "Tampa Bay Rays",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "46-48",
-      "away_record": "56-38",
+      "home_record": "47-48",
+      "away_record": "56-39",
       "venue": "Fenway Park",
       "broadcasts": [
         "ESPN Unlmtd",
