@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-17T14:25:01.168701Z",
+  "refreshed_at_utc": "2026-07-17T15:52:26.040782Z",
   "dates_requested": [
     "20260716",
     "20260717",
@@ -350,7 +350,7 @@
       "away_score": "0",
       "home_record": "49-47",
       "away_record": "50-45",
-      "venue": "Chase Field",
+      "venue": "Chase Field (NH)",
       "broadcasts": [
         "MLB.TV",
         "DBACKS.TV",
@@ -677,7 +677,7 @@
       "away_score": "0",
       "home_record": "49-47",
       "away_record": "50-45",
-      "venue": "Chase Field",
+      "venue": "Chase Field (NH)",
       "broadcasts": [
         "MLB.TV",
         "DBACKS.TV",
