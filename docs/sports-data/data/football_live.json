@@ -1,12 +1,12 @@
 {
   "sport": "football",
-  "refreshed_at_utc": "2026-07-17T23:42:46.244813Z",
+  "refreshed_at_utc": "2026-07-18T01:29:44.978862Z",
   "dates_requested": [
-    "20260716",
     "20260717",
-    "20260718"
+    "20260718",
+    "20260719"
   ],
-  "event_count": 1,
+  "event_count": 2,
   "events": [
     {
       "sport": "football",
@@ -32,6 +32,31 @@
         "FOX One"
       ],
       "link": "https://www.espn.com/soccer/match/_/gameId/760516/england-france"
+    },
+    {
+      "sport": "football",
+      "event_id": "760517",
+      "date_utc": "2026-07-19T19:00Z",
+      "name": "Argentina at Spain",
+      "short_name": "ARG @ ESP",
+      "status": "Scheduled",
+      "status_short": "Scheduled",
+      "state": "pre",
+      "period": "",
+      "clock": "0'",
+      "home_team": "Spain",
+      "away_team": "Argentina",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "",
+      "away_record": "",
+      "venue": "MetLife Stadium",
+      "broadcasts": [
+        "FOX",
+        "Tele",
+        "FOX One"
+      ],
+      "link": "https://www.espn.com/soccer/match/_/gameId/760517/argentina-spain"
     }
   ],
   "errors": []
