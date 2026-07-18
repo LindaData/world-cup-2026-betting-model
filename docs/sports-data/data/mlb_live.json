@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-18T16:26:00.702288Z",
+  "refreshed_at_utc": "2026-07-18T17:27:53.183628Z",
   "dates_requested": [
     "20260717",
     "20260718",
@@ -392,10 +392,10 @@
       "date_utc": "2026-07-18T17:10Z",
       "name": "Pittsburgh Pirates at Cleveland Guardians",
       "short_name": "PIT @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/18 - 1:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
       "away_team": "Pittsburgh Pirates",
@@ -408,7 +408,7 @@
         "MLB.TV",
         "CLEGuardians.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401896568/pirates-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401896568"
     },
     {
       "sport": "mlb",
