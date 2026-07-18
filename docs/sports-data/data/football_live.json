@@ -1,6 +1,6 @@
 {
   "sport": "football",
-  "refreshed_at_utc": "2026-07-18T20:37:36.797039Z",
+  "refreshed_at_utc": "2026-07-18T21:40:43.675883Z",
   "dates_requested": [
     "20260717",
     "20260718",
@@ -14,15 +14,15 @@
       "date_utc": "2026-07-18T21:00Z",
       "name": "England at France",
       "short_name": "ENG @ FRA",
-      "status": "Scheduled",
-      "status_short": "Scheduled",
-      "state": "pre",
-      "period": "",
-      "clock": "0'",
+      "status": "First Half",
+      "status_short": "40'",
+      "state": "in",
+      "period": 1,
+      "clock": "40'",
       "home_team": "France",
       "away_team": "England",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "3",
       "home_record": "",
       "away_record": "",
       "venue": "Hard Rock Stadium",
@@ -31,7 +31,7 @@
         "Tele",
         "FOX One"
       ],
-      "link": "https://www.espn.com/soccer/match/_/gameId/760516/england-france"
+      "link": "https://www.espn.com/soccer/match/_/gameId/760516"
     },
     {
       "sport": "football",
