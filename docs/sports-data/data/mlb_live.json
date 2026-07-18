@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-18T14:16:00.436169Z",
+  "refreshed_at_utc": "2026-07-18T15:27:28.039619Z",
   "dates_requested": [
     "20260717",
     "20260718",
@@ -437,6 +437,31 @@
     },
     {
       "sport": "mlb",
+      "event_id": "401816158",
+      "date_utc": "2026-07-18T19:05Z",
+      "name": "New York Mets at Philadelphia Phillies",
+      "short_name": "NYM @ PHI",
+      "status": "Scheduled",
+      "status_short": "7/18 - 3:05 PM EDT",
+      "state": "pre",
+      "period": 1,
+      "clock": "0:00",
+      "home_team": "Philadelphia Phillies",
+      "away_team": "New York Mets",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "54-44",
+      "away_record": "41-57",
+      "venue": "Citizens Bank Park",
+      "broadcasts": [
+        "MLB.TV",
+        "NBC Sports Phil",
+        "SNY"
+      ],
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816158/mets-phillies"
+    },
+    {
+      "sport": "mlb",
       "event_id": "401816156",
       "date_utc": "2026-07-18T19:07Z",
       "name": "Chicago White Sox at Toronto Blue Jays",
@@ -485,31 +510,6 @@
         "Reds.TV"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401816166/reds-rockies"
-    },
-    {
-      "sport": "mlb",
-      "event_id": "401816158",
-      "date_utc": "2026-07-18T20:05Z",
-      "name": "New York Mets at Philadelphia Phillies",
-      "short_name": "NYM @ PHI",
-      "status": "Scheduled",
-      "status_short": "7/18 - 4:05 PM EDT",
-      "state": "pre",
-      "period": 1,
-      "clock": "0:00",
-      "home_team": "Philadelphia Phillies",
-      "away_team": "New York Mets",
-      "home_score": "0",
-      "away_score": "0",
-      "home_record": "54-44",
-      "away_record": "41-57",
-      "venue": "Citizens Bank Park",
-      "broadcasts": [
-        "MLB.TV",
-        "NBC Sports Phil",
-        "SNY"
-      ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816158/mets-phillies"
     },
     {
       "sport": "mlb",
