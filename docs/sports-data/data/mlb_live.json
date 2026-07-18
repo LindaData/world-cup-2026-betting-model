@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-18T04:26:28.428312Z",
+  "refreshed_at_utc": "2026-07-18T06:27:03.036978Z",
   "dates_requested": [
     "20260717",
     "20260718",
@@ -316,24 +316,24 @@
       "date_utc": "2026-07-18T01:40Z",
       "name": "St. Louis Cardinals at Arizona Diamondbacks",
       "short_name": "STL @ ARI",
-      "status": "In Progress",
-      "status_short": "Bot 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Arizona Diamondbacks",
       "away_team": "St. Louis Cardinals",
       "home_score": "4",
       "away_score": "5",
-      "home_record": "49-47",
-      "away_record": "50-45",
+      "home_record": "49-48",
+      "away_record": "51-45",
       "venue": "Chase Field (NH)",
       "broadcasts": [
         "MLB.TV",
         "DBACKS.TV",
         "Cardinals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816154"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816154/cardinals-diamondbacks"
     },
     {
       "sport": "mlb",
@@ -341,24 +341,24 @@
       "date_utc": "2026-07-18T01:40Z",
       "name": "Washington Nationals at Athletics Athletics",
       "short_name": "WSH @ ATH",
-      "status": "In Progress",
-      "status_short": "End 7th",
-      "state": "in",
-      "period": 7,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Athletics",
       "away_team": "Washington Nationals",
-      "home_score": "2",
-      "away_score": "18",
-      "home_record": "41-55",
-      "away_record": "48-49",
+      "home_score": "4",
+      "away_score": "23",
+      "home_record": "41-56",
+      "away_record": "49-49",
       "venue": "Sutter Health Park",
       "broadcasts": [
         "MLB.TV",
         "NBC Sports CA",
         "Nationals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816155"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816155/nationals-athletics"
     },
     {
       "sport": "mlb",
@@ -366,17 +366,17 @@
       "date_utc": "2026-07-18T02:10Z",
       "name": "San Francisco Giants at Seattle Mariners",
       "short_name": "SF @ SEA",
-      "status": "In Progress",
-      "status_short": "Bot 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Seattle Mariners",
       "away_team": "San Francisco Giants",
       "home_score": "0",
       "away_score": "7",
-      "home_record": "48-49",
-      "away_record": "41-55",
+      "home_record": "48-50",
+      "away_record": "42-55",
       "venue": "T-Mobile Park",
       "broadcasts": [
         "MLB.TV",
@@ -384,7 +384,7 @@
         "Mariners.TV",
         "KING 5"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816153"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816153/giants-mariners"
     },
     {
       "sport": "mlb",
@@ -652,8 +652,8 @@
       "away_team": "St. Louis Cardinals",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "49-47",
-      "away_record": "50-45",
+      "home_record": "49-48",
+      "away_record": "51-45",
       "venue": "Chase Field (NH)",
       "broadcasts": [
         "MLB.TV",
@@ -725,8 +725,8 @@
       "away_team": "San Francisco Giants",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-49",
-      "away_record": "41-55",
+      "home_record": "48-50",
+      "away_record": "42-55",
       "venue": "T-Mobile Park",
       "broadcasts": [
         "MLB.TV",
@@ -749,8 +749,8 @@
       "away_team": "Washington Nationals",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "41-55",
-      "away_record": "48-49",
+      "home_record": "41-56",
+      "away_record": "49-49",
       "venue": "Sutter Health Park",
       "broadcasts": [
         "MLB.TV",
@@ -1048,8 +1048,8 @@
       "away_team": "Washington Nationals",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "41-55",
-      "away_record": "48-49",
+      "home_record": "41-56",
+      "away_record": "49-49",
       "venue": "Sutter Health Park",
       "broadcasts": [
         "MLB.TV",
@@ -1098,8 +1098,8 @@
       "away_team": "San Francisco Giants",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "48-49",
-      "away_record": "41-55",
+      "home_record": "48-50",
+      "away_record": "42-55",
       "venue": "T-Mobile Park",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -1124,8 +1124,8 @@
       "away_team": "St. Louis Cardinals",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "49-47",
-      "away_record": "50-45",
+      "home_record": "49-48",
+      "away_record": "51-45",
       "venue": "Chase Field (NH)",
       "broadcasts": [
         "MLB.TV",
