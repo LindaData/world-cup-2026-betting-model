@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-18T22:38:45.358418Z",
+  "refreshed_at_utc": "2026-07-18T23:42:43.266205Z",
   "dates_requested": [
     "20260717",
     "20260718",
@@ -441,24 +441,24 @@
       "date_utc": "2026-07-18T19:05Z",
       "name": "New York Mets at Philadelphia Phillies",
       "short_name": "NYM @ PHI",
-      "status": "In Progress",
-      "status_short": "End 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Philadelphia Phillies",
       "away_team": "New York Mets",
       "home_score": "6",
       "away_score": "1",
-      "home_record": "54-44",
-      "away_record": "41-57",
+      "home_record": "55-44",
+      "away_record": "41-58",
       "venue": "Citizens Bank Park",
       "broadcasts": [
         "MLB.TV",
         "NBC Sports Phil",
         "SNY"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816158"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816158/mets-phillies"
     },
     {
       "sport": "mlb",
@@ -518,14 +518,14 @@
       "name": "Tampa Bay Rays at Boston Red Sox",
       "short_name": "TB @ BOS",
       "status": "In Progress",
-      "status_short": "Top 5th",
+      "status_short": "Bot 8th",
       "state": "in",
-      "period": 5,
+      "period": 8,
       "clock": "0:00",
       "home_team": "Boston Red Sox",
       "away_team": "Tampa Bay Rays",
-      "home_score": "3",
-      "away_score": "5",
+      "home_score": "7",
+      "away_score": "6",
       "home_record": "48-48",
       "away_record": "56-40",
       "venue": "Fenway Park",
@@ -543,24 +543,24 @@
       "date_utc": "2026-07-18T20:10Z",
       "name": "Texas Rangers at Atlanta Braves",
       "short_name": "TEX @ ATL",
-      "status": "In Progress",
-      "status_short": "Top 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Atlanta Braves",
       "away_team": "Texas Rangers",
       "home_score": "6",
       "away_score": "7",
-      "home_record": "56-40",
-      "away_record": "49-48",
+      "home_record": "56-41",
+      "away_record": "50-48",
       "venue": "Truist Park",
       "broadcasts": [
         "MLB.TV",
         "BravesVision",
         "Rangers Sports Network"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816161"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816161/rangers-braves"
     },
     {
       "sport": "mlb",
@@ -568,24 +568,24 @@
       "date_utc": "2026-07-18T20:10Z",
       "name": "Baltimore Orioles at Houston Astros",
       "short_name": "BAL @ HOU",
-      "status": "In Progress",
-      "status_short": "End 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final/11",
+      "state": "post",
+      "period": 11,
       "clock": "0:00",
       "home_team": "Houston Astros",
       "away_team": "Baltimore Orioles",
-      "home_score": "1",
-      "away_score": "1",
-      "home_record": "47-52",
-      "away_record": "47-51",
+      "home_score": "2",
+      "away_score": "4",
+      "home_record": "47-53",
+      "away_record": "48-51",
       "venue": "Daikin Park",
       "broadcasts": [
         "MLB.TV",
         "MASN",
         "Space City Home Network"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816162"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816162/orioles-astros"
     },
     {
       "sport": "mlb",
@@ -593,24 +593,24 @@
       "date_utc": "2026-07-18T20:10Z",
       "name": "Miami Marlins at Milwaukee Brewers",
       "short_name": "MIA @ MIL",
-      "status": "In Progress",
-      "status_short": "Bot 7th",
-      "state": "in",
-      "period": 7,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Milwaukee Brewers",
       "away_team": "Miami Marlins",
-      "home_score": "6",
-      "away_score": "3",
-      "home_record": "60-37",
-      "away_record": "52-46",
+      "home_score": "8",
+      "away_score": "6",
+      "home_record": "61-37",
+      "away_record": "52-47",
       "venue": "American Family Field",
       "broadcasts": [
         "MLB.TV",
         "Brewers.TV",
         "Marlins.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816163"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816163/marlins-brewers"
     },
     {
       "sport": "mlb",
@@ -618,24 +618,24 @@
       "date_utc": "2026-07-18T20:10Z",
       "name": "San Diego Padres at Kansas City Royals",
       "short_name": "SD @ KC",
-      "status": "In Progress",
-      "status_short": "Top 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Kansas City Royals",
       "away_team": "San Diego Padres",
       "home_score": "6",
       "away_score": "1",
-      "home_record": "39-59",
-      "away_record": "48-49",
+      "home_record": "40-59",
+      "away_record": "48-50",
       "venue": "Kauffman Stadium",
       "broadcasts": [
         "MLB.TV",
         "Royals.TV",
         "Padres.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816165"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816165/padres-royals"
     },
     {
       "sport": "mlb",
@@ -643,24 +643,24 @@
       "date_utc": "2026-07-18T20:10Z",
       "name": "St. Louis Cardinals at Arizona Diamondbacks",
       "short_name": "STL @ ARI",
-      "status": "In Progress",
-      "status_short": "Top 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Arizona Diamondbacks",
       "away_team": "St. Louis Cardinals",
       "home_score": "5",
-      "away_score": "2",
-      "home_record": "49-48",
-      "away_record": "51-45",
+      "away_score": "3",
+      "home_record": "50-48",
+      "away_record": "51-46",
       "venue": "Chase Field (NH)",
       "broadcasts": [
         "MLB.TV",
         "DBACKS.TV",
         "Cardinals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816169"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816169/cardinals-diamondbacks"
     },
     {
       "sport": "mlb",
@@ -705,8 +705,7 @@
       "away_record": "62-36",
       "venue": "Yankee Stadium",
       "broadcasts": [
-        "MLB.TV",
-        "FOX"
+        "MLB.TV"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401816157/dodgers-yankees"
     },
@@ -828,8 +827,9 @@
       "away_record": "62-36",
       "venue": "Yankee Stadium",
       "broadcasts": [
-        "FOX",
-        "MLB.TV"
+        "MLB.TV",
+        "Sportsnet LA",
+        "YES"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401897386/dodgers-yankees"
     },
@@ -848,8 +848,8 @@
       "away_team": "New York Mets",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "54-44",
-      "away_record": "41-57",
+      "home_record": "55-44",
+      "away_record": "41-58",
       "venue": "Citizens Bank Park",
       "broadcasts": [
         "MLB.TV",
@@ -898,8 +898,8 @@
       "away_team": "Texas Rangers",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "56-40",
-      "away_record": "49-48",
+      "home_record": "56-41",
+      "away_record": "50-48",
       "venue": "Truist Park",
       "broadcasts": [
         "MLB.TV",
@@ -947,8 +947,8 @@
       "away_team": "Baltimore Orioles",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "47-52",
-      "away_record": "47-51",
+      "home_record": "47-53",
+      "away_record": "48-51",
       "venue": "Daikin Park",
       "broadcasts": [
         "MLB.TV",
@@ -972,8 +972,8 @@
       "away_team": "Miami Marlins",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "60-37",
-      "away_record": "52-46",
+      "home_record": "61-37",
+      "away_record": "52-47",
       "venue": "American Family Field",
       "broadcasts": [
         "MLB.TV",
@@ -997,8 +997,8 @@
       "away_team": "San Diego Padres",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "39-59",
-      "away_record": "48-49",
+      "home_record": "40-59",
+      "away_record": "48-50",
       "venue": "Kauffman Stadium",
       "broadcasts": [
         "MLB.TV",
@@ -1148,8 +1148,8 @@
       "away_team": "St. Louis Cardinals",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "49-48",
-      "away_record": "51-45",
+      "home_record": "50-48",
+      "away_record": "51-46",
       "venue": "Chase Field (NH)",
       "broadcasts": [
         "MLB.TV",
