@@ -1,6 +1,6 @@
 {
   "sport": "football",
-  "refreshed_at_utc": "2026-07-19T21:11:47.481266Z",
+  "refreshed_at_utc": "2026-07-19T22:13:51.104149Z",
   "dates_requested": [
     "20260718",
     "20260719",
@@ -39,14 +39,14 @@
       "date_utc": "2026-07-19T19:00Z",
       "name": "Argentina at Spain",
       "short_name": "ARG @ ESP",
-      "status": "Second Half",
-      "status_short": "90'+4'",
-      "state": "in",
-      "period": 2,
-      "clock": "90'+4'",
+      "status": "Final Score - After Extra Time",
+      "status_short": "AET",
+      "state": "post",
+      "period": 4,
+      "clock": "120'+5'",
       "home_team": "Spain",
       "away_team": "Argentina",
-      "home_score": "0",
+      "home_score": "1",
       "away_score": "0",
       "home_record": "",
       "away_record": "",
@@ -56,7 +56,7 @@
         "Tele",
         "FOX One"
       ],
-      "link": "https://www.espn.com/soccer/match/_/gameId/760517"
+      "link": "https://www.espn.com/soccer/match/_/gameId/760517/argentina-spain"
     }
   ],
   "errors": []
