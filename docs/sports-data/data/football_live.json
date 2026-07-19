@@ -1,6 +1,6 @@
 {
   "sport": "football",
-  "refreshed_at_utc": "2026-07-19T18:51:50.024482Z",
+  "refreshed_at_utc": "2026-07-19T20:02:31.044493Z",
   "dates_requested": [
     "20260718",
     "20260719",
@@ -39,11 +39,11 @@
       "date_utc": "2026-07-19T19:00Z",
       "name": "Argentina at Spain",
       "short_name": "ARG @ ESP",
-      "status": "Scheduled",
-      "status_short": "Scheduled",
-      "state": "pre",
-      "period": "",
-      "clock": "0'",
+      "status": "Halftime",
+      "status_short": "HT",
+      "state": "in",
+      "period": 1,
+      "clock": "45'+4'",
       "home_team": "Spain",
       "away_team": "Argentina",
       "home_score": "0",
@@ -56,7 +56,7 @@
         "Tele",
         "FOX One"
       ],
-      "link": "https://www.espn.com/soccer/match/_/gameId/760517/argentina-spain"
+      "link": "https://www.espn.com/soccer/match/_/gameId/760517"
     }
   ],
   "errors": []
