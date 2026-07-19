@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-19T16:44:54.065352Z",
+  "refreshed_at_utc": "2026-07-19T17:50:04.718479Z",
   "dates_requested": [
     "20260718",
     "20260719",
@@ -412,14 +412,14 @@
       "name": "Chicago White Sox at Toronto Blue Jays",
       "short_name": "CHW @ TOR",
       "status": "In Progress",
-      "status_short": "End 2nd",
+      "status_short": "Top 7th",
       "state": "in",
-      "period": 2,
+      "period": 7,
       "clock": "0:00",
       "home_team": "Toronto Blue Jays",
       "away_team": "Chicago White Sox",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "3",
       "home_record": "46-52",
       "away_record": "51-46",
       "venue": "Rogers Centre",
@@ -437,14 +437,14 @@
       "name": "Los Angeles Dodgers at New York Yankees",
       "short_name": "LAD @ NYY",
       "status": "In Progress",
-      "status_short": "Top 1st",
+      "status_short": "Bot 4th",
       "state": "in",
-      "period": 1,
+      "period": 4,
       "clock": "0:00",
       "home_team": "New York Yankees",
       "away_team": "Los Angeles Dodgers",
-      "home_score": "0",
-      "away_score": "0",
+      "home_score": "1",
+      "away_score": "2",
       "home_record": "54-43",
       "away_record": "62-36",
       "venue": "Yankee Stadium",
@@ -461,15 +461,15 @@
       "date_utc": "2026-07-19T17:35Z",
       "name": "New York Mets at Philadelphia Phillies",
       "short_name": "NYM @ PHI",
-      "status": "Scheduled",
-      "status_short": "7/19 - 1:35 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Mid 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Philadelphia Phillies",
       "away_team": "New York Mets",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "2",
       "home_record": "55-44",
       "away_record": "41-58",
       "venue": "Citizens Bank Park",
@@ -478,7 +478,7 @@
         "NBC Sports Phil",
         "SNY"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816173/mets-phillies"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816173"
     },
     {
       "sport": "mlb",
@@ -486,9 +486,9 @@
       "date_utc": "2026-07-19T17:35Z",
       "name": "Tampa Bay Rays at Boston Red Sox",
       "short_name": "TB @ BOS",
-      "status": "Scheduled",
-      "status_short": "7/19 - 1:35 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Boston Red Sox",
@@ -503,7 +503,7 @@
         "Rays.TV",
         "NESN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816175/rays-red-sox"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816175"
     },
     {
       "sport": "mlb",
@@ -511,9 +511,9 @@
       "date_utc": "2026-07-19T17:35Z",
       "name": "Texas Rangers at Atlanta Braves",
       "short_name": "TEX @ ATL",
-      "status": "Scheduled",
-      "status_short": "7/19 - 1:35 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Atlanta Braves",
@@ -528,7 +528,7 @@
         "BravesVision",
         "Rangers Sports Network"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816176/rangers-braves"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816176"
     },
     {
       "sport": "mlb",
@@ -536,9 +536,9 @@
       "date_utc": "2026-07-19T17:40Z",
       "name": "Pittsburgh Pirates at Cleveland Guardians",
       "short_name": "PIT @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/19 - 1:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
@@ -552,7 +552,7 @@
         "MLB.TV",
         "CLEGuardians.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816174/pirates-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816174"
     },
     {
       "sport": "mlb",
