@@ -1,6 +1,6 @@
 {
   "sport": "football",
-  "refreshed_at_utc": "2026-07-19T20:02:31.044493Z",
+  "refreshed_at_utc": "2026-07-19T21:11:47.481266Z",
   "dates_requested": [
     "20260718",
     "20260719",
@@ -39,11 +39,11 @@
       "date_utc": "2026-07-19T19:00Z",
       "name": "Argentina at Spain",
       "short_name": "ARG @ ESP",
-      "status": "Halftime",
-      "status_short": "HT",
+      "status": "Second Half",
+      "status_short": "90'+4'",
       "state": "in",
-      "period": 1,
-      "clock": "45'+4'",
+      "period": 2,
+      "clock": "90'+4'",
       "home_team": "Spain",
       "away_team": "Argentina",
       "home_score": "0",
