@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-19T15:47:27.750214Z",
+  "refreshed_at_utc": "2026-07-19T16:44:54.065352Z",
   "dates_requested": [
     "20260718",
     "20260719",
@@ -411,10 +411,10 @@
       "date_utc": "2026-07-19T16:15Z",
       "name": "Chicago White Sox at Toronto Blue Jays",
       "short_name": "CHW @ TOR",
-      "status": "Scheduled",
-      "status_short": "7/19 - 12:15 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "End 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Toronto Blue Jays",
       "away_team": "Chicago White Sox",
@@ -428,7 +428,7 @@
         "Sportsnet",
         "TVA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816171/white-sox-blue-jays"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816171"
     },
     {
       "sport": "mlb",
@@ -436,9 +436,9 @@
       "date_utc": "2026-07-19T16:35Z",
       "name": "Los Angeles Dodgers at New York Yankees",
       "short_name": "LAD @ NYY",
-      "status": "Scheduled",
-      "status_short": "7/19 - 12:35 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "New York Yankees",
@@ -453,7 +453,7 @@
         "Sportsnet LA",
         "YES"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401897386/dodgers-yankees"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401897386"
     },
     {
       "sport": "mlb",
