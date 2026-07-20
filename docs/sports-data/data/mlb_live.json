@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-20T01:00:14.092660Z",
+  "refreshed_at_utc": "2026-07-20T04:59:10.560264Z",
   "dates_requested": [
     "20260719",
     "20260720",
@@ -375,7 +375,7 @@
       "away_score": "7",
       "home_record": "51-48",
       "away_record": "51-47",
-      "venue": "Chase Field (NH)",
+      "venue": "Chase Field",
       "broadcasts": [
         "MLB.TV",
         "DBACKS.TV",
@@ -389,23 +389,23 @@
       "date_utc": "2026-07-19T23:20Z",
       "name": "Los Angeles Dodgers at New York Yankees",
       "short_name": "LAD @ NYY",
-      "status": "In Progress",
-      "status_short": "Bot 5th",
-      "state": "in",
-      "period": 5,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "New York Yankees",
       "away_team": "Los Angeles Dodgers",
-      "home_score": "1",
-      "away_score": "0",
-      "home_record": "54-44",
-      "away_record": "63-36",
+      "home_score": "2",
+      "away_score": "1",
+      "home_record": "55-44",
+      "away_record": "63-37",
       "venue": "Yankee Stadium",
       "broadcasts": [
         "NBC",
         "Peacock"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816172"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816172/dodgers-yankees"
     },
     {
       "sport": "mlb",
@@ -448,7 +448,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "55-45",
-      "away_record": "63-36",
+      "away_record": "63-37",
       "venue": "Citizens Bank Park",
       "broadcasts": [
         "ESPN"
@@ -470,7 +470,7 @@
       "away_team": "Pittsburgh Pirates",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "54-44",
+      "home_record": "55-44",
       "away_record": "52-48",
       "venue": "Yankee Stadium",
       "broadcasts": [
@@ -723,7 +723,7 @@
       "away_score": "0",
       "home_record": "51-48",
       "away_record": "42-57",
-      "venue": "Chase Field (NH)",
+      "venue": "Chase Field",
       "broadcasts": [
         "MLB.TV",
         "DBACKS.TV",
@@ -797,7 +797,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "55-45",
-      "away_record": "63-36",
+      "away_record": "63-37",
       "venue": "Citizens Bank Park",
       "broadcasts": [
         "MLB.TV",
@@ -847,7 +847,7 @@
       "away_team": "Pittsburgh Pirates",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "54-44",
+      "home_record": "55-44",
       "away_record": "52-48",
       "venue": "Yankee Stadium",
       "broadcasts": [
@@ -1125,7 +1125,7 @@
       "away_score": "0",
       "home_record": "51-48",
       "away_record": "42-57",
-      "venue": "Chase Field (NH)",
+      "venue": "Chase Field",
       "broadcasts": [
         "MLB.TV",
         "DBACKS.TV",
