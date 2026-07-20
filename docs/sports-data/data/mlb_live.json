@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-20T22:47:07.199894Z",
+  "refreshed_at_utc": "2026-07-20T23:47:35.876185Z",
   "dates_requested": [
     "20260719",
     "20260720",
@@ -414,14 +414,14 @@
       "name": "Minnesota Twins at Cleveland Guardians",
       "short_name": "MIN @ CLE",
       "status": "In Progress",
-      "status_short": "Top 1st",
+      "status_short": "Top 4th",
       "state": "in",
-      "period": 1,
+      "period": 4,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
       "away_team": "Minnesota Twins",
-      "home_score": "0",
-      "away_score": "0",
+      "home_score": "7",
+      "away_score": "2",
       "home_record": "52-48",
       "away_record": "49-51",
       "venue": "Progressive Field",
@@ -438,10 +438,10 @@
       "date_utc": "2026-07-20T23:00Z",
       "name": "Los Angeles Dodgers at Philadelphia Phillies",
       "short_name": "LAD @ PHI",
-      "status": "Scheduled",
-      "status_short": "7/20 - 7:00 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "Philadelphia Phillies",
       "away_team": "Los Angeles Dodgers",
@@ -453,7 +453,7 @@
       "broadcasts": [
         "ESPN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816187/dodgers-phillies"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816187"
     },
     {
       "sport": "mlb",
@@ -461,15 +461,15 @@
       "date_utc": "2026-07-20T23:05Z",
       "name": "Pittsburgh Pirates at New York Yankees",
       "short_name": "PIT @ NYY",
-      "status": "Scheduled",
-      "status_short": "7/20 - 7:05 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 2nd",
+      "state": "in",
+      "period": 2,
       "clock": "0:00",
       "home_team": "New York Yankees",
       "away_team": "Pittsburgh Pirates",
-      "home_score": "0",
-      "away_score": "0",
+      "home_score": "4",
+      "away_score": "3",
       "home_record": "55-44",
       "away_record": "52-48",
       "venue": "Yankee Stadium",
@@ -477,7 +477,7 @@
         "MLB.TV",
         "YES"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816189/pirates-yankees"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816189"
     },
     {
       "sport": "mlb",
@@ -485,15 +485,15 @@
       "date_utc": "2026-07-20T23:07Z",
       "name": "Tampa Bay Rays at Toronto Blue Jays",
       "short_name": "TB @ TOR",
-      "status": "Scheduled",
-      "status_short": "7/20 - 7:07 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Mid 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Toronto Blue Jays",
       "away_team": "Tampa Bay Rays",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "2",
       "home_record": "46-53",
       "away_record": "56-42",
       "venue": "Rogers Centre",
@@ -503,7 +503,7 @@
         "Sportsnet",
         "TVA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816191/rays-blue-jays"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816191"
     },
     {
       "sport": "mlb",
@@ -511,15 +511,15 @@
       "date_utc": "2026-07-20T23:10Z",
       "name": "Baltimore Orioles at Boston Red Sox",
       "short_name": "BAL @ BOS",
-      "status": "Scheduled",
-      "status_short": "7/20 - 7:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Boston Red Sox",
       "away_team": "Baltimore Orioles",
-      "home_score": "0",
-      "away_score": "0",
+      "home_score": "1",
+      "away_score": "1",
       "home_record": "50-48",
       "away_record": "49-51",
       "venue": "Fenway Park",
@@ -528,7 +528,7 @@
         "MASN",
         "NESN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816186/orioles-red-sox"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816186"
     },
     {
       "sport": "mlb",
@@ -536,10 +536,10 @@
       "date_utc": "2026-07-20T23:15Z",
       "name": "San Diego Padres at Atlanta Braves",
       "short_name": "SD @ ATL",
-      "status": "Scheduled",
-      "status_short": "7/20 - 7:15 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Top 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Atlanta Braves",
       "away_team": "San Diego Padres",
@@ -554,7 +554,7 @@
         "Gray Media",
         "Padres.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816190/padres-braves"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816190"
     },
     {
       "sport": "mlb",
@@ -562,9 +562,9 @@
       "date_utc": "2026-07-20T23:40Z",
       "name": "New York Mets at Milwaukee Brewers",
       "short_name": "NYM @ MIL",
-      "status": "Scheduled",
-      "status_short": "7/20 - 7:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Milwaukee Brewers",
@@ -579,7 +579,7 @@
         "Brewers.TV",
         "SNY"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816195/mets-brewers"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816195"
     },
     {
       "sport": "mlb",
@@ -587,9 +587,9 @@
       "date_utc": "2026-07-20T23:40Z",
       "name": "San Francisco Giants at Kansas City Royals",
       "short_name": "SF @ KC",
-      "status": "Scheduled",
-      "status_short": "7/20 - 7:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Kansas City Royals",
@@ -604,7 +604,7 @@
         "NBC Sports BA",
         "Royals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816196/giants-royals"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816196"
     },
     {
       "sport": "mlb",
@@ -637,9 +637,9 @@
       "date_utc": "2026-07-21T00:05Z",
       "name": "Detroit Tigers at Chicago Cubs",
       "short_name": "DET @ CHC",
-      "status": "Scheduled",
-      "status_short": "7/20 - 8:05 PM EDT",
-      "state": "pre",
+      "status": "Delayed",
+      "status_short": "Delayed, Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Chicago Cubs",
@@ -654,7 +654,7 @@
         "Marquee Sports Net",
         "Tigers.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816193/tigers-cubs"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816193"
     },
     {
       "sport": "mlb",
