@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-20T21:38:35.562032Z",
+  "refreshed_at_utc": "2026-07-20T22:47:07.199894Z",
   "dates_requested": [
     "20260719",
     "20260720",
@@ -413,9 +413,9 @@
       "date_utc": "2026-07-20T22:40Z",
       "name": "Minnesota Twins at Cleveland Guardians",
       "short_name": "MIN @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/20 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
@@ -430,7 +430,7 @@
         "CLEGuardians.TV",
         "Twins.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816188/twins-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816188"
     },
     {
       "sport": "mlb",
