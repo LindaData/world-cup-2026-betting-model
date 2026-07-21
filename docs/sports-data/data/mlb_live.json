@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-21T21:55:26.356806Z",
+  "refreshed_at_utc": "2026-07-21T22:45:45.783661Z",
   "dates_requested": [
     "20260720",
     "20260721",
@@ -388,9 +388,9 @@
       "date_utc": "2026-07-21T22:40Z",
       "name": "Los Angeles Dodgers at Philadelphia Phillies",
       "short_name": "LAD @ PHI",
-      "status": "Scheduled",
-      "status_short": "7/21 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "Rain Delay",
+      "status_short": "Rain Delay, Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Philadelphia Phillies",
@@ -406,7 +406,7 @@
         "Sportsnet LA",
         "NBC Sports Phil"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816202/dodgers-phillies"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816202"
     },
     {
       "sport": "mlb",
@@ -414,15 +414,15 @@
       "date_utc": "2026-07-21T22:40Z",
       "name": "Minnesota Twins at Cleveland Guardians",
       "short_name": "MIN @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/21 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Mid 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
       "away_team": "Minnesota Twins",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "1",
       "home_record": "53-48",
       "away_record": "49-52",
       "venue": "Progressive Field",
@@ -431,7 +431,7 @@
         "CLEGuardians.TV",
         "Twins.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816203/twins-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816203"
     },
     {
       "sport": "mlb",
