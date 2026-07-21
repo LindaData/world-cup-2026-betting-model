@@ -1,12 +1,12 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-21T20:40:43.959340Z",
+  "refreshed_at_utc": "2026-07-21T21:55:26.356806Z",
   "dates_requested": [
     "20260720",
     "20260721",
     "20260722"
   ],
-  "event_count": 46,
+  "event_count": 47,
   "events": [
     {
       "sport": "mlb",
@@ -488,9 +488,9 @@
       "date_utc": "2026-07-21T23:10Z",
       "name": "Baltimore Orioles at Boston Red Sox",
       "short_name": "BAL @ BOS",
-      "status": "Scheduled",
-      "status_short": "7/21 - 7:10 PM EDT",
-      "state": "pre",
+      "status": "Postponed",
+      "status_short": "Postponed",
+      "state": "post",
       "period": 1,
       "clock": "0:00",
       "home_team": "Boston Red Sox",
@@ -785,6 +785,29 @@
     },
     {
       "sport": "mlb",
+      "event_id": "401898715",
+      "date_utc": "2026-07-22T17:35Z",
+      "name": "Baltimore Orioles at Boston Red Sox",
+      "short_name": "BAL @ BOS",
+      "status": "Scheduled",
+      "status_short": "7/22 - 1:35 PM EDT",
+      "state": "pre",
+      "period": 1,
+      "clock": "0:00",
+      "home_team": "Boston Red Sox",
+      "away_team": "Baltimore Orioles",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "51-48",
+      "away_record": "49-52",
+      "venue": "Fenway Park",
+      "broadcasts": [
+        "MLB.TV"
+      ],
+      "link": "https://www.espn.com/mlb/game/_/gameId/401898715/orioles-red-sox"
+    },
+    {
+      "sport": "mlb",
       "event_id": "401816225",
       "date_utc": "2026-07-22T18:10Z",
       "name": "New York Mets at Milwaukee Brewers",
@@ -990,9 +1013,9 @@
       "date_utc": "2026-07-22T23:05Z",
       "name": "Pittsburgh Pirates at New York Yankees",
       "short_name": "PIT @ NYY",
-      "status": "Postponed",
-      "status_short": "Postponed",
-      "state": "post",
+      "status": "Scheduled",
+      "status_short": "7/22 - 7:05 PM EDT",
+      "state": "pre",
       "period": 1,
       "clock": "0:00",
       "home_team": "New York Yankees",
@@ -1003,7 +1026,8 @@
       "away_record": "52-49",
       "venue": "Yankee Stadium",
       "broadcasts": [
-        "MLB.TV"
+        "MLB.TV",
+        "YES"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401898714/pirates-yankees"
     },
