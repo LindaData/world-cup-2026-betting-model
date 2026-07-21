@@ -1,12 +1,12 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-21T17:49:52.933884Z",
+  "refreshed_at_utc": "2026-07-21T19:04:23.303136Z",
   "dates_requested": [
     "20260720",
     "20260721",
     "20260722"
   ],
-  "event_count": 45,
+  "event_count": 46,
   "events": [
     {
       "sport": "mlb",
@@ -439,9 +439,9 @@
       "date_utc": "2026-07-21T23:05Z",
       "name": "Pittsburgh Pirates at New York Yankees",
       "short_name": "PIT @ NYY",
-      "status": "Scheduled",
-      "status_short": "7/21 - 7:05 PM EDT",
-      "state": "pre",
+      "status": "Postponed",
+      "status_short": "Postponed",
+      "state": "post",
       "period": 1,
       "clock": "0:00",
       "home_team": "New York Yankees",
@@ -762,11 +762,11 @@
     {
       "sport": "mlb",
       "event_id": "401816219",
-      "date_utc": "2026-07-22T17:35Z",
+      "date_utc": "2026-07-22T17:05Z",
       "name": "Pittsburgh Pirates at New York Yankees",
       "short_name": "PIT @ NYY",
       "status": "Scheduled",
-      "status_short": "7/22 - 1:35 PM EDT",
+      "status_short": "7/22 - 1:05 PM EDT",
       "state": "pre",
       "period": 1,
       "clock": "0:00",
@@ -983,6 +983,29 @@
         "Twins.TV"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401816218/twins-guardians"
+    },
+    {
+      "sport": "mlb",
+      "event_id": "401898714",
+      "date_utc": "2026-07-22T23:05Z",
+      "name": "Pittsburgh Pirates at New York Yankees",
+      "short_name": "PIT @ NYY",
+      "status": "Scheduled",
+      "status_short": "7/22 - 7:05 PM EDT",
+      "state": "pre",
+      "period": 1,
+      "clock": "0:00",
+      "home_team": "New York Yankees",
+      "away_team": "Pittsburgh Pirates",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "56-44",
+      "away_record": "52-49",
+      "venue": "Yankee Stadium",
+      "broadcasts": [
+        "MLB.TV"
+      ],
+      "link": "https://www.espn.com/mlb/game/_/gameId/401898714/pirates-yankees"
     },
     {
       "sport": "mlb",
