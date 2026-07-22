@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-22T21:39:21.172926Z",
+  "refreshed_at_utc": "2026-07-22T22:53:24.317158Z",
   "dates_requested": [
     "20260721",
     "20260722",
@@ -489,24 +489,24 @@
       "date_utc": "2026-07-22T19:10Z",
       "name": "Washington Nationals at Colorado Rockies",
       "short_name": "WSH @ COL",
-      "status": "In Progress",
-      "status_short": "Top 8th",
-      "state": "in",
-      "period": 8,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Colorado Rockies",
       "away_team": "Washington Nationals",
       "home_score": "0",
       "away_score": "8",
-      "home_record": "41-62",
-      "away_record": "51-51",
+      "home_record": "41-63",
+      "away_record": "52-51",
       "venue": "Coors Field",
       "broadcasts": [
         "MLB.TV",
         "Rockies.TV",
         "Nationals.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816227"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816227/nationals-rockies"
     },
     {
       "sport": "mlb",
@@ -514,17 +514,17 @@
       "date_utc": "2026-07-22T19:40Z",
       "name": "Athletics Athletics at Arizona Diamondbacks",
       "short_name": "ATH @ ARI",
-      "status": "In Progress",
-      "status_short": "Bot 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Arizona Diamondbacks",
       "away_team": "Athletics",
-      "home_score": "9",
-      "away_score": "2",
-      "home_record": "52-49",
-      "away_record": "43-58",
+      "home_score": "15",
+      "away_score": "5",
+      "home_record": "53-49",
+      "away_record": "43-59",
       "venue": "Chase Field",
       "broadcasts": [
         "ESPN Unlmtd",
@@ -532,7 +532,7 @@
         "DBACKS.TV",
         "NBC Sports CA"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816228"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816228/athletics-diamondbacks"
     },
     {
       "sport": "mlb",
@@ -540,24 +540,24 @@
       "date_utc": "2026-07-22T19:40Z",
       "name": "Cincinnati Reds at Seattle Mariners",
       "short_name": "CIN @ SEA",
-      "status": "In Progress",
-      "status_short": "Bot 7th",
-      "state": "in",
-      "period": 7,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Seattle Mariners",
       "away_team": "Cincinnati Reds",
       "home_score": "3",
       "away_score": "5",
-      "home_record": "51-51",
-      "away_record": "46-54",
+      "home_record": "51-52",
+      "away_record": "47-54",
       "venue": "T-Mobile Park",
       "broadcasts": [
         "MLB.TV",
         "Reds.TV",
         "Mariners.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816229"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816229/reds-mariners"
     },
     {
       "sport": "mlb",
@@ -565,24 +565,24 @@
       "date_utc": "2026-07-22T20:07Z",
       "name": "St. Louis Cardinals at Los Angeles Angels",
       "short_name": "STL @ LAA",
-      "status": "In Progress",
-      "status_short": "Bot 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Los Angeles Angels",
       "away_team": "St. Louis Cardinals",
       "home_score": "0",
       "away_score": "1",
-      "home_record": "41-61",
-      "away_record": "51-49",
+      "home_record": "41-62",
+      "away_record": "52-49",
       "venue": "Angel Stadium",
       "broadcasts": [
         "MLB.TV",
         "Cardinals.TV",
         "Angels.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816230"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816230/cardinals-angels"
     },
     {
       "sport": "mlb",
@@ -590,9 +590,9 @@
       "date_utc": "2026-07-22T22:40Z",
       "name": "Los Angeles Dodgers at Philadelphia Phillies",
       "short_name": "LAD @ PHI",
-      "status": "Scheduled",
-      "status_short": "7/22 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Philadelphia Phillies",
@@ -607,7 +607,7 @@
         "Sportsnet LA",
         "NBC Sports Phil"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816217/dodgers-phillies"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816217"
     },
     {
       "sport": "mlb",
@@ -615,15 +615,15 @@
       "date_utc": "2026-07-22T22:40Z",
       "name": "Minnesota Twins at Cleveland Guardians",
       "short_name": "MIN @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/22 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
       "away_team": "Minnesota Twins",
       "home_score": "0",
-      "away_score": "0",
+      "away_score": "1",
       "home_record": "54-48",
       "away_record": "49-53",
       "venue": "Progressive Field",
@@ -632,7 +632,7 @@
         "CLEGuardians.TV",
         "Twins.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816218/twins-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816218"
     },
     {
       "sport": "mlb",
@@ -899,8 +899,8 @@
       "away_team": "Arizona Diamondbacks",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "51-49",
-      "away_record": "52-49",
+      "home_record": "52-49",
+      "away_record": "53-49",
       "venue": "Busch Stadium",
       "broadcasts": [
         "MLB.TV",
