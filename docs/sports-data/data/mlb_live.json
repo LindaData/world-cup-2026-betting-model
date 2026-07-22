@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-22T16:14:35.322879Z",
+  "refreshed_at_utc": "2026-07-22T17:47:09.896801Z",
   "dates_requested": [
     "20260721",
     "20260722",
@@ -390,10 +390,10 @@
       "date_utc": "2026-07-22T17:05Z",
       "name": "Pittsburgh Pirates at New York Yankees",
       "short_name": "PIT @ NYY",
-      "status": "Scheduled",
-      "status_short": "7/22 - 1:05 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "End 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "New York Yankees",
       "away_team": "Pittsburgh Pirates",
@@ -406,7 +406,7 @@
         "MLB.TV",
         "YES"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816219/pirates-yankees"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816219"
     },
     {
       "sport": "mlb",
@@ -414,9 +414,9 @@
       "date_utc": "2026-07-22T17:35Z",
       "name": "Baltimore Orioles at Boston Red Sox",
       "short_name": "BAL @ BOS",
-      "status": "Scheduled",
-      "status_short": "7/22 - 1:35 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Bot 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Boston Red Sox",
@@ -428,9 +428,10 @@
       "venue": "Fenway Park",
       "broadcasts": [
         "MLB.TV",
-        "NESN"
+        "NESN",
+        "MASN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401898715/orioles-red-sox"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401898715"
     },
     {
       "sport": "mlb",
