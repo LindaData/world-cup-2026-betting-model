@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-23T16:19:41.786936Z",
+  "refreshed_at_utc": "2026-07-23T17:53:16.968873Z",
   "dates_requested": [
     "20260722",
     "20260723",
@@ -438,14 +438,14 @@
       "name": "San Diego Padres at Atlanta Braves",
       "short_name": "SD @ ATL",
       "status": "In Progress",
-      "status_short": "Top 1st",
+      "status_short": "Top 6th",
       "state": "in",
-      "period": 1,
+      "period": 6,
       "clock": "0:00",
       "home_team": "Atlanta Braves",
       "away_team": "San Diego Padres",
-      "home_score": "0",
-      "away_score": "0",
+      "home_score": "5",
+      "away_score": "3",
       "home_record": "59-42",
       "away_record": "50-52",
       "venue": "Truist Park",
@@ -462,10 +462,10 @@
       "date_utc": "2026-07-23T17:10Z",
       "name": "Minnesota Twins at Cleveland Guardians",
       "short_name": "MIN @ CLE",
-      "status": "Scheduled",
-      "status_short": "7/23 - 1:10 PM EDT",
-      "state": "pre",
-      "period": 1,
+      "status": "In Progress",
+      "status_short": "Bot 3rd",
+      "state": "in",
+      "period": 3,
       "clock": "0:00",
       "home_team": "Cleveland Guardians",
       "away_team": "Minnesota Twins",
@@ -480,7 +480,7 @@
         "CLEGuardians.TV",
         "Twins.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816232/twins-guardians"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816232"
     },
     {
       "sport": "mlb",
