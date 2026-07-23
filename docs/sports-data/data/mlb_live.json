@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-23T21:33:01.225671Z",
+  "refreshed_at_utc": "2026-07-23T22:47:11.874935Z",
   "dates_requested": [
     "20260722",
     "20260723",
@@ -515,14 +515,14 @@
       "name": "Arizona Diamondbacks at St. Louis Cardinals",
       "short_name": "ARI @ STL",
       "status": "In Progress",
-      "status_short": "Bot 1st",
+      "status_short": "Top 6th",
       "state": "in",
-      "period": 1,
+      "period": 6,
       "clock": "0:00",
       "home_team": "St. Louis Cardinals",
       "away_team": "Arizona Diamondbacks",
       "home_score": "2",
-      "away_score": "0",
+      "away_score": "4",
       "home_record": "52-49",
       "away_record": "53-49",
       "venue": "Busch Stadium",
@@ -539,9 +539,9 @@
       "date_utc": "2026-07-23T22:40Z",
       "name": "Kansas City Royals at Detroit Tigers",
       "short_name": "KC @ DET",
-      "status": "Scheduled",
-      "status_short": "7/23 - 6:40 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Detroit Tigers",
@@ -557,7 +557,7 @@
         "Royals.TV",
         "Tigers.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816231/royals-tigers"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816231"
     },
     {
       "sport": "mlb",
