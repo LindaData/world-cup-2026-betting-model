@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-23T14:38:53.139758Z",
+  "refreshed_at_utc": "2026-07-23T16:19:41.786936Z",
   "dates_requested": [
     "20260722",
     "20260723",
@@ -437,9 +437,9 @@
       "date_utc": "2026-07-23T16:15Z",
       "name": "San Diego Padres at Atlanta Braves",
       "short_name": "SD @ ATL",
-      "status": "Scheduled",
-      "status_short": "7/23 - 12:15 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "status_short": "Top 1st",
+      "state": "in",
       "period": 1,
       "clock": "0:00",
       "home_team": "Atlanta Braves",
@@ -454,7 +454,7 @@
         "BravesVision",
         "Padres.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816233/padres-braves"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816233"
     },
     {
       "sport": "mlb",
