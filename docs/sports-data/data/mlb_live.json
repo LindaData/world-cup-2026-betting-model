@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-23T01:53:29.598711Z",
+  "refreshed_at_utc": "2026-07-23T05:16:55.656013Z",
   "dates_requested": [
     "20260722",
     "20260723",
@@ -314,24 +314,24 @@
       "date_utc": "2026-07-22T23:10Z",
       "name": "Baltimore Orioles at Boston Red Sox",
       "short_name": "BAL @ BOS",
-      "status": "In Progress",
-      "status_short": "Mid 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Boston Red Sox",
       "away_team": "Baltimore Orioles",
       "home_score": "1",
       "away_score": "5",
-      "home_record": "52-48",
-      "away_record": "49-53",
+      "home_record": "52-49",
+      "away_record": "50-53",
       "venue": "Fenway Park",
       "broadcasts": [
         "MLB.TV",
         "MASN",
         "NESN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816216"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816216/orioles-red-sox"
     },
     {
       "sport": "mlb",
@@ -339,24 +339,24 @@
       "date_utc": "2026-07-22T23:15Z",
       "name": "San Diego Padres at Atlanta Braves",
       "short_name": "SD @ ATL",
-      "status": "In Progress",
-      "status_short": "Top 9th",
-      "state": "in",
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
       "period": 9,
       "clock": "0:00",
       "home_team": "Atlanta Braves",
       "away_team": "San Diego Padres",
       "home_score": "7",
-      "away_score": "1",
-      "home_record": "58-42",
-      "away_record": "50-51",
+      "away_score": "6",
+      "home_record": "59-42",
+      "away_record": "50-52",
       "venue": "Truist Park",
       "broadcasts": [
         "MLB.TV",
         "BravesVision",
         "Padres.TV"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816220"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816220/padres-braves"
     },
     {
       "sport": "mlb",
@@ -364,22 +364,22 @@
       "date_utc": "2026-07-23T00:00Z",
       "name": "Detroit Tigers at Chicago Cubs",
       "short_name": "DET @ CHC",
-      "status": "In Progress",
-      "status_short": "Top 7th",
-      "state": "in",
-      "period": 7,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Chicago Cubs",
       "away_team": "Detroit Tigers",
       "home_score": "1",
-      "away_score": "4",
-      "home_record": "57-44",
-      "away_record": "47-54",
+      "away_score": "5",
+      "home_record": "57-45",
+      "away_record": "48-54",
       "venue": "Wrigley Field",
       "broadcasts": [
         "ESPN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816223"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816223/tigers-cubs"
     },
     {
       "sport": "mlb",
@@ -387,24 +387,24 @@
       "date_utc": "2026-07-23T00:05Z",
       "name": "Chicago White Sox at Texas Rangers",
       "short_name": "CHW @ TEX",
-      "status": "In Progress",
-      "status_short": "Top 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Texas Rangers",
       "away_team": "Chicago White Sox",
       "home_score": "2",
       "away_score": "4",
-      "home_record": "51-50",
-      "away_record": "53-47",
+      "home_record": "51-51",
+      "away_record": "54-47",
       "venue": "Globe Life Field",
       "broadcasts": [
         "MLB.TV",
         "Rangers Sports Network",
         "CHSN"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816222"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816222/white-sox-rangers"
     },
     {
       "sport": "mlb",
@@ -412,24 +412,24 @@
       "date_utc": "2026-07-23T00:10Z",
       "name": "Miami Marlins at Houston Astros",
       "short_name": "MIA @ HOU",
-      "status": "In Progress",
-      "status_short": "Bot 6th",
-      "state": "in",
-      "period": 6,
+      "status": "Final",
+      "status_short": "Final",
+      "state": "post",
+      "period": 9,
       "clock": "0:00",
       "home_team": "Houston Astros",
       "away_team": "Miami Marlins",
-      "home_score": "2",
+      "home_score": "5",
       "away_score": "2",
-      "home_record": "49-54",
-      "away_record": "52-50",
+      "home_record": "50-54",
+      "away_record": "52-51",
       "venue": "Daikin Park",
       "broadcasts": [
         "MLB.TV",
         "Marlins.TV",
         "Space City Home Network"
       ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816224"
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816224/marlins-astros"
     },
     {
       "sport": "mlb",
@@ -446,8 +446,8 @@
       "away_team": "San Diego Padres",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "58-42",
-      "away_record": "50-51",
+      "home_record": "59-42",
+      "away_record": "50-52",
       "venue": "Truist Park",
       "broadcasts": [
         "MLB.TV",
@@ -471,7 +471,7 @@
       "away_team": "Minnesota Twins",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "54-48",
+      "home_record": "54-49",
       "away_record": "50-53",
       "venue": "Progressive Field",
       "broadcasts": [
@@ -548,7 +548,7 @@
       "away_team": "Kansas City Royals",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "47-54",
+      "home_record": "48-54",
       "away_record": "43-60",
       "venue": "Comerica Park",
       "broadcasts": [
@@ -600,7 +600,7 @@
       "home_score": "0",
       "away_score": "0",
       "home_record": "53-50",
-      "away_record": "57-44",
+      "away_record": "57-45",
       "venue": "PNC Park",
       "broadcasts": [
         "MLB.TV",
@@ -623,7 +623,7 @@
       "away_team": "Kansas City Royals",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "47-54",
+      "home_record": "48-54",
       "away_record": "43-60",
       "venue": "Comerica Park",
       "broadcasts": [
@@ -698,8 +698,8 @@
       "away_team": "Atlanta Braves",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "49-53",
-      "away_record": "58-42",
+      "home_record": "50-53",
+      "away_record": "59-42",
       "venue": "Oriole Park at Camden Yards",
       "broadcasts": [
         "MLB.TV",
@@ -774,8 +774,8 @@
       "away_team": "San Diego Padres",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "52-50",
-      "away_record": "50-51",
+      "home_record": "52-51",
+      "away_record": "50-52",
       "venue": "loanDepot park",
       "broadcasts": [
         "MLB.TV",
@@ -799,7 +799,7 @@
       "away_team": "Toronto Blue Jays",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "52-48",
+      "home_record": "52-49",
       "away_record": "46-56",
       "venue": "Fenway Park",
       "broadcasts": [
@@ -825,8 +825,8 @@
       "away_team": "Houston Astros",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "53-47",
-      "away_record": "49-54",
+      "home_record": "54-47",
+      "away_record": "50-54",
       "venue": "Rate Field",
       "broadcasts": [
         "MLB.TV",
@@ -850,7 +850,7 @@
       "away_team": "Seattle Mariners",
       "home_score": "0",
       "away_score": "0",
-      "home_record": "51-50",
+      "home_record": "51-51",
       "away_record": "51-52",
       "venue": "Globe Life Field",
       "broadcasts": [
