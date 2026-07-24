@@ -1,6 +1,6 @@
 {
   "sport": "mlb",
-  "refreshed_at_utc": "2026-07-24T01:49:14.031579Z",
+  "refreshed_at_utc": "2026-07-24T05:12:00.568929Z",
   "dates_requested": [
     "20260723",
     "20260724",
@@ -212,29 +212,6 @@
     },
     {
       "sport": "mlb",
-      "event_id": "401816241",
-      "date_utc": "2026-07-24T22:40Z",
-      "name": "New York Yankees at Philadelphia Phillies",
-      "short_name": "NYY @ PHI",
-      "status": "Scheduled",
-      "status_short": "7/24 - 6:40 PM EDT",
-      "state": "pre",
-      "period": 1,
-      "clock": "0:00",
-      "home_team": "Philadelphia Phillies",
-      "away_team": "New York Yankees",
-      "home_score": "0",
-      "away_score": "0",
-      "home_record": "56-47",
-      "away_record": "57-45",
-      "venue": "Citizens Bank Park",
-      "broadcasts": [
-        "Apple TV"
-      ],
-      "link": "https://www.espn.com/mlb/game/_/gameId/401816241/yankees-phillies"
-    },
-    {
-      "sport": "mlb",
       "event_id": "401816235",
       "date_utc": "2026-07-24T22:45Z",
       "name": "Arizona Diamondbacks at Washington Nationals",
@@ -259,6 +236,29 @@
         "Gray Media"
       ],
       "link": "https://www.espn.com/mlb/game/_/gameId/401816235/diamondbacks-nationals"
+    },
+    {
+      "sport": "mlb",
+      "event_id": "401816241",
+      "date_utc": "2026-07-24T22:45Z",
+      "name": "New York Yankees at Philadelphia Phillies",
+      "short_name": "NYY @ PHI",
+      "status": "Scheduled",
+      "status_short": "7/24 - 6:45 PM EDT",
+      "state": "pre",
+      "period": 1,
+      "clock": "0:00",
+      "home_team": "Philadelphia Phillies",
+      "away_team": "New York Yankees",
+      "home_score": "0",
+      "away_score": "0",
+      "home_record": "56-47",
+      "away_record": "57-45",
+      "venue": "Citizens Bank Park",
+      "broadcasts": [
+        "Apple TV"
+      ],
+      "link": "https://www.espn.com/mlb/game/_/gameId/401816241/yankees-phillies"
     },
     {
       "sport": "mlb",
@@ -364,11 +364,11 @@
     {
       "sport": "mlb",
       "event_id": "401816243",
-      "date_utc": "2026-07-24T23:10Z",
+      "date_utc": "2026-07-24T23:15Z",
       "name": "Toronto Blue Jays at Boston Red Sox",
       "short_name": "TOR @ BOS",
       "status": "Scheduled",
-      "status_short": "7/24 - 7:10 PM EDT",
+      "status_short": "7/24 - 7:15 PM EDT",
       "state": "pre",
       "period": 1,
       "clock": "0:00",
