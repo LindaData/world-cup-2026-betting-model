@@ -1,12 +1,16 @@
 {
   "sport": "basketball",
-  "refreshed_at_utc": "2026-07-23T11:22:36.564099Z",
+  "refreshed_at_utc": "2026-07-24T11:15:17.368432Z",
   "league_id": 12,
   "league_name": "NBA",
   "season": "2024-2025",
   "season_selection_attempts": [
     {
       "season": "2025-2026",
+      "status": "API returned errors for /games: {'plan': 'Free plans do not have access to this season, try from 2022 to 2024.'}"
+    },
+    {
+      "season": "2026-2027",
       "status": "API returned errors for /games: {'plan': 'Free plans do not have access to this season, try from 2022 to 2024.'}"
     },
     {
